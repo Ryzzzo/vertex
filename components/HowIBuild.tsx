@@ -3,6 +3,8 @@ import ArchitectureDiagram from "./ArchitectureDiagram";
 import TokenPanel from "./TokenPanel";
 import SchemaDiagram from "./SchemaDiagram";
 import DeployPanels from "./DeployPanels";
+import IsometricFlow from "./IsometricFlow";
+import TerminalPanel from "./TerminalPanel";
 
 function Chapter({
   marker,
@@ -45,7 +47,12 @@ export default function HowIBuild() {
           <Chapter
             marker="1.0"
             title="Architecture"
-            visual={<ArchitectureDiagram />}
+            visual={
+              <div className="visual-stack">
+                <ArchitectureDiagram />
+                <IsometricFlow />
+              </div>
+            }
           >
             Before code, I draw the boundaries: who owns each piece of data, what
             runs on a schedule versus on demand, where a feature gates by plan.
@@ -89,7 +96,12 @@ export default function HowIBuild() {
           <Chapter
             marker="4.0"
             title="Deploy discipline"
-            visual={<DeployPanels />}
+            visual={
+              <div className="visual-stack">
+                <TerminalPanel />
+                <DeployPanels />
+              </div>
+            }
           >
             Shipping is a checklist, not a feeling. Nothing counts as deployed
             until the remote, my local branch, and the live build agree on the

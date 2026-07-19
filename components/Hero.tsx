@@ -34,7 +34,8 @@ export default function Hero() {
           </a>
         </div>
 
-        <div className="hero-visual parallax">
+        {/* Parallax now lives on the mockup's individual planes, not the wrapper. */}
+        <div className="hero-visual">
           <HeroMockup />
         </div>
       </div>

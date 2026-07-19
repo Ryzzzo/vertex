@@ -54,7 +54,11 @@ const stateColor: Record<NonNullable<Card["state"]>, string> = {
 };
 
 /**
- * Decorative composition — a chat thread laid over a kanban fragment.
+ * Decorative composition — a chat thread laid over a kanban fragment, both
+ * sitting in a browser frame over a gradient mesh. The three planes drift at
+ * different rates on scroll, which is what sells the depth; the mesh stays
+ * fixed so the drift has something stationary to read against.
+ *
  * Hidden from assistive tech: the content is illustrative, not informational.
  */
 export default function HeroMockup() {
@@ -62,37 +66,49 @@ export default function HeroMockup() {
 
   return (
     <div className="mockup" aria-hidden="true">
-      {/* Kanban fragment, behind */}
-      <div className="mockup-board">
-        {columns.map((col) => (
-          <div key={col.name} className="mockup-col">
-            <div className="mockup-col-head">
-              <span>{col.name}</span>
-              <span className="mockup-count">{col.cards.length}</span>
+      {/* Chromatic mesh, furthest back and fixed */}
+      <div className="mockup-mesh" />
+
+      {/* Browser frame + kanban fragment, mid plane */}
+      <div className="mockup-window drift drift-slow">
+        <div className="mockup-chrome">
+          <span className="mockup-dot" />
+          <span className="mockup-dot" />
+          <span className="mockup-dot" />
+          <span className="mockup-url">app.myconsultbase.com/board</span>
+        </div>
+
+        <div className="mockup-board">
+          {columns.map((col) => (
+            <div key={col.name} className="mockup-col">
+              <div className="mockup-col-head">
+                <span>{col.name}</span>
+                <span className="mockup-count">{col.cards.length}</span>
+              </div>
+              {col.cards.map((card) => {
+                const i = cardIndex++;
+                return (
+                  <div
+                    key={card.title}
+                    className="mockup-card assemble-card"
+                    style={{ "--i": i } as CSSProperties}
+                  >
+                    <span
+                      className="mockup-pill"
+                      style={{ background: stateColor[card.state ?? "todo"] }}
+                    />
+                    <p className="mockup-card-title">{card.title}</p>
+                    <span className="mockup-chip">{card.tag}</span>
+                  </div>
+                );
+              })}
             </div>
-            {col.cards.map((card) => {
-              const i = cardIndex++;
-              return (
-                <div
-                  key={card.title}
-                  className="mockup-card assemble-card"
-                  style={{ "--i": i } as CSSProperties}
-                >
-                  <span
-                    className="mockup-pill"
-                    style={{ background: stateColor[card.state ?? "todo"] }}
-                  />
-                  <p className="mockup-card-title">{card.title}</p>
-                  <span className="mockup-chip">{card.tag}</span>
-                </div>
-              );
-            })}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* Chat thread, in front */}
-      <div className="mockup-chat">
+      {/* Chat thread, front plane, drifts furthest */}
+      <div className="mockup-chat drift drift-fast">
         {thread.map((m, i) => (
           <div
             key={m.body}

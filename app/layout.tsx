@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Assistant from "@/components/Assistant";
 
 /**
  * "Inter Display" is not published as its own Google Fonts family — Inter's
@@ -44,7 +45,10 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <Assistant />
+      </body>
     </html>
   );
 }
