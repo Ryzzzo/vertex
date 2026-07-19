@@ -37,18 +37,20 @@ export const work: WorkItem[] = [
     name: "Parenting Plan Pro",
     line: "Legal document generation where the text is the product, and protected accordingly.",
     url: "https://parentingplanpro.com",
-    stack: "Next.js · Supabase · Postgres · deterministic PDF assembly",
+    stack: "Next.js · Supabase · react-pdf · Stripe · source-fidelity CI gate",
     approach:
-      "Statutory language lives in a protected-text registry, and the build fails if generated output drifts from its source by a character. Assembly is deterministic — the same inputs produce the same bytes — so a plan can be regenerated and diffed years after it was filed. Review states are modeled in the schema rather than tracked in anyone’s memory.",
+      "The plan's legal language lives in a protected-text registry, and the build fails if rendered output drifts from its source by a character. One codebase renders jurisdiction-aware plans across US/Canada, UK, and Australia school-calendar systems. Contested arrangements — supervised visitation, step-up schedules — are gated behind professional mediation, so self-authored legal language never reaches a branded, court-ready PDF.",
+    shot: "/work/parenting-plan-pro/hero-desktop.avif",
+    shotAlt: "The Parenting Plan Pro landing page rendered on desktop.",
   },
   {
     slug: "civic-strategy-partners",
     name: "Civic Strategy Partners",
-    line: "Site for a fractional GSA MAS advisory practice — both generations: the 2025 launch site and the complete 2026 rebuild now live.",
+    line: "Site for a fractional GSA MAS advisory practice, built for an audience that checks your CAGE code.",
     url: "https://www.civicstrategypartners.com/",
-    stack: "Next.js · Tailwind · static render · Vercel",
+    stack: "Next.js App Router · Tailwind · server-side form API · Vercel",
     approach:
-      "A credibility site for a practice that sells judgment, so the build optimizes for trust signals and first paint rather than motion. Everything renders statically; nothing on the critical path waits on a client-side fetch. The 2026 rebuild preserved the existing URL structure, so inbound links and accumulated search equity survived the redesign intact.",
+      "A credibility site for a practice that sells judgment, so the detail work went where a federal buyer actually looks — the footer carries live UEI, CAGE, and NAICS identifiers beside the SDVOSB certification, because that audience verifies before it inquires. Motion is engineered rather than avoided: the gradient wave animates on background-position across an oversized canvas, so it never jumps at the seam. This is the second generation of the site for the same client, staged behind a passphrase gate for review before it took the root domain.",
     shot: "/work/civic-strategy-partners/hero-desktop.avif",
     shotAlt: "The Civic Strategy Partners site rendered on desktop.",
   },
@@ -57,9 +59,9 @@ export const work: WorkItem[] = [
     name: "Revoix",
     line: "Product site for an on-device speech and situational-awareness tool used by police and emergency responders. Four languages, zero tracking by design.",
     url: "https://www.revoix.de",
-    stack: "Next.js · next-intl · static export · no analytics, no backend",
+    stack: "Next.js · prerendered on Vercel · no analytics",
     approach:
-      "The privacy claim on the page has to survive the network tab, so the site makes no third-party requests and ships no analytics. There is no backend and no API surface — every page renders at build time. Locale routing is path-based across four languages, so each one is independently linkable and independently indexable.",
+      "Static-feel front-end for a language platform. Backend-free — the served HTML has zero third-party requests, no analytics, not even Vercel Insights. Locale routes carry independently linkable metadata (title, description, OG) even though the body copy renders client-side.",
     shot: "/work/revoix/hero-desktop.avif",
     shotAlt: "The Revoix product site rendered on desktop.",
   },
@@ -68,9 +70,9 @@ export const work: WorkItem[] = [
     name: "FM24",
     line: "Multilingual public site for a German security and facility-management software platform, shipped as a static build into the client’s existing server environment.",
     url: "https://fm24.info",
-    stack: "Next.js · static export · build-time i18n · client-hosted",
+    stack: "Next.js · static export · dropped onto legacy Apache",
     approach:
-      "Shipped as a static export dropped into infrastructure the client already runs — no Node runtime for them to maintain, no API for the site to depend on. Language routing resolves at build time rather than through a request-time redirect. The handoff was the deliverable: they own the output and can redeploy it without me.",
+      "Static export shipped into infrastructure with no Node runtime — the client hosts on a legacy Apache stack, so the entire built site is prerendered files. Backend-free. Bilingual DE/EN with build-time i18n. GDPR-conformant cookie consent gate.",
     shot: "/work/fm24/hero-desktop.avif",
     shotAlt: "The FM24 public site rendered on desktop.",
   },
@@ -79,9 +81,9 @@ export const work: WorkItem[] = [
     name: "Villa L’Estagne",
     line: "A booking site for a Mediterranean villa, built to the property’s standard rather than a template’s.",
     note: "Preview coming soon.",
-    stack: "Next.js · Supabase · Stripe · date-fns",
+    stack: "Next.js · Supabase RLS · Resend · no cookies",
     approach:
-      "Booking is the part that has to be right: two requests for the same night cannot both win, so the constraint lives in the database rather than in application code that races itself. Availability, pricing, and calendar sync are modeled once and read everywhere, so the calendar and the checkout can never disagree. The design brief was the property’s standard, not a booking template’s.",
+      "Row-level security lets an anonymous visitor write a booking request and read nothing back, so one guest's dates and contact details are never visible to another. Overlapping requests are allowed by design — two parties can hold the same week as on_request and the owner arbitrates from the admin panel. Bilingual FR/EN with French primary. No cookies, no analytics, no payment processing — a direct-booking site without a platform in the middle.",
   },
 ];
 
