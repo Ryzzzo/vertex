@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="512" height="512" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-<rect width="512" height="512" fill="#000"/>
-<g fill="#fff">
-<path d="m80 100 80 240h45l-65-195 65 195h45l80-240h-45l-57.5 172.5-57.5-172.5h-35l-57.5 172.5-57.5-172.5z"/>
-<path d="m340 250-50 50 50 50h50l-60-60 60-60h-50l-50 50-40-40h-50l70 70-30 30 30 30h50l40-40 50 50h50l-70-70z"/>
-</g>
-</svg>
