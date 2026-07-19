@@ -59,9 +59,9 @@ export const work: WorkItem[] = [
     name: "Revoix",
     line: "Product site for an on-device speech and situational-awareness tool used by police and emergency responders. Four languages, zero tracking by design.",
     url: "https://www.revoix.de",
-    stack: "Next.js · prerendered on Vercel · no analytics",
+    stack: "Next.js · prerendered on Vercel · no analytics · no cookies",
     approach:
-      "Static-feel front-end for a language platform. Backend-free — the served HTML has zero third-party requests, no analytics, not even Vercel Insights. Locale routes carry independently linkable metadata (title, description, OG) even though the body copy renders client-side.",
+      "Static-feel front-end for a language platform. Backend-free — the served HTML has zero third-party requests, no analytics, no cookies, not even Vercel Insights. Locale routes carry independently linkable metadata (title, description, OG) even though the body copy renders client-side.",
     shot: "/work/revoix/hero-desktop.avif",
     shotAlt: "The Revoix product site rendered on desktop.",
   },
