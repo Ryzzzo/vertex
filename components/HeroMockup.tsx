@@ -3,6 +3,11 @@ import type { CSSProperties } from "react";
 type Message = { from: string; time: string; body: string };
 type Card = { title: string; tag: string; state?: "todo" | "doing" | "done" };
 
+/**
+ * The second speaker is labelled "Client", never given a name. On a page whose
+ * headline is "One developer", an invented teammate would quietly contradict
+ * the claim the rest of the site is making.
+ */
 const thread: Message[] = [
   {
     from: "Ryan",
@@ -10,9 +15,9 @@ const thread: Message[] = [
     body: "Overlap backstop is in. Two requests for the same night can’t both win now, even if they land in the same second.",
   },
   {
-    from: "Dana",
+    from: "Client",
     time: "09:16",
-    body: "Tried it from two tabs. Second one bounces clean, and the message actually explains why.",
+    body: "Just tried it from two tabs — the second one bounced with a message that actually explained why.",
   },
   {
     from: "Ryan",
@@ -20,9 +25,9 @@ const thread: Message[] = [
     body: "Good. The migration ships with the rebuild that expects it — not ahead of it.",
   },
   {
-    from: "Dana",
+    from: "Client",
     time: "09:21",
-    body: "Then I’ll hold the palette rollout until after. No reason to move two things at once.",
+    body: "Then I’ll hold my announcement until after. No reason to move two things at once.",
   },
 ];
 
