@@ -100,6 +100,45 @@ export const lab = {
   meta: "Designed, built, and deployed in one evening.",
 };
 
+export type LabItem = {
+  slug: string;
+  name: string;
+  line: string;
+  /** Internal route (e.g. /labs/fee-engine) or an external URL. */
+  href: string;
+  external?: boolean;
+  /** Sets the card's status chip: a running demo vs. a static interface study. */
+  kind: "live" | "concept";
+  /** Real capture, where one exists; concept items render a drawn placeholder. */
+  shot?: string;
+  shotAlt?: string;
+};
+
+/**
+ * The routed Labs index. NC Housing Terminal reuses the homepage `lab` entry so
+ * its copy lives in one place; Fee Engine is the first item that lives on the
+ * site itself rather than at its own domain.
+ */
+export const labs: LabItem[] = [
+  {
+    slug: "fee-engine",
+    name: "Fee Engine",
+    line: "One pricing calculator, four industry rule sets, no vertical logic in the code — interface concept.",
+    href: "/labs/fee-engine",
+    kind: "concept",
+  },
+  {
+    slug: "nc-housing-terminal",
+    name: lab.name,
+    line: lab.line,
+    href: lab.url,
+    external: true,
+    kind: "live",
+    shot: lab.shot,
+    shotAlt: lab.shotAlt,
+  },
+];
+
 export const affordances = [
   { label: "Email", href: "mailto:contact@vertexapps.dev" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/rystacy/" },
