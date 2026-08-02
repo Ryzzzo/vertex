@@ -9,7 +9,7 @@ import SiteFooter from "@/components/SiteFooter";
 export default function Page() {
   return (
     <>
-      <SiteHeader />
+      <SiteHeader wordmarkHref="#hero-heading" />
       <main>
         <Hero />
         <HowIBuild />

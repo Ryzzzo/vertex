@@ -97,6 +97,13 @@ export default function Lab() {
             </div>
           </div>
         </article>
+
+        <p className="lab-more reveal">
+          <a className="lab-more-link" href="/labs">
+            More in Labs
+            <Chevron />
+          </a>
+        </p>
       </div>
     </section>
   );
