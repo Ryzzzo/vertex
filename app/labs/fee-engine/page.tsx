@@ -72,7 +72,7 @@ export default function FeeEnginePage() {
                   <span className="mockup-url">fee-engine · interface concept</span>
                   <a
                     className="labs-fullscreen"
-                    href="/labs/fee-engine/app.html"
+                    href="/labs/fee-engine.html"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -81,7 +81,7 @@ export default function FeeEnginePage() {
                 </div>
                 <iframe
                   className="labs-iframe"
-                  src="/labs/fee-engine/app.html"
+                  src="/labs/fee-engine.html"
                   title="Fee Engine — an interactive interface concept"
                 />
               </div>
