@@ -1,6 +1,6 @@
 import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/Hero";
-import HeroIsometric from "@/components/HeroIsometric";
+import HeroStage from "@/components/HeroStage";
 import AnnouncementPill from "@/components/AnnouncementPill";
 import HowIBuild from "@/components/HowIBuild";
 import SelectedWork from "@/components/SelectedWork";
@@ -13,10 +13,10 @@ export default function Page() {
     <>
       <SiteHeader wordmarkHref="#hero-heading" />
       <main>
-        {/* Passed as children so the SVG and the pill stay server-rendered and
-            out of the client bundle, even though Hero itself is a client
-            component for the entrance animation. */}
-        <Hero visual={<HeroIsometric />} pill={<AnnouncementPill />} />
+        {/* Hero stays a Server Component; only the tilted stage ships client
+            JS, and the pill is server-rendered from the same labs array the
+            /labs index reads. */}
+        <Hero visual={<HeroStage />} pill={<AnnouncementPill />} />
         <HowIBuild />
         <SelectedWork />
         <Lab />

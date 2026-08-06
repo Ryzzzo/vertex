@@ -28,7 +28,7 @@ export default function Hero({
 
   return (
     <section className="section hero" aria-labelledby="hero-heading">
-      <div className="shell hero-grid">
+      <div className="shell">
         <div className="hero-copy">
           <h1 id="hero-heading" className="h1 hero-title">
             {words.map((w, i) => (
@@ -79,8 +79,10 @@ export default function Hero({
           </div>
         </div>
 
-        <div className="hero-visual">{visual}</div>
       </div>
+
+      {/* Full-bleed, so it sits outside the shell rather than in a grid cell. */}
+      {visual}
     </section>
   );
 }
