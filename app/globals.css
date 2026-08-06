@@ -343,17 +343,42 @@ a {
   gap: 1.5rem;
 }
 
+/**
+ * The header carries a full-brightness wordmark and exactly one nav item, so a
+ * lone word at --text-secondary read as a caption rather than a link — visitors
+ * reported not finding Labs at all. Contrast was never the problem (6.13:1,
+ * passing); salience was. Primary colour plus a standing underline is what makes
+ * a single word read as navigation, without resorting to a button or a badge.
+ */
 .site-nav-link {
+  position: relative;
   font-family: var(--font-display);
   font-size: 0.9375rem;
   font-weight: 500;
   letter-spacing: -0.005em;
-  color: var(--text-secondary);
-  transition: color var(--duration-hover) var(--easing-linear);
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.4em;
+  text-decoration-color: color-mix(in oklab, var(--text-primary) 32%, transparent);
+  transition:
+    color var(--duration-hover) var(--easing-linear),
+    text-decoration-color var(--duration-hover) var(--easing-linear);
+}
+
+/**
+ * The text box alone measured 34x23px, under the 24x24 minimum target size.
+ * Extending the hit area with a pseudo-element rather than padding keeps the
+ * header's height — and so the hero's position — exactly where it was.
+ */
+.site-nav-link::after {
+  content: "";
+  position: absolute;
+  inset: -0.75rem -0.625rem;
 }
 
 .site-nav-link:hover {
-  color: var(--text-primary);
+  text-decoration-color: var(--text-primary);
 }
 
 .wordmark {
@@ -1335,8 +1360,16 @@ a {
   margin-block: 0.25rem 0.125rem;
 }
 
+/**
+ * Labs is an index that grows, so it tracks item count rather than sitting on
+ * the fixed two-column grid Selected Work uses: auto-fit gives two columns at
+ * today's two items and three once there are three or more, with no orphan row
+ * at odd counts. Below 900px the base .cards rule still collapses this to one
+ * column. Scoped to Labs so Selected Work's deliberate pairing is untouched.
+ */
 .labs-cards {
   align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
 }
 
 .labs-card-media {
