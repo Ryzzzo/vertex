@@ -13,10 +13,20 @@
   --accent: #5e6ad2;
   --hairline: #1f2023;
 
-  /* Inter's variable font carries the display cut; see app/layout.tsx */
-  --font-display: var(--font-inter, "Inter", ui-sans-serif, system-ui);
+  /* Display and body are deliberately different families; see app/layout.tsx */
+  --font-display: var(--font-instrument-sans, "Instrument Sans", ui-sans-serif, system-ui);
   --font-body: var(--font-inter, "Inter", ui-sans-serif, system-ui);
+  --font-serif: var(--font-instrument-serif, "Instrument Serif", ui-serif, Georgia, serif);
   --font-mono: var(--font-jetbrains-mono, "JetBrains Mono", ui-monospace, monospace);
+
+  /*
+   * Two tracking values for the whole site and nothing else: display type
+   * tightens, uppercase micro-labels open up, everything between keeps the
+   * font's own metrics. The previous system carried ten distinct values, which
+   * is the tell of type set one component at a time rather than as a system.
+   */
+  --tracking-tight: -0.025em;
+  --tracking-wider: 0.05em;
 
   --easing-linear: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-reveal: 320ms;
@@ -112,9 +122,9 @@ a {
 
 .h1 {
   font-family: var(--font-display);
-  font-size: clamp(3.25rem, 6vw, 5rem);
-  font-weight: 550;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.625rem, 1.75rem + 2.8vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
   line-height: 1.05;
   margin: 0;
   text-wrap: balance;
@@ -122,9 +132,9 @@ a {
 
 .h2 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.5vw, 2.75rem);
-  font-weight: 550;
-  letter-spacing: -0.015em;
+  font-size: clamp(2rem, 1.35rem + 1.8vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
   line-height: 1.1;
   margin: 0;
   text-wrap: balance;
@@ -133,8 +143,8 @@ a {
 .h3 {
   font-family: var(--font-display);
   font-size: 1.375rem;
-  font-weight: 550;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
   line-height: 1.25;
   margin: 0;
 }
@@ -150,7 +160,7 @@ a {
 
 .body-lg {
   color: var(--text-secondary);
-  font-size: clamp(1.125rem, 1.5vw, 1.3125rem);
+  font-size: clamp(1.125rem, 1rem + 0.35vw, 1.3125rem);
   font-weight: 400;
   line-height: 1.5;
   margin: 0;
@@ -161,7 +171,7 @@ a {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-wider);
   color: var(--text-tertiary);
   margin: 0;
 }
@@ -169,9 +179,9 @@ a {
 .lede {
   color: var(--text-primary);
   font-family: var(--font-display);
-  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.875rem);
   font-weight: 500;
-  letter-spacing: -0.015em;
+  letter-spacing: var(--tracking-tight);
   line-height: 1.3;
   margin: 0;
   text-wrap: balance;
@@ -302,7 +312,6 @@ a {
   font-family: var(--font-body);
   font-size: 0.9375rem;
   font-weight: 500;
-  letter-spacing: -0.005em;
   cursor: pointer;
   transition:
     border-color var(--duration-hover) var(--easing-linear),
@@ -355,7 +364,6 @@ a {
   font-family: var(--font-display);
   font-size: 0.9375rem;
   font-weight: 500;
-  letter-spacing: -0.005em;
   color: var(--text-primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -387,8 +395,7 @@ a {
   gap: 0.625rem;
   font-family: var(--font-display);
   font-size: 0.9375rem;
-  font-weight: 550;
-  letter-spacing: -0.01em;
+  font-weight: 500;
   color: var(--text-primary);
   transition: opacity var(--duration-hover) var(--easing-linear);
 }
@@ -437,7 +444,7 @@ a {
  */
 @media (min-width: 901px) {
   .hero .h1 {
-    font-size: clamp(3rem, 12cqi, 4rem);
+    font-size: clamp(2.625rem, 1.75rem + 6.4cqi, 3.5rem);
   }
 }
 
@@ -445,9 +452,173 @@ a {
   max-width: 34ch;
 }
 
+/* The one editorial moment on the page — Instrument Serif is held for exactly
+   this, an italic phrase carrying the emotional weight of the sentence. */
 .hero-sub em {
   color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: 1.14em;
   font-style: italic;
+  letter-spacing: 0;
+}
+
+/*
+ * Words animate individually, so each needs to be its own box. inline-block
+ * would collapse the spaces between them, so the space is part of the span's
+ * text and white-space: pre-wrap keeps it.
+ */
+.hero-title {
+  text-wrap: balance;
+}
+
+.hero-word {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+/*
+ * Word-by-word entrance. ~0.11s apart, each word arriving out of focus and a
+ * little low. Declared only under no-preference, so a reduced-motion visitor
+ * gets the finished sentence with no rule to undo — and because it is CSS, the
+ * first frame is the browser's first paint rather than React's first commit.
+ */
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+    filter: blur(7px);
+  }
+}
+
+@keyframes hero-block-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-word {
+    animation: word-in 560ms var(--easing-linear) both;
+    animation-delay: calc(var(--i) * 110ms);
+  }
+
+  .hero-enter {
+    animation: hero-block-in 560ms var(--easing-linear) both;
+    animation-delay: calc(var(--i) * 110ms);
+  }
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.875rem 1.25rem;
+}
+
+/*
+ * Announcement pill — the newest Labs item, sitting beside the primary CTA as
+ * a lower-commitment second path for the visitor who is not ready to convert.
+ */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0 0.75rem 0 0.625rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  transition:
+    border-color var(--duration-hover) var(--easing-linear),
+    color var(--duration-hover) var(--easing-linear);
+}
+
+.pill:hover {
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--hairline));
+  color: var(--text-primary);
+}
+
+/* The single sanctioned splash of accent in the hero. */
+.pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+
+.pill-arrow {
+  color: var(--text-tertiary);
+  transition: transform var(--duration-hover) var(--easing-linear);
+}
+
+.pill:hover .pill-arrow {
+  color: var(--text-secondary);
+  transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-arrow {
+    transition: none;
+  }
+  .pill:hover .pill-arrow {
+    transform: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Hero graphic — the stacked product surfaces
+   ───────────────────────────────────────────────────────────── */
+
+.stack {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/*
+ * Hierarchy comes from brightness, not opacity. An opacity of 0.72 on the note
+ * composited it down to roughly 3.9:1 against the ground — under the floor for
+ * 8.5px text, and invisible in a measurement that only reads `fill`.
+ */
+.stack-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: var(--tracking-wider);
+  fill: var(--text-primary);
+}
+
+.stack-note {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: var(--tracking-wider);
+  fill: var(--text-secondary);
+}
+
+@keyframes stack-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+/*
+ * The stack assembles bottom-up on load, which is the same argument the graphic
+ * makes standing still — so under reduced motion it simply starts assembled and
+ * nothing is lost.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .stack-layer {
+    animation: stack-rise 620ms var(--easing-linear) both;
+    animation-delay: calc(220ms + var(--i) * 90ms);
+  }
+
+  .stack-ground {
+    animation: stack-rise 620ms var(--easing-linear) both;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -555,7 +726,7 @@ a {
   margin: 0 0 0.875rem;
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--text-tertiary);
 }
@@ -597,18 +768,18 @@ a {
   border-block: 1px solid var(--hairline);
   font-family: var(--font-display);
   color: var(--text-secondary);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-tight);
 }
 
 .tokens-type-a {
   font-size: 1.5rem;
-  font-weight: 550;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
 .tokens-type-b {
   font-size: 1.0625rem;
-  font-weight: 550;
+  font-weight: 500;
 }
 
 .tokens-type-c {
@@ -644,8 +815,7 @@ a {
   margin: 0 0 0.4375rem;
   font-family: var(--font-display);
   font-size: 0.9375rem;
-  font-weight: 550;
-  letter-spacing: -0.01em;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
@@ -732,7 +902,7 @@ a {
   background: color-mix(in oklab, var(--accent) 14%, transparent);
   color: var(--text-primary);
   font-size: 0.6875rem;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-wider);
 }
 
 /* Two visuals sharing one chapter column */
@@ -775,7 +945,7 @@ a {
   margin-left: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-wider);
   color: var(--text-tertiary);
 }
 
@@ -893,7 +1063,7 @@ a {
 .iso-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   fill: var(--text-primary);
 }
@@ -901,7 +1071,7 @@ a {
 .iso-detail {
   font-family: var(--font-mono);
   font-size: 8.5px;
-  letter-spacing: 0.03em;
+  letter-spacing: var(--tracking-wider);
   fill: var(--text-tertiary);
 }
 
@@ -1086,7 +1256,7 @@ a {
   margin: 0;
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--text-tertiary);
 }
@@ -1120,7 +1290,7 @@ a {
   color: var(--text-tertiary);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   cursor: pointer;
   transition: color var(--duration-hover) var(--easing-linear);
@@ -1194,8 +1364,8 @@ a {
 }
 
 .card-featured .card-title {
-  font-size: clamp(1.625rem, 2.6vw, 2.125rem);
-  letter-spacing: -0.015em;
+  font-size: clamp(1.625rem, 1.3rem + 1.05vw, 2.125rem);
+  letter-spacing: var(--tracking-tight);
 }
 
 .card-eyebrow {
@@ -1311,7 +1481,7 @@ a {
   justify-content: space-between;
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--text-tertiary);
 }
@@ -1335,7 +1505,7 @@ a {
   gap: 0.4375rem;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--text-tertiary);
   transition: color var(--duration-hover) var(--easing-linear);
@@ -1398,7 +1568,7 @@ a {
   backdrop-filter: blur(8px);
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--text-secondary);
 }
@@ -1437,7 +1607,7 @@ a {
   margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
 }
 
@@ -1495,7 +1665,7 @@ a {
   margin-left: auto;
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-wider);
   color: var(--text-tertiary);
   transition: color var(--duration-hover) var(--easing-linear);
 }
@@ -1570,7 +1740,6 @@ a {
   font-family: var(--font-display);
   font-size: 1.0625rem;
   font-weight: 500;
-  letter-spacing: -0.01em;
 }
 
 /* --text-tertiary measures 3.18:1 on the ground, which is under the 4.5:1 floor
@@ -1607,7 +1776,6 @@ a {
   font-family: var(--font-display);
   font-size: 0.9375rem;
   font-weight: 500;
-  letter-spacing: -0.005em;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
@@ -1668,8 +1836,7 @@ a {
   margin: 0;
   font-family: var(--font-display);
   font-size: 0.9375rem;
-  font-weight: 550;
-  letter-spacing: -0.01em;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
@@ -1815,7 +1982,7 @@ a {
   border-bottom: 1px solid var(--hairline);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--text-tertiary);
 }
@@ -1845,7 +2012,6 @@ a {
   font-size: 0.8125rem;
   line-height: 1.35;
   color: var(--text-primary);
-  letter-spacing: -0.005em;
 }
 
 .mockup-chip {
@@ -1891,7 +2057,7 @@ a {
 
 .mockup-msg-from {
   font-size: 0.75rem;
-  font-weight: 550;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
