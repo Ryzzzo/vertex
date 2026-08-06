@@ -1469,8 +1469,14 @@ a {
   flex-wrap: wrap;
 }
 
+/*
+ * Inherits .marker, which is --text-tertiary and measures 3.18:1 on the ground
+ * — under the 4.5:1 floor. This particular line is the one that keeps a Labs
+ * demo honest about not being a product, so it was the least readable text on
+ * the page doing the most important job. Lifted to secondary, 6.13:1.
+ */
 .labs-disclaimer {
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
 }
 
 .labs-frame-figure {
@@ -1513,6 +1519,107 @@ a {
 
 .labs-back {
   margin: clamp(2rem, 4vw, 3rem) 0 0;
+}
+
+/* The ops table is a full application screen rather than a single panel, so it
+   needs more height than the Fee Engine frame to show its density argument. */
+.labs-iframe-tall {
+  height: clamp(38rem, 30rem + 24vh, 54rem);
+}
+
+.labs-kbd {
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  color: var(--text-secondary);
+}
+
+/*
+ * Design notes — a native <details> so the disclosure is keyboard-operable and
+ * findable by in-page search without any JavaScript. Collapsed by default: the
+ * demo is the headline, the reasoning is for whoever wants it.
+ */
+.notes {
+  margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.notes-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 1.25rem 0;
+  cursor: pointer;
+  list-style: none;
+  color: var(--text-primary);
+  transition: color var(--duration-hover) var(--easing-linear);
+}
+
+/* Safari still paints its own disclosure triangle without this. */
+.notes-summary::-webkit-details-marker {
+  display: none;
+}
+
+.notes-summary:hover {
+  color: var(--accent);
+}
+
+.notes-summary-label {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* --text-tertiary measures 3.18:1 on the ground, which is under the 4.5:1 floor
+   for text this size. Secondary lands at 6.13:1 and still reads as subordinate
+   to the label beside it. */
+.notes-summary-hint {
+  color: var(--text-secondary);
+}
+
+.notes-chevron {
+  margin-left: auto;
+  align-self: center;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transform-origin: center;
+  transition: transform var(--duration-reveal) var(--easing-linear);
+}
+
+.notes[open] .notes-chevron {
+  transform: rotate(-135deg);
+}
+
+.notes-body {
+  display: grid;
+  gap: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+  padding-bottom: 2rem;
+  max-width: 68ch;
+}
+
+.notes-item-head {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.notes-item-body {
+  color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notes-chevron {
+    transition: none;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────

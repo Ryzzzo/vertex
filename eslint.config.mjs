@@ -14,6 +14,12 @@ const eslintConfig = [
       ".claude/**",
       "next-env.d.ts",
       "scripts/**",
+      /*
+       * `public/**` is served verbatim, and the Labs demos ship their own built
+       * bundles there. Linting minified vendor output reports thousands of
+       * findings against code we neither wrote nor can act on.
+       */
+      "public/**",
     ],
   },
   ...coreWebVitals,

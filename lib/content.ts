@@ -121,6 +121,13 @@ export type LabItem = {
  */
 export const labs: LabItem[] = [
   {
+    slug: "ops-table",
+    name: "Ops Queue Triage",
+    line: "A 420-row exception table with keyboard-first ergonomics, URL-shareable filter state, and a CSV export that survives Excel — interface concept.",
+    href: "/labs/ops-table",
+    kind: "concept",
+  },
+  {
     slug: "fee-engine",
     name: "Fee Engine",
     line: "One pricing calculator, four industry rule sets, no vertical logic in the code — interface concept.",
