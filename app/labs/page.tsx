@@ -50,7 +50,7 @@ function Chevron() {
  * rather than a screenshot — a left column of inputs resolving into a single
  * fixed fee on the right, which is the whole idea of the tool at a glance.
  */
-function ConceptThumb() {
+function FeeEngineThumb() {
   return (
     <svg
       className="labs-thumb"
@@ -97,7 +97,65 @@ function ConceptThumb() {
   );
 }
 
+/**
+ * Ops Queue Triage draws its own density rather than borrowing the Fee Engine's
+ * plate: the argument of that demo is rows-on-screen, so the thumbnail is a
+ * tight run of them under a pinned header, with the status and priority columns
+ * carrying the only colour.
+ */
+function OpsTableThumb() {
+  const rows = Array.from({ length: 14 }, (_, i) => i);
+  const statusFill = ["#6ba5ff", "#e0a34a", "#e0a34a", "#f2707a"];
+
+  return (
+    <svg
+      className="labs-thumb"
+      viewBox="0 0 640 360"
+      role="img"
+      aria-label="Ops Queue Triage — a dense exception table, interface concept"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <rect width="640" height="360" fill="#0A0B0D" />
+      <rect width="640" height="34" fill="#101215" />
+      <rect y="33" width="640" height="1" fill="#1E2126" />
+      <rect x="20" y="12" width="10" height="10" rx="3" fill="#6BA5FF" />
+      <rect x="38" y="14" width="74" height="6" rx="3" fill="#2A2F36" />
+      {/* toolbar: search, the collapsed filter control, and the export action */}
+      <rect x="20" y="46" width="96" height="16" rx="4" fill="#16191D" stroke="#22262C" />
+      <rect x="124" y="46" width="42" height="16" rx="4" fill="#16191D" stroke="#2E333A" />
+      <rect x="516" y="46" width="104" height="16" rx="4" fill="#2C5FA8" />
+      {/* pinned header row */}
+      <rect y="74" width="640" height="18" fill="#0D0F12" />
+      <rect y="91" width="640" height="1" fill="#1E2126" />
+      {[20, 96, 232, 352, 432, 520].map((x, i) => (
+        <rect key={i} x={x} y="80" width={i === 1 ? 46 : 34} height="5" rx="2.5" fill="#3A4048" />
+      ))}
+      {rows.map((i) => {
+        const y = 100 + i * 18;
+        return (
+          <g key={i}>
+            {i % 2 === 1 && <rect y={y - 4} width="640" height="18" fill="#0C0E11" />}
+            <rect x="20" y={y} width="42" height="5" rx="2.5" fill="#5A626C" />
+            <rect x="96" y={y} width={78 + ((i * 17) % 46)} height="5" rx="2.5" fill="#8B939D" />
+            <rect x="232" y={y} width={52 + ((i * 11) % 30)} height="5" rx="2.5" fill="#5A626C" />
+            <circle cx="356" cy={y + 2.5} r="3" fill={statusFill[i % statusFill.length]} />
+            <rect x="364" y={y} width="40" height="5" rx="2.5" fill="#5A626C" />
+            <rect x="432" y={y} width="14" height="5" rx="2.5" fill={i % 5 === 0 ? "#F2707A" : "#5A626C"} />
+            <rect x={556 - ((i * 13) % 34)} y={y} width={64 + ((i * 13) % 34)} height="5" rx="2.5" fill="#C9D0D8" />
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+const THUMBS: Record<string, () => React.ReactElement> = {
+  "fee-engine": FeeEngineThumb,
+  "ops-table": OpsTableThumb,
+};
+
 function LabsCard({ item }: { item: LabItem }) {
+  const Thumb = THUMBS[item.slug] ?? FeeEngineThumb;
   const heading = (
     <>
       {item.name}
@@ -118,7 +176,7 @@ function LabsCard({ item }: { item: LabItem }) {
             className="card-shot"
           />
         ) : (
-          <ConceptThumb />
+          <Thumb />
         )}
         <span className={`labs-tag labs-tag-${item.kind}`}>
           {item.kind === "live" ? "Live" : "Interface concept"}
