@@ -1,19 +1,40 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import {
+  Inter,
+  Instrument_Sans,
+  Instrument_Serif,
+  JetBrains_Mono,
+} from "next/font/google";
 import "./globals.css";
 import Assistant from "@/components/Assistant";
 
 /**
- * "Inter Display" is not published as its own Google Fonts family — Inter's
- * variable font carries the display cut on its optical-size axis. Loading it
- * once and aliasing --font-display to it in globals.css avoids shipping a
- * duplicate @font-face set for what is the same file.
+ * Inter stays on body copy, where it is a genuinely good text face. Display
+ * type moved off it: at headline sizes Inter is the default every SaaS template
+ * ships with, and the whole argument of this site is that it was not assembled
+ * from a template. Instrument Sans carries a little more character in the
+ * counters and a narrower cap, which reads as drawn rather than defaulted.
  */
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
   axes: ["opsz"],
+});
+
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-instrument-sans",
+});
+
+/** Held for editorial moments — currently the hero's one italic phrase. */
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  display: "swap",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -69,7 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${inter.variable} ${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
     >
       <body>
         {children}
