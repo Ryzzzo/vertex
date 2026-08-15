@@ -1,0 +1,767 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Direction A — Instrument
+   Prototype styles, scoped under .da-root so nothing here can reach the
+   shipped homepage. Everything is namespaced `da-`; no global selector is
+   redefined.
+
+   One easing curve for this page: cubic-bezier(0.32, 0.72, 0, 1). It is the
+   only custom curve declared in this file, and no rule uses a different one.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.da-root {
+  /* Motion */
+  --da-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  /* SiteHeader and SiteFooter are reused from the shipped site and read
+     --easing-linear from globals.css. Rebinding it here means the whole
+     prototype page — borrowed chrome included — runs on the one curve. */
+  --easing-linear: cubic-bezier(0.32, 0.72, 0, 1);
+  --da-fast: 160ms;
+  --da-mid: 420ms;
+  --da-slow: 700ms;
+
+  /* Ground and ink. Contrast checked against #08090a and #101112:
+     body 5.8:1, dim 4.9:1, accent-ink 7.2:1. --da-accent itself is 4.26:1
+     on the ground, so it carries rules, borders and the particle colour —
+     never small text. */
+  --da-bg: #08090a;
+  --da-surface: #101112;
+  --da-line: #1f2023;
+  --da-line-strong: #2b2d33;
+  --da-ink: #f7f8f8;
+  --da-body: #8a8f98;
+  --da-dim: #7d828c;
+  --da-accent: #5e6ad2;
+  --da-accent-ink: #8b95ea;
+
+  /* Type. Every clamp mixes a rem term with the vw term so text still scales
+     at 200% browser zoom (WCAG 1.4.4). */
+  --da-display: clamp(2.75rem, 1.85rem + 3.6vw, 5.25rem);
+  --da-h2: clamp(1.9rem, 1.35rem + 2.1vw, 3rem);
+  --da-h3: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --da-lede: clamp(1.0625rem, 0.98rem + 0.42vw, 1.3125rem);
+  --da-copy: clamp(0.9375rem, 0.9rem + 0.18vw, 1rem);
+  --da-micro: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+
+  /* Space */
+  --da-gutter: clamp(1.25rem, 0.9rem + 1.5vw, 2.5rem);
+  --da-rhythm: clamp(5rem, 3.4rem + 6vw, 9rem);
+  --da-shell-max: 1200px;
+
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  color: var(--da-ink);
+  font-family: var(--font-body);
+}
+
+/* The canvas is fixed, so it never contributes layout and cannot shift
+   anything. Masked so the cloud dissolves into the page instead of ending at
+   a hard rectangle. */
+.da-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    118% 86% at 50% 46%,
+    #000 40%,
+    transparent 95%
+  );
+  mask-image: radial-gradient(118% 86% at 50% 46%, #000 40%, transparent 95%);
+}
+
+.da-shell {
+  width: 100%;
+  max-width: var(--da-shell-max);
+  margin-inline: auto;
+  padding-inline: var(--da-gutter);
+}
+
+.da-section {
+  position: relative;
+  padding-block: var(--da-rhythm);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Type
+   ───────────────────────────────────────────────────────────── */
+
+.da-display {
+  font-family: var(--font-serif);
+  font-size: var(--da-display);
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 0.98;
+  margin: 0;
+  text-wrap: balance;
+  color: var(--da-ink);
+}
+
+.da-display em {
+  font-style: italic;
+  color: var(--da-accent-ink);
+}
+
+.da-h2 {
+  font-family: var(--font-display);
+  font-size: var(--da-h2);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.da-beat .da-h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.04;
+}
+
+.da-h3 {
+  font-family: var(--font-display);
+  font-size: var(--da-h3);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.da-lede {
+  color: var(--da-body);
+  font-size: var(--da-lede);
+  line-height: 1.55;
+  margin: 0;
+  text-wrap: pretty;
+  max-width: 46ch;
+}
+
+.da-copy {
+  color: var(--da-body);
+  font-size: var(--da-copy);
+  line-height: 1.6;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.da-marker {
+  font-family: var(--font-mono);
+  font-size: var(--da-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--da-dim);
+  margin: 0 0 1rem;
+}
+
+.da-marker-accent {
+  color: var(--da-accent-ink);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Hero
+   ───────────────────────────────────────────────────────────── */
+
+.da-hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  padding-block: clamp(6rem, 4rem + 8vw, 9rem) var(--da-rhythm);
+}
+
+/* Atmosphere: two static gradients, painted once, no filter anywhere. */
+.da-hero::before,
+.da-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.da-hero::before {
+  background: radial-gradient(
+    60% 55% at 74% 44%,
+    color-mix(in oklab, var(--da-accent) 20%, transparent) 0%,
+    transparent 68%
+  );
+}
+
+.da-hero::after {
+  background: radial-gradient(
+    46% 40% at 18% 62%,
+    color-mix(in oklab, var(--da-accent) 9%, transparent) 0%,
+    transparent 70%
+  );
+}
+
+.da-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 1rem + 4vw, 4rem);
+  align-items: center;
+}
+
+.da-hero-copy {
+  min-width: 0;
+  max-width: 34rem;
+}
+
+.da-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--da-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--da-dim);
+  margin: 0 0 clamp(1.25rem, 1rem + 1vw, 2rem);
+}
+
+.da-byline strong {
+  font-weight: 500;
+  color: var(--da-ink);
+}
+
+.da-byline span[aria-hidden] {
+  color: var(--da-accent-ink);
+}
+
+.da-hero-sub {
+  margin-top: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+}
+
+.da-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+}
+
+.da-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: 7px;
+  border: 1px solid var(--da-line-strong);
+  background: var(--da-surface);
+  color: var(--da-ink);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition:
+    border-color var(--da-fast) var(--da-ease),
+    background-color var(--da-fast) var(--da-ease),
+    transform var(--da-fast) var(--da-ease);
+}
+
+.da-btn svg {
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+
+.da-btn:hover {
+  border-color: var(--da-accent);
+  transform: translateY(-1px);
+}
+
+.da-btn-primary {
+  background: var(--da-accent);
+  border-color: var(--da-accent);
+  color: #fff;
+}
+
+.da-btn-primary:hover {
+  background: color-mix(in oklab, var(--da-accent) 86%, #fff);
+  border-color: color-mix(in oklab, var(--da-accent) 86%, #fff);
+}
+
+.da-cue {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  font-family: var(--font-mono);
+  font-size: var(--da-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--da-dim);
+}
+
+.da-cue::before {
+  content: "";
+  width: 2.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--da-accent), transparent);
+}
+
+/* Word-by-word entrance. Transform and opacity only — nothing blurs, nothing
+   re-rasterises, and the LCP text is in the HTML at full size from paint. */
+.da-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-block: 0.14em;
+  margin-block: -0.14em;
+}
+
+.da-word > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+.da-enter {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .da-word > span {
+    transform: translateY(112%);
+    animation: da-word-up 760ms var(--da-ease) forwards;
+    animation-delay: calc(var(--i, 0) * 105ms + 90ms);
+  }
+
+  .da-enter {
+    opacity: 0;
+    transform: translateY(1rem);
+    animation: da-fade-up 640ms var(--da-ease) forwards;
+    animation-delay: calc(var(--i, 0) * 105ms + 180ms);
+  }
+}
+
+@keyframes da-word-up {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes da-fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Scroll-driven reveals
+   Progressive enhancement only: the unanimated state below is the correct
+   one, so Firefox (scroll-timeline still behind a flag) and any no-JS load
+   get the finished layout rather than an empty page.
+   ───────────────────────────────────────────────────────────── */
+
+.da-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .da-reveal {
+      animation: da-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 6% cover 32%;
+      animation-delay: calc(var(--i, 0) * 0ms);
+    }
+  }
+
+  /* JS fallback, applied only when the CSS timeline is unavailable. The
+     attribute is set by RevealFallback after feature-detection, so this
+     block cannot hide content on a browser that never runs it. */
+  [data-da-io] .da-reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition:
+      opacity var(--da-slow) var(--da-ease),
+      transform var(--da-slow) var(--da-ease);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  [data-da-io] .da-reveal[data-seen] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes da-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Proof band — the tilted-artifact motif lives here
+   ───────────────────────────────────────────────────────────── */
+
+.da-proof {
+  background: var(--da-bg);
+  border-top: 1px solid var(--da-line);
+  border-bottom: 1px solid var(--da-line);
+}
+
+.da-proof-grid {
+  list-style: none;
+  margin: clamp(2.5rem, 2rem + 2vw, 3.5rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: clamp(1.25rem, 1rem + 1vw, 2rem);
+}
+
+.da-proof-item {
+  min-width: 0;
+}
+
+.da-proof-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1rem 1.25rem;
+  border: 1px solid var(--da-line);
+  border-radius: 12px;
+  background: var(--da-surface);
+  transition:
+    transform var(--da-mid) var(--da-ease),
+    border-color var(--da-mid) var(--da-ease);
+}
+
+.da-proof-item:hover .da-proof-card,
+.da-proof-item:focus-within .da-proof-card {
+  transform: translateY(-4px);
+  border-color: var(--da-line-strong);
+}
+
+/* The tilted-artifact motif. It sits on the media panel rather than on the
+   whole card, because keystoning body copy to carry a motif is the wrong
+   trade: the plane reads as an artifact, the text stays flat and readable.
+   Hover flattens it — the object turns to face you. */
+.da-proof-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 7px;
+  border: 1px solid var(--da-line);
+  background: #0b0c0e;
+  color: var(--da-line-strong);
+  transform: perspective(760px) rotateY(-13deg) rotateX(5deg) scale(0.95);
+  transform-origin: 60% 50%;
+  transition: transform var(--da-mid) var(--da-ease);
+}
+
+.da-proof-item:nth-child(even) .da-proof-media {
+  transform: perspective(760px) rotateY(13deg) rotateX(5deg) scale(0.95);
+  transform-origin: 40% 50%;
+}
+
+.da-proof-item:hover .da-proof-media,
+.da-proof-item:focus-within .da-proof-media {
+  transform: perspective(760px) rotateY(0deg) rotateX(0deg) scale(1);
+}
+
+.da-proof-shot,
+.da-proof-drawn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.da-proof-drawn {
+  padding: 0.75rem;
+  object-fit: contain;
+}
+
+.da-proof-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.da-proof-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--da-ink);
+}
+
+.da-proof-link svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  color: var(--da-accent-ink);
+  transition: transform var(--da-fast) var(--da-ease);
+}
+
+.da-proof-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* The whole card is the target; the heading link stretches over it. */
+.da-proof-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+}
+
+.da-proof-card {
+  position: relative;
+}
+
+.da-proof-line {
+  color: var(--da-body);
+  font-size: var(--da-copy);
+  line-height: 1.5;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.da-proof-meta {
+  font-family: var(--font-mono);
+  font-size: var(--da-micro);
+  color: var(--da-dim);
+  margin: 0;
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   The rail — four beats, three transitions
+   ───────────────────────────────────────────────────────────── */
+
+.da-rail {
+  position: relative;
+}
+
+.da-beat {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  gap: clamp(1.5rem, 1rem + 3vw, 3rem);
+  padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+}
+
+.da-beat-copy {
+  position: relative;
+  min-width: 0;
+  max-width: 34rem;
+}
+
+.da-beat-copy > * + * {
+  margin-top: clamp(1rem, 0.85rem + 0.7vw, 1.5rem);
+}
+
+.da-beat-index {
+  font-family: var(--font-mono);
+  font-size: var(--da-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--da-accent-ink);
+  margin: 0;
+}
+
+.da-beat-note {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--da-micro);
+  color: var(--da-dim);
+  border-top: 1px solid var(--da-line);
+  padding-top: 0.9rem;
+}
+
+.da-beat-note b {
+  color: var(--da-accent-ink);
+  font-weight: 400;
+}
+
+/* The figure holds its space in both modes. In canvas mode the particles
+   occupy exactly this box, so hiding it costs no layout and no CLS. */
+.da-figure {
+  margin: 0;
+  width: min(100%, 30rem);
+  justify-self: center;
+  aspect-ratio: 1;
+  color: var(--da-accent-ink);
+  opacity: 0.85;
+  transition: opacity var(--da-slow) var(--da-ease);
+}
+
+.da-figure svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+[data-da-mode="canvas"] .da-figure {
+  opacity: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Placeholder tail — everything past the rail is scaffolding
+   ───────────────────────────────────────────────────────────── */
+
+.da-tail {
+  background: var(--da-bg);
+  border-top: 1px solid var(--da-line);
+}
+
+.da-tail-grid {
+  list-style: none;
+  margin: clamp(2rem, 1.6rem + 2vw, 3rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1px;
+  background: var(--da-line);
+  border: 1px solid var(--da-line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.da-tail-grid li {
+  background: var(--da-surface);
+  padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  min-width: 0;
+}
+
+.da-tail-grid p {
+  margin: 0.5rem 0 0;
+  color: var(--da-body);
+  font-size: var(--da-copy);
+  line-height: 1.55;
+}
+
+.da-link {
+  color: var(--da-accent-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: color-mix(in oklab, var(--da-accent-ink) 45%, transparent);
+  transition: text-decoration-color var(--da-fast) var(--da-ease);
+}
+
+.da-link:hover {
+  text-decoration-color: var(--da-accent-ink);
+}
+
+.da-placeholder {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--da-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--da-accent-ink);
+  border: 1px dashed var(--da-line-strong);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+}
+
+.da-tail-foot {
+  margin-top: clamp(2rem, 1.6rem + 2vw, 3rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--da-line);
+  color: var(--da-dim);
+  font-family: var(--font-mono);
+  font-size: var(--da-micro);
+  line-height: 1.7;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Two columns from 768px up. Below that everything is a single
+   column and the instrument sits above its copy.
+   ───────────────────────────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .da-hero-grid,
+  .da-beat {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .da-beat:nth-child(even) .da-beat-copy {
+    order: 2;
+  }
+
+  .da-beat:nth-child(even) .da-figure {
+    order: 1;
+  }
+
+  .da-beat:nth-child(even) .da-beat-copy {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 767px) {
+  .da-hero-grid .da-figure,
+  .da-beat .da-figure {
+    order: -1;
+    width: min(100%, 20rem);
+  }
+
+  /* Copy sits over the cloud on one column, so it gets a ground of its own.
+     A static gradient, painted once — no backdrop-filter. */
+  .da-beat-copy::before,
+  .da-hero-copy::before {
+    content: "";
+    position: absolute;
+    inset: -1.5rem -1rem;
+    z-index: -1;
+    background: radial-gradient(
+      70% 60% at 40% 50%,
+      color-mix(in oklab, var(--da-bg) 92%, transparent) 0%,
+      transparent 100%
+    );
+  }
+
+  .da-hero-copy {
+    position: relative;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Reduced motion — skip, never slow. No canvas is created at all;
+   the rig returns before it asks for a context.
+   ───────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .da-figure {
+    opacity: 0.85;
+    transition: none;
+  }
+
+  .da-proof-card,
+  .da-proof-item:hover .da-proof-card,
+  .da-proof-item:focus-within .da-proof-card {
+    transform: none;
+    transition: none;
+  }
+
+  /* The tilt is a still image, not motion, so it stays — but it stops
+     responding to hover, which is the part that moves. */
+  .da-proof-media,
+  .da-proof-item:hover .da-proof-media,
+  .da-proof-item:focus-within .da-proof-media {
+    transition: none;
+  }
+
+  .da-btn {
+    transition: none;
+  }
+}
