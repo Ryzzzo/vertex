@@ -2,10 +2,16 @@ import { Fragment } from "react";
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import InstrumentRig from "@/components/v2/InstrumentRig";
+import ExplodedStack from "@/components/v2/ExplodedStack";
+import {
+  ExplodedStackCallouts,
+  ExplodedStackDrawing,
+} from "@/components/v2/ExplodedStackFallback";
 import RevealFallback from "@/components/v2/RevealFallback";
+import SmoothScroll from "@/components/v2/SmoothScroll";
 import ProofBand from "@/components/v2/ProofBand";
 import StaticInstrument from "@/components/v2/StaticInstrument";
+import { POSE_ZOOM, stageAspect } from "@/components/v2/exploded-stack";
 import { SHAPE_ORDER } from "@/components/v2/instrument-shapes";
 import "./direction-a.css";
 
@@ -83,19 +89,22 @@ const BEATS = [
 export default function DirectionAPage() {
   return (
     <div className="da-root">
-      {/* Fixed, aria-hidden, contributes no layout. Returns before creating a
-          context under reduced motion, Save-Data, or missing WebGL 2. */}
-      <InstrumentRig />
       <RevealFallback />
+      <SmoothScroll />
 
       <SiteHeader />
 
       <main>
+        {/* A scroll track. The stage inside is pinned for its length, which is
+            the distance the stack needs to come apart, hold, and seat. Under
+            reduced motion and below 768px the track is one viewport and this
+            is an ordinary hero section. */}
         <section
           className="da-hero"
           id="da-hero"
           aria-labelledby="da-thesis"
         >
+        <div className="da-hero-sticky">
           <div className="da-shell da-hero-grid">
             <div className="da-hero-copy">
               <p className="da-byline">
@@ -162,8 +171,19 @@ export default function DirectionAPage() {
               </p>
             </div>
 
-            <StaticInstrument id="storefront" />
+            {/* The client wrapper owns the stage box and the capability gate;
+                the drawing inside it is server-rendered and ships in the HTML,
+                so it is the first paint everywhere and the whole picture where
+                WebGL never arrives. */}
+            <ExplodedStack
+              aspect={stageAspect()}
+              zoom={POSE_ZOOM.rest}
+              callouts={<ExplodedStackCallouts />}
+            >
+              <ExplodedStackDrawing />
+            </ExplodedStack>
           </div>
+        </div>
         </section>
 
         {/* Viewport two. Evidence before theatre, deliberately. */}
