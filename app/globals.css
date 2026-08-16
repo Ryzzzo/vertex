@@ -11,6 +11,23 @@
   --text-secondary: #8a8f98;
   --text-tertiary: #5e6068;
   --accent: #5e6ad2;
+
+  /*
+   * The same indigo, one step lighter, for the places the accent is set as
+   * *text* rather than used as a fill.
+   *
+   * --accent itself is boxed in and cannot serve both jobs. At #5e6ad2 it
+   * measures 4.24:1 as small text on --bg — under the 4.5:1 floor — while white
+   * on it measures 4.70:1, only just over. Raising it until the text case
+   * passes drops the white-on-accent case below 4.5:1; the two cross at roughly
+   * 4.5:1 each around oklch L 0.575, so no single value clears both.
+   *
+   * So the fill keeps its approved value and text gets a sibling: same hue
+   * (275.21), same chroma (0.1585), L raised 0.567 -> 0.62. Measures 5.26:1 on
+   * --bg, 4.99:1 on --surface. (WCAG 1.4.3)
+   */
+  --accent-text: #6c7ae4;
+
   --hairline: #1f2023;
 
   /* Display and body are deliberately different families; see app/layout.tsx */
@@ -29,17 +46,27 @@
   --tracking-wider: 0.05em;
 
   /*
-   * One curve for the entire site. Retargeted to the Sprint/Linear value so the
-   * hero's entrance and everything already on this token stay a single family
-   * rather than the hero introducing a second curve alongside the old one.
+   * One curve for the entire site. This is the value measured live on
+   * linear.app — the long-tail ease-out the design library treats as canonical
+   * — and it is the same curve the Labs exports already run, so the whole
+   * estate is now a single family rather than two systems side by side.
    */
-  --easing-linear: cubic-bezier(0.22, 1, 0.36, 1);
+  --easing-linear: cubic-bezier(0.32, 0.72, 0, 1);
   --duration-reveal: 320ms;
   --duration-hover: 150ms;
 
   --content-max: 1200px;
-  --section-rhythm: clamp(6rem, 10vw, 9rem);
-  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+  /*
+   * Every fluid value on this page mixes a rem into the middle term. A bare
+   * `vw` there is frozen against browser zoom — the viewport shrinks by exactly
+   * as much as the zoom magnifies, so the value never grows and text stops
+   * scaling at 200% (WCAG 1.4.4). Each of these keeps its original min and max
+   * and its original max-out viewport; only the ramp between them is shallower,
+   * with the rem carrying ~60% of the floor.
+   */
+  --section-rhythm: clamp(6rem, 3.6rem + 6vw, 9rem);
+  --gutter: clamp(1.25rem, 0.75rem + 2.8vw, 2.5rem);
 }
 
 /* Expose tokens to Tailwind utilities */
@@ -424,13 +451,13 @@ a {
    ───────────────────────────────────────────────────────────── */
 
 .hero {
-  padding-block-start: clamp(3rem, 6vw, 5rem);
+  padding-block-start: clamp(3rem, 1.8rem + 3.85vw, 5rem);
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: 5fr 7fr;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
+  gap: clamp(2.5rem, 1.5rem + 3.35vw, 4.5rem);
   align-items: center;
 }
 
@@ -485,16 +512,21 @@ a {
 }
 
 /*
- * Word-by-word entrance. ~0.11s apart, each word arriving out of focus and a
- * little low. Declared only under no-preference, so a reduced-motion visitor
- * gets the finished sentence with no rule to undo — and because it is CSS, the
- * first frame is the browser's first paint rather than React's first commit.
+ * Word-by-word entrance. ~0.11s apart, each word arriving a little low.
+ * Declared only under no-preference, so a reduced-motion visitor gets the
+ * finished sentence with no rule to undo — and because it is CSS, the first
+ * frame is the browser's first paint rather than React's first commit.
+ *
+ * This used to animate filter: blur(7px) → 0 as well. A filter cannot be
+ * handed to the compositor, so every one of those frames forced a full repaint
+ * of the headline — and it ran during load, which is precisely the window LCP
+ * and INP are sampled in. Opacity and transform get the same read of arrival
+ * and stay on the compositor thread.
  */
 @keyframes word-in {
   from {
     opacity: 0;
     transform: translateY(0.35em);
-    filter: blur(7px);
   }
 }
 
@@ -637,7 +669,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  margin-bottom: clamp(3rem, 1.8rem + 3vw, 4.5rem);
   max-width: 62ch;
 }
 
@@ -656,13 +688,13 @@ a {
 .chapters {
   display: flex;
   flex-direction: column;
-  gap: clamp(3.5rem, 7vw, 6rem);
+  gap: clamp(3.5rem, 2.1rem + 4.55vw, 6rem);
 }
 
 .chapter {
   display: grid;
   grid-template-columns: 5fr 7fr;
-  gap: clamp(2rem, 4vw, 3.5rem);
+  gap: clamp(2rem, 1.2rem + 2.65vw, 3.5rem);
   align-items: center;
 }
 
@@ -974,7 +1006,7 @@ a {
 
 .terminal-prompt {
   flex: none;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .terminal-text {
@@ -1129,7 +1161,7 @@ a {
 .cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.75rem, 3vw, 2.75rem);
+  gap: clamp(1.75rem, 1.05rem + 1.85vw, 2.75rem);
 }
 
 .card,
@@ -1356,10 +1388,10 @@ a {
 .card-featured {
   display: grid;
   grid-template-columns: 7fr 5fr;
-  gap: clamp(2rem, 4vw, 3.25rem);
+  gap: clamp(2rem, 1.2rem + 2.55vw, 3.25rem);
   align-items: center;
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
-  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: clamp(2.5rem, 1.5rem + 3.15vw, 4rem);
+  padding-bottom: clamp(2.5rem, 1.5rem + 3.15vw, 4rem);
   border-bottom: 1px solid var(--hairline);
 }
 
@@ -1377,7 +1409,7 @@ a {
 }
 
 .card-eyebrow {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .card-featured .card-line {
@@ -1410,7 +1442,7 @@ a {
   border: 1px solid var(--hairline);
   border-radius: 12px;
   background: var(--surface);
-  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: clamp(1.75rem, 1.05rem + 1.75vw, 2.5rem);
 }
 
 /*
@@ -1432,7 +1464,7 @@ a {
 .lab-body {
   display: grid;
   grid-template-columns: 5fr 7fr;
-  gap: clamp(2rem, 4vw, 3.5rem);
+  gap: clamp(2rem, 1.2rem + 2.65vw, 3.5rem);
   align-items: start;
 }
 
@@ -1504,7 +1536,7 @@ a {
 }
 
 .lab-more {
-  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  margin: clamp(2rem, 1.2rem + 2.4vw, 3rem) 0 0;
 }
 
 .lab-more-link {
@@ -1612,7 +1644,7 @@ a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  margin-bottom: clamp(1.5rem, 0.9rem + 1.8vw, 2.25rem);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   letter-spacing: var(--tracking-wider);
@@ -1637,7 +1669,7 @@ a {
 }
 
 .labs-item-head {
-  margin-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: clamp(2rem, 1.2rem + 2.4vw, 3rem);
 }
 
 .labs-item-titlerow {
@@ -1685,7 +1717,7 @@ a {
 .labs-iframe {
   display: block;
   width: 100%;
-  height: clamp(560px, 78vh, 880px);
+  height: clamp(35rem, 21rem + 48vh, 55rem);
   border: 0;
   background: #08090a;
 }
@@ -1696,7 +1728,7 @@ a {
 }
 
 .labs-back {
-  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  margin: clamp(2rem, 1.2rem + 2.4vw, 3rem) 0 0;
 }
 
 /* The ops table is a full application screen rather than a single panel, so it
@@ -1741,7 +1773,7 @@ a {
 }
 
 .notes-summary:hover {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .notes-summary-label {
