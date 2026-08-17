@@ -2,21 +2,22 @@ import { Fragment } from "react";
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import ExplodedStack from "@/components/v2/ExplodedStack";
+import Machine from "@/components/v2/Machine";
 import {
-  ExplodedStackCallouts,
-  ExplodedStackDrawing,
-} from "@/components/v2/ExplodedStackFallback";
+  MachineCallouts,
+  MachineDrawing,
+  MachineReadout,
+} from "@/components/v2/MachineFallback";
 import RevealFallback from "@/components/v2/RevealFallback";
 import SmoothScroll from "@/components/v2/SmoothScroll";
 import ProofBand from "@/components/v2/ProofBand";
 import StaticInstrument from "@/components/v2/StaticInstrument";
-import { POSE_ZOOM, stageAspect } from "@/components/v2/exploded-stack";
+import { LAUNCH_U, stageAspect } from "@/components/v2/machine-parts";
 import { SHAPE_ORDER } from "@/components/v2/instrument-shapes";
 import "./direction-a.css";
 
 export const metadata: Metadata = {
-  title: "Direction A — Instrument · Vertex prototype",
+  title: "The Machine · Vertex prototype",
   description:
     "Preview-only prototype of a rebuilt vertexapps.dev. Not the live site.",
   // A prototype route on a preview branch has no business in an index.
@@ -96,9 +97,9 @@ export default function DirectionAPage() {
 
       <main>
         {/* A scroll track. The stage inside is pinned for its length, which is
-            the distance the stack needs to come apart, hold, and seat. Under
-            reduced motion and below 768px the track is one viewport and this
-            is an ordinary hero section. */}
+            the distance the marble needs to travel the machine end to end.
+            Under reduced motion and below 768px the track is one viewport and
+            this is an ordinary hero section. */}
         <section
           className="da-hero"
           id="da-hero"
@@ -175,13 +176,14 @@ export default function DirectionAPage() {
                 the drawing inside it is server-rendered and ships in the HTML,
                 so it is the first paint everywhere and the whole picture where
                 WebGL never arrives. */}
-            <ExplodedStack
+            <Machine
               aspect={stageAspect()}
-              zoom={POSE_ZOOM.rest}
-              callouts={<ExplodedStackCallouts />}
+              launchU={LAUNCH_U}
+              callouts={<MachineCallouts />}
+              readout={<MachineReadout />}
             >
-              <ExplodedStackDrawing />
-            </ExplodedStack>
+              <MachineDrawing />
+            </Machine>
           </div>
         </div>
         </section>
@@ -252,9 +254,8 @@ export default function DirectionAPage() {
             </ul>
 
             <p className="da-tail-foot">
-              Direction A — Instrument · preview branch{" "}
-              <code>vx/direction-a-particles</code> · not indexed, not merged.
-              The live site at vertexapps.dev is untouched.
+              The Machine · preview branch <code>vx/machine-hero</code> · not
+              indexed, not merged. The live site at vertexapps.dev is untouched.
             </p>
           </div>
         </section>

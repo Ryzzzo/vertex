@@ -32,6 +32,10 @@
   --da-dim: #7d828c;
   --da-accent: #5e6ad2;
   --da-accent-ink: #8b95ea;
+  /* The one green on the page, and it exists for one thing: the terminal on
+     the Interface module. 8.9:1 on the ground, so it is safe as small text in
+     the readout line as well as as a light on the object. */
+  --da-screen: #3dd68c;
 
   /* Type. Every clamp mixes a rem term with the vw term so text still scales
      at 200% browser zoom (WCAG 1.4.4). */
@@ -349,281 +353,421 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   The Exploded Stack
-   One object, five plates, drawn once in `exploded-stack.ts` and rendered
-   twice: as the inline SVG below (server, 0 kB, correct on its own) and as
-   a WebGL canvas over it where the client can carry one.
+   The Machine
+   One object in five modules, drawn once in `machine.ts` and rendered twice:
+   as the inline SVG below (server, 0 kB, correct on its own) and as a WebGL
+   canvas over it where the client can carry one.
 
-   `--xs-sep` is the whole animation. CSS scroll-driven animation drives it
-   where there is no canvas; the canvas takes over by writing the label
-   positions directly and setting `data-xs-mode`.
+   The frame's `aspect-ratio` is the camera's aspect, which is why the drawing
+   and the canvas frame the same rectangle at every viewport width — the
+   handoff has no fitting step and therefore nothing to get wrong.
+
+   `--mx-p` is the whole no-JavaScript animation: the marble's progress along
+   its route, driven by a scroll-driven keyframe. Where the canvas is running,
+   it takes over and this does nothing.
    ───────────────────────────────────────────────────────────── */
 
-@property --xs-sep {
+@property --mx-p {
   syntax: "<number>";
   initial-value: 0;
   inherits: true;
 }
 
-/* Two tracks: the drawing takes what is left, the callouts take what they
+/* Two tracks: the machine takes what is left, the callouts take what they
    need. Text is a fixed size and the drawing is not, so this is the only
    arrangement where labels neither overlap the object on a narrow screen nor
    waste a gutter on a wide one — and it cannot overflow the viewport
    (WCAG 1.4.10) at any width, because the drawing yields, not the page. */
-.xs-stage {
-  --xs-sep: 0;
+.mx-stage {
+  --mx-p: 0;
   /* Explicit rather than `auto`: the callouts are absolutely positioned, so
      they contribute no intrinsic width, and `container-type: size` — which is
-     what lets them measure themselves against the drawing's height — implies
+     what lets them measure themselves against the machine's height — implies
      size containment and would collapse an intrinsic track anyway. */
-  --xs-callout-w: clamp(8rem, 6.6rem + 2.4vw, 9.5rem);
+  --mx-callout-w: clamp(8.5rem, 6.4rem + 3.4vw, 11rem);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--xs-callout-w);
+  grid-template-columns: minmax(0, 1fr) var(--mx-callout-w);
+  grid-template-rows: minmax(0, 1fr) auto;
   align-items: stretch;
-  gap: clamp(0.4rem, 0.25rem + 0.5vw, 0.75rem);
+  gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.9rem);
   width: min(100%, 40rem);
   justify-self: center;
 }
 
-.xs-frame {
+.mx-frame {
   position: relative;
-  /* Reserved before anything paints, from the same bounds the drawing was
-     projected through, so the SVG → canvas swap shifts nothing. */
-  aspect-ratio: var(--xs-aspect, 1.16);
+  /* Reserved before anything paints, from the same camera the drawing was
+     projected through, so the SVG → canvas swap shifts nothing (CLS). */
+  aspect-ratio: var(--mx-aspect, 0.78);
   container-type: size;
 }
 
-.xs-gl-host {
+.mx-gl-host {
   display: contents;
 }
 
-.xs-svg,
-.xs-canvas {
+.mx-svg,
+.mx-canvas {
   display: block;
   width: 100%;
   height: 100%;
   /* Rule 3: dissolved edges are the tell of an environment, hard edges the
-     tell of a diagram. The ground field has to end in the page, not at a box. */
+     tell of a diagram. The void has to end in the page, not at a box. */
   -webkit-mask-image: radial-gradient(
-    118% 100% at 50% 48%,
-    #000 58%,
+    112% 96% at 50% 46%,
+    #000 56%,
     transparent 100%
   );
-  mask-image: radial-gradient(118% 100% at 50% 48%, #000 58%, transparent 100%);
+  mask-image: radial-gradient(112% 96% at 50% 46%, #000 56%, transparent 100%);
   transition: opacity var(--da-slow) var(--da-ease);
 }
 
-.xs-canvas {
+.mx-canvas {
   position: absolute;
   inset: 0;
   opacity: 0;
 }
 
-/* The drawing stays until a frame has actually reached the canvas. If the
-   loop never runs, the page keeps a finished picture rather than a hole. */
-.xs-stage[data-xs-mode="canvas"] .xs-canvas {
+/* The drawing stays until a frame has actually reached the canvas. If the loop
+   never runs, the page keeps a finished picture rather than a hole. */
+.mx-stage[data-mx-mode="canvas"] .mx-canvas {
   opacity: 1;
   /* Rule 4. The object is grabbable, and saying so is worth more than any
      amount of autoplay. */
   cursor: grab;
 }
 
-.xs-stage[data-xs-mode="canvas"] .xs-svg {
-  opacity: 0;
+/* The drawing is not replaced by the object; the object is built into it. It
+   holds at full strength while the parts are still arriving and settles to a
+   ghost as they seat, so the construction lines stay faintly over the material
+   thing. That is the move igloo.inc makes, and it is why the built state still
+   reads as engineered rather than as a render.
+
+   `--mx-built` is written by the canvas. The `1` default matters: if the
+   property is never set, this resolves to the ghost rather than to a drawing
+   sitting at full opacity on top of a finished object. */
+.mx-stage[data-mx-mode="canvas"] .mx-svg {
+  opacity: calc(1 - 0.86 * var(--mx-built, 1));
+  transition: none;
 }
 
-.xs-stage[data-xs-grab] .xs-canvas {
+.mx-stage[data-mx-grab] .mx-canvas {
   cursor: grabbing;
 }
 
-.xs-svg path {
+.mx-svg path {
   fill: none;
   stroke-linecap: round;
-  /* Resolves stroke width in screen pixels rather than in the ~450-unit
+  stroke-linejoin: round;
+  /* Resolves stroke width in screen pixels rather than in the 200-unit
      viewBox, so a hairline stays a hairline at every size. */
   vector-effect: non-scaling-stroke;
 }
 
-.xs-grid {
+.mx-construction {
+  stroke: var(--da-ink);
+  stroke-width: 0.55;
+  opacity: 0.14;
+}
+
+.mx-detail {
   stroke: var(--da-ink);
   stroke-width: 0.6;
-  opacity: 0.15;
+  opacity: 0.3;
 }
 
-.xs-construction {
+.mx-track {
   stroke: var(--da-ink);
-  stroke-width: 0.7;
-  opacity: 0.2;
+  stroke-width: 0.8;
+  opacity: 0.5;
 }
 
-.xs-detail {
-  stroke: var(--da-ink);
-  stroke-width: 0.75;
-  opacity: 0.42;
-}
-
-.xs-edge {
+.mx-edge {
   stroke: var(--da-ink);
   stroke-width: 1;
-  opacity: 0.92;
+  opacity: 0.88;
 }
 
-.xs-accent {
+.mx-accent {
   stroke: var(--da-accent-ink);
+  stroke-width: 0.9;
+  opacity: 0.8;
+}
+
+.mx-screen {
+  stroke: var(--da-screen);
   stroke-width: 0.9;
   opacity: 0.85;
 }
 
-/* Rest-pose zoom. `--xs-zoom` is set inline from the geometry so the number
-   lives in one place; it relaxes to 1 exactly as the stack separates into the
-   headroom it was borrowing. */
-.xs-zoom {
-  transform-box: view-box;
-  transform-origin: center;
-  transform: scale(calc(var(--xs-zoom, 1) - (var(--xs-zoom, 1) - 1) * var(--xs-sep)));
+/* The marble. Its whole journey is one `offset-path`, which is why the
+   no-JavaScript state gets a moving object for zero kilobytes. Where either
+   feature is missing it sits at `offset-distance: 0` — the mouth of the
+   machine — which is the pose the drawing was composed around. */
+.mx-marble {
+  offset-distance: calc(var(--mx-p) * 100%);
+  offset-rotate: 0deg;
 }
 
-/* A vertical move in world space is a pure vertical move on screen under an
-   isometric camera, so separating a plate is one translate. */
-.xs-plate {
-  transform: translate(0, calc(var(--xs-sep) * var(--xs-lift)));
+.mx-marble-body {
+  fill: #101216;
+  stroke: var(--da-ink);
+  stroke-width: 1;
+  opacity: 0.92;
+  vector-effect: non-scaling-stroke;
 }
 
-.xs-plate-detail {
-  opacity: calc(0.32 + 0.68 * var(--xs-sep));
+.mx-marble-spec {
+  fill: var(--da-ink);
+  opacity: 0.55;
 }
 
-/* The top plate is the focal face at rest; the four beneath it are ghosted
-   until they clear. */
-.xs-plate[data-plate="deploy"] .xs-plate-detail {
-  opacity: 1;
-}
+/* ── callouts ──────────────────────────────────────────────────
+   Reference #3's floating signage, done as DOM text rather than inside the
+   canvas: five labels rendered into a 480px-wide frame is the clutter the
+   brief said to skip, and text in the DOM can be selected, translated and read
+   aloud (WCAG 1.4.5).
 
-/* The column stretches to the frame's height, so a percentage of its own
-   height is a percentage of the drawing's — which is what lets a callout sit
-   exactly beside the plate it names without either knowing the other's size. */
-.xs-callouts {
+   The column stretches to the frame's height, so a percentage of its own
+   height is a percentage of the machine's — which is what lets a callout sit
+   exactly beside the module it names without either knowing the other's size. */
+.mx-callouts {
   position: relative;
   container-type: size;
-  pointer-events: none;
 }
 
-/* Aligned to one column, which is how a real assembly drawing sets callouts.
-   Only the vertical position tracks the plate. */
-.xs-label {
+.mx-callout {
   position: absolute;
   left: 0;
-  top: 0;
+  right: 0;
+  /* Module centres are at −2, −1, 0, 1, 2 pitches. Under a perspective camera
+     that is very nearly an even ladder down the frame, so the position is
+     arithmetic against the frame's own height rather than a projection — which
+     keeps the callout column free of any dependency on the geometry module.
+     The two numbers are measured off the rendered frame, not derived. */
+  top: calc((22.6 + var(--mx-i) * 13.9) * 1cqh);
+}
+
+.mx-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.2rem 0 0.2rem 1.15rem;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: clamp(0.625rem, 0.58rem + 0.16vw, 0.75rem);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--da-ink) calc(58% + 42% * var(--mx-live, 0)), var(--da-body));
+  cursor: pointer;
+  transition: color var(--da-mid) var(--da-ease);
+}
+
+.mx-label b {
+  color: var(--da-accent-ink);
+  font-weight: 400;
+  opacity: calc(0.6 + 0.4 * var(--mx-live, 0));
+}
+
+/* The bracket back to the module it names — the mark under the signage in
+   reference #3, and the thing that makes a floating label read as attached. */
+.mx-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  bottom: 0.15rem;
+  width: 0.5rem;
+  border-left: 1px solid var(--da-accent);
+  border-top: 1px solid var(--da-accent);
+  border-bottom: 1px solid var(--da-accent);
+  opacity: calc(0.28 + 0.62 * var(--mx-live, 0));
+  transition: opacity var(--da-mid) var(--da-ease);
+}
+
+.mx-label:focus-visible {
+  outline: 2px solid var(--da-accent-ink);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Hover and focus disclose the module's copy. It is a button rather than a
+   span precisely so the keyboard gets this too — a hover-only disclosure is a
+   disclosure that does not exist for anyone not using a mouse. */
+.mx-callout-copy {
+  margin: 0.3rem 0 0 1.15rem;
+  max-width: 22ch;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--da-body);
+  text-wrap: pretty;
+  opacity: 0;
+  transform: translateY(-0.25rem);
+  pointer-events: none;
+  transition:
+    opacity var(--da-mid) var(--da-ease),
+    transform var(--da-mid) var(--da-ease);
+}
+
+.mx-callout:hover .mx-callout-copy,
+.mx-callout:focus-within .mx-callout-copy,
+.mx-callout[data-mx-on] .mx-callout-copy {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── the terminal's readout, as text ───────────────────────────
+   The canvas draws the same string into the screen texture. This is the copy
+   that can be selected, searched and read out. */
+.mx-readout {
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  white-space: nowrap;
+  margin: 0.2rem 0 0;
+  min-height: 1.2rem;
   font-family: var(--font-mono);
-  font-size: clamp(0.625rem, 0.58rem + 0.16vw, 0.75rem);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--da-body);
-  /* Visible by default: on a technical drawing the callouts are part of the
-     picture, and under reduced motion this is the picture. The canvas
-     overrides `--xs-on` per frame once it is running. */
-  opacity: var(--xs-on, 1);
-  transform: translate3d(
-      0,
-      calc((var(--xs-ly) + var(--xs-sep) * var(--xs-ldy)) * 1cqh),
-      0
-    )
-    translate(0, -50%);
+  font-size: clamp(0.625rem, 0.6rem + 0.1vw, 0.6875rem);
+  letter-spacing: 0.04em;
+  color: var(--da-dim);
 }
 
-.xs-label b {
-  color: var(--da-accent-ink);
-  font-weight: 400;
-}
-
-/* The leader back to the plate it names. */
-.xs-label::before {
-  content: "";
-  width: 0.7rem;
-  height: 1px;
+.mx-readout-dot {
+  width: 0.4rem;
+  height: 0.4rem;
   flex: none;
-  background: var(--da-dim);
+  border-radius: 50%;
+  background: var(--da-screen);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--da-screen) 18%, transparent);
 }
 
+.mx-readout-text {
+  color: var(--da-body);
+}
+
+/* ── the no-JavaScript animation ───────────────────────────────
+   Progressive enhancement only. Without `animation-timeline`, or without
+   `offset-path`, `--mx-p` stays 0, the marble waits at the mouth, and the
+   drawing is a finished technical illustration — which is the state the whole
+   fallback strategy depends on being correct. */
 @media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: scroll()) {
-    /* The document's own scroll, with an explicit range — not `view()`.
-       A view timeline measures an element's pass across the scrollport, so an
+  @supports (animation-timeline: scroll()) and (offset-path: path("M0 0")) {
+    /* The document's own scroll, with an explicit range — not `view()`. A view
+       timeline measures an element's pass across the scrollport, so an
        above-the-fold hero is already a third of the way through its range
-       before the page has been scrolled at all: the drawing loaded most of the
-       way separated, and the rest pose — the one frame the whole fallback
-       strategy depends on being correct — was never what anyone saw. Anchoring
-       to the scroller makes progress zero at scroll zero by construction, and
-       the range below is the same distance the canvas reads. */
-    .xs-stage {
-      animation: xs-separate linear both;
+       before the page has been scrolled at all. Anchoring to the scroller
+       makes progress zero at scroll zero by construction, and the range below
+       is the same distance the canvas reads. */
+    .mx-stage {
+      animation: mx-run linear both;
       animation-timeline: scroll(root block);
       animation-range: 0 calc(var(--da-hero-track) - 100svh);
     }
 
-    /* Once the canvas is live it owns the choreography; running both would
-       be two animations arguing over one object. */
-    .xs-stage[data-xs-mode="canvas"] {
+    /* Once the canvas is live it owns the choreography; running both would be
+       two animations arguing over one object. */
+    .mx-stage[data-mx-mode="canvas"] {
       animation: none;
+    }
+
+    /* Each module lights as the marble is inside it. A triangular window per
+       module, computed from one custom property — five rules, no JavaScript,
+       and the same beat the canvas plays. */
+    .mx-callout {
+      --mx-live: clamp(
+        0,
+        min(
+          calc((var(--mx-p) - var(--mx-a)) * 14),
+          calc((var(--mx-b) - var(--mx-p)) * 14)
+        ),
+        1
+      );
     }
   }
 }
 
-/* Single column below 1024: the drawing leads, the copy follows. */
+/* The same remap the canvas applies: the descent takes most of the track and
+   the launch takes a little, so the exit reads as the one fast move rather than
+   as half the scroll spent watching a barrel. `--mx-launch` is written onto the
+   stage by the server from the route's own geometry — there is no second number
+   here to drift out of step with it. */
+@keyframes mx-run {
+  0% {
+    --mx-p: 0;
+  }
+  5% {
+    --mx-p: 0;
+  }
+  82% {
+    --mx-p: var(--mx-launch, 0.53);
+  }
+  97% {
+    --mx-p: 1;
+  }
+  100% {
+    --mx-p: 1;
+  }
+}
+
+/* Single column below 1024: the machine leads, the copy follows. */
 @media (max-width: 1023px) {
-  .da-hero-grid .xs-stage {
+  .da-hero-grid .mx-stage {
     order: -1;
   }
 }
 
 /* Below 768 the callout column would take a third of the width and leave the
-   drawing at ~200px. The layer names matter more than their exact vertical
+   machine at ~200px. The module names matter more than their exact vertical
    alignment does, so they become a legend underneath and the drawing gets the
    full column. */
 @media (max-width: 767px) {
-  .xs-stage {
+  .mx-stage {
     grid-template-columns: minmax(0, 1fr);
+    width: min(100%, 24rem);
   }
 
-  .xs-callouts {
+  .mx-callouts {
     position: static;
     container-type: normal;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem 1.1rem;
+    gap: 0.35rem 0.9rem;
     margin-top: 0.9rem;
   }
 
-  .xs-label {
+  .mx-callout {
     position: static;
-    transform: none;
+  }
+
+  /* The copy is a hover disclosure and there is no hover here, so it comes out
+     of the layout — but not out of the accessibility tree. `display: none`
+     would remove it, and the `aria-describedby` on each label would then point
+     at nothing, which quietly costs screen-reader users on a phone the one
+     sentence that explains the module. Clipped, not deleted. */
+  .mx-callout-copy {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .mx-label {
+    padding-left: 0.85rem;
   }
 
   /* The track is content-height here, so it cannot supply the range. The whole
-     arc plays across the first screen of scrolling instead. */
-  @supports (animation-timeline: scroll()) {
-    .xs-stage {
-      animation-range: 0 92svh;
+     journey plays across the first screen of scrolling instead. */
+  @supports (animation-timeline: scroll()) and (offset-path: path("M0 0")) {
+    .mx-stage {
+      animation-range: 0 96svh;
     }
-  }
-}
-
-/* The unanimated value of `--xs-sep` is 0, which is the rest pose, which is
-   the finished drawing. Nothing here is required for the picture to be
-   correct — that is the whole point of the guard above. */
-@keyframes xs-separate {
-  0% {
-    --xs-sep: 0;
-  }
-  48% {
-    --xs-sep: 1;
-  }
-  100% {
-    --xs-sep: 0;
   }
 }
 
@@ -1036,15 +1180,24 @@
 
 @media (prefers-reduced-motion: reduce) {
   /* Skip, never slow. The track collapses to one viewport, no canvas is ever
-     requested, and the stack stays in its rest pose — which is a finished
-     technical drawing with all five layers named, not a paused animation. */
+     requested, and the marble stays at the mouth of the machine — which is a
+     finished engineering drawing with all five modules named, not a paused
+     animation. */
   .da-root {
     --da-hero-track: 100svh;
   }
 
-  .xs-svg,
-  .xs-canvas {
+  .mx-svg,
+  .mx-canvas,
+  .mx-label,
+  .mx-label::before,
+  .mx-callout-copy {
     transition: none;
+  }
+
+  /* Hover and focus still disclose the copy; only the motion is dropped. */
+  .mx-callout-copy {
+    transform: none;
   }
 
   .da-figure {
