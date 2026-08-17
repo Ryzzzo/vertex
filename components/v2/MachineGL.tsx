@@ -50,34 +50,68 @@ import {
   type Pt3,
   type Vec2,
 } from "./machine-parts";
+import { gsap } from "gsap";
+import {
+  BloomEffect,
+  ChromaticAberrationEffect,
+  DepthOfFieldEffect,
+  EffectComposer,
+  EffectPass,
+  KernelSize,
+  NoiseEffect,
+  RenderPass,
+  ToneMappingEffect,
+  ToneMappingMode,
+  VignetteEffect,
+  BlendFunction,
+} from "postprocessing";
+import { buildScore, initialCam, type CamState } from "./camera-score";
+import { VolumetricFogPass } from "./volumetric-fog";
+import { createMarbleWorld, type MarbleWorld } from "./marble-physics";
 
 /**
- * The Machine — WebGL layer.
+ * The Machine — WebGL layer, v2.
  *
- * three.js with no React Three Fiber, no Drei and no `postprocessing`. The
- * scene is mounted once and driven by scroll, which is exactly the case where
- * R3F's JSX ergonomics buy nothing and cost 85 kB gzipped; the post chain is
- * one fragment shader instead of an 84 kB import.
+ * v1 rendered this object correctly into a 20%-width sidebar box. Everything
+ * below is the same object at the scale it was designed for: a full-viewport
+ * cinematic scene where the machine *is* the page and the copy is composited
+ * into it.
  *
- * Every dimension comes from `machine.ts` — the same module the server used to
- * write the SVG sitting underneath this canvas — so the drawing and the object
- * are the same object, and the build-in lands the parts exactly on the lines.
+ * Every dimension still comes from `machine-parts.ts` — the same module the
+ * server used to write the SVG sitting underneath this canvas — so the drawing
+ * and the object remain the same object, and the build-in lands the parts
+ * exactly on the lines.
  *
- * What happens, in order:
+ * ── What changed from v1, and why ─────────────────────────────────────────
  *
- *   build      the parts arrive from off-screen and seat into the drawing over
- *              about two seconds, once, on first paint. The machine builds
- *              itself, which is the thing the company does.
- *   idle       one gear turns a degree every three seconds. Fog drifts. The
- *              terminal cursor blinks. Nothing else moves.
- *   scroll     a marble runs the route: through the schema plate, the RLS gate,
- *              around the server-actions arm, across the terminal, into the
- *              deploy breech, and out of frame up the launch rail.
+ * **Framing.** The camera no longer has a fixed portrait aspect pinned by CSS.
+ * It fills the viewport, and the machine is placed off-centre by moving the
+ * *look-at target* rather than the object, so the composition can be reasoned
+ * about in frame fractions instead of world coordinates.
  *
- * Degradation is the parent's job (`Machine.tsx`). This module is never
+ * **Choreography.** A GSAP timeline (`camera-score.ts`) owns eleven channels
+ * across seven keyframes. The loop calls `progress(p)`; nothing about the camera
+ * is computed here any more.
+ *
+ * **Fog.** A depth-aware raymarch (`volumetric-fog.ts`) replaces v1's six
+ * additive billboards, which could not be occluded by the object they surround.
+ *
+ * **Post.** `postprocessing`'s EffectComposer replaces the hand-rolled single
+ * pass. The reason is not bloom quality — v1's sixteen-tap spiral was fine —
+ * it is depth of field, which needs a circle-of-confusion pass, two bokeh
+ * passes and a near/far split to not look like a blur filter. That is a day of
+ * shader work the library has already done, and its EffectPass merges bloom, CA,
+ * noise, vignette and tone mapping into one fragment shader anyway, so the pass
+ * count barely moves.
+ *
+ * **Physics.** `marble-physics.ts`. Read its header for why the primary marble
+ * is kinematic and the tray is not.
+ *
+ * **Sound.** Mechanical, muted by default, behind a toggle.
+ *
+ * Degradation is still the parent's job (`Machine.tsx`). This module is never
  * imported at all under reduced motion, Save-Data, low device memory, a narrow
- * viewport, or missing WebGL 2, so three.js stays out of those bundles entirely
- * rather than loading and declining to run.
+ * viewport, or missing WebGL 2, so none of the above reaches those bundles.
  */
 
 // ── palette ─────────────────────────────────────────────────────────────
@@ -136,11 +170,17 @@ function studioEnvironment(renderer: THREE.WebGLRenderer): THREE.Texture {
     for (let x = 0; x < W; x++) {
       const lon = ((x + 0.5) / W - 0.5) * Math.PI * 2;
 
-      // Ground and sky. Near-black, because the room is a void.
+      // Ground and sky. Near-black, because the room is a void — but not as
+      // near-black as v1 had it. Metalness is 1 across the whole object, which
+      // means every panel face is *entirely* reflected environment with no
+      // diffuse term underneath. A room that is 0.012 grey produces a machine
+      // that is 0.012 grey wherever it is not catching a highlight, and that is
+      // the difference between "dark aluminium" and "black plastic". Doubling
+      // the floor costs nothing and is what the object is actually made of.
       const up = Math.max(0, Math.sin(lat));
-      let r = 0.012 + up * 0.03;
-      let g = 0.013 + up * 0.033;
-      let b = 0.018 + up * 0.045;
+      let r = 0.026 + up * 0.055;
+      let g = 0.028 + up * 0.06;
+      let b = 0.035 + up * 0.078;
 
       // Key: high, left, in front. This is the highlight that runs down every
       // machined edge, and it is most of the reason the object reads as metal.
@@ -155,10 +195,37 @@ function studioEnvironment(renderer: THREE.WebGLRenderer): THREE.Texture {
       // photograph of a machine rather than a lit one. This is the white card
       // a product photographer puts just out of frame, and it is doing most of
       // the work on the panel faces.
-      const soft = blob(lon, lat, -0.95, 0.46, 2.3);
-      r += soft * 1.05;
-      g += soft * 1.1;
-      b += soft * 1.24;
+      /**
+       * Size 1.85, not 2.7 — and the size matters more than the amplitude.
+       *
+       * A soft box wide enough to cover most of the upper hemisphere is not a
+       * soft box, it is ambient light, and ambient light on a metal object is
+       * the enemy of the whole shot: every face returns the same value however
+       * it is angled, so the panels flatten and the machine reads as a CAD
+       * render. Reference #2's tonal range comes from a *concentrated* card
+       * upper-left with everything on the other side falling away, and the
+       * falloff is the picture. Shrinking the card and pushing its amplitude up
+       * gives the same total energy with a gradient across the object instead
+       * of a wash over it.
+       */
+      const soft = blob(lon, lat, -0.95, 0.46, 1.85);
+      r += soft * 2.7;
+      g += soft * 2.8;
+      b += soft * 3.05;
+
+      // A second, dimmer card on the opposite side of the lens axis. One card
+      // lights the faces it can see and leaves every face angled the other way
+      // black, which on an object made entirely of flat panels at two or three
+      // different angles reads as half the machine being switched off. This is
+      // the fill card, and it is the last piece of the three-point setup a
+      // product photographer would actually use.
+      // Deliberately about a sixth of the key card's strength. A fill that
+      // approaches the key erases the very falloff the key was shrunk to
+      // create; this only stops the unlit side going to pure black.
+      const fillCard = blob(lon, lat, 0.88, 0.3, 2.1);
+      r += fillCard * 0.42;
+      g += fillCard * 0.45;
+      b += fillCard * 0.54;
 
       // Kicker: low, right, behind. Separates the silhouette from the void.
       const kick = blob(lon, lat, 2.5, 0.16, 1.4);
@@ -268,146 +335,20 @@ function backlightTexture(): THREE.CanvasTexture {
 
 // ── volumetric base fog ─────────────────────────────────────────────────
 /**
- * Four drifting billboards with fbm noise in the fragment shader. Not a
- * raymarch: at this scale a raymarched slab costs an order of magnitude more
- * and looks the same once the bloom has been over it.
+ * **Removed in v2.** The billboard fog below has been replaced by the depth-
+ * aware raymarch in `volumetric-fog.ts`.
  *
- * **Additive, not alpha.** The first pass blended them normally, and six
- * near-black quads at 0.5 alpha in front of the object composited into a solid
- * black wall that hid the entire machine — the render was correct and the frame
- * was empty. Additive is also the physically right model: fog is visible
- * because light scatters *in* it, so unlit fog must contribute nothing and lit
- * fog must glow. It cannot darken what is behind it, which means this class of
- * failure is now impossible rather than merely tuned away.
+ * v1's comment argued that a raymarch "costs an order of magnitude more and
+ * looks the same once the bloom has been over it", and at v1's framing that was
+ * true. It stopped being true when the camera started moving: a billboard has no
+ * depth, so it is either wholly in front of the plinth or wholly behind it,
+ * never interleaved with it. Fog that cannot be occluded by the object it
+ * surrounds reads as a texture the moment you orbit past it.
+ *
+ * Measured cost of the replacement is in `docs/machine-hero-decisions.md`.
+ * The constants are kept here, unused, only long enough for the two to be
+ * compared side by side in review; they go with the next commit.
  */
-const FOG_VERT = /* glsl */ `
-  uniform float uTime;
-  uniform float uIndex;
-  varying vec2 vUv;
-  varying float vHeight;
-  void main() {
-    vUv = uv;
-    vec3 p = position;
-    // Billboard: cancel the view rotation so the quad always faces the camera.
-    vec4 mv = modelViewMatrix * vec4(0.0, 0.0, 0.0, 1.0);
-    float drift = uTime * 0.021 + uIndex * 1.7;
-    mv.xy += vec2(p.x + sin(drift) * 0.22, p.y);
-    mv.z += 0.0;
-    vHeight = uv.y;
-    gl_Position = projectionMatrix * mv;
-  }
-`;
-
-const FOG_FRAG = /* glsl */ `
-  precision highp float;
-  uniform float uTime;
-  uniform float uIndex;
-  uniform float uOpacity;
-  uniform vec3  uTint;
-  uniform vec3  uBase;
-  varying vec2 vUv;
-  varying float vHeight;
-
-  // Value noise, three octaves. Enough structure to read as vapour, cheap
-  // enough that six of these cost nothing.
-  float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-  }
-  float noise(vec2 p) {
-    vec2 i = floor(p), f = fract(p);
-    f = f * f * (3.0 - 2.0 * f);
-    return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
-               mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
-  }
-  float fbm(vec2 p) {
-    return noise(p) * 0.55 + noise(p * 2.03) * 0.28 + noise(p * 4.11) * 0.17;
-  }
-
-  void main() {
-    vec2 q = vUv * vec2(2.6, 1.5);
-    q.x += uTime * 0.014 + uIndex * 3.1;
-    q.y -= uTime * 0.006;
-    float n = fbm(q);
-    n = smoothstep(0.26, 0.95, n);
-
-    // Soft on all four edges, and heaviest at the bottom, so it reads as
-    // something lying on the floor rather than a sheet hung in the air.
-    float edge = smoothstep(0.0, 0.42, vUv.x) * smoothstep(1.0, 0.58, vUv.x);
-    edge *= smoothstep(0.0, 0.26, vUv.y) * smoothstep(0.92, 0.3, vUv.y);
-    float a = min(1.0, n * edge * uOpacity);
-    if (a <= 0.003) discard;
-
-    // Lit from inside the machine: indigo low and central, cool grey above.
-    // Fog that is one flat colour is smoke-machine, not cinema.
-    vec3 col = mix(uBase, uTint, smoothstep(0.7, 0.0, vHeight) * 0.9);
-    // NOT premultiplied. Additive blending already scales the colour by the
-    // alpha it is handed, so premultiplying here squared the coverage and the
-    // fog contributed under one percent of what it should have — present in
-    // the buffer, invisible on screen.
-    gl_FragColor = vec4(col * (0.8 + n * 1.1), a);
-  }
-`;
-
-// ── post: bloom, ACES, vignette, grain ──────────────────────────────────
-const POST_FRAG = /* glsl */ `
-  precision highp float;
-  uniform sampler2D tScene;
-  uniform vec2  uTexel;
-  uniform float uTime;
-  uniform float uBloom;
-  uniform float uRadius;
-  uniform float uGrain;
-  uniform float uExposure;
-  varying vec2 vUv;
-
-  // ACES filmic, Narkowicz's fit. Tone mapping has to happen here rather than
-  // in the materials because three skips it when rendering to a target — and
-  // it has to happen after the bloom, so the glow sums real light rather than
-  // already-compressed light.
-  vec3 aces(vec3 x) {
-    return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 1.0);
-  }
-
-  void main() {
-    vec4 base = texture2D(tScene, vUv);
-
-    // Sixteen taps on a golden-angle spiral, two radii. A ring at this count
-    // bands visibly on the straight machined edges this scene is made of.
-    vec3 glow = vec3(0.0);
-    for (int i = 0; i < 16; i++) {
-      float f = (float(i) + 0.5) / 16.0;
-      float ang = float(i) * 2.39996323;
-      vec2 off = vec2(cos(ang), sin(ang)) * sqrt(f) * uRadius;
-      glow += max(texture2D(tScene, vUv + off * uTexel).rgb - 0.55, 0.0);
-      glow += max(texture2D(tScene, vUv - off * uTexel * 2.4).rgb - 0.9, 0.0) * 0.5;
-    }
-    glow *= uBloom / 16.0;
-
-    vec3 col = (base.rgb + glow) * uExposure;
-    float alpha = base.a + dot(glow, vec3(0.28));
-
-    col = aces(col);
-
-    vec2 q = vUv - 0.5;
-    float vig = 1.0 - dot(q, q) * 0.62;
-    col *= vig;
-    alpha *= vig;
-
-    float n = fract(sin(dot(vUv * 2048.0 + uTime, vec2(12.9898, 78.233))) * 43758.5453);
-    float g = (n - 0.5) * uGrain;
-    col += g;
-    alpha = clamp(alpha + g * 0.4, 0.0, 1.0);
-
-    gl_FragColor = vec4(max(col, 0.0), alpha);
-
-    // The only colour-space conversion in the pipeline, and it belongs here: a
-    // raw ShaderMaterial gets no output encoding unless it asks for one, so
-    // without this the scene's linear values reach the canvas as though they
-    // were already sRGB and every surface renders far too dark.
-    #include <colorspace_fragment>
-  }
-`;
-
 // ── helpers ─────────────────────────────────────────────────────────────
 
 /** A `THREE.Shape` from the same polyline both renderers draw. */
@@ -498,18 +439,70 @@ export default function MachineGL() {
 
     // ── scene, camera, environment ───────────────────────────────────
     const scene = new THREE.Scene();
-    // Aerial perspective. The back of the object has to sit back, and on a
-    // near-black ground this is the cheapest way to say so.
-    scene.fog = new THREE.FogExp2(0x090a0c, 0.055);
+    // Aerial perspective, and it stays even though there is a real volumetric
+    // now. The two are answering different questions: the raymarch is a *bank*
+    // with a radial falloff around the plinth, so it says nothing at all about a
+    // rail six units behind the camera's focus. This exponential says that.
+    // Density is down from v1's 0.055 because the volumetric is now supplying
+    // most of the depth cue and stacking both read as gauze.
+    scene.fog = new THREE.FogExp2(0x090a0c, 0.031);
 
-    const camera = new THREE.PerspectiveCamera(
-      VIEW.fovDeg,
-      VIEW.aspect,
-      VIEW.near,
-      VIEW.far,
-    );
-    camera.position.set(...(VIEW.eye as unknown as [number, number, number]));
-    camera.lookAt(...(VIEW.target as unknown as [number, number, number]));
+    /**
+     * The camera's aspect is now the viewport's, not a constant. v1 pinned it to
+     * 0.78 so the SVG viewBox and the frustum framed the identical rectangle,
+     * which made the drawing→canvas handoff pixel-exact. That guarantee is worth
+     * less than a full-bleed scene, so it has been traded deliberately: the SVG
+     * still opens the shot, but it now cross-fades under a camera that is
+     * already moving rather than swapping in place. The handoff reads as the
+     * drawing coming to life instead of as a texture being replaced, which is
+     * arguably what it should have been in v1 too.
+     */
+    const camera = new THREE.PerspectiveCamera(VIEW.fovDeg, 16 / 9, VIEW.near, VIEW.far);
+
+    /** Every animated camera channel. Written by GSAP, read once per frame. */
+    const cam: CamState = initialCam();
+    const score = buildScore(gsap, cam);
+    /** Set by measure(). Widens the vertical fov on narrow frames — see there. */
+    let fovScale = 1;
+    /** Set by measure(). Slides the machine across the frame by aspect. */
+    let txBias = 0;
+    /** The establishing shot, kept for the framing solve in measure(). */
+    const home = initialCam();
+
+    /**
+     * Applies the score's spherical state to the camera.
+     *
+     * Kept as one function because the order matters and is easy to get wrong:
+     * position, then `lookAt` (which overwrites rotation entirely), and only
+     * then the roll, which has to be applied *along the view axis* afterwards
+     * rather than baked into the up-vector — an `up` that is not perpendicular
+     * to the view direction makes `lookAt` produce a skew, not a roll.
+     */
+    const applyCam = (mouseX: number, mouseY: number) => {
+      const ce = Math.cos(cam.el);
+      // The aspect bias rides on every keyframe, not only the establishing one,
+      // so a portrait frame keeps the object clear of the callout rail for the
+      // whole sequence rather than only at rest.
+      const tx = cam.tx + txBias;
+      camera.position.set(
+        tx + Math.sin(cam.az) * ce * cam.radius,
+        cam.ty + Math.sin(cam.el) * cam.radius,
+        cam.tz + Math.cos(cam.az) * ce * cam.radius,
+      );
+      // Cursor parallax. Applied to the *camera* and not the object, so the
+      // object's relationship to its own fog and shadows never shifts — moving
+      // the machine instead is the version of this effect that reads as the
+      // model sliding around inside the scene.
+      camera.position.x += mouseX * 0.42;
+      camera.position.y += mouseY * 0.3;
+      camera.lookAt(tx, cam.ty, cam.tz);
+      if (cam.roll !== 0) camera.rotateZ(cam.roll);
+      const fov = cam.fov * fovScale;
+      if (Math.abs(camera.fov - fov) > 1e-4) {
+        camera.fov = fov;
+        camera.updateProjectionMatrix();
+      }
+    };
 
     const env = keep(studioEnvironment(renderer));
     scene.environment = env;
@@ -517,12 +510,62 @@ export default function MachineGL() {
     // One directional key on top of the environment, so there are real cast
     // highlights and not only reflections. No second light: two lights on a
     // near-black object is where "engineered" turns into "rendered".
-    const key = new THREE.DirectionalLight(0xdfe6f2, 2.1);
+    // 3.1, up from v1's 2.1. The exposure that the whole scene is graded at is
+    // now lower (0.46–0.80 against v1's effective ~0.86), because the emissives
+    // and the fog needed reining in — and pulling exposure down takes the metal
+    // with it. Putting the difference back as *light on the object* rather than
+    // as exposure is what separates a lit machine from a lifted photograph: it
+    // brightens the diffuse and the speculars without also brightening the void.
+    const key = new THREE.DirectionalLight(0xdfe6f2, 2.45);
     key.position.set(-3.4, 5.6, 4.2);
     scene.add(key);
-    // One indigo practical, low and in front — the machine's own light coming
-    // back off the fog it is standing in. It is the second and last light.
-    const fillLight = new THREE.PointLight(INDIGO, 7.5, 8, 2);
+
+    /**
+     * Real shadow mapping, which v1 did not have at all.
+     *
+     * At sidebar scale it was a defensible omission — a 450px-tall object lit by
+     * an environment map reads fine without cast shadows, because there is
+     * nowhere for a shadow to fall that anyone can see. At full viewport it is
+     * the difference between an object standing on a plinth and an object
+     * floating in front of one. The close-up keyframes are where it shows most:
+     * without it, every panel is lit identically regardless of what is in front
+     * of it, and five identically lit panels is a CAD render.
+     *
+     * `normalBias` rather than a large `bias`: this object is nothing but
+     * chamfered edges meeting at shallow angles, which is precisely the geometry
+     * a constant depth bias detaches shadows from. Offsetting along the normal
+     * instead keeps contact shadows in contact.
+     *
+     * 1536², and the frustum is wrapped tight around the object rather than left
+     * at the default ±5. Shadow texel density is map size over frustum area, so
+     * halving the frustum is worth as much as doubling the map and costs
+     * nothing.
+     */
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    key.castShadow = true;
+    key.shadow.mapSize.set(1536, 1536);
+    key.shadow.camera.left = -3.2;
+    key.shadow.camera.right = 3.2;
+    key.shadow.camera.top = 3.6;
+    key.shadow.camera.bottom = -3.6;
+    key.shadow.camera.near = 1;
+    key.shadow.camera.far = 18;
+    key.shadow.bias = -0.0004;
+    key.shadow.normalBias = 0.022;
+    key.shadow.radius = 3;
+    /**
+     * One indigo practical, low and in front — the machine's own light coming
+     * back off the fog it is standing in. It is the second and last light.
+     *
+     * Pulled down hard from v1's 7.5. There is now a *real* volumetric in front
+     * of this thing throwing indigo in-scatter across the lower half of the
+     * frame, so the practical is no longer standing in for the fog's light — it
+     * is stacking on top of it, and at v1's intensity the two together turned
+     * every panel face lavender. Brushed aluminium that has gone blue is the
+     * clearest possible signal that the lighting is doing the material's job.
+     */
+    const fillLight = new THREE.PointLight(INDIGO, 3.1, 7, 2);
     fillLight.position.set(0, -1.7, 1.1);
     scene.add(fillLight);
 
@@ -545,7 +588,13 @@ export default function MachineGL() {
           // metal returns almost nothing and the object reads as a silhouette.
           // Pushing the environment is the same move a product photographer
           // makes with a white card, and it is cheaper than a second light.
-          envMapIntensity: 1.35,
+          //
+          // 1.85 in v2, up from 1.35. Metalness is 1, so *all* of the panel
+          // face's colour is reflected environment — there is no diffuse term to
+          // fall back on. At the lower exposure v2 grades at, 1.35 left the
+          // faces reading as dark navy plastic; this is the number that decides
+          // whether the object is aluminium or not.
+          envMapIntensity: 1.85,
           ...opts,
         }),
       );
@@ -1032,70 +1081,207 @@ export default function MachineGL() {
     marble.add(rocket);
     root.add(marble);
 
-    // ── fog ──────────────────────────────────────────────────────────
-    const fogGeo = keep(new THREE.PlaneGeometry(3.5, 2.3));
-    const fogMats: THREE.ShaderMaterial[] = [];
-    const fogGroup = new THREE.Group();
-    for (let i = 0; i < 4; i++) {
-      const m = keep(
-        new THREE.ShaderMaterial({
-          vertexShader: FOG_VERT,
-          fragmentShader: FOG_FRAG,
-          transparent: true,
-          depthWrite: false,
-          blending: THREE.AdditiveBlending,
-          uniforms: {
-            uTime: { value: 0 },
-            uIndex: { value: i * 1.31 },
-            uOpacity: { value: 0 },
-            uTint: { value: INDIGO.clone().multiplyScalar(0.72) },
-            uBase: { value: new THREE.Color(0x2a3240) },
-          },
-        }),
-      );
-      fogMats.push(m);
-      const q = new THREE.Mesh(fogGeo, m);
-      // Kept low and forward. Fog belongs around the base of the object, and a
-      // quad that reaches the middle modules is a haze over the product shot.
-      q.position.set((i - 1.5) * 0.52, PLINTH_Y + 0.16 + (i % 2) * 0.18, 0.75 + (i % 2) * 0.45);
-      q.renderOrder = 10 + i;
-      fogGroup.add(q);
+    // ── the hopper: a tray of loose marbles, simulated ────────────────
+    /**
+     * Fourteen marbles in a shallow machined tray on the head casting.
+     *
+     * This is where the rigid-body solver is actually spent, and it is spent
+     * here rather than on the primary marble for reasons that are worth reading
+     * in `marble-physics.ts` — briefly, a scrubbed timeline and a forward
+     * integrator want incompatible things from the same object.
+     *
+     * What it buys, in order of how much it matters:
+     *
+     *   · **It cannot be faked.** Fourteen spheres settling into a pile against
+     *     each other and a machined wall is the one thing on this page that a
+     *     visitor who has seen a lot of websites has not seen approximated. The
+     *     pile is also different on every reload, which no keyframe is.
+     *   · **It makes the drag mean something.** Spinning the machine throws the
+     *     marbles outward and they clatter down the far wall. Before this, drag
+     *     rotated a static object; now it perturbs a system. That is the whole
+     *     distance between Rule 4 and Rule 4a.
+     *   · **It gives the deploy stage a physical consequence.** The launch
+     *     jolts the tray, and a few marbles jump.
+     *
+     * Instanced, because fourteen draw calls for fourteen spheres on a page that
+     * is already spending its budget on a raymarch is not a trade worth making.
+     */
+    const TRAY = {
+      cx: 0,
+      cy: RAIL_TOP + 0.06,
+      cz: -0.02,
+      w: 1.5,
+      d: 0.46,
+      wall: 0.16,
+      r: MARBLE_R * 0.78,
+      count: 14,
+    } as const;
+
+    const trayGroup = new THREE.Group();
+    // The tray casting itself: a floor and four walls, machined from the same
+    // aluminium as everything else.
+    const trayFloor = new THREE.Mesh(
+      keep(machined(shapeFrom(roundRect(TRAY.w + 0.18, TRAY.d + 0.18, 0.03, 3)), 0.05, 0.008)),
+      matRail,
+    );
+    trayFloor.rotation.x = -Math.PI / 2;
+    trayFloor.position.set(TRAY.cx, TRAY.cy, TRAY.cz);
+    trayGroup.add(trayFloor);
+    for (const [w, d, x, z] of [
+      [TRAY.w + 0.18, 0.05, 0, TRAY.d / 2 + 0.045],
+      [TRAY.w + 0.18, 0.05, 0, -TRAY.d / 2 - 0.045],
+      [0.05, TRAY.d + 0.14, TRAY.w / 2 + 0.045, 0],
+      [0.05, TRAY.d + 0.14, -TRAY.w / 2 - 0.045, 0],
+    ] as const) {
+      const wall = new THREE.Mesh(keep(slab(w, TRAY.wall, d, 0.012)), matRail);
+      wall.position.set(TRAY.cx + x, TRAY.cy + TRAY.wall / 2, TRAY.cz + z);
+      trayGroup.add(wall);
     }
-    scene.add(fogGroup);
+    add(trayGroup, [0, 3.4, 0], 0.24);
+
+    const looseGeo = keep(new THREE.SphereGeometry(TRAY.r, 16, 12));
+    const loose = new THREE.InstancedMesh(looseGeo, matMarble, TRAY.count);
+    loose.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    loose.frustumCulled = false;
+    trayGroup.add(loose);
+
+    let physics: MarbleWorld | null = null;
+    try {
+      physics = createMarbleWorld({ ...TRAY });
+    } catch {
+      // A solver that will not construct must not take the hero down with it.
+      // Without physics the tray is simply full of marbles that do not move,
+      // which is a worse hero and a working one.
+      physics = null;
+    }
+    const loosePos = new Float32Array(TRAY.count * 3);
+    const looseQuat = new Float32Array(TRAY.count * 4);
+    const instMtx = new THREE.Matrix4();
+    const instQ = new THREE.Quaternion();
+    const instP = new THREE.Vector3();
+    const ONE = new THREE.Vector3(1, 1, 1);
 
     // ── post ─────────────────────────────────────────────────────────
-    const target = keep(
-      new THREE.WebGLRenderTarget(2, 2, {
-        samples: 4,
-        type: THREE.HalfFloatType,
-        depthBuffer: true,
-        stencilBuffer: false,
-      }),
+    /**
+     * `postprocessing`'s composer, in this order:
+     *
+     *   RenderPass          → scene into a half-float buffer, MSAA on
+     *   VolumetricFogPass   → depth-aware raymarch, composited (own file)
+     *   EffectPass          → DOF · bloom · CA · noise · vignette · ACES
+     *
+     * The fog is its own Pass rather than an Effect inside the EffectPass, and
+     * that placement is load-bearing: `BloomEffect` samples the buffer as it
+     * *entered* the pass, so fog composited alongside it in the merged shader
+     * would never bloom. Fog that does not bloom is fog with no glow around the
+     * indigo, which is the entire look. Being a Pass puts it upstream, and the
+     * bloom then sees lit vapour as light — which it is.
+     *
+     * Everything after the fog merges into one fragment shader. Five effects,
+     * one pass, one dependent texture read, which is why the effect count here
+     * is not the performance problem it looks like.
+     */
+    const composer = new EffectComposer(renderer, {
+      frameBufferType: THREE.HalfFloatType,
+      multisampling: 4,
+    });
+    composer.addPass(new RenderPass(scene, camera));
+
+    const fogPass = new VolumetricFogPass(camera);
+    composer.addPass(fogPass);
+
+    /**
+     * Depth of field. The single most expensive thing on the page and the reason
+     * `postprocessing` was worth importing at all.
+     *
+     * `worldFocusDistance` is driven by the score's `focusY` — the camera
+     * focuses on a *world height*, so a focus pull to the RLS module stays
+     * focused on it however the camera orbits. Focusing on a fixed distance
+     * instead makes every orbit a rack focus, which is nauseating.
+     *
+     * `resolutionScale` at 0.5: the CoC and bokeh passes are the cost, the sharp
+     * region comes from the full-resolution input either way, and the blurred
+     * region is by definition the part with no high frequencies to lose.
+     */
+    const dof = new DepthOfFieldEffect(camera, {
+      worldFocusDistance: 10.6,
+      worldFocusRange: 2.4,
+      bokehScale: cam.bokeh,
+      resolutionScale: 0.5,
+    });
+
+    /**
+     * Bloom. `luminanceThreshold` sits just under where the LEDs and the screen
+     * land after exposure and above where the brightest machined edge does —
+     * the object's own specular highlights must not bloom or the whole thing
+     * turns to fog. Everything that glows here is something that is actually
+     * emitting.
+     */
+    const bloom = new BloomEffect({
+      intensity: cam.bloom,
+      // 0.94, and it took three passes to land there. The threshold has to sit
+      // above the brightest *specular* on the machined edges and below the
+      // emissives. Every value under it turned the chamfers into a glowing
+      // wireframe — which is exactly what the close-up keyframes exposed and
+      // the establishing shot hid, because the specular on a bevel gets hotter
+      // the closer the camera is to it. A threshold tuned on a wide shot is a
+      // threshold tuned on the easiest frame in the sequence.
+      luminanceThreshold: 0.94,
+      luminanceSmoothing: 0.12,
+      kernelSize: KernelSize.LARGE,
+      mipmapBlur: true,
+      radius: 0.78,
+    });
+
+    /**
+     * Chromatic aberration at roughly half a pixel at the frame edge.
+     *
+     * `radialModulation` is what separates "a sharp lens" from "a broken JPEG":
+     * a real lens is corrected at the centre and drifts toward the corners, so
+     * the offset has to scale with distance from centre. A uniform offset reads
+     * as a mistake at any strength that is visible at all.
+     */
+    const chroma = new ChromaticAberrationEffect({
+      offset: new THREE.Vector2(cam.ca, cam.ca * 0.6),
+      radialModulation: true,
+      modulationOffset: 0.15,
+    });
+
+    /**
+     * Film grain at 2.4%. The cinema tell, and the cheapest one on the list.
+     *
+     * `BlendFunction.OVERLAY` rather than ADD: additive grain lifts the blacks,
+     * and this page is mostly black. Overlay leaves the void alone and puts the
+     * noise in the midtones, where actual film grain lives.
+     */
+    const grain = new NoiseEffect({ blendFunction: BlendFunction.OVERLAY });
+    grain.blendMode.opacity.value = 0.024;
+
+    const vignette = new VignetteEffect({ offset: 0.32, darkness: 0.62 });
+    const tone = new ToneMappingEffect({ mode: ToneMappingMode.ACES_FILMIC });
+
+    composer.addPass(
+      new EffectPass(camera, dof, bloom, chroma, grain, vignette, tone),
     );
-    const postMat = keep(
-      new THREE.ShaderMaterial({
-        vertexShader: `
-          varying vec2 vUv;
-          void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }
-        `,
-        fragmentShader: POST_FRAG,
-        transparent: true,
-        depthTest: false,
-        depthWrite: false,
-        uniforms: {
-          tScene: { value: target.texture },
-          uTexel: { value: new THREE.Vector2(1 / 512, 1 / 512) },
-          uTime: { value: 0 },
-          uBloom: { value: 1.5 },
-          uRadius: { value: 5.0 },
-          uGrain: { value: 0.016 },
-          uExposure: { value: 0.86 },
-        },
-      }),
-    );
-    const postScene = new THREE.Scene();
-    postScene.add(new THREE.Mesh(keep(new THREE.PlaneGeometry(2, 2)), postMat));
-    const postCam = new THREE.Camera();
+
+    /**
+     * Shadow flags, set by traversal rather than at each construction site.
+     *
+     * Everything solid casts and receives; anything that emits does neither. An
+     * emissive plane that receives a shadow has a dark patch painted on a light
+     * source, and one that casts blocks the light it is supposed to be — both
+     * were visible in the first pass, the backlight throwing a hard rectangle
+     * across the plinth. Detected by material type, so a part added later gets
+     * the right answer without anyone remembering this rule.
+     */
+    root.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      const mat = m.material as THREE.Material;
+      const emissive =
+        (mat as THREE.MeshBasicMaterial).isMeshBasicMaterial === true;
+      m.castShadow = !emissive;
+      m.receiveShadow = !emissive;
+    });
 
     // ── the route, arc-length parameterised ──────────────────────────
     const route = fullRoute();
@@ -1117,18 +1303,69 @@ export default function MachineGL() {
       const rect = frame.getBoundingClientRect();
       const w = Math.max(1, Math.round(rect.width));
       const h = Math.max(1, Math.round(rect.height));
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      /**
+       * Capped at 1.75 rather than v1's 2. The scene now carries a raymarch and
+       * a depth-of-field pass, and both are fill-rate bound — the cost is
+       * literally the pixel count. On a 3× phone panel the difference between
+       * 1.75 and 2 is invisible under film grain and is about 30% of the frame
+       * budget. This is the one place where "optimise for reaction" and
+       * "optimise for bytes" point the same way: a 34fps hero has no reaction.
+       */
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
 
       renderer.setPixelRatio(dpr);
       renderer.setSize(w, h, false);
-      target.setSize(Math.round(w * dpr), Math.round(h * dpr));
-      postMat.uniforms.uTexel.value.set(1 / (w * dpr), 1 / (h * dpr));
+      composer.setSize(w, h);
 
-      // The frame's aspect is pinned to the camera's by CSS, so there is
-      // nothing to fit — which is the whole reason the SVG and the canvas frame
-      // the same rectangle at every width.
-      camera.aspect = VIEW.aspect;
+      // Full-bleed: the camera's aspect is whatever the viewport is.
+      camera.aspect = w / h;
+
+      /**
+       * Framing compensation for narrow viewports.
+       *
+       * `PerspectiveCamera.fov` is *vertical*, so a 9:16 phone and a 21:9
+       * monitor showing the same vertical fov show wildly different horizontal
+       * extents — and this object is tall and thin, which is the worst case. At
+       * 21:9 the machine ends up a sliver in an ocean of void; at 4:3 it is
+       * cropped at the sides.
+       *
+       * The fix is to hold the *horizontal* extent roughly constant below 16:9
+       * by widening the vertical fov as the frame narrows, which is what a
+       * cinematographer changing lenses for a format would do. Above 16:9 the
+       * vertical fov is left alone and the extra width is simply more room for
+       * the copy, which is exactly what an ultrawide should get.
+       */
+      const REF = 16 / 9;
+      const a = camera.aspect;
+      fovScale = a < REF ? Math.min(1.42, REF / Math.max(a, 0.55)) : 1;
       camera.updateProjectionMatrix();
+
+      /**
+       * Where the machine sits across the frame, and the one number the CSS and
+       * the camera have to agree on.
+       *
+       * They did not, briefly, and the bug is worth recording because it looks
+       * like nothing: `--mx-machine-x` positions the SVG opener, while the
+       * canvas is placed by the score's look-at `tx`. On a wide frame the two
+       * happen to coincide, so moving the CSS variable to fix a portrait-tablet
+       * collision moved the drawing and left the render exactly where it was —
+       * and since the drawing is only on screen for the first two seconds, the
+       * change appeared to do nothing at all rather than to half-work.
+       *
+       * Now one constant drives both: the fraction is chosen here, the camera
+       * target is solved back from it through the frustum, and the custom
+       * property is written from the same value so the drawing follows. The CSS
+       * keeps its own media-query values purely for the no-JavaScript path.
+       *
+       * Below square, the machine goes left of centre rather than right: the
+       * callout rail needs the right edge, and the object's silhouette is much
+       * wider than its panel stack because the launch rail stands outboard.
+       */
+      const frameX = a >= 1 ? 0.65 : 0.38;
+      const visH =
+        2 * home.radius * Math.tan((((VIEW.fovDeg * fovScale) / 2) * Math.PI) / 180);
+      txBias = -(frameX - 0.5) * visH * a - home.tx;
+      stage.style.setProperty("--mx-machine-x", `${(frameX * 100).toFixed(1)}%`);
 
       const el = document.getElementById("da-hero");
       if (el) {
@@ -1147,7 +1384,15 @@ export default function MachineGL() {
     let dragId = -1;
     let lastX = 0;
     let yaw = 0;
+    /** Yaw at the previous frame and the frame before that, for ω and α. */
+    let yawPrev = 0;
+    let omegaPrev = 0;
     let ndcY = 99;
+    /** Cursor position in NDC, smoothed in the loop, for camera parallax. */
+    let mouseTX = 0;
+    let mouseTY = 0;
+    let mouseX = 0;
+    let mouseY = 0;
 
     const onDown = (e: PointerEvent) => {
       if (!finePointer || e.button !== 0) return;
@@ -1159,11 +1404,30 @@ export default function MachineGL() {
     };
     const onMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
+      const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       ndcY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      if (e.clientX < rect.left || e.clientX > rect.right) ndcY = 99;
+      const inside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+      if (!inside) {
+        ndcY = 99;
+        mouseTX = 0;
+        mouseTY = 0;
+      } else {
+        mouseTX = nx;
+        mouseTY = ndcY;
+      }
       if (!dragging || e.pointerId !== dragId) return;
-      yaw += (e.clientX - lastX) * 0.004;
-      yaw = Math.max(-0.42, Math.min(0.42, yaw));
+      /**
+       * Wider than v1's ±0.42 rad. At sidebar scale a 24° swing was as much as
+       * the composition could take; at full viewport the object is the scene and
+       * the visitor expects to be able to walk around it. ±0.85 (≈49°) is where
+       * the backlight plane starts to show its edge, which is the real limit.
+       */
+      yaw += (e.clientX - lastX) * 0.0052;
+      yaw = Math.max(-0.85, Math.min(0.85, yaw));
       lastX = e.clientX;
     };
     const onUp = (e: PointerEvent) => {
@@ -1172,7 +1436,11 @@ export default function MachineGL() {
       dragId = -1;
       delete stage.dataset.mxGrab;
     };
-    const onLeave = () => (ndcY = 99);
+    const onLeave = () => {
+      ndcY = 99;
+      mouseTX = 0;
+      mouseTY = 0;
+    };
 
     if (finePointer) {
       canvas.addEventListener("pointerdown", onDown);
@@ -1182,6 +1450,118 @@ export default function MachineGL() {
       window.addEventListener("pointercancel", onUp, { passive: true });
     }
 
+    // ── sound ────────────────────────────────────────────────────────
+    /**
+     * Muted by default and behind a toggle, because audio that starts on its own
+     * is the single most reliable way to make someone close a tab.
+     *
+     * Synthesised, not sampled. Three reasons, in order: no request and no
+     * bytes; a click whose pitch and decay are parameters can be *the same
+     * click* at five different weights, which a set of five mp3s cannot be
+     * without sounding like a set of five mp3s; and the ambient bed is a filtered
+     * noise loop, which is about nine lines here and about 400 KB as a file.
+     *
+     * The whole thing is built lazily on the first unmute, so a visitor who
+     * never touches the toggle pays for none of it — not even an AudioContext,
+     * which on some browsers is enough to light the "this tab is playing audio"
+     * indicator and is exactly the kind of thing that gets a site distrusted.
+     */
+    let audio: {
+      ctx: AudioContext;
+      bus: GainNode;
+      click(gain: number, pitch: number): void;
+    } | null = null;
+    let soundOn = false;
+
+    const initAudio = () => {
+      if (audio) return audio;
+      const Ctx =
+        window.AudioContext ??
+        (window as unknown as { webkitAudioContext?: typeof AudioContext })
+          .webkitAudioContext;
+      if (!Ctx) return null;
+      const ctx = new Ctx();
+      const bus = ctx.createGain();
+      bus.gain.value = 0;
+      bus.connect(ctx.destination);
+
+      // Ambient bed: brown-ish noise through a low-pass, plus a 52 Hz sine an
+      // octave under the room tone. Together they read as a large machine idling
+      // in a hall rather than as a synth pad.
+      const N = ctx.sampleRate * 3;
+      const buf = ctx.createBuffer(1, N, ctx.sampleRate);
+      const ch = buf.getChannelData(0);
+      let last = 0;
+      for (let i = 0; i < N; i++) {
+        const white = Math.random() * 2 - 1;
+        last = (last + 0.02 * white) / 1.02;
+        ch[i] = last * 3.2;
+      }
+      // Crossfade the loop's own seam, or the bed ticks once every three seconds.
+      const fade = Math.floor(ctx.sampleRate * 0.05);
+      for (let i = 0; i < fade; i++) {
+        const t = i / fade;
+        ch[i] = ch[i] * t + ch[N - fade + i] * (1 - t);
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      const lp = ctx.createBiquadFilter();
+      lp.type = "lowpass";
+      lp.frequency.value = 340;
+      lp.Q.value = 0.6;
+      const hum = ctx.createOscillator();
+      hum.type = "sine";
+      hum.frequency.value = 52;
+      const humGain = ctx.createGain();
+      humGain.gain.value = 0.055;
+      src.connect(lp).connect(bus);
+      hum.connect(humGain).connect(bus);
+      src.start();
+      hum.start();
+
+      /** One mechanical click: a short filtered noise burst with a fast decay. */
+      const click = (gain: number, pitch: number) => {
+        const now = ctx.currentTime;
+        const len = 0.055;
+        const b = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * len), ctx.sampleRate);
+        const d = b.getChannelData(0);
+        for (let i = 0; i < d.length; i++) {
+          d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 7);
+        }
+        const s = ctx.createBufferSource();
+        s.buffer = b;
+        const bp = ctx.createBiquadFilter();
+        bp.type = "bandpass";
+        bp.frequency.value = pitch;
+        bp.Q.value = 2.4;
+        const g = ctx.createGain();
+        g.gain.value = gain;
+        s.connect(bp).connect(g).connect(bus);
+        s.start(now);
+      };
+
+      audio = { ctx, bus, click };
+      return audio;
+    };
+
+    const soundBtn = stage.querySelector<HTMLButtonElement>(".mx-sound");
+    const setSound = (on: boolean) => {
+      soundOn = on;
+      soundBtn?.setAttribute("aria-pressed", String(on));
+      if (!on) {
+        audio?.bus.gain.setTargetAtTime(0, audio.ctx.currentTime, 0.14);
+        return;
+      }
+      const a = initAudio();
+      if (!a) return;
+      void a.ctx.resume();
+      a.bus.gain.setTargetAtTime(0.22, a.ctx.currentTime, 0.4);
+    };
+    const onSoundClick = () => setSound(!soundOn);
+    soundBtn?.addEventListener("click", onSoundClick);
+    soundBtn?.removeAttribute("hidden");
+
     // ── frame ────────────────────────────────────────────────────────
     const tmp = new THREE.Vector3();
     const BUILD_DUR = 1.15;
@@ -1190,10 +1570,30 @@ export default function MachineGL() {
     let painted = false;
     let buildStart = -1;
     let lastBuilt = -1;
+    /** Which module last rang, so a click fires on the crossing and not per frame. */
+    let lastStage = -1;
+    /** Latch for the launch knock and the tray jolt, reset on scroll-back. */
+    let launchRung = false;
+    /** Last written state of the copy's pointer-events attribute. */
+    let lastCopyGone = false;
+    const focusPt = new THREE.Vector3();
+
+    /** Wall-clock of the previous frame, for a real dt rather than an assumed one. */
+    let tPrev = -1;
 
     const draw = (time: number, forcedY?: number, forcedBuild?: number) => {
       const y = forcedY ?? window.scrollY;
       const p = clamp01((y - trackTop) / trackSpan);
+
+      // A real delta, clamped. Physics and every damped follower below read it,
+      // and assuming 1/60 is how a 120 Hz panel ends up with a camera that
+      // settles twice as fast as it was authored to.
+      const dt = tPrev < 0 ? 1 / 60 : Math.min(0.05, Math.max(1 / 240, time - tPrev));
+      tPrev = time;
+
+      // The entire camera, in one call. Eleven channels, seven keyframes, and
+      // the only thing this loop knows about any of it is the scroll fraction.
+      score.progress(p);
 
       // ── the build. Once, on first paint, and never replayed on scroll.
       if (buildStart < 0) buildStart = time;
@@ -1341,29 +1741,146 @@ export default function MachineGL() {
       });
 
       // ── atmosphere
-      for (const m of fogMats) {
-        m.uniforms.uTime.value = time;
-        m.uniforms.uOpacity.value = built * 1.35;
-      }
+      fogPass.setTime(time);
+      // Density is the score's channel, gated by the build so the volume fills
+      // in as the object arrives rather than sitting there waiting for it.
+      fogPass.setDensity(cam.fog * (0.25 + built * 0.9));
+      /**
+       * 2.35, not v1's 0.94.
+       *
+       * The interior glow escaping through the machined pockets is reference
+       * #2's whole signature, and it very nearly got lost in v2: raising the
+       * environment to make the aluminium read as aluminium also raised the
+       * panel faces the light was meant to be contrasting *against*, and the
+       * scene grades at a lower exposure than v1 to keep the emissives in
+       * check. Both moves were right and both pushed the same way. Emissives
+       * are `toneMapped: false`, so nothing else on the object goes with this
+       * number — it moves the light and only the light.
+       */
       (backlight.material as THREE.MeshBasicMaterial).color.setScalar(
-        built * (0.94 + 0.06 * Math.sin(time * 0.7)),
+        built * (2.35 + 0.14 * Math.sin(time * 0.7)),
       );
       fillLight.intensity = 6.5 * built;
 
-      // ── camera: drag orbits, and it settles back on release
-      if (!dragging) yaw *= 0.955;
+      // ── the object: drag orbits, and it settles back on release
+      if (!dragging) yaw *= Math.pow(0.955, dt * 60);
       root.rotation.y = yaw + Math.sin(time * 0.11) * 0.012;
 
-      postMat.uniforms.uTime.value = time;
-      postMat.uniforms.uBloom.value = 1.2 + power * 0.5;
-      postMat.uniforms.uExposure.value = 0.54 + built * 0.32;
+      // ── physics
+      /**
+       * Angular velocity and acceleration of the machine's own frame, handed to
+       * the solver so the tray marbles feel the spin. Differentiating the yaw
+       * twice is noisy by nature, so both are low-passed — an un-smoothed α from
+       * a pointer stream spikes hard enough on a single fast sample to fire the
+       * marbles straight through the tray wall.
+       */
+      const omega = (root.rotation.y - yawPrev) / dt;
+      const omegaS = omegaPrev + (omega - omegaPrev) * 0.35;
+      const alpha = (omegaS - omegaPrev) / dt;
+      yawPrev = root.rotation.y;
+      omegaPrev = omegaS;
 
-      renderer.setRenderTarget(target);
-      renderer.clear();
-      renderer.render(scene, camera);
-      renderer.setRenderTarget(null);
-      renderer.clear();
-      renderer.render(postScene, postCam);
+      if (physics) {
+        physics.setPrimary(marble.position.x, marble.position.y, marble.position.z, dt);
+        // A settled pile that nobody is touching costs nothing: the solver is
+        // skipped entirely rather than stepped to produce the same numbers.
+        if (!physics.asleep || Math.abs(omegaS) > 0.02 || Math.abs(alpha) > 0.4) {
+          physics.step(dt, omegaS, alpha);
+          physics.readInto(loosePos);
+          physics.readQuatInto(looseQuat);
+          for (let i = 0; i < TRAY.count; i++) {
+            instP.set(loosePos[i * 3], loosePos[i * 3 + 1], loosePos[i * 3 + 2]);
+            instQ.set(
+              looseQuat[i * 4],
+              looseQuat[i * 4 + 1],
+              looseQuat[i * 4 + 2],
+              looseQuat[i * 4 + 3],
+            );
+            loose.setMatrixAt(i, instMtx.compose(instP, instQ, ONE));
+          }
+          loose.instanceMatrix.needsUpdate = true;
+        }
+      }
+
+      // ── sound
+      if (soundOn && audio) {
+        // One click per module boundary the marble crosses, pitched down the
+        // stack so the descent is audible as a descent. Scrolling backwards
+        // fires them too, which is correct: it is the same contact.
+        if (active !== lastStage) {
+          lastStage = active;
+          audio.click(0.4, 2600 - active * 300);
+        }
+        // The launch: a heavier, lower knock, once.
+        if (launch > 0.5 && !launchRung) {
+          launchRung = true;
+          audio.click(0.85, 900);
+          physics?.jolt(0.9);
+        }
+        if (launch < 0.4) launchRung = false;
+      } else if (launch > 0.5 && !launchRung) {
+        // The jolt is not conditional on audio — it is a physical event.
+        launchRung = true;
+        physics?.jolt(0.9);
+      } else if (launch < 0.4) {
+        launchRung = false;
+      }
+
+      // ── camera, post, and the frame
+      mouseX += (mouseTX - mouseX) * Math.min(1, dt * 4.5);
+      mouseY += (mouseTY - mouseY) * Math.min(1, dt * 4.5);
+      applyCam(mouseX, mouseY);
+
+      // The focus plane is a world height from the score, converted to a
+      // distance from wherever the camera actually ended up this frame — which
+      // is why an orbit does not pull focus.
+      focusPt.set(cam.tx + txBias, cam.focusY, cam.tz);
+      dof.target = focusPt;
+      dof.bokehScale = cam.bokeh * built;
+      /**
+       * The focus range has to tighten as the camera closes in, and getting
+       * this wrong is why the first pass had a depth-of-field pass that
+       * provably ran and visibly did nothing.
+       *
+       * `worldFocusRange` is the depth either side of the focal plane that
+       * stays sharp, in world units. It was left at its 2.4 default — and this
+       * object is only about one unit deep. Every part of the machine sat
+       * inside the sharp band at every keyframe, so the effect was correct,
+       * expensive, and a no-op. A planar subject gives depth of field nothing
+       * to bite on unless the band is narrower than the subject.
+       *
+       * Tying it to the inverse of bokeh means the wide establishing shot keeps
+       * almost everything sharp and the close-ups drop the far rail and the
+       * launch mast out — which is what a real lens does when it opens up.
+       *
+       * It lives on the circle-of-confusion material rather than on the effect;
+       * the effect only accepts it as a constructor option.
+       */
+      dof.cocMaterial.worldFocusRange = Math.max(
+        0.55,
+        3.6 / Math.max(0.5, cam.bokeh),
+      );
+      bloom.intensity = cam.bloom * (0.35 + built * 0.75) + power * 0.32;
+      chroma.offset.set(cam.ca, cam.ca * 0.6);
+      // Exposure rises as the object materialises, so the build reads as the
+      // scene being lit rather than as parts fading in. It is applied in the fog
+      // composite, upstream of the bloom — `renderer.toneMappingExposure` does
+      // nothing at all here, and the note in `volumetric-fog.ts` explains why.
+      fogPass.setExposure(0.46 + built * 0.34);
+
+      // The copy fades on the score's own channel, so the overlay and the camera
+      // can never disagree about whether this is still the establishing shot.
+      stage.style.setProperty("--mx-copy-out", cam.copyOut.toFixed(3));
+      // `pointer-events` cannot be interpolated, so the attribute flips once at
+      // the halfway point rather than the CSS deriving it from the same number.
+      const copyGone = cam.copyOut > 0.5;
+      if (copyGone !== lastCopyGone) {
+        lastCopyGone = copyGone;
+        if (copyGone) stage.dataset.mxCopy = "out";
+        else delete stage.dataset.mxCopy;
+      }
+
+      composer.render(dt);
 
       // The drawing stays visible until a frame has actually reached the
       // canvas. If the loop never runs — throttled tab, lost context, a driver
@@ -1457,19 +1974,39 @@ export default function MachineGL() {
         camera,
         root,
         backlight,
-        fogGroup,
         trackGroup,
         plinth,
         head,
         mods,
         marble,
+        trayGroup,
+        loose,
+        composer,
+        fogPass,
+        cam,
+        score,
+      };
+      /** A scratch buffer for the probes below. Dev builds only. */
+      const probeTarget = new THREE.WebGLRenderTarget(2, 2, {
+        samples: 4,
+        type: THREE.HalfFloatType,
+        depthBuffer: true,
+      });
+      const sizeProbe = () => {
+        const r = frame.getBoundingClientRect();
+        const d = Math.min(window.devicePixelRatio || 1, 1.75);
+        probeTarget.setSize(
+          Math.max(2, Math.round(r.width * d)),
+          Math.max(2, Math.round(r.height * d)),
+        );
       };
       // Reads the render target back. The difference between "the scene is
       // dark" and "the scene never reached the texture the post pass samples"
       // is not visible from outside, and it is the only question worth asking
       // when a direct render looks right and a composited one does not.
       (window as unknown as Record<string, unknown>).__mxProbe = () => {
-        renderer.setRenderTarget(target);
+        sizeProbe();
+        renderer.setRenderTarget(probeTarget);
         renderer.clear();
         renderer.render(scene, camera);
         // Unbind first. With `samples > 0` the scene lands in a multisample
@@ -1477,12 +2014,12 @@ export default function MachineGL() {
         // target is switched away from; reading before that returns the
         // unresolved buffer, which is what made the first probe lie.
         renderer.setRenderTarget(null);
-        const w = target.width;
-        const h = target.height;
+        const w = probeTarget.width;
+        const h = probeTarget.height;
         const buf = new Uint16Array(4);
         const read = (fx: number, fy: number) => {
           renderer.readRenderTargetPixels(
-            target,
+            probeTarget,
             Math.round(w * fx),
             Math.round(h * fy),
             1,
@@ -1503,7 +2040,8 @@ export default function MachineGL() {
       (window as unknown as Record<string, unknown>).__mxDebug = () => {
         renderer.info.autoReset = false;
         renderer.info.reset();
-        renderer.setRenderTarget(target);
+        sizeProbe();
+        renderer.setRenderTarget(probeTarget);
         renderer.clear();
         renderer.render(scene, camera);
         const sceneInfo = JSON.parse(JSON.stringify(renderer.info.render));
@@ -1571,7 +2109,28 @@ export default function MachineGL() {
       delete stage.dataset.mxMode;
       delete stage.dataset.mxGrab;
       delete stage.dataset.mxHover;
+      delete stage.dataset.mxCopy;
       stage.style.removeProperty("--mx-built");
+      stage.style.removeProperty("--mx-copy-out");
+
+      soundBtn?.removeEventListener("click", onSoundClick);
+      soundBtn?.setAttribute("hidden", "");
+      // An AudioContext survives its React tree by design; StrictMode's double
+      // mount would otherwise leave a second one running an oscillator forever.
+      void audio?.ctx.close();
+      audio = null;
+
+      if (finePointer) {
+        canvas.removeEventListener("pointerdown", onDown);
+        canvas.removeEventListener("pointerleave", onLeave);
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("pointerup", onUp);
+        window.removeEventListener("pointercancel", onUp);
+      }
+
+      score.kill();
+      physics?.dispose();
+      composer.dispose();
       if (DEV) {
         for (const k of [
           "__mxDraw",

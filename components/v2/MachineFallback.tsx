@@ -12,6 +12,7 @@ import {
   type Segments,
   type StrokeClass,
 } from "./machine-parts";
+import { moduleFrameY } from "./camera-score";
 
 /**
  * The Machine — zero-JavaScript state.
@@ -143,6 +144,10 @@ export function MachineCallouts() {
           style={
             {
               "--mx-i": i,
+              // Where this module actually lands down the frame in the
+              // establishing shot, projected through the same camera the canvas
+              // uses. Not a measured constant — see `moduleFrameY`.
+              "--mx-top": `${(moduleFrameY(m.y) * 100).toFixed(2)}%`,
               // The window this module is live for, taken from the route
               // itself. CSS turns the pair into a triangular ramp, which is the
               // whole no-JavaScript stage highlight.

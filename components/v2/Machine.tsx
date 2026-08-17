@@ -73,20 +73,20 @@ const getServerSnapshot = () => false;
 
 export default function Machine({
   children,
-  callouts,
-  readout,
-  aspect,
+  overlay,
   launchU,
 }: {
   /** The server-rendered drawing. Sits under the canvas, in the same box. */
   children: ReactNode;
-  /** The callout column. Its own grid track, so labels can never overlap the
-      machine or push the page wider than the viewport at any width. */
-  callouts: ReactNode;
-  /** The terminal readout, as selectable text under the stage. */
-  readout: ReactNode;
-  /** The camera's aspect, so the frame and the frustum are the same rectangle. */
-  aspect: number;
+  /**
+   * Everything composited over the scene — copy, callouts, readout, controls.
+   *
+   * v1 passed these as separate grid tracks beside the stage, which is what made
+   * the hero a two-column layout with an illustration in one column. They are
+   * one slot now, and it is an *overlay*: the stage is the full viewport and
+   * this sits on top of it.
+   */
+  overlay: ReactNode;
   /** Where the descent ends and the launch begins, in route distance. Passed in
       from the server rather than imported, so the geometry module stays out of
       the client bundle for the clients that never load the canvas. */
@@ -95,18 +95,20 @@ export default function Machine({
   const enhance = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   return (
-    <div
-      className="mx-stage"
-      style={
-        { "--mx-aspect": aspect, "--mx-launch": launchU } as React.CSSProperties
-      }
-    >
+    <div className="mx-stage" style={{ "--mx-launch": launchU } as React.CSSProperties}>
+      {/*
+       * No `--mx-aspect` any more. v1 pinned the frame's aspect-ratio to the
+       * camera's so the SVG viewBox and the WebGL frustum framed the identical
+       * rectangle and the handoff was pixel-exact. A full-bleed scene cannot
+       * have a fixed aspect, so that guarantee is gone by choice: the drawing
+       * now opens the shot and cross-fades under a camera that is already
+       * moving. See the note in MachineGL.tsx.
+       */}
       <div className="mx-frame">
         {children}
         {enhance ? <MachineGL /> : null}
       </div>
-      {callouts}
-      {readout}
+      {overlay}
     </div>
   );
 }
