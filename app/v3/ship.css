@@ -1,0 +1,628 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   The ship — prototype styles.
+
+   Scoped under `.sh-root` so nothing here can reach the shipped homepage.
+   Everything is namespaced `sh-`; no global selector is redefined.
+
+   ONE easing curve for this page: cubic-bezier(0.32, 0.72, 0, 1). It is the
+   only custom curve declared in this file and no rule uses another.
+
+   ── The structural idea ───────────────────────────────────────────────
+   One fixed canvas behind the document; ten sections scrolling over it. Each
+   act also carries a sticky *drawing* backdrop, which is the first paint
+   everywhere and the whole picture where WebGL never arrives. Because the
+   backdrops are sticky elements inside per-act wrappers, the drawing changes
+   at the act break with **no JavaScript at all** — which is what makes the
+   no-WebGL path a real two-act page rather than a bridge that never leaves.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.sh-root {
+  --sh-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  /* SiteHeader/SiteFooter are borrowed from the shipped site and read
+     --easing-linear from globals.css. Rebinding it here means the whole
+     prototype runs on the one curve, borrowed chrome included. */
+  --easing-linear: cubic-bezier(0.32, 0.72, 0, 1);
+  --sh-fast: 160ms;
+  --sh-mid: 420ms;
+  --sh-slow: 720ms;
+
+  /* Act-neutral defaults. `.sh-act` overrides them; see the note there. */
+  --sh-ink: var(--sh-cool-ink);
+  --sh-ground: var(--sh-cool-ink);
+  --sh-head: var(--sh-cool-chrome);
+  --sh-body: var(--sh-cool-dim);
+  --sh-label: var(--sh-cool-amber);
+  --sh-rule: var(--sh-cool-blue);
+  --sh-accent: var(--sh-cool-blue);
+
+  /* Type. Every clamp mixes a rem term with the vw term, so text still scales
+     at 200% browser zoom (WCAG 1.4.4). A bare vw in the middle term stops
+     responding to zoom, which is the failure most generators emit. */
+  --sh-display: clamp(2.5rem, 1.7rem + 3.4vw, 5rem);
+  --sh-h2: clamp(1.85rem, 1.3rem + 2.1vw, 3rem);
+  --sh-lede: clamp(1rem, 0.94rem + 0.4vw, 1.25rem);
+  --sh-copy: clamp(0.9375rem, 0.9rem + 0.18vw, 1rem);
+  --sh-micro: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+
+  --sh-gutter: clamp(1.25rem, 0.9rem + 1.5vw, 3rem);
+  --sh-col: min(38rem, 44vw);
+
+  position: relative;
+  background: var(--sh-ground);
+  color: var(--sh-body);
+  font-family: var(--font-body);
+}
+
+/* ── The fixed stage ─────────────────────────────────────────────────── */
+
+.sh-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* The canvas is the only thing in here. Drawings live in the act wrappers
+     so they can change without JavaScript. */
+}
+
+.sh-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--sh-slow) var(--sh-ease);
+}
+
+/* Set once, by the render loop, after a frame has actually reached the
+   screen. If the loop never runs the drawing stays — a lost context or a
+   driver that gives up leaves a page, not a black rectangle. */
+:root[data-sh-mode="canvas"] .sh-canvas {
+  opacity: 1;
+}
+
+/* ── The track ───────────────────────────────────────────────────────── */
+
+.sh-track {
+  position: relative;
+  z-index: 1;
+}
+
+.sh-act {
+  position: relative;
+}
+
+/* The two palettes. Everything downstream reads the role tokens, never the
+   act tokens directly, so a beat's copy does not know which world it is in. */
+.sh-act[data-act="ship"] {
+  --sh-ground: var(--sh-cool-ink);
+  --sh-head: var(--sh-cool-chrome);
+  --sh-body: var(--sh-cool-dim);
+  --sh-label: var(--sh-cool-amber);
+  --sh-rule: var(--sh-cool-blue);
+  --sh-accent: var(--sh-cool-blue);
+  --sh-scrim: 5 9 18;
+}
+
+.sh-act[data-act="dune"] {
+  --sh-ground: var(--sh-warm-ink);
+  --sh-head: var(--sh-warm-sand);
+  --sh-body: var(--sh-warm-dim);
+  --sh-label: var(--sh-warm-ochre);
+  --sh-rule: var(--sh-warm-ochre);
+  --sh-accent: var(--sh-warm-ochre);
+  --sh-scrim: 31 21 12;
+}
+
+/* The drawing backdrop for an act. Sticky inside the act wrapper, so it is
+   pinned for exactly the act's scroll length and swaps at the boundary. */
+.sh-backdrop {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-bottom: -100svh;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity var(--sh-slow) var(--sh-ease);
+}
+
+:root[data-sh-mode="canvas"] .sh-backdrop {
+  opacity: 0;
+}
+
+.sh-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── A beat ──────────────────────────────────────────────────────────── */
+
+.sh-beat {
+  /* Height is authored in `narrative.ts` and arrives as an inline custom
+     property, so the camera score and this rule are reading one number. */
+  height: calc(var(--sh-vh) * 1svh);
+  /* A sticky child taller than its containing block does not stick — it simply
+     scrolls, and then overflows into the section below it. The descent beat was
+     authored at 70svh and its copy sat on top of the portfolio copy for the
+     whole of the portfolio beat. Every beat is now at least a viewport, and
+     `narrative.ts` will not accept less. */
+  min-height: 100svh;
+  position: relative;
+  z-index: 1;
+}
+
+.sh-pin {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  padding: clamp(5rem, 12vh, 9rem) var(--sh-gutter);
+}
+
+/* Copy sits on one side of the frame, opposite the console the camera is
+   looking at. The two facts are the same decision — see `narrative.ts`. */
+.sh-pin[data-side="left"] { justify-items: start; }
+.sh-pin[data-side="right"] { justify-items: end; text-align: right; }
+.sh-pin[data-side="center"] { justify-items: center; text-align: center; }
+
+.sh-copy {
+  max-width: var(--sh-col);
+  /* The scrim. Copy over a live scene needs one, and its opacity is what the
+     contrast ratios in `palette.ts` were measured against — so it is not a
+     taste value and must not be lowered without re-measuring. */
+  background: linear-gradient(
+    to right,
+    rgb(var(--sh-scrim) / 0.86) 0%,
+    rgb(var(--sh-scrim) / 0.72) 62%,
+    rgb(var(--sh-scrim) / 0) 100%
+  );
+  padding: clamp(1.25rem, 2.4vw, 2.25rem) clamp(3rem, 6vw, 5.5rem)
+    clamp(1.5rem, 2.4vw, 2.25rem) clamp(1.25rem, 2.4vw, 2rem);
+  margin-inline-start: calc(clamp(1.25rem, 2.4vw, 2rem) * -1);
+  border-inline-start: 1px solid rgb(from var(--sh-rule) r g b / 0.34);
+}
+
+.sh-pin[data-side="right"] .sh-copy {
+  background: linear-gradient(
+    to left,
+    rgb(var(--sh-scrim) / 0.86) 0%,
+    rgb(var(--sh-scrim) / 0.72) 62%,
+    rgb(var(--sh-scrim) / 0) 100%
+  );
+  margin-inline-start: 0;
+  margin-inline-end: calc(clamp(1.25rem, 2.4vw, 2rem) * -1);
+  border-inline-start: 0;
+  border-inline-end: 1px solid rgb(from var(--sh-rule) r g b / 0.34);
+}
+
+.sh-pin[data-side="center"] .sh-copy {
+  background: radial-gradient(
+    ellipse at center,
+    rgb(var(--sh-scrim) / 0.88) 0%,
+    rgb(var(--sh-scrim) / 0.62) 58%,
+    rgb(var(--sh-scrim) / 0) 100%
+  );
+  border: 0;
+  margin-inline: 0;
+  padding-inline: clamp(1.5rem, 5vw, 4rem);
+}
+
+/* Only one beat's copy should be legible at a time.
+ *
+ * At each handover the outgoing pin is still at the bottom of its section while
+ * the incoming one is at the top, so two headlines share the frame for a few
+ * hundred pixels of scroll. Fixed with a scroll-driven fade rather than JS: the
+ * page already has a fixed canvas and a scrubbed timeline, and this is the one
+ * piece of scroll-linked work that can run on the compositor for nothing.
+ *
+ * Progressive enhancement, and the unanimated state is the correct one —
+ * `opacity: 1`. Firefox stable still has scroll-driven animation behind a flag,
+ * so without the `@supports` guard this would hide the copy on Firefox, which
+ * is exactly the failure the rule exists to prevent. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .sh-beat {
+      view-timeline-name: --sh-beat;
+      view-timeline-axis: block;
+    }
+    .sh-copy {
+      animation: sh-copy-hold linear both;
+      animation-timeline: --sh-beat;
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes sh-copy-hold {
+  0% { opacity: 0; }
+  16%, 84% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── Copy ────────────────────────────────────────────────────────────── */
+
+.sh-label {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  margin: 0 0 clamp(1rem, 2vh, 1.75rem);
+  font-family: var(--font-mono);
+  font-size: var(--sh-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sh-label);
+}
+
+.sh-pin[data-side="right"] .sh-label { justify-content: flex-end; }
+.sh-pin[data-side="center"] .sh-label { justify-content: center; }
+
+.sh-label b {
+  font-weight: 400;
+  color: var(--sh-head);
+}
+
+.sh-h {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--sh-display);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  color: var(--sh-head);
+  text-wrap: balance;
+}
+
+.sh-beat:not(:first-child) .sh-h {
+  font-size: var(--sh-h2);
+}
+
+/* The one editorial move on the page, held to a single phrase per headline. */
+.sh-h em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.sh-sub {
+  margin: clamp(1rem, 2vh, 1.5rem) 0 0;
+  max-width: 34ch;
+  font-size: var(--sh-lede);
+  line-height: 1.5;
+  color: var(--sh-body);
+  text-wrap: pretty;
+}
+
+.sh-pin[data-side="right"] .sh-sub { margin-inline-start: auto; }
+.sh-pin[data-side="center"] .sh-sub { margin-inline: auto; }
+
+/* ── The code and terminal blocks ────────────────────────────────────────
+   These carry the text the console screens deliberately do not bake in. They
+   are the accessible, selectable, zoomable version of what the render shows
+   as row rhythm — which is what makes the render's abstraction legitimate
+   rather than a shortcut (WCAG 1.4.5). */
+
+.sh-pre {
+  margin: clamp(1rem, 2vh, 1.5rem) 0 0;
+  padding: 0.875rem 1rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: clamp(0.6875rem, 0.65rem + 0.16vw, 0.8125rem);
+  line-height: 1.7;
+  color: var(--sh-head);
+  background: rgb(var(--sh-scrim) / 0.72);
+  border: 1px solid rgb(from var(--sh-rule) r g b / 0.28);
+  border-radius: 3px;
+  text-align: left;
+  tab-size: 2;
+}
+
+.sh-pre .k { color: var(--sh-accent); }
+.sh-pre .d { color: var(--sh-body); }
+.sh-pre .g { color: var(--sh-cool-green); }
+
+/* ── Press and hold ──────────────────────────────────────────────────────
+   A real button, so it has an accessible name, a focus ring and the
+   Space/Enter path for free. `hidden` in the HTML and revealed by the render
+   loop: a control that drives a canvas which is not running is a control that
+   lies, which is the same rule v2 applied to its sound toggle. */
+
+.sh-hold {
+  --sh-hold-fill: 0;
+  position: relative;
+  margin: clamp(1.25rem, 2.4vh, 1.75rem) 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.6rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: var(--sh-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sh-head);
+  background: rgb(var(--sh-scrim) / 0.8);
+  border: 1px solid rgb(from var(--sh-rule) r g b / 0.5);
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  touch-action: none;
+  transition:
+    border-color var(--sh-fast) var(--sh-ease),
+    color var(--sh-fast) var(--sh-ease);
+}
+
+.sh-hold::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(from var(--sh-accent) r g b / 0.22);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 620ms var(--sh-ease);
+}
+
+.sh-hold[aria-pressed="true"]::before { transform: scaleX(1); }
+.sh-hold[aria-pressed="true"] { border-color: var(--sh-accent); }
+
+.sh-hold:hover { border-color: rgb(from var(--sh-rule) r g b / 0.85); }
+
+.sh-hold:focus-visible {
+  outline: 2px solid var(--sh-accent);
+  outline-offset: 3px;
+}
+
+.sh-hold span { position: relative; }
+
+/* The dot. Not decoration — it is the only thing on the control that says
+   "this is held, not clicked" before you have held it. */
+.sh-hold i {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sh-accent);
+  flex: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sh-hold:not([aria-pressed="true"]) i {
+    animation: sh-pulse 2.4s var(--sh-ease) infinite;
+  }
+}
+
+@keyframes sh-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ── The portfolio monoliths ─────────────────────────────────────────── */
+
+.sh-monoliths {
+  list-style: none;
+  margin: clamp(1.5rem, 3vh, 2.25rem) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  background: rgb(from var(--sh-rule) r g b / 0.26);
+  border: 1px solid rgb(from var(--sh-rule) r g b / 0.26);
+}
+
+.sh-monoliths a {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: baseline;
+  gap: 0.75rem;
+  /* Tight rows on purpose. Four of these plus a headline and a lede has to fit
+     one viewport at 900px without the fourth one falling off the bottom — which
+     it did at 0.75rem. Density is the point anyway: this is a manifest. */
+  padding: 0.55rem 1rem;
+  background: rgb(var(--sh-scrim) / 0.86);
+  color: var(--sh-head);
+  transition: background var(--sh-fast) var(--sh-ease);
+}
+
+.sh-monoliths a:hover,
+.sh-monoliths a:focus-visible {
+  background: rgb(from var(--sh-accent) r g b / 0.16);
+}
+
+.sh-monoliths a:focus-visible {
+  outline: 2px solid var(--sh-accent);
+  outline-offset: -2px;
+}
+
+.sh-mono-i {
+  font-family: var(--font-mono);
+  font-size: var(--sh-micro);
+  color: var(--sh-label);
+  font-variant-numeric: tabular-nums;
+}
+
+.sh-mono-n {
+  font-family: var(--font-display);
+  font-size: var(--sh-copy);
+  letter-spacing: -0.01em;
+}
+
+.sh-mono-l {
+  font-family: var(--font-mono);
+  font-size: var(--sh-micro);
+  color: var(--sh-body);
+}
+
+/* ── Chrome ──────────────────────────────────────────────────────────── */
+
+.sh-byline {
+  position: absolute;
+  top: clamp(1.25rem, 3vh, 2rem);
+  left: var(--sh-gutter);
+  right: var(--sh-gutter);
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--sh-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sh-cool-dim);
+}
+
+.sh-cue {
+  margin: clamp(1.5rem, 3vh, 2.5rem) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--sh-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sh-label);
+}
+
+.sh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: clamp(1.5rem, 3vh, 2rem) 0 0;
+}
+
+.sh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.15rem;
+  font-family: var(--font-mono);
+  font-size: var(--sh-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sh-head);
+  border: 1px solid rgb(from var(--sh-rule) r g b / 0.55);
+  border-radius: 2px;
+  transition:
+    background var(--sh-fast) var(--sh-ease),
+    border-color var(--sh-fast) var(--sh-ease);
+}
+
+.sh-btn:hover { background: rgb(from var(--sh-accent) r g b / 0.14); }
+.sh-btn:focus-visible { outline: 2px solid var(--sh-accent); outline-offset: 3px; }
+.sh-btn-primary { background: rgb(from var(--sh-accent) r g b / 0.18); }
+
+.sh-foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: clamp(1.25rem, 2.4vh, 1.75rem) 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--sh-micro);
+  letter-spacing: 0.08em;
+}
+
+.sh-foot-links a {
+  color: var(--sh-head);
+  border-bottom: 1px solid rgb(from var(--sh-rule) r g b / 0.5);
+  padding-bottom: 2px;
+}
+
+.sh-foot-links a:hover { border-bottom-color: var(--sh-accent); }
+.sh-foot-links a:focus-visible { outline: 2px solid var(--sh-accent); outline-offset: 3px; }
+
+.sh-note {
+  margin: clamp(2rem, 5vh, 3.5rem) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--sh-micro);
+  color: var(--sh-body);
+  opacity: 0.75;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────
+   Skip the effect, never slow it. There is no canvas on this path (the gate
+   in `Scene.tsx` never requests the chunk), so the only thing left to fix is
+   the track itself: 1,215svh of scroll with a static backdrop is a tax, not
+   an experience. The beats collapse to ordinary sections and the two drawings
+   become inline figures at the head of their acts. */
+
+@media (prefers-reduced-motion: reduce) {
+  .sh-beat {
+    height: auto;
+    min-height: 0;
+  }
+  .sh-pin {
+    position: static;
+    min-height: 0;
+    padding-block: clamp(3rem, 8vh, 5rem);
+  }
+  .sh-backdrop {
+    position: static;
+    margin-bottom: 0;
+    height: clamp(20rem, 52svh, 34rem);
+  }
+  .sh-act { background: var(--sh-ground); }
+  .sh-copy { background: none; border: 0; margin-inline: 0; padding-inline: 0; }
+  .sh-pin[data-side="right"] .sh-copy { border: 0; }
+}
+
+/* ── Widths ──────────────────────────────────────────────────────────────
+   Rule #17's four: 375, 768, 1440, and PWA-standalone 375. */
+
+@media (max-width: 1023px) {
+  .sh-root { --sh-col: min(34rem, 74vw); }
+  .sh-pin[data-side="right"] {
+    justify-items: start;
+    text-align: left;
+  }
+  .sh-pin[data-side="right"] .sh-copy {
+    background: linear-gradient(
+      to right,
+      rgb(var(--sh-scrim) / 0.86) 0%,
+      rgb(var(--sh-scrim) / 0.72) 62%,
+      rgb(var(--sh-scrim) / 0) 100%
+    );
+    margin-inline-start: calc(clamp(1.25rem, 2.4vw, 2rem) * -1);
+    margin-inline-end: 0;
+    border-inline-end: 0;
+    border-inline-start: 1px solid rgb(from var(--sh-rule) r g b / 0.34);
+  }
+  .sh-pin[data-side="right"] .sh-sub { margin-inline-start: 0; }
+}
+
+@media (max-width: 767px) {
+  /* No canvas below this line — the drawing is the page. Beats shorten to
+     roughly a viewport each so the narrative still has ten stops but the
+     document is ~11 screens rather than ~13. */
+  .sh-root { --sh-col: 100%; }
+  .sh-beat { height: auto; min-height: 92svh; }
+  .sh-pin {
+    align-content: end;
+    padding-bottom: clamp(3rem, 12vh, 6rem);
+  }
+  .sh-copy {
+    background: linear-gradient(
+      to top,
+      rgb(var(--sh-scrim) / 0.94) 0%,
+      rgb(var(--sh-scrim) / 0.86) 58%,
+      rgb(var(--sh-scrim) / 0) 100%
+    );
+    border: 0;
+    margin-inline: calc(var(--sh-gutter) * -1);
+    padding: 4rem var(--sh-gutter) 0;
+  }
+  .sh-pin[data-side="right"] .sh-copy,
+  .sh-pin[data-side="center"] .sh-copy {
+    background: linear-gradient(
+      to top,
+      rgb(var(--sh-scrim) / 0.94) 0%,
+      rgb(var(--sh-scrim) / 0.86) 58%,
+      rgb(var(--sh-scrim) / 0) 100%
+    );
+    border: 0;
+    margin-inline: calc(var(--sh-gutter) * -1);
+    padding: 4rem var(--sh-gutter) 0;
+  }
+  .sh-monoliths a { grid-template-columns: 2rem 1fr; }
+  .sh-mono-l { grid-column: 2; }
+}
+
+/* Standalone PWA: the status bar is not there to give the byline room, so it
+   takes the safe-area inset instead of a fixed top. */
+@media (display-mode: standalone) {
+  .sh-byline { top: max(clamp(1.25rem, 3vh, 2rem), env(safe-area-inset-top)); }
+  .sh-pin { padding-bottom: max(clamp(3rem, 12vh, 6rem), env(safe-area-inset-bottom)); }
+}
