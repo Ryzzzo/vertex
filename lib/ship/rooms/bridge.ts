@@ -174,6 +174,25 @@ export function createBridge(opts: {
     [-Math.PI / 2, 0, 0],
   );
 
+  /**
+   * The floor guide track — the one blue element in the room.
+   *
+   * Two thin runs either side of the centre line, recessed into the plating and
+   * stopping short of the dais. In the reference corridor this is the single
+   * restrained cyan note against an otherwise white-and-black scheme, and it
+   * does a real job beyond decoration: a lit line on the floor running toward
+   * the viewport is the strongest possible depth cue in a one-point
+   * perspective, because its convergence is unambiguous in a way a wall seam
+   * never is.
+   */
+  const trackGeo = track(bevelBox(0.07, 0.02, deckLength - 7.5, 0.008));
+  for (const tx of [-0.42, 0.42]) {
+    const line = new Mesh(trackGeo, accentStrip);
+    line.position.set(tx, 0.012, (ROOM.nearZ + ROOM.farZ) / 2 - 1.6);
+    line.receiveShadow = false;
+    group.add(line);
+  }
+
   /* ── Ceiling ───────────────────────────────────────────────────────────
      Dark, so it reads as a lid rather than a fifth wall, with the coffer ribs
      and two light runs doing the perspective work. The ribs are what carry

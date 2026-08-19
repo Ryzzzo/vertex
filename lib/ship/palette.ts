@@ -48,17 +48,29 @@ export const SHIP = {
   /** Panel side and hairline. Structural only — see the contrast note. */
   hullShade: "#7C8595",
   /**
-   * The base metal. Brushed titanium / gunmetal.
+   * The base metal. Brushed titanium / gunmetal, run deep.
    *
-   * Not near-black. An earlier pass put the panel faces at #0A0D14 and they
-   * lost their form — a plate with no value left in it cannot show its own
-   * bevel, so the glowing outlines had nothing to sit on. Slate keeps enough
-   * luminance to model while still reading as the dark field the white accents
-   * are measured against.
+   * ── How this can be near-black and still legible ─────────────────────────
+   *
+   * An earlier pass at #0A0D14 lost all form, and the correction to #1F2530
+   * recovered it — but by lifting the field, which costs the contrast the white
+   * strips need to pop. Both of those treat albedo as the only lever.
+   *
+   * The Blender VFX corridor shows the actual mechanism: its walls are nearly
+   * black and you can still read every panel division, because the dark metal
+   * is catching the light strips as **narrow specular highlights**. Form is
+   * described by reflection, not by diffuse value. That is why "darker but
+   * still legible" is not a contradiction — it is a shift from one channel to
+   * another.
+   *
+   * So the albedo goes deep (#10151D) while metalness stays high and roughness
+   * sits at 0.35–0.45: dark enough that the field reads as black, reflective
+   * enough that every bevel returns a thin bright line, and rough enough that
+   * those lines are soft rather than mirror-sharp.
    */
-  slate: "#1F2530",
+  slate: "#10151D",
   /** The lighter slate, for faces catching the ceiling runs. */
-  slateLit: "#2D3540",
+  slateLit: "#1A212B",
   /**
    * Deep recessed channel between panels. Stays near-black — the recess is the
    * joint, not the plate, and it is what gives the slate somewhere to be light

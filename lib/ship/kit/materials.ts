@@ -137,8 +137,8 @@ export function markedHullMaterial(
   seed: number,
 ): MeshPhysicalNodeMaterial {
   const m = new MeshPhysicalNodeMaterial({
-    metalness: 0.9,
-    roughness: 0.34,
+    metalness: 0.88,
+    roughness: 0.4,
     clearcoat: 0.4,
     clearcoatRoughness: 0.2,
   });
@@ -146,7 +146,11 @@ export function markedHullMaterial(
 
   m.colorNode = Fn(() => {
     const p = uv();
-    const base = color(SHIP.hull);
+    // A step lighter than its neighbours, not white. Against a near-black field
+    // a white plate every third bay reads as a stripe pattern; the reference
+    // corridor shows its equipment as tonal variation inside the dark, which is
+    // what "you can still make out where things are" actually looks like.
+    const base = color(SHIP.slateLit);
 
     /**
      * A block of index marks in the upper-left corner: three heavy bars of
@@ -192,8 +196,11 @@ export function markedHullMaterial(
     const tick = smoothstep(0.34, 0.46, p.y.mul(5).fract().sub(0.5).abs().mul(2));
     const tickInk = inTicks.mul(tick);
 
-    const ink = max(max(markInk, hazardInk), tickInk).mul(0.82);
-    return mix(base, color(SHIP.recess), ink);
+    // Ink now lifts rather than darkens. On a near-black plate a darker stencil
+    // has nowhere to go — it disappears into the panel it is printed on. Real
+    // hull stencilling on dark hardware is pale for exactly this reason.
+    const ink = max(max(markInk, hazardInk), tickInk).mul(0.66);
+    return mix(base, color(SHIP.hullShade), ink);
   })();
 
   return bag.add(m);
@@ -317,7 +324,11 @@ export function deckMaterial(
     // instead of tiling out flat to the edges.
     const centre = uv().sub(vec2(0.5, 0.5)).length();
     const falloff = smoothstep(0.62, 0.12, centre);
-    return color(SHIP.accent).mul(seam).mul(falloff).mul(0.22);
+    // Neutral and very faint. The blue in the floor is now a single lit track
+    // running the room's length — one navigational cue, as in the reference,
+    // rather than a blue grid across the whole deck. A grid of accent seams was
+    // spending the room's entire colour budget on the floor.
+    return color("#8FA6C2").mul(seam).mul(falloff).mul(0.1);
   })();
 
   return bag.add(m);
@@ -364,12 +375,16 @@ export function darkPanelMaterial(
    * a manufacturing artefact rather than a damage one — it says the plate was
    * finished, not that it has been used.
    */
+  // 0.35–0.45. Below this the panels mirror the strips into hard glints that
+  // read as chrome; above it the reflection spreads too wide to describe an
+  // edge, and with a near-black albedo an edge that is not described by
+  // specular is not described at all.
   m.roughnessNode = Fn(() => {
     const p = positionLocal;
     const brushed = mx_noise_float(
       vec3(p.x.mul(1.4), p.y.mul(52.0), p.z.mul(1.4)),
-    ).mul(0.04);
-    return float(0.34).add(brushed).clamp(0.28, 0.42);
+    ).mul(0.045);
+    return float(0.4).add(brushed).clamp(0.35, 0.45);
   })();
 
   return bag.add(m);
