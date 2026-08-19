@@ -1,0 +1,467 @@
+/**
+ * Ship shell styling.
+ *
+ * Layering, and why it is this way:
+ *
+ *   z 0  .ship-canvas      fixed, the rendered scene
+ *   z 0  .bridge-drawing   fixed, later in the DOM so it sits over the canvas
+ *                          and can fade off it once a frame has rendered
+ *   z 1  .ship-content     normal flow, the room's copy
+ *   z 2  .hud              fixed, the ship computer — persists across rooms
+ *
+ * Everything in the scene layer is `position: fixed`, so the canvas never
+ * contributes to document width. That is what makes the no-horizontal-scroll
+ * guarantee at 320px hold without negotiating with the renderer.
+ *
+ * The overlay is asymmetric on purpose. The room is symmetric and the viewport
+ * is dead centre, so copy over the middle would fight the composition. The copy
+ * sits low-left over the deliberately empty foreground deck; the ship computer
+ * sits low-right.
+ */
+
+.ship {
+  position: relative;
+  min-height: 100svh;
+  color: var(--sh-text);
+  background: var(--sh-space);
+  /* One curve for the whole site, matching --easing-linear in globals.css. */
+  --sh-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ship-gutter: clamp(1.25rem, 0.75rem + 2.4vw, 2.75rem);
+}
+
+/* ── Scene layer ──────────────────────────────────────────────────────── */
+
+.ship-canvas,
+.bridge-drawing {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/**
+ * The drawing is the first paint on every client and the entire room on Tier C.
+ * It lifts only once a frame has genuinely rendered — `data-ship-scene="live"`
+ * is set two rAF ticks after the renderer's first pass, not when the module
+ * resolves. Fading on "the module loaded" would reveal a black canvas, and a
+ * page that shows less after loading more is the worst possible read.
+ *
+ * With JavaScript off the attribute never appears and the drawing simply stays.
+ * That is the correct unenhanced state, not a fallback.
+ */
+.bridge-drawing {
+  opacity: 1;
+  transition: opacity 900ms var(--sh-ease);
+}
+
+[data-ship-scene="live"] .bridge-drawing {
+  opacity: 0;
+}
+
+/* ── Content layer ────────────────────────────────────────────────────── */
+
+.ship-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding: var(--ship-gutter);
+  pointer-events: none;
+}
+
+/* Interactive things re-enable pointer events explicitly, so the empty regions
+   of the overlay never intercept the scene beneath them. */
+.ship-content a,
+.ship-content button,
+.ship-copy {
+  pointer-events: auto;
+}
+
+.ship-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sh-text-dim);
+}
+
+.ship-copy {
+  margin-top: auto;
+  max-width: 33rem;
+  padding: clamp(1rem, 0.7rem + 1.4vw, 1.75rem);
+  border: 1px solid color-mix(in oklab, var(--sh-hull-shade) 34%, transparent);
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--sh-scrim) 88%, transparent);
+  /* Painted once on a static layer — never inside a render loop. */
+  backdrop-filter: blur(14px);
+}
+
+.ship-eyebrow {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sh-accent);
+}
+
+.ship-title {
+  margin: 0;
+  font-family: var(--font-display);
+  /* A rem term is mixed with the vw term so this still scales under browser
+     zoom. A bare vw in a clamp() middle stops responding at fixed widths. */
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+  color: var(--sh-hull);
+}
+
+.ship-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.ship-blurb {
+  margin: 0.875rem 0 0;
+  max-width: 42ch;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--sh-text);
+  text-wrap: pretty;
+}
+
+.ship-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 1.375rem;
+}
+
+.ship-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.05rem;
+  border: 1px solid var(--sh-hull-shade);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--sh-hull);
+  background: transparent;
+  transition:
+    border-color 200ms var(--sh-ease),
+    color 200ms var(--sh-ease),
+    background-color 200ms var(--sh-ease);
+}
+
+.ship-btn:hover {
+  border-color: var(--sh-accent);
+  color: var(--sh-accent);
+}
+
+.ship-btn-primary {
+  border-color: var(--sh-accent);
+  background: color-mix(in oklab, var(--sh-accent) 16%, transparent);
+}
+
+.ship-btn-primary:hover {
+  background: color-mix(in oklab, var(--sh-accent) 26%, transparent);
+  color: var(--sh-hull);
+}
+
+/* ── Ship computer ────────────────────────────────────────────────────── */
+
+.hud {
+  position: fixed;
+  z-index: 2;
+  right: var(--ship-gutter);
+  bottom: var(--ship-gutter);
+  min-width: 17.5rem;
+  padding: clamp(0.875rem, 0.7rem + 0.8vw, 1.25rem);
+  border: 1px solid color-mix(in oklab, var(--sh-hull-shade) 34%, transparent);
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--sh-scrim) 90%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.hud-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sh-text-dim);
+  cursor: pointer;
+  /* The default triangle is a browser artefact, not part of the ship. The
+     panel's own open/closed state carries the affordance. */
+  list-style: none;
+}
+
+.hud-title::-webkit-details-marker {
+  display: none;
+}
+
+.hud-title:focus-visible {
+  outline: 2px solid var(--sh-accent);
+  outline-offset: 3px;
+}
+
+.hud-title-text {
+  /* Allowed to shrink before the compartment name does. On a narrow collapsed
+     bar the label is the least valuable thing on the row. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Only shown when the panel is collapsed, so a closed ship computer still
+   answers the one question it exists to answer: where am I. */
+.hud-title-current {
+  margin-left: auto;
+  padding-left: 0.5rem;
+  color: var(--sh-accent);
+  white-space: nowrap;
+  flex: none;
+  display: none;
+}
+
+.hud:not([open]) .hud-title {
+  margin-bottom: 0;
+}
+
+.hud:not([open]) .hud-title-current {
+  display: inline;
+}
+
+.hud-title-mark {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sh-accent);
+  flex: none;
+}
+
+.hud-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hud-item {
+  border-top: 1px solid color-mix(in oklab, var(--sh-hull-shade) 22%, transparent);
+}
+
+.hud-item:first-child {
+  border-top: 0;
+}
+
+.hud-link,
+.hud-item.is-sealed {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+
+.hud-link {
+  color: var(--sh-text);
+  transition:
+    color 180ms var(--sh-ease),
+    background-color 180ms var(--sh-ease);
+}
+
+.hud-link:hover {
+  color: var(--sh-hull);
+  background: color-mix(in oklab, var(--sh-accent) 12%, transparent);
+}
+
+.hud-link[aria-current="page"] {
+  color: var(--sh-accent);
+}
+
+/* Sealed compartments read as scheduled rather than broken, and they are not
+   focusable — nothing reachable by keyboard should lead nowhere. */
+.hud-item.is-sealed {
+  color: var(--sh-text-dim);
+}
+
+.hud-designation {
+  white-space: nowrap;
+}
+
+.hud-status {
+  font-size: 0.6875rem;
+  color: var(--sh-text-dim);
+  text-align: right;
+}
+
+.hud-link[aria-current="page"] .hud-status {
+  color: var(--sh-accent);
+}
+
+/* `accentDim` would be the obvious colour here and it measures 3.73:1, so it
+   is not used. `hullShade` clears 4.5:1 at 5.26:1. */
+.hud-opens {
+  color: var(--sh-hull-shade);
+}
+
+/* ── Focus. Never suppressed, never invisible. ────────────────────────── */
+
+.ship a:focus-visible,
+.ship button:focus-visible {
+  outline: 2px solid var(--sh-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.ship-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+
+.ship-skip:focus-visible {
+  left: var(--ship-gutter);
+  top: var(--ship-gutter);
+  z-index: 3;
+  padding: 0.6rem 1rem;
+  background: var(--sh-scrim);
+  border: 1px solid var(--sh-accent);
+  color: var(--sh-hull);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+/* ── Room prose ───────────────────────────────────────────────────────────
+   Real DOM under the scene. This is what a screen reader reads, what a crawler
+   indexes, and what a Tier C visitor gets in full. The canvas is aria-hidden
+   and carries nothing that is not also here. */
+
+.ship-readout {
+  position: relative;
+  z-index: 1;
+  padding: clamp(3rem, 2rem + 4vw, 5rem) var(--ship-gutter)
+    calc(var(--ship-gutter) + 12rem);
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in oklab, var(--sh-space) 94%, transparent) 14%
+  );
+}
+
+.ship-readout-inner {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.ship-readout h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 1.1rem + 1.1vw, 1.75rem);
+  letter-spacing: -0.02em;
+  color: var(--sh-hull);
+  margin: 0 0 0.75rem;
+}
+
+.ship-readout p {
+  margin: 0 0 1rem;
+  line-height: 1.65;
+  color: var(--sh-text);
+  text-wrap: pretty;
+}
+
+.ship-readout a {
+  color: var(--sh-accent);
+}
+
+/* ── Narrow ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .hud {
+    left: var(--ship-gutter);
+    /* Clear the assistant bubble in the corner, which otherwise sits on top of
+       the collapsed bar and eats the compartment name. */
+    right: calc(var(--ship-gutter) + 3.75rem);
+    min-width: 0;
+    /* Expanded, five compartments plus wrapped status text is taller than the
+       viewport minus the copy card. It scrolls inside itself rather than
+       pushing the page or covering the room. */
+    max-height: min(52svh, 24rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Clear the collapsed ship computer. Expanded it overlays, which is the
+     correct behaviour for a panel the visitor just opened. */
+  .ship-content {
+    padding-bottom: calc(var(--ship-gutter) + 5.5rem);
+  }
+
+  .ship-copy {
+    max-width: none;
+    /* The copy card was taking two thirds of a 375×812 screen and burying the
+       room behind it. On a phone the room is most of what there is to look at,
+       so the card gets out of its way. */
+    padding: 1rem;
+  }
+
+  .ship-title {
+    font-size: clamp(1.5rem, 1.1rem + 2.2vw, 2rem);
+  }
+
+  .ship-blurb {
+    font-size: 0.9375rem;
+    margin-top: 0.625rem;
+  }
+
+  .ship-actions {
+    margin-top: 1rem;
+  }
+
+  .ship-topbar {
+    font-size: 0.625rem;
+  }
+}
+
+/* Below 480px the sealed rows wrap to three lines with the phase suffix. The
+   status word is the information; the schedule is detail the ship computer can
+   drop at this width. */
+@media (max-width: 480px) {
+  .hud-opens {
+    display: none;
+  }
+}
+
+/**
+ * Reduced motion skips rather than slows. The renderer is never started on this
+ * path — `detectCapability` returns Tier C before the dynamic import fires — so
+ * all that remains here is to stop the drawing's own handover transition and
+ * the hover eases.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .bridge-drawing,
+  .ship-btn,
+  .hud-link {
+    transition: none;
+  }
+}
