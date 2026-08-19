@@ -328,7 +328,11 @@ export function deckMaterial(
     // running the room's length — one navigational cue, as in the reference,
     // rather than a blue grid across the whole deck. A grid of accent seams was
     // spending the room's entire colour budget on the floor.
-    return color("#8FA6C2").mul(seam).mul(falloff).mul(0.1);
+    // Lifted from 0.1. With the room deeper and the camera tilted down, the
+    // deck is now a third of the frame rather than a sliver — a floor that dark
+    // is a hole the composition falls into, and the seams are the only thing
+    // describing how far away the far end is.
+    return color("#8FA6C2").mul(seam).mul(falloff).mul(0.28);
   })();
 
   return bag.add(m);

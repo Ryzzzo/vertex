@@ -20,6 +20,7 @@ import {
   ExtrudeGeometry,
   PlaneGeometry,
   Shape,
+  ShapeGeometry,
   type BufferGeometry,
 } from "three/webgpu";
 
@@ -158,6 +159,48 @@ export function slab(w: number, h: number, d: number): BufferGeometry {
 /** A flat quad on the XY plane, centred. Screens, decals, deck sections. */
 export function quad(w: number, h: number, seg = 1): BufferGeometry {
   return new PlaneGeometry(w, h, seg, seg);
+}
+
+/**
+ * An arbitrary flat polygon, built on the XY plane for the caller to rotate.
+ *
+ * Used for the deck and ceiling now that the room is an octagon rather than a
+ * rectangle — a `PlaneGeometry` cannot describe either.
+ *
+ * UVs are re-normalised to 0..1 across the polygon's bounds. `ShapeGeometry`
+ * writes the vertex position straight into the UV, so on a 22-metre room the
+ * incoming UVs run 0..22 — and every material here multiplies UV by a division
+ * count expecting 0..1. Left alone, the deck grid comes out at twenty-two times
+ * its intended density, which reads as noise rather than as plating.
+ */
+export function polygonPlate(points: [number, number][]): BufferGeometry {
+  const s = new Shape();
+  s.moveTo(points[0][0], points[0][1]);
+  for (let i = 1; i < points.length; i++) s.lineTo(points[i][0], points[i][1]);
+  s.closePath();
+
+  const g = new ShapeGeometry(s);
+
+  const uv = g.getAttribute("uv");
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  for (let i = 0; i < uv.count; i++) {
+    minX = Math.min(minX, uv.getX(i));
+    maxX = Math.max(maxX, uv.getX(i));
+    minY = Math.min(minY, uv.getY(i));
+    maxY = Math.max(maxY, uv.getY(i));
+  }
+  const spanX = maxX - minX || 1;
+  const spanY = maxY - minY || 1;
+  for (let i = 0; i < uv.count; i++) {
+    uv.setXY(i, (uv.getX(i) - minX) / spanX, (uv.getY(i) - minY) / spanY);
+  }
+  uv.needsUpdate = true;
+
+  g.computeVertexNormals();
+  return g;
 }
 
 /**

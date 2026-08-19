@@ -1,40 +1,34 @@
 /**
  * Room 01 — the Bridge.
  *
- * ── The composition, read off the reference rather than described ─────────
+ * ── The shell, and why it was rebuilt ─────────────────────────────────────
  *
- * Symmetric one-point perspective on the centre axis. A chamfered viewport
- * dominates the far wall with a gas giant behind it. Three console pods per
- * side recede toward it. A command chair sits small and mid-ground on a raised
- * dais, its headrest well below the viewport sill. A coffered ceiling carries
- * two longitudinal light strips that do most of the lighting, and the deck is
- * dark plate with inscribed seams.
+ * The previous bridge was a rectangle 18 m wide by 23 m deep and still read as
+ * a small box. Size was never the problem; three other things were, and the
+ * rebuild addresses each with geometry rather than with lighting:
  *
- * Grey, white, black. Blue appears in the star field, the screens and the
- * interactive highlights, and nowhere else.
+ *   1. **A right angle in peripheral vision says "box".** Two parallel side
+ *      walls meeting a flat back wall put a hard 90° corner in both bottom
+ *      corners of frame, and no amount of depth behind that undoes it. The
+ *      plan is now an elongated octagon (`kit/plan.ts`), so every corner the
+ *      viewer sees is 135°.
+ *   2. **A room is only as deep as its furthest interesting thing.** The old
+ *      viewport took under half the front wall, so the wall was the subject and
+ *      the window a feature on it. It is now ~72% of the front wall and the
+ *      brightest thing in the room.
+ *   3. **Perspective needs something at intermediate distance.** An empty floor
+ *      between near and far gives the eye nothing to measure with, so twelve
+ *      metres and four metres look alike. There is now a helm arc at the
+ *      mid-point, a raised dais, and floor tracks converging the full length.
  *
- * ── The three failures this layout exists to avoid ────────────────────────
+ * The camera also moved back and up. The chair sits at the near end of a long
+ * room rather than in the middle of a short one.
  *
- * The previous bridge was rejected on camera, palette and scale, and each has a
- * number here rather than an intention:
+ * ── What carried over unchanged ───────────────────────────────────────────
  *
- *   Cramped — the chair back filled a third of the frame and occluded the
- *     viewport. Here the camera is at y=3.5 and z=+7.0 with a 55° vertical
- *     field, and the chair tops out at y=1.88 at z=-2.2. That puts the chair
- *     silhouette roughly 8° below the camera axis and the viewport sill roughly
- *     1.4° below it — the chair sits in the lower third and never crosses the
- *     glass. Verified by looking, not by this arithmetic.
- *
- *   Palette — a warm tan banded planet that read as wooden venetian blinds.
- *     The gas giant here is cold and its bands are warped by a second noise
- *     octave so they shear rather than run parallel. Parallel stripes are the
- *     failure; turbulence is atmosphere.
- *
- *   Scale — nothing conveyed room size. Here the ceiling and the deck are both
- *     in frame with their perspective lines converging, the side walls run the
- *     full 23 m of the room, and there is a deliberate expanse of empty deck in
- *     the foreground. Spaciousness comes from what is in the corners of the
- *     frame, not from the lens.
+ * Deep slate albedo with form described by specular rather than diffuse, the
+ * glowing traced outlines, stencil ink that lifts rather than darkens, the blue
+ * floor track, green at roughly a tenth, cast shadows and the chair rim light.
  */
 import {
   Group,
@@ -51,10 +45,12 @@ import {
   bevelBox,
   bevelFrame,
   bevelPanel,
+  polygonPlate,
   post,
   quad,
   seatBack,
 } from "../kit/shapes";
+import { octagonPlan, BRIDGE_PLAN_CONFIG } from "../kit/plan";
 import {
   accentStripMaterial,
   chromeMaterial,
@@ -76,44 +72,45 @@ import { SHIP } from "../palette";
 import type { FrameState, RoomModule } from "../scene/types";
 import type { QualityTier } from "../scene/quality";
 
-/* ── Layout. Every number the room's proportions depend on, in one place. ── */
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+
+const PLAN = octagonPlan();
 
 const ROOM = {
-  halfWidth: 9,
-  ceiling: 5.6,
-  /** The viewport wall. */
-  farZ: -14,
-  /** Rear bulkhead, behind the camera — closes the box so nothing reads open. */
-  nearZ: 9,
+  /** At the spine. The vault rises to this at the centre line. */
+  ceilingCrown: 8.6,
+  /** Where the vault meets the side walls. Must clear the viewport top. */
+  ceilingSpring: 6.2,
 } as const;
 
+/** ~72% of the 14 m front wall. The room's defining feature. */
 const VIEWPORT = {
-  width: 8.2,
-  height: 3.1,
-  /** Bottom edge. Above the chair's headrest (1.88) by design. */
-  sill: 1.95,
-  frame: 0.5,
+  width: 10.2,
+  height: 4.0,
+  sill: 1.7,
+  frame: 0.42,
 } as const;
 
-const CHAIR = { z: -2.2, daisRadius: 1.65, daisHeight: 0.3 } as const;
+const CHAIR = { z: 1.5, daisRadius: 2.0, daisHeight: 0.42 } as const;
 
-/**
- * Console pods, per side. Sliced to the quality tier's station count.
- *
- * Pushed outboard and spread further apart than the first pass, where they
- * overlapped one another in projection and crowded the lower third — the
- * stations should flank the viewport and lead the eye to it, not compete with
- * it for the same screen space.
- */
-const STATION_Z = [-4.4, -7.8, -11.0] as const;
-const STATION_X = 6.6;
+/** The helm arc — the mid-ground object that makes the depth legible. */
+const HELM = { z: -6.6, halfSpan: 4.6 } as const;
 
 export const BRIDGE_CAMERA = {
-  position: [0, 3.5, 7.0] as [number, number, number],
-  target: [0, 2.9, ROOM.farZ] as [number, number, number],
-  /** Vertical. At 16:9 this is ~86° horizontal — wide enough to hold both side
-   *  walls and the ceiling without the barrel distortion a 75° vertical would
-   *  put on the straight panel runs. */
+  /** Behind and above the chair, at the room's near end. */
+  position: [0, 5.4, 10.5] as [number, number, number],
+  /**
+   * Aimed low, at the deck rather than at the viewport's centre.
+   *
+   * The previous target sat at y=3.0 and put the camera almost level, which
+   * spent the top 40% of frame on unlit ceiling void and gave the eye no floor
+   * to measure the room against. Looking *down* a long room is the classic
+   * depth read — the deck recedes, the guide tracks converge, and the vault
+   * crops out of frame instead of dominating it. The viewport still lands in
+   * the upper third because it is four metres tall.
+   */
+  target: [0, 1.6, PLAN.frontZ] as [number, number, number],
+  /** Vertical; ~86° horizontal at 16:9. */
   fov: 55,
 } as const;
 
@@ -153,132 +150,16 @@ export function createBridge(opts: {
     const mesh = new Mesh(track(g), m);
     mesh.position.set(...pos);
     if (rot) mesh.rotation.set(...rot);
-    // Both flags, on everything. Meshes default to neither, so a scene can have
-    // a correctly configured shadow-casting light and render no shadows at all
-    // — which is what was happening here.
+    // Both flags on everything. Meshes default to neither, so a correctly
+    // configured shadow-casting light renders no shadows at all without them.
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     group.add(mesh);
     return mesh;
   };
 
-  /* ── Deck ──────────────────────────────────────────────────────────────
-     One plate with the seams inscribed by the material rather than modelled.
-     A deck built from individual plate meshes is several hundred draw calls
-     for a pattern a grid function returns for free. */
-  const deckLength = ROOM.nearZ - ROOM.farZ;
-  add(
-    quad(ROOM.halfWidth * 2, deckLength),
-    deckMaterial(bag, quality.deckDivisions),
-    [0, 0, (ROOM.nearZ + ROOM.farZ) / 2],
-    [-Math.PI / 2, 0, 0],
-  );
-
-  /**
-   * The floor guide track — the one blue element in the room.
-   *
-   * Two thin runs either side of the centre line, recessed into the plating and
-   * stopping short of the dais. In the reference corridor this is the single
-   * restrained cyan note against an otherwise white-and-black scheme, and it
-   * does a real job beyond decoration: a lit line on the floor running toward
-   * the viewport is the strongest possible depth cue in a one-point
-   * perspective, because its convergence is unambiguous in a way a wall seam
-   * never is.
-   */
-  const trackGeo = track(bevelBox(0.07, 0.02, deckLength - 7.5, 0.008));
-  for (const tx of [-0.42, 0.42]) {
-    const line = new Mesh(trackGeo, accentStrip);
-    line.position.set(tx, 0.012, (ROOM.nearZ + ROOM.farZ) / 2 - 1.6);
-    line.receiveShadow = false;
-    group.add(line);
-  }
-
-  /* ── Ceiling ───────────────────────────────────────────────────────────
-     Dark, so it reads as a lid rather than a fifth wall, with the coffer ribs
-     and two light runs doing the perspective work. The ribs are what carry
-     depth — a flat dark ceiling gives the eye nothing to measure the room by. */
-  add(
-    quad(ROOM.halfWidth * 2, deckLength),
-    recess,
-    [0, ROOM.ceiling, (ROOM.nearZ + ROOM.farZ) / 2],
-    [Math.PI / 2, 0, 0],
-  );
-
-  // Ribs are DARK. The first pass made them `hullEdge`, and a run of bright
-  // horizontal bars across the ceiling read as venetian blinds — the exact
-  // texture the previous bridge was rejected for, reproduced overhead in white.
-  // A coffered ceiling is recesses with light between them, so the structure
-  // has to be the shadow and the strips have to be the only bright thing up
-  // there.
-  const ribSpan = deckLength / (quality.ceilingRibs + 1);
-  const ribGeo = track(bevelBox(ROOM.halfWidth * 2 - 0.4, 0.17, 0.3));
-  const ribLightGeo = track(bevelBox(ROOM.halfWidth * 2 - 1.9, 0.06, 0.07, 0.015));
-  for (let i = 1; i <= quality.ceilingRibs; i++) {
-    const z = ROOM.farZ + ribSpan * i;
-    const rib = new Mesh(ribGeo, recess);
-    rib.position.set(0, ROOM.ceiling - 0.09, z);
-    group.add(rib);
-
-    // A lit inlay every third coffer. Every other one, against the two long
-    // runs already up there, turned the ceiling into a solid sheet of light —
-    // the ceiling is nearly half the frame, so it is the fastest surface in the
-    // room to overload.
-    if (i % 3 === 1) {
-      const inlay = new Mesh(ribLightGeo, strip);
-      inlay.position.set(0, ROOM.ceiling - 0.2, z);
-      group.add(inlay);
-    }
-  }
-
-  // The two longitudinal runs. These are the room's actual light source, and
-  // their convergence toward the viewport is the strongest depth cue in frame.
-  for (const x of [-2.8, 2.8]) {
-    add(bevelBox(0.3, 0.1, deckLength - 1.2), strip, [
-      x,
-      ROOM.ceiling - 0.28,
-      (ROOM.nearZ + ROOM.farZ) / 2,
-    ]);
-    // A recessed housing around each run so the light reads as built in.
-    add(bevelBox(0.72, 0.3, deckLength - 1.0), recess, [
-      x,
-      ROOM.ceiling - 0.16,
-      (ROOM.nearZ + ROOM.farZ) / 2,
-    ]);
-  }
-
-  /* ── Side walls ────────────────────────────────────────────────────────
-     The signature motif, and the thing that makes the reference read as
-     cinematic rather than architectural: a near-black panel with a **glowing
-     chamfered outline traced around it**.
-
-     Not a white panel with a light near it. The outline is the light source,
-     the panel is the dark ground it reads against, and the panel's own bevel
-     carries the reflection of the outline back into the room. Inverting those
-     two roles is the entire difference between this and a lit interior.
-
-     Geometry is built once per course and shared across all 28 placements.
-     Twenty-eight identical shapes allocated separately is the kit-of-parts
-     principle stated and then ignored — one mesh, many placements, is the
-     whole reason a room like this costs kilobytes. */
-  const panelCount = 7;
-  const panelPitch = deckLength / panelCount;
-  const panelW = panelPitch - 0.24;
-  // 0.05, down from 0.085. The reference outlines are hairlines against a large
-  // dark panel; at 0.085 they read as wide bands and the panel becomes a small
-  // dark hole in a white surround, which inverts the ratio again.
-  const trim = 0.05;
-
-  // Shared geometry. Disposed once via `geometries`, referenced many times.
-  const upperPanelGeo = track(bevelPanel(panelW, 2.44, 0.16));
-  const lowerPanelGeo = track(bevelPanel(panelW, 2.04, 0.16));
-  const upperFrameGeo = track(
-    bevelFrame(panelW + 0.1, 2.54, panelW + 0.1 - trim * 2, 2.54 - trim * 2, 0.07, 0.16, 0.012),
-  );
-  const lowerFrameGeo = track(
-    bevelFrame(panelW + 0.1, 2.14, panelW + 0.1 - trim * 2, 2.14 - trim * 2, 0.07, 0.16, 0.012),
-  );
-
-  const placeShared = (
+  /** Place an already-tracked geometry again. One shape, many placements. */
+  const reuse = (
     g: BufferGeometry,
     m: Material,
     pos: [number, number, number],
@@ -290,89 +171,209 @@ export function createBridge(opts: {
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     group.add(mesh);
+    return mesh;
   };
 
-  for (const side of [-1, 1] as const) {
-    const x = ROOM.halfWidth * side;
-    const yaw: [number, number, number] = [0, (-Math.PI / 2) * side, 0];
+  /* ── Deck ──────────────────────────────────────────────────────────────
+     The octagon itself, with seams inscribed by the material rather than
+     modelled. */
+  add(
+    polygonPlate(PLAN.vertices),
+    deckMaterial(bag, quality.deckDivisions),
+    [0, 0, 0],
+    [Math.PI / 2, 0, 0],
+  );
 
-    // The wall behind the panels, so the gaps read as depth rather than holes.
+  /* ── Floor guide tracks ────────────────────────────────────────────────
+     Two thin runs the full length of the room, stopping short of the dais.
+     A lit line converging toward the viewport is the strongest depth cue
+     available in one-point perspective — its convergence is unambiguous in a
+     way a wall seam never is, which is exactly what the old room lacked. */
+  const trackLength = CHAIR.z - CHAIR.daisRadius - PLAN.frontZ - 1.2;
+  const trackGeo = track(bevelBox(0.08, 0.02, trackLength, 0.008));
+  for (const tx of [-0.5, 0.5]) {
+    const line = reuse(trackGeo, accentStrip, [
+      tx,
+      0.012,
+      (CHAIR.z - CHAIR.daisRadius + PLAN.frontZ) / 2 - 0.6,
+    ], [0, 0, 0]);
+    line.castShadow = false;
+    line.receiveShadow = false;
+  }
+
+  /* ── Walls ─────────────────────────────────────────────────────────────
+     Each octagon edge gets a run of dark panels with glowing traced outlines.
+     Segment geometry is derived from the plan, so reshaping the room does not
+     mean re-deriving eight sets of angles by hand. */
+  /**
+   * Three courses, not two.
+   *
+   * Two topped out at y≈5.2 in a room whose walls run to 6.2, leaving a metre
+   * of unlit backing above every bay — which from a camera tilted down reads as
+   * a dead black band across the top third of frame. A wall has to be panelled
+   * all the way to where it meets the ceiling, or the room appears to stop
+   * before it does.
+   */
+  const COURSE = [
+    { y: 5.42, h: 1.35 },
+    { y: 3.62, h: 2.05 },
+    { y: 1.28, h: 2.3 },
+  ] as const;
+  const trim = 0.05;
+
+  for (const seg of PLAN.segments) {
+    const [mx, mz] = seg.mid;
+    const yaw: [number, number, number] = [0, seg.yaw, 0];
+
+    // The front wall carries the viewport and builds its own surface below.
+    //
+    // This `continue` has to come BEFORE the backing quad, not after. Adding an
+    // opaque near-black plate across the whole front wall and *then* skipping
+    // the panel run left the viewport aperture covered by it — the frame and
+    // its glowing outline drew correctly over a sealed hole, so the window read
+    // as a switched-off panel while the planet and star field sat behind a
+    // wall, rendering perfectly and visible to nobody.
+    if (seg.kind === "front") continue;
+
+    // Backing, so the gaps between panels read as depth rather than as holes.
     add(
-      quad(deckLength, ROOM.ceiling),
+      quad(seg.length, ROOM.ceilingSpring + 1.6),
       recess,
-      [x, ROOM.ceiling / 2, (ROOM.nearZ + ROOM.farZ) / 2],
+      [mx, (ROOM.ceilingSpring + 1.6) / 2, mz],
       yaw,
     );
 
-    for (let i = 0; i < panelCount; i++) {
-      const z = ROOM.farZ + panelPitch * (i + 0.5);
+    const bays = Math.max(2, Math.round(seg.length / 3.1));
+    const pitch = seg.length / bays;
+    const panelW = pitch - 0.26;
+    const inward: [number, number] = [Math.sin(seg.yaw), Math.cos(seg.yaw)];
+    const along: [number, number] = [inward[1], -inward[0]];
 
-      // Every third panel carries hull stencilling. Every panel marked would
-      // read as wallpaper; one in three reads as a hull where only some plates
-      // are access panels, which is what real hardware looks like.
-      placeShared(
-        upperPanelGeo,
-        i % 3 === 1 ? marked : darkPanel,
-        [x - 0.12 * side, 4.0, z],
-        yaw,
-      );
-      placeShared(
-        lowerPanelGeo,
-        i % 3 === 2 ? marked : darkPanel,
-        [x - 0.12 * side, 1.35, z],
-        yaw,
+    for (const course of COURSE) {
+      const panelGeo = track(bevelPanel(panelW, course.h, 0.16));
+      const frameGeo = track(
+        bevelFrame(
+          panelW + 0.1,
+          course.h + 0.1,
+          panelW + 0.1 - trim * 2,
+          course.h + 0.1 - trim * 2,
+          0.07,
+          0.16,
+          0.012,
+        ),
       );
 
-      // The outlines, standing proud of the panel face so they cast their own
-      // highlight down the chamfer rather than sitting flush and flat.
-      placeShared(upperFrameGeo, strip, [x - 0.19 * side, 4.0, z], yaw);
-      placeShared(lowerFrameGeo, strip, [x - 0.19 * side, 1.35, z], yaw);
+      for (let i = 0; i < bays; i++) {
+        const t = (i + 0.5 - bays / 2) * pitch;
+        const px = mx + along[0] * t;
+        const pz = mz + along[1] * t;
+
+        // Every third bay is a marked access panel — a step lighter with hull
+        // stencilling. Every bay marked would read as wallpaper.
+        reuse(
+          panelGeo,
+          i % 3 === 1 ? marked : darkPanel,
+          [px + inward[0] * 0.12, course.y, pz + inward[1] * 0.12],
+          yaw,
+        );
+        reuse(
+          frameGeo,
+          strip,
+          [px + inward[0] * 0.19, course.y, pz + inward[1] * 0.19],
+          yaw,
+        );
+      }
     }
 
-    // Continuous strips: one in the channel between panel courses, one at the
-    // deck line washing the floor.
-    add(
-      bevelBox(0.08, 0.1, deckLength - 0.6, 0.015),
-      strip,
-      [x - 0.22 * side, 2.62, (ROOM.nearZ + ROOM.farZ) / 2],
-    );
-    add(
-      bevelBox(0.08, 0.08, deckLength - 0.6, 0.015),
-      strip,
-      [x - 0.22 * side, 0.16, (ROOM.nearZ + ROOM.farZ) / 2],
-    );
+    // Continuous hairlines: one in the channel between courses, one washing
+    // the deck. With a near-black field these are what keep the wall-to-floor
+    // and wall-to-wall junctions legible.
+    //
+    // Length goes on **X**, not Z. `bevelBox(w, h, d)` puts `d` on the Z axis,
+    // and these are placed with a yaw rotation that aligns X along the wall —
+    // so building the length on Z made each rail a twelve-metre beam driven
+    // perpendicular through the wall it was meant to trim. The back wall's ran
+    // straight through the camera and filled the frame with a white column.
+    const railGeo = track(bevelBox(seg.length - 0.5, 0.09, 0.07, 0.014));
+    // 6.18 is the cornice, where the wall meets the vault. Without it the top
+    // of frame is unlit ceiling with no edge on it, and a dark band with no
+    // boundary reads as the room having no ceiling rather than a dark one.
+    for (const railY of [6.18, 4.68, 2.44, 0.16]) {
+      reuse(railGeo, strip, [
+        mx + inward[0] * 0.22,
+        railY,
+        mz + inward[1] * 0.22,
+      ], yaw);
+    }
   }
 
-  /* ── Far wall and the viewport ─────────────────────────────────────────
-     Built as four panels around the opening plus a chamfered frame, rather
-     than a wall with a hole punched in it. The frame is the piece that reads. */
+  /* ── Vaulted ceiling ───────────────────────────────────────────────────
+     Stepped longitudinal courses rising to a spine, in the same panel language
+     as the walls. A flat lid over an octagon still reads as a box lid; a vault
+     removes the last large right angle from the frame. */
+  const STEPS = 5;
+  // Stops short of the front wall so the vault never overhangs the viewport,
+  // and short of the rear so the bulkhead reads as a wall rather than a seam.
+  const vaultFrontZ = PLAN.frontZ + 1.6;
+  const vaultDepth = PLAN.backZ - vaultFrontZ;
+  const vaultMidZ = (PLAN.backZ + vaultFrontZ) / 2;
+
+  for (let s = 0; s < STEPS; s++) {
+    const t = s / (STEPS - 1);
+    // Widest and lowest at the walls, narrowest and highest at the spine.
+    const halfW = PLAN.halfWidth * (1 - t * 0.82);
+    const y = ROOM.ceilingSpring + (ROOM.ceilingCrown - ROOM.ceilingSpring) * t;
+    const stepGeo = track(bevelBox(halfW * 2, 0.24, vaultDepth, 0.03));
+    reuse(stepGeo, s === STEPS - 1 ? darkPanel : recess, [0, y, vaultMidZ], [
+      0, 0, 0,
+    ]);
+
+    // Lit edges sit BELOW their riser, not on top of it. Placed above, they
+    // were occluded by the very step they were meant to describe — a ceiling
+    // full of lights that nothing in the room could see.
+    if (s < STEPS - 1) {
+      const edgeGeo = track(bevelBox(0.07, 0.06, vaultDepth - 1.0, 0.014));
+      for (const ex of [-halfW + 0.12, halfW - 0.12]) {
+        reuse(edgeGeo, strip, [ex, y - 0.17, vaultMidZ], [0, 0, 0]);
+      }
+    }
+  }
+
+  // The two long spine runs, unchanged in role: the strongest depth cue up top.
+  const spineGeo = track(bevelBox(0.32, 0.1, vaultDepth - 1.6, 0.02));
+  for (const x of [-1.5, 1.5]) {
+    reuse(spineGeo, strip, [x, ROOM.ceilingCrown - 0.26, vaultMidZ], [0, 0, 0]);
+  }
+
+  /* ── Front wall and the viewport ───────────────────────────────────────
+     The viewport is 72% of the front wall. It is the room's defining feature
+     and the furthest bright thing, which is what makes the depth read. */
   const vpTop = VIEWPORT.sill + VIEWPORT.height;
   const vpHalf = VIEWPORT.width / 2;
+  const frontHalf = PLAN.frontHalfWidth;
 
-  // The far wall is dark field, like the sides. It exists to be the ground the
-  // viewport's glow reads against.
-  add(quad(ROOM.halfWidth * 2, VIEWPORT.sill), darkPanel, [
+  add(quad(frontHalf * 2, VIEWPORT.sill), darkPanel, [
     0,
     VIEWPORT.sill / 2,
-    ROOM.farZ,
+    PLAN.frontZ,
   ]);
-  add(quad(ROOM.halfWidth * 2, ROOM.ceiling - vpTop), darkPanel, [
+  add(quad(frontHalf * 2, ROOM.ceilingSpring + 1.6 - vpTop), darkPanel, [
     0,
-    (ROOM.ceiling + vpTop) / 2,
-    ROOM.farZ,
+    (ROOM.ceilingSpring + 1.6 + vpTop) / 2,
+    PLAN.frontZ,
   ]);
   for (const side of [-1, 1] as const) {
-    const w = ROOM.halfWidth - vpHalf;
+    const w = frontHalf - vpHalf;
     add(quad(w, VIEWPORT.height), darkPanel, [
       side * (vpHalf + w / 2),
       VIEWPORT.sill + VIEWPORT.height / 2,
-      ROOM.farZ,
+      PLAN.frontZ,
     ]);
   }
 
-  // The structural surround, in pale metal — the one large white form on this
-  // wall, matching how the reference keeps its viewport housing bright while
-  // the wall around it goes black.
+  // Structural surround in pale metal, then the glowing outline traced around
+  // it — the same motif as every wall bay, at the scale of the thing the room
+  // is built around.
   add(
     bevelFrame(
       VIEWPORT.width + VIEWPORT.frame * 2,
@@ -382,124 +383,72 @@ export function createBridge(opts: {
       0.34,
     ),
     hull,
-    [0, VIEWPORT.sill + VIEWPORT.height / 2, ROOM.farZ + 0.2],
+    [0, VIEWPORT.sill + VIEWPORT.height / 2, PLAN.frontZ + 0.2],
   );
-
-  // And the glowing outline traced around it — the same motif as every wall
-  // panel, at the scale of the thing the room is built around.
   add(
     bevelFrame(
-      VIEWPORT.width + VIEWPORT.frame * 2 + 0.16,
-      VIEWPORT.height + VIEWPORT.frame * 2 + 0.16,
+      VIEWPORT.width + VIEWPORT.frame * 2 + 0.18,
+      VIEWPORT.height + VIEWPORT.frame * 2 + 0.18,
       VIEWPORT.width + VIEWPORT.frame * 2,
       VIEWPORT.height + VIEWPORT.frame * 2,
-      0.08,
+      0.09,
       0.3,
       0.014,
     ),
     strip,
-    [0, VIEWPORT.sill + VIEWPORT.height / 2, ROOM.farZ + 0.3],
-  );
-  // Accent trim on the inner lip — one of the three places blue is allowed.
-  add(
-    bevelFrame(
-      VIEWPORT.width + 0.14,
-      VIEWPORT.height + 0.14,
-      VIEWPORT.width,
-      VIEWPORT.height,
-      0.06,
-      0.24,
-      0.01,
-    ),
-    accentStrip,
-    [0, VIEWPORT.sill + VIEWPORT.height / 2, ROOM.farZ + 0.36],
+    [0, VIEWPORT.sill + VIEWPORT.height / 2, PLAN.frontZ + 0.3],
   );
 
   /**
    * The forward console bank, under the viewport.
    *
-   * The first pass left the far wall a flat grey expanse either side of the
-   * window, which is where the frame lost most of its density — Rule 2's point
-   * is that a surface reads as cheap when it carries too little information,
-   * and a 18 m wall with one hole in it carries almost none. The reference has
-   * a continuous bank here, and it is also what stops the viewport looking like
-   * a picture hung on a wall.
+   * Restores the element the rewrite dropped. Without it the front wall is a
+   * flat plane with one hole in it, which is where the old room lost most of
+   * its density — and it is also what stops the viewport reading as a picture
+   * hung on a wall rather than as an aperture in a structure.
    */
-  add(bevelPanel(VIEWPORT.width + 1.4, 0.72, 1.0, 0.14), hull, [
+  add(bevelPanel(VIEWPORT.width + 1.6, 0.78, 1.1, 0.14), hull, [
     0,
-    0.5,
-    ROOM.farZ + 0.62,
+    0.52,
+    PLAN.frontZ + 0.68,
   ]);
   add(
-    bevelPanel(VIEWPORT.width + 1.0, 0.62, 0.12, 0.1),
+    bevelPanel(VIEWPORT.width + 1.2, 0.66, 0.12, 0.1),
     hullEdge,
-    [0, 0.93, ROOM.farZ + 0.86],
+    [0, 0.98, PLAN.frontZ + 0.94],
     [-1.15, 0, 0],
   );
-  add(
-    quad(VIEWPORT.width * 0.42, 0.3),
-    screenMaterial(bag, seed + 71, 8),
-    [-VIEWPORT.width * 0.24, 1.06, ROOM.farZ + 0.94],
-    [-1.15, 0, 0],
-  );
-  add(
-    quad(VIEWPORT.width * 0.42, 0.3),
-    screenMaterial(bag, seed + 72, 8),
-    [VIEWPORT.width * 0.24, 1.06, ROOM.farZ + 0.94],
-    [-1.15, 0, 0],
-  );
-  add(bevelBox(VIEWPORT.width + 1.2, 0.04, 0.05), accentStrip, [
+  for (const s of [-1, 1] as const) {
+    add(
+      quad(VIEWPORT.width * 0.4, 0.32),
+      screenMaterial(bag, seed + 70 + s, 8, s > 0 ? 3 : 0),
+      [s * VIEWPORT.width * 0.23, 1.12, PLAN.frontZ + 1.02],
+      [-1.15, 0, 0],
+    );
+  }
+  add(bevelBox(VIEWPORT.width + 1.4, 0.05, 0.06, 0.012), accentStrip, [
     0,
-    0.87,
-    ROOM.farZ + 1.12,
+    0.92,
+    PLAN.frontZ + 1.22,
   ]);
 
-  // Vertical panel divisions on the far wall, so it is panelled rather than
-  // blank. Recessed, because the joint is what makes a panel read as a panel.
-  for (const s of [-1, 1] as const) {
-    for (const d of [0, 1] as const) {
-      add(bevelBox(0.09, ROOM.ceiling - 0.4, 0.06), recess, [
-        s * (vpHalf + 0.95 + d * 1.65),
-        ROOM.ceiling / 2,
-        ROOM.farZ + 0.06,
-      ]);
-    }
-    // A strip washing the wall either side of the window.
-    add(bevelBox(0.05, VIEWPORT.height * 0.8, 0.05), strip, [
-      s * (vpHalf + 0.62),
-      VIEWPORT.sill + VIEWPORT.height / 2,
-      ROOM.farZ + 0.1,
-    ]);
-  }
-
-  /* ── What is outside ───────────────────────────────────────────────────
-     A star-field backdrop far behind the wall, and the gas giant as real
-     geometry between them so it can actually rotate. */
+  /* ── What is outside ───────────────────────────────────────────────────*/
   add(
-    quad(190, 110),
-    starFieldMaterial(bag, quality.stars > 1500 ? 190 : 120),
-    [0, 24, -95],
+    quad(260, 150),
+    starFieldMaterial(bag, quality.stars > 1500 ? 210 : 130),
+    [0, 28, -110],
   );
 
-  const giantMat = gasGiantMaterial(bag, seed);
   const giant = new Mesh(
-    track(new SphereGeometry(13, quality.name === "full" ? 96 : 48, 48)),
-    giantMat,
+    track(new SphereGeometry(16, quality.name === "full" ? 96 : 48, 48)),
+    gasGiantMaterial(bag, seed),
   );
   // Off-centre and low, so the viewport frames a limb rather than a bullseye.
-  // A planet centred in a centred window is a target; offset, it is a view.
-  giant.position.set(-9.5, 5.5, -58);
+  giant.position.set(-11, 6, -66);
+  giant.castShadow = false;
+  giant.receiveShadow = false;
   group.add(giant);
 
-  /**
-   * The viewport display, showing the rendered gas giant.
-   *
-   * Sits just inside the aperture, sized to the opening. The procedural planet
-   * above stays in the scene behind it — if the video never plays, that is what
-   * shows through, and it is a correct frame rather than a hole. So the
-   * fallback needs no state machine: one surface becomes opaque in front of
-   * another, or it does not.
-   */
   const screen = createVideoScreen({
     webm: "/ship/bridge/gasgiant.webm",
     mp4: "/ship/bridge/gasgiant.mp4",
@@ -511,279 +460,200 @@ export function createBridge(opts: {
   screenMesh.position.set(
     0,
     VIEWPORT.sill + VIEWPORT.height / 2,
-    ROOM.farZ + 0.05,
+    PLAN.frontZ + 0.05,
   );
   screenMesh.visible = false;
+  screenMesh.castShadow = false;
+  screenMesh.receiveShadow = false;
   group.add(screenMesh);
   void screen.ready.then((ok) => {
     screenMesh.visible = ok;
   });
 
-  /* ── Console pods ──────────────────────────────────────────────────────
-     Three per side on the full tier. Each is a plinth, a canted desk and a
-     screen, rotated to face the centre axis — the inward cant is what makes a
-     row of desks read as stations rather than as furniture. */
-  const stations = STATION_Z.slice(0, quality.stationsPerSide);
-  stations.forEach((z, i) => {
-    for (const side of [-1, 1] as const) {
-      const x = STATION_X * side;
+  /* ── Helm arc ──────────────────────────────────────────────────────────
+     The mid-ground. Two forward stations on a low arc between the chair and
+     the viewport, at roughly the room's half-depth.
 
-      /**
-       * Yaw, derived rather than guessed.
-       *
-       * A panel built in the XY plane faces +Z. Rotating it by θ about Y makes
-       * it face (sin θ, 0, cos θ). For this pod's screen to face the camera at
-       * (0, 3.5, 7), the wanted direction is normalize(0 - x, 0, 7 - z), which
-       * for the middle station works out at about 23° — and its sign is
-       * opposite the side, because a pod on -X must turn toward +X.
-       *
-       * The first pass used ±70° with the sign the other way, and the stations
-       * rendered as slabs scattered at random angles with their screens edge-on
-       * and unreadable. Deriving it from the camera position instead of picking
-       * a number is the difference.
-       */
-      const yaw = Math.atan2(-x, 7 - z);
+     This is the single most important addition of the rebuild. Perspective is
+     only legible against objects at intermediate distances; with an empty floor
+     between the chair and the far wall, four metres and twelve metres project
+     almost identically and the room collapses. */
+  for (const side of [-1, 1] as const) {
+    const hx = side * HELM.halfSpan * 0.52;
+    const yaw = Math.atan2(-hx, 9 - HELM.z);
 
-      // Plinth.
-      add(bevelPanel(2.7, 0.86, 1.4, 0.16), hull, [x, 0.43, z], [0, yaw, 0]);
-      // Desk surface, near-flat, catching the ceiling runs.
+    add(bevelPanel(3.0, 0.92, 1.5, 0.16), hull, [hx, 0.46, HELM.z], [0, yaw, 0]);
+    add(
+      bevelPanel(2.8, 1.2, 0.1, 0.12),
+      hullEdge,
+      [hx, 0.95, HELM.z + 0.12],
+      [-1.3, yaw, 0],
+    );
+    add(
+      quad(2.3, 0.82),
+      screenMaterial(bag, seed + 400 + side, 20, side > 0 ? 2 : 1),
+      [hx, 1.4, HELM.z - 0.36],
+      [-0.36, yaw, 0],
+    );
+    // Length on X so the yaw aligns it along the console face.
+    add(bevelBox(2.6, 0.05, 0.06, 0.012), accentStrip, [
+      hx,
+      0.94,
+      HELM.z + 0.66,
+    ], [0, yaw, 0]);
+  }
+
+  /* ── Perimeter stations, tucked into the angled walls ──────────────────
+     Set into the octagon's cut corners rather than floating off a flat wall,
+     which is what makes them read as built into the room. */
+  const angled = PLAN.segments.filter((s) => s.kind === "frontAngle");
+  angled.forEach((seg, si) => {
+    const inward: [number, number] = [Math.sin(seg.yaw), Math.cos(seg.yaw)];
+    const along: [number, number] = [inward[1], -inward[0]];
+
+    for (let i = 0; i < 2; i++) {
+      const t = (i - 0.5) * (seg.length * 0.42);
+      const sx = seg.mid[0] + along[0] * t + inward[0] * 1.35;
+      const sz = seg.mid[1] + along[1] * t + inward[1] * 1.35;
+      const yaw = seg.yaw;
+      const station = si * 2 + i;
+
+      add(bevelPanel(2.7, 0.88, 1.4, 0.16), hull, [sx, 0.44, sz], [0, yaw, 0]);
       add(
         bevelPanel(2.5, 1.15, 0.1, 0.12),
         hullEdge,
-        [x, 0.89, z + 0.1],
+        [sx, 0.92, sz + 0.1],
         [-1.32, yaw, 0],
       );
-      // Screen, canted back so it faces the camera rather than the ceiling.
-      // Each station runs a different readout — code, bar chart, plot, wave —
-      // so the bridge reads as a room where several different things are being
-      // watched, rather than six copies of one panel. Blank rectangles were a
-      // large part of why the first pass read as empty.
-      //
-      // Exactly one station of six runs a green phosphor terminal. That is the
-      // ratio the brief caps at roughly a tenth — green as the thing one
-      // console is doing, not as a colour the room is painted. Two would start
-      // to read as a scheme; six would be a Matrix wall.
-      const station = i * 2 + (side > 0 ? 1 : 0);
+      // Exactly one station of the four runs a green phosphor terminal.
       add(
         quad(2.0, 0.78),
         screenMaterial(
           bag,
-          seed + i * 13 + (side > 0 ? 101 : 0),
+          seed + station * 13,
           22,
           station % 4,
-          station === 2 ? SHIP.phosphor : SHIP.accent,
+          station === 1 ? SHIP.phosphor : SHIP.accent,
         ),
-        [x, 1.32, z - 0.34],
+        [sx, 1.34, sz - 0.34],
         [-0.34, yaw, 0],
       );
-
-      // Two telltales on the desk edge — one green, one white. Pinhead scale,
-      // so they read as points of colour rather than areas of it.
-      add(bevelBox(0.06, 0.05, 0.06, 0.012), ledGreen, [
-        x - 0.86,
-        0.95,
-        z + 0.52,
-      ]);
-      add(bevelBox(0.06, 0.05, 0.06, 0.012), ledWhite, [
-        x - 0.74,
-        0.95,
-        z + 0.52,
-      ]);
-      // Screen bezel behind it, so the glow sits in something.
       add(
         bevelPanel(2.2, 0.96, 0.1, 0.1),
         recess,
-        [x, 1.31, z - 0.38],
+        [sx, 1.33, sz - 0.38],
         [-0.34, yaw, 0],
       );
-      // Base accent — one of the three places blue is allowed.
-      add(bevelBox(2.4, 0.05, 0.05), accentStrip, [x, 0.88, z + 0.62], [0, yaw, 0]);
+
+      // Pinhead telltales. At viewing distance a point of colour, not an area.
+      add(bevelBox(0.06, 0.05, 0.06, 0.012), ledGreen, [
+        sx - 0.8,
+        0.97,
+        sz + 0.5,
+      ]);
+      add(bevelBox(0.06, 0.05, 0.06, 0.012), ledWhite, [
+        sx - 0.68,
+        0.97,
+        sz + 0.5,
+      ]);
     }
   });
 
-  /* ── Dais and command chair ────────────────────────────────────────────
-     Small in frame on purpose. The chair is a scale reference for the room,
-     not the subject — the moment the chair becomes the subject, the room stops
-     reading as a room. */
-  // The dais is DARK. The first pass made it `hullEdge` and it rendered as a
-  // bright white disc on a dark deck — a spotlight puddle with a silhouette
-  // standing in it, which pulled the eye straight off the viewport. In the
-  // reference the platform is the darkest thing in the middle distance and the
-  // chair is the bright object on it. That order matters.
-  add(post(CHAIR.daisRadius, CHAIR.daisHeight, 40), recess, [
+  /* ── Dais and command chair ────────────────────────────────────────────*/
+  add(post(CHAIR.daisRadius, CHAIR.daisHeight, 48), recess, [
     0,
     CHAIR.daisHeight / 2,
     CHAIR.z,
   ]);
-  /**
-   * The dais rim light, as a band on the side rather than a disc on the top.
-   *
-   * The first version was a 0.04-tall cylinder centred at `daisHeight - 0.02`,
-   * so its top cap sat exactly on the dais's own top cap. Two coplanar faces at
-   * 40 segments z-fought into a blue starburst that dominated the lower third
-   * of the frame — the single most visible defect in that pass, and it read as
-   * a deliberate effect rather than as the depth-buffer artefact it was.
-   *
-   * Sunk to the dais's mid-height so no face is shared with anything.
-   */
-  add(post(CHAIR.daisRadius + 0.03, 0.06, 40), accentStrip, [
+  add(post(CHAIR.daisRadius + 0.03, 0.06, 48), accentStrip, [
     0,
     CHAIR.daisHeight * 0.55,
     CHAIR.z,
   ]);
-  // Pedestal, in polished chrome. One chrome element against brushed metal
-  // reads as engineering; a room of chrome reads as a car advert.
+  // A step up onto the dais, so the platform reads as raised rather than drawn.
+  add(post(CHAIR.daisRadius + 0.7, 0.14, 48), darkPanel, [
+    0,
+    0.07,
+    CHAIR.z,
+  ]);
   add(post(0.2, 0.46, 24), chrome, [0, CHAIR.daisHeight + 0.23, CHAIR.z]);
 
-  /**
-   * Seat, back and arms, all in hull so the chair is the bright object on a
-   * dark platform.
-   *
-   * Read at roughly ninety pixels tall, so the silhouette is the entire
-   * budget. What makes a chair legible at that size is three steps — a seat pan
-   * that projects forward of the back, a back taller than it is wide, and arms
-   * that break the outline. An octagonal cap on top of the back read as a bin
-   * lid and is gone.
-   */
-  const seatY = CHAIR.daisHeight + 0.46;
-  // Seat pan, well forward of the back. The step between pan and back is the
-  // single strongest cue that this is a seat and not a cylinder — the previous
-  // pass had them nearly coincident and the chair read as a white mug.
+  const seatY = CHAIR.daisHeight + 0.48;
   add(bevelPanel(0.94, 0.98, 0.14, 0.09), hull, [0, seatY, CHAIR.z + 0.3], [
     -Math.PI / 2,
     0,
     0,
   ]);
-  // Back — an open cylinder section, never a taper. See `seatBack`: a solid of
-  // revolution that narrows reads as a traffic cone at any scale, and a
-  // previous build shipped exactly that, parked on the bridge axis directly
-  // over the viewport in the establishing frame. Narrower than it is tall, and
-  // reclined a few degrees so the top edge catches the ceiling runs.
-  //
-  // Height is load-bearing twice over. At 1.3 the back topped out at y=2.09,
-  // which is above the viewport sill at 1.95 — it cleared the glass only
-  // because the camera is elevated, which is a coincidence rather than a
-  // design. At 1.1 it tops out at 1.89 and is below the sill in world space,
-  // so the chair cannot occlude the window from any camera height.
+  // An open cylinder section, never a taper — a solid of revolution that
+  // narrows reads as a traffic cone at any scale.
   add(seatBack(0.34, 1.1), hull, [0, seatY + 0.58, CHAIR.z - 0.14], [
     -0.09,
     0,
     0,
   ]);
-  // Arms set well outboard of the 0.34 back radius. Inboard of it they merged
-  // into one white mass and the whole chair read as a pillar; the flare is what
-  // makes the silhouette say "seat" at ninety pixels.
   for (const s of [-1, 1] as const) {
-    add(bevelBox(0.13, 0.11, 0.8), hullEdge, [s * 0.62, seatY + 0.27, CHAIR.z + 0.2]);
-    add(bevelBox(0.1, 0.28, 0.1), hullEdge, [s * 0.62, seatY + 0.13, CHAIR.z + 0.52]);
+    add(bevelBox(0.13, 0.11, 0.8, 0.02), hullEdge, [
+      s * 0.62,
+      seatY + 0.27,
+      CHAIR.z + 0.2,
+    ]);
+    add(bevelBox(0.1, 0.28, 0.1, 0.02), hullEdge, [
+      s * 0.62,
+      seatY + 0.13,
+      CHAIR.z + 0.52,
+    ]);
   }
 
-  /* ── Rear bulkhead ─────────────────────────────────────────────────────
-     Behind the camera at rest, so it is never in frame — but it closes the box,
-     which the scattering composite needs so the room does not fade into an
-     open end. */
-  add(quad(ROOM.halfWidth * 2, ROOM.ceiling), recess, [
-    0,
-    ROOM.ceiling / 2,
-    ROOM.nearZ,
-  ]);
-
-  /* ── Light ─────────────────────────────────────────────────────────────
-     The strips are `MeshBasicNodeMaterial`, so they look like they emit but do
-     not actually light anything — three has no global illumination. These are
-     the lights that do the work, positioned to agree with the strips so the
-     lie is consistent. */
-  // 0.35, down from 0.95. Ambient is what fills the recesses, and the recesses
-  // are supposed to be the black the white panels read against — the reference
-  // is a dark room with lit accents, not a lit room. The strips carry the
-  // illumination now; this only stops the shadow side going to pure zero.
+  /* ── Light ─────────────────────────────────────────────────────────────*/
   const hemi = new HemisphereLight(0xbcd0e8, 0x090c11, 0.35);
   group.add(hemi);
 
-  // Key, coming through the viewport. Cold, and the only shadow caster.
   const key = new DirectionalLight(0xcfe0f5, 0.85);
-  key.position.set(-4, 7, -18);
+  key.position.set(-5, 8, -22);
   key.target.position.set(0, 1.6, -2);
   if (quality.shadowLights > 0) {
-    /**
-     * The shadow camera has to be *sized*, and this was the bug.
-     *
-     * `castShadow = true` was already set, but a DirectionalLight's shadow
-     * camera is an orthographic one that defaults to a ±5 unit box. This room
-     * is 18 m across and 23 m deep, so the frustum covered a fifth of it and
-     * everything outside simply had no shadow map to sample — which reads as
-     * "shadows are subtle" rather than as "shadows are absent from most of the
-     * frame". Nothing in the material or light setup was wrong.
-     */
+    // The shadow camera has to be *sized*. A DirectionalLight's is orthographic
+    // and defaults to a ±5 unit box, which on this room covers a fifth of the
+    // floor — and reads as "shadows are subtle" rather than "shadows are
+    // missing from most of the frame".
     key.castShadow = true;
     key.shadow.mapSize.set(2048, 2048);
     const sc = key.shadow.camera;
-    sc.left = -ROOM.halfWidth - 2;
-    sc.right = ROOM.halfWidth + 2;
-    sc.top = ROOM.ceiling + 4;
-    sc.bottom = -ROOM.ceiling - 4;
+    sc.left = -PLAN.halfWidth - 3;
+    sc.right = PLAN.halfWidth + 3;
+    sc.top = ROOM.ceilingCrown + 6;
+    sc.bottom = -ROOM.ceilingCrown - 6;
     sc.near = 0.5;
-    sc.far = 70;
+    sc.far = 90;
     sc.updateProjectionMatrix();
-    // Normal bias rather than a large constant bias: a constant one large
-    // enough to stop acne on the deck also detaches the chair's shadow from its
-    // own base, which is the one shadow that has to be anchored.
     key.shadow.bias = -0.0004;
     key.shadow.normalBias = 0.035;
   }
   group.add(key, key.target);
 
-  /**
-   * The chair's own light: a rim from behind and above.
-   *
-   * Its job is the silhouette. The key comes through the viewport, so the
-   * chair's camera-facing side is by definition its shadow side and the form
-   * dies into the dark dais behind it. A soft light above and behind draws a
-   * bright edge down the seat back and the arms, which is what separates a hero
-   * object from a placeholder — and it is the cheapest possible version of the
-   * treatment, one light aimed at one thing.
-   */
+  // The chair's rim. The key comes through the viewport, so the chair's
+  // camera-facing side is by definition its shadow side.
   const rim = new DirectionalLight(0xd6e4f7, 0.9);
-  rim.position.set(2.2, 5.2, -8.5);
+  rim.position.set(2.4, 5.6, -6);
   rim.target.position.set(0, CHAIR.daisHeight + 0.9, CHAIR.z);
   group.add(rim, rim.target);
 
-  // Practicals along the ceiling runs, so the room has falloff down its length
-  // rather than one flat exposure.
+  const fill = new DirectionalLight(0xb9c8dc, 0.22);
+  fill.position.set(3, 6, 14);
+  fill.target.position.set(0, 1.4, -6);
+  group.add(fill, fill.target);
+
   const practicals: PointLight[] = [];
-  for (const x of [-2.8, 2.8]) {
-    for (const z of [-11, -6.5, -2, 2.5]) {
-      const p = new PointLight(0xdce8f7, 10, 18, 2);
-      p.position.set(x, ROOM.ceiling - 0.5, z);
+  for (const x of [-1.5, 1.5]) {
+    for (const z of [-13, -8, -3, 3]) {
+      const p = new PointLight(0xdce8f7, 11, 20, 2);
+      p.position.set(x, ROOM.ceilingCrown - 0.7, z);
       practicals.push(p);
       group.add(p);
     }
   }
 
-  /**
-   * The camera-side fill.
-   *
-   * Cheating, and every real lighting setup does it. The key comes through the
-   * viewport, which means every surface facing the camera — the chair back, the
-   * console fronts, the near ends of the side panels — is by definition facing
-   * away from the only directional light in the room. Physically correct, and
-   * it rendered the chair as a black blob on a bright disc.
-   *
-   * Kept dim and cool so it lifts the near surfaces off black without
-   * flattening the key's modelling.
-   */
-  const fill = new DirectionalLight(0xb9c8dc, 0.22);
-  fill.position.set(2.5, 5.5, 12);
-  fill.target.position.set(0, 1.4, -4);
-  group.add(fill, fill.target);
-
-  /* ── Motion ────────────────────────────────────────────────────────────
-     One thing happens: the gas giant turns. At 0.02 rad/s a full rotation is
-     about five minutes, which is slow enough to be atmosphere and fast enough
-     that a visitor who sits for twenty seconds sees it move.
-
-     The camera carries a few degrees of pointer parallax on top. It is not the
-     moment — it is what stops a static frame reading as a still. */
+  /* ── Motion ────────────────────────────────────────────────────────────*/
   const restPos = BRIDGE_CAMERA.position;
   const restTarget = BRIDGE_CAMERA.target;
 
@@ -798,40 +668,27 @@ export function createBridge(opts: {
       giant.rotation.y += state.delta * 0.02;
 
       const cam = opts.camera;
-      const px = state.pointer.x * 0.55;
-      const py = state.pointer.y * 0.3;
+      const px = state.pointer.x * 0.6;
+      const py = state.pointer.y * 0.32;
 
-      /**
-       * Portrait recompose.
-       *
-       * At 375×812 the frame is 0.46 aspect, so a target set for 16:9 puts the
-       * viewport dead centre — which is exactly where the copy card sits. The
-       * room was rendering correctly and was almost entirely hidden behind its
-       * own overlay, which is the kind of defect that only a screenshot finds.
-       *
-       * Raising the target lifts the window into the upper third and drops the
-       * empty foreground deck out of frame, where on a phone it was costing
-       * half the screen for nothing.
-       */
+      // Portrait recompose. At 0.46 aspect a target set for 16:9 puts the
+      // viewport dead centre, which is exactly where the copy card sits.
       const portrait = Math.max(0, Math.min(1, (0.95 - state.aspect) / 0.4));
-      const targetY = restTarget[1] + portrait * 1.55;
-      const camY = restPos[1] + portrait * 0.7;
-      const camZ = restPos[2] - portrait * 2.4;
+      const targetY = restTarget[1] + portrait * 1.7;
+      const camY = restPos[1] + portrait * 0.8;
+      const camZ = restPos[2] - portrait * 3.2;
 
-      // Ease toward the parallax target rather than snapping, so a fast pointer
-      // sweep does not whip the camera.
       cam.position.x += (restPos[0] + px - cam.position.x) * 0.045;
       cam.position.y += (camY + py - cam.position.y) * 0.045;
       cam.position.z = camZ;
       cam.lookAt(restTarget[0] + px * 0.35, targetY + py * 0.2, restTarget[2]);
 
-      // The boot brings the practicals and the strips up. Held on one channel
-      // so the whole room resolves together rather than in pieces.
       const lit = state.boot;
       hemi.intensity = 0.35 * lit;
       key.intensity = 0.85 * lit;
+      rim.intensity = 0.9 * lit;
       fill.intensity = 0.22 * lit;
-      for (const p of practicals) p.intensity = 10 * lit;
+      for (const p of practicals) p.intensity = 11 * lit;
     },
     dispose() {
       // The video element holds a decoder and a network handle, neither of
@@ -843,3 +700,5 @@ export function createBridge(opts: {
     },
   };
 }
+
+export { BRIDGE_PLAN_CONFIG };
