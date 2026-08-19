@@ -126,11 +126,18 @@ export class SceneManager {
     // downloaded.
     this.environment = createShipEnvironment(this.renderer);
     this.scene.environment = this.environment.texture;
-    // 0.4, down from 0.85. The environment is what stops metal being flat, but
-    // at full strength it also becomes a second ambient light and lifts every
-    // shadow in the room off black. Reflections stay; the fill they were
-    // smuggling in does not.
-    this.scene.environmentIntensity = 0.4;
+    /**
+     * 0.7 — and this is the lever that widens contrast rather than flattening
+     * it.
+     *
+     * Ambient light lifts everything, blacks included, so raising it to
+     * recover the white console masses would have destroyed the dark field they
+     * read against. The environment does not behave that way: a surface returns
+     * it in proportion to its own albedo, so a #E9EBEE panel brightens hard
+     * while a #0A0D14 one barely moves. Same knob, opposite effect on the two
+     * ends of the range.
+     */
+    this.scene.environmentIntensity = 0.7;
 
     // Atmospheric depth. Far walls recede into a faintly blue haze instead of
     // holding full contrast to the back of the room, which is most of what

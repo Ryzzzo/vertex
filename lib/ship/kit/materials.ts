@@ -276,6 +276,31 @@ export function deckMaterial(
   });
 
   m.colorNode = grid();
+
+  /**
+   * Inscribed deck lighting.
+   *
+   * The reference floor is not merely dark — it carries a faint lit circuit
+   * through the plating, which is most of why the deck reads as a surface with
+   * engineering in it rather than as a dark rectangle. Only the primary seams
+   * light, never the fine score, so the two frequencies stay distinguishable:
+   * one is a joint between plates, the other is a scribe line on a plate.
+   */
+  m.emissiveNode = Fn(() => {
+    const cell = uv().mul(divisions);
+    const e = cell.fract().sub(0.5).abs();
+    const seam = max(
+      smoothstep(0.482, 0.5, e.x),
+      smoothstep(0.482, 0.5, e.y),
+    );
+    // Falls off with distance from the room's centre line, so the deck lighting
+    // reads as strongest under the command dais and fades toward the walls
+    // instead of tiling out flat to the edges.
+    const centre = uv().sub(vec2(0.5, 0.5)).length();
+    const falloff = smoothstep(0.62, 0.12, centre);
+    return color(SHIP.accent).mul(seam).mul(falloff).mul(0.22);
+  })();
+
   return bag.add(m);
 }
 
@@ -286,19 +311,56 @@ export function deckMaterial(
  * strip that goes dim in shadow, which is exactly wrong for something that is
  * supposed to be producing the light.
  */
+export function darkPanelMaterial(
+  bag: MaterialBag,
+): MeshPhysicalNodeMaterial {
+  /**
+   * The wall field.
+   *
+   * The reference inverts what a first pass assumes: the dark surfaces are the
+   * field and the white surfaces are the accent, and the white is *emitting*
+   * rather than being lit. So the large wall panels are near-black metal whose
+   * job is to be the ground a glowing outline reads against, and to carry the
+   * reflection of that outline down its own bevel.
+   *
+   * Metallic and fairly smooth on purpose. A near-black *diffuse* surface is
+   * just a hole; a near-black *metal* still returns the strips and the
+   * environment, which is what keeps it reading as a panel rather than as
+   * absence.
+   */
+  const m = new MeshPhysicalNodeMaterial({
+    color: "#0A0D14",
+    metalness: 0.9,
+    roughness: 0.35,
+    clearcoat: 0.35,
+    clearcoatRoughness: 0.22,
+  });
+  return bag.add(m);
+}
+
 export function stripMaterial(
   bag: MaterialBag,
-  intensity = 3.2,
+  intensity = 2.2,
 ): MeshStandardNodeMaterial {
   // Standard with an emissive term rather than Basic. Basic ignores the
   // environment entirely, so the strip's own housing got no reflection off it
   // and the fitting read as a white sticker on a grey wall. This still emits,
   // and it also sits in the room.
+  //
+  // Glow is a *ratio*, not a value — it exists only relative to how dark the
+  // field around it is.
+  //
+  // Which is why 5.5 was wrong. Going from a handful of strips to ~30 traced
+  // outlines multiplied the emissive *area* in the room, and raising intensity
+  // at the same time compounded it: the bloom from adjacent outlines merged and
+  // the walls resolved to solid white. The dark field disappeared, and with it
+  // the contrast the outlines were there to create. More glowing surfaces means
+  // each one has to be dimmer, not brighter.
   const m = new MeshStandardNodeMaterial({
     color: SHIP.recess,
     metalness: 0.1,
     roughness: 0.5,
-    emissive: SHIP.strip,
+    emissive: "#FFFFFF",
     emissiveIntensity: intensity,
   });
   return bag.add(m);

@@ -55,7 +55,7 @@ const FULL: QualityTier = {
   scatter: true,
   scatterScale: 1,
   bloom: true,
-  bloomStrength: 0.42,
+  bloomStrength: 0.2,
   ao: true,
   /**
    * Off, and deliberately.
@@ -84,7 +84,7 @@ const REDUCED: QualityTier = {
   scatter: true,
   scatterScale: 0.5,
   bloom: true,
-  bloomStrength: 0.34,
+  bloomStrength: 0.16,
   ao: false,
   dof: false,
   stars: 900,

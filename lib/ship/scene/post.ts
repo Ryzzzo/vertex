@@ -108,8 +108,12 @@ export function createPostChain(
   // is meant to glow, so there is nothing to threshold out. Thresholding total
   // luminance instead is what makes a bright white panel bloom as hard as an
   // LED, which is the single fastest way to make a scene look dated.
+  // Radius 0.38, down from 0.62. A wide radius spreads each outline far enough
+  // to overlap its neighbours, and thirty overlapping glows is a white wall
+  // rather than thirty lit edges. Tight bloom keeps each strip legible as a
+  // separate light.
   const bloomed = quality.bloom
-    ? occluded.add(bloom(emissiveTex, quality.bloomStrength, 0.62, 0))
+    ? occluded.add(bloom(emissiveTex, quality.bloomStrength, 0.38, 0))
     : occluded;
 
   /**

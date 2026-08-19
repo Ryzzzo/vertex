@@ -58,6 +58,7 @@ import {
 import {
   accentStripMaterial,
   chromeMaterial,
+  darkPanelMaterial,
   deckMaterial,
   gasGiantMaterial,
   hullEdgeMaterial,
@@ -131,6 +132,7 @@ export function createBridge(opts: {
   };
 
   const hull = hullMaterial(bag);
+  const darkPanel = darkPanelMaterial(bag);
   const marked = markedHullMaterial(bag, seed);
   const hullEdge = hullEdgeMaterial(bag);
   const chrome = chromeMaterial(bag);
@@ -181,13 +183,23 @@ export function createBridge(opts: {
   // has to be the shadow and the strips have to be the only bright thing up
   // there.
   const ribSpan = deckLength / (quality.ceilingRibs + 1);
+  const ribGeo = track(bevelBox(ROOM.halfWidth * 2 - 0.4, 0.17, 0.3));
+  const ribLightGeo = track(bevelBox(ROOM.halfWidth * 2 - 1.9, 0.06, 0.07, 0.015));
   for (let i = 1; i <= quality.ceilingRibs; i++) {
     const z = ROOM.farZ + ribSpan * i;
-    add(bevelBox(ROOM.halfWidth * 2 - 0.4, 0.17, 0.3), recess, [
-      0,
-      ROOM.ceiling - 0.09,
-      z,
-    ]);
+    const rib = new Mesh(ribGeo, recess);
+    rib.position.set(0, ROOM.ceiling - 0.09, z);
+    group.add(rib);
+
+    // A lit inlay every third coffer. Every other one, against the two long
+    // runs already up there, turned the ceiling into a solid sheet of light —
+    // the ceiling is nearly half the frame, so it is the fastest surface in the
+    // room to overload.
+    if (i % 3 === 1) {
+      const inlay = new Mesh(ribLightGeo, strip);
+      inlay.position.set(0, ROOM.ceiling - 0.2, z);
+      group.add(inlay);
+    }
   }
 
   // The two longitudinal runs. These are the room's actual light source, and
@@ -207,44 +219,84 @@ export function createBridge(opts: {
   }
 
   /* ── Side walls ────────────────────────────────────────────────────────
-     A run of chamfered panels with recessed gaps between them. The bevel on
-     each panel is what makes the wall read as machined rather than painted:
-     a flat quad under a strip light returns one value, a bevel returns a
-     bright line where it turns through the key. */
+     The signature motif, and the thing that makes the reference read as
+     cinematic rather than architectural: a near-black panel with a **glowing
+     chamfered outline traced around it**.
+
+     Not a white panel with a light near it. The outline is the light source,
+     the panel is the dark ground it reads against, and the panel's own bevel
+     carries the reflection of the outline back into the room. Inverting those
+     two roles is the entire difference between this and a lit interior.
+
+     Geometry is built once per course and shared across all 28 placements.
+     Twenty-eight identical shapes allocated separately is the kit-of-parts
+     principle stated and then ignored — one mesh, many placements, is the
+     whole reason a room like this costs kilobytes. */
   const panelCount = 7;
   const panelPitch = deckLength / panelCount;
+  const panelW = panelPitch - 0.24;
+  // 0.05, down from 0.085. The reference outlines are hairlines against a large
+  // dark panel; at 0.085 they read as wide bands and the panel becomes a small
+  // dark hole in a white surround, which inverts the ratio again.
+  const trim = 0.05;
+
+  // Shared geometry. Disposed once via `geometries`, referenced many times.
+  const upperPanelGeo = track(bevelPanel(panelW, 2.44, 0.16));
+  const lowerPanelGeo = track(bevelPanel(panelW, 2.04, 0.16));
+  const upperFrameGeo = track(
+    bevelFrame(panelW + 0.1, 2.54, panelW + 0.1 - trim * 2, 2.54 - trim * 2, 0.07, 0.16, 0.012),
+  );
+  const lowerFrameGeo = track(
+    bevelFrame(panelW + 0.1, 2.14, panelW + 0.1 - trim * 2, 2.14 - trim * 2, 0.07, 0.16, 0.012),
+  );
+
+  const placeShared = (
+    g: BufferGeometry,
+    m: Material,
+    pos: [number, number, number],
+    rot: [number, number, number],
+  ) => {
+    const mesh = new Mesh(g, m);
+    mesh.position.set(...pos);
+    mesh.rotation.set(...rot);
+    group.add(mesh);
+  };
+
   for (const side of [-1, 1] as const) {
     const x = ROOM.halfWidth * side;
+    const yaw: [number, number, number] = [0, (-Math.PI / 2) * side, 0];
 
     // The wall behind the panels, so the gaps read as depth rather than holes.
     add(
       quad(deckLength, ROOM.ceiling),
       recess,
       [x, ROOM.ceiling / 2, (ROOM.nearZ + ROOM.farZ) / 2],
-      [0, (-Math.PI / 2) * side, 0],
+      yaw,
     );
 
     for (let i = 0; i < panelCount; i++) {
       const z = ROOM.farZ + panelPitch * (i + 0.5);
-      // Upper panel and lower panel, split by a continuous strip channel — the
-      // horizontal break is what gives a long wall a scale reference.
-      //
-      // Every third panel carries hull stencilling — part index, hazard
-      // chevrons, alignment ticks. Every panel marked would read as wallpaper;
-      // one in three reads as a serviceable hull where only some plates are
-      // access panels, which is what real hardware looks like.
-      add(
-        bevelPanel(panelPitch - 0.22, 2.5, 0.18),
-        i % 3 === 1 ? marked : hull,
-        [x - 0.1 * side, 4.0, z],
-        [0, (-Math.PI / 2) * side, 0],
+
+      // Every third panel carries hull stencilling. Every panel marked would
+      // read as wallpaper; one in three reads as a hull where only some plates
+      // are access panels, which is what real hardware looks like.
+      placeShared(
+        upperPanelGeo,
+        i % 3 === 1 ? marked : darkPanel,
+        [x - 0.12 * side, 4.0, z],
+        yaw,
       );
-      add(
-        bevelPanel(panelPitch - 0.22, 2.1, 0.18),
-        i % 3 === 2 ? marked : hull,
-        [x - 0.1 * side, 1.35, z],
-        [0, (-Math.PI / 2) * side, 0],
+      placeShared(
+        lowerPanelGeo,
+        i % 3 === 2 ? marked : darkPanel,
+        [x - 0.12 * side, 1.35, z],
+        yaw,
       );
+
+      // The outlines, standing proud of the panel face so they cast their own
+      // highlight down the chamfer rather than sitting flush and flat.
+      placeShared(upperFrameGeo, strip, [x - 0.19 * side, 4.0, z], yaw);
+      placeShared(lowerFrameGeo, strip, [x - 0.19 * side, 1.35, z], yaw);
     }
 
     // Continuous strips: one in the channel between panel courses, one at the
@@ -267,29 +319,30 @@ export function createBridge(opts: {
   const vpTop = VIEWPORT.sill + VIEWPORT.height;
   const vpHalf = VIEWPORT.width / 2;
 
-  // Below the viewport.
-  add(quad(ROOM.halfWidth * 2, VIEWPORT.sill), hull, [
+  // The far wall is dark field, like the sides. It exists to be the ground the
+  // viewport's glow reads against.
+  add(quad(ROOM.halfWidth * 2, VIEWPORT.sill), darkPanel, [
     0,
     VIEWPORT.sill / 2,
     ROOM.farZ,
   ]);
-  // Above it.
-  add(quad(ROOM.halfWidth * 2, ROOM.ceiling - vpTop), hull, [
+  add(quad(ROOM.halfWidth * 2, ROOM.ceiling - vpTop), darkPanel, [
     0,
     (ROOM.ceiling + vpTop) / 2,
     ROOM.farZ,
   ]);
-  // Either side.
   for (const side of [-1, 1] as const) {
     const w = ROOM.halfWidth - vpHalf;
-    add(quad(w, VIEWPORT.height), hull, [
+    add(quad(w, VIEWPORT.height), darkPanel, [
       side * (vpHalf + w / 2),
       VIEWPORT.sill + VIEWPORT.height / 2,
       ROOM.farZ,
     ]);
   }
 
-  // The frame itself, standing proud of the wall.
+  // The structural surround, in pale metal — the one large white form on this
+  // wall, matching how the reference keeps its viewport housing bright while
+  // the wall around it goes black.
   add(
     bevelFrame(
       VIEWPORT.width + VIEWPORT.frame * 2,
@@ -300,6 +353,22 @@ export function createBridge(opts: {
     ),
     hull,
     [0, VIEWPORT.sill + VIEWPORT.height / 2, ROOM.farZ + 0.2],
+  );
+
+  // And the glowing outline traced around it — the same motif as every wall
+  // panel, at the scale of the thing the room is built around.
+  add(
+    bevelFrame(
+      VIEWPORT.width + VIEWPORT.frame * 2 + 0.16,
+      VIEWPORT.height + VIEWPORT.frame * 2 + 0.16,
+      VIEWPORT.width + VIEWPORT.frame * 2,
+      VIEWPORT.height + VIEWPORT.frame * 2,
+      0.08,
+      0.3,
+      0.014,
+    ),
+    strip,
+    [0, VIEWPORT.sill + VIEWPORT.height / 2, ROOM.farZ + 0.3],
   );
   // Accent trim on the inner lip — one of the three places blue is allowed.
   add(
