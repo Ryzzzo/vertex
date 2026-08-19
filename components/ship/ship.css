@@ -36,6 +36,27 @@
    */
   --sh-ease: var(--easing-linear);
   --ship-gutter: clamp(1.25rem, 0.75rem + 2.4vw, 2.75rem);
+
+  /**
+   * Text glow.
+   *
+   * The room's whole language is emissive white against black — the panel
+   * outlines, the ceiling inlays, the viewport surround. The type was the one
+   * layer still speaking in blue, which is why several rounds of palette work
+   * on the 3D read as "colours haven't changed": the overlay never moved.
+   *
+   * So the interface joins the room. Blue survives only where it is atmosphere
+   * — console readouts, the deck seams, the dais ring — and every piece of type
+   * becomes white that glows, at three weights so hierarchy still exists
+   * without hue.
+   *
+   * Painted once on static text. Never animate these: a text-shadow inside a
+   * render loop is the same defect as a blur inside one.
+   */
+  --sh-glow-strong:
+    0 0 6px rgba(233, 235, 238, 0.55), 0 0 18px rgba(180, 210, 255, 0.28);
+  --sh-glow: 0 0 5px rgba(233, 235, 238, 0.38), 0 0 14px rgba(180, 210, 255, 0.18);
+  --sh-glow-soft: 0 0 4px rgba(233, 235, 238, 0.24);
 }
 
 /* ── Scene layer ──────────────────────────────────────────────────────── */
@@ -113,30 +134,53 @@
 }
 
 .ship-eyebrow {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.875rem;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  /* Wider than the rest of the site's mono. A system label reads as a system
+     label because of its tracking, not its colour — which is what lets the
+     blue come out without the label losing its register. */
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--sh-accent);
+  color: var(--sh-hull);
+  text-shadow: var(--sh-glow);
 }
 
+/**
+ * The headline moves to the serif.
+ *
+ * "Fancier but tech-forward" resolved as editorial-serif-against-technical-
+ * mono rather than as a new display face: Instrument Serif is already loaded
+ * for the italic fragment, so promoting it to carry the whole headline costs
+ * zero additional bytes and introduces no fourth family to the type system.
+ *
+ * The tech register then comes from the company it keeps — wide-tracked mono
+ * labels above and below it — rather than from the letterforms themselves.
+ * A serif headline flanked by monospace system text is the pairing that reads
+ * as an instrument built by someone with taste; a geometric sans flanked by
+ * monospace reads as a dashboard.
+ */
 .ship-title {
   margin: 0;
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
+  font-weight: 400;
   /* A rem term is mixed with the vw term so this still scales under browser
      zoom. A bare vw in a clamp() middle stops responding at fixed widths. */
-  font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
-  line-height: 1.04;
-  letter-spacing: -0.028em;
+  font-size: clamp(2.5rem, 1.7rem + 3.4vw, 4.25rem);
+  line-height: 1.02;
+  /* Serif at display size wants to open up, not tighten — the negative
+     tracking that flatters a grotesk closes serif counters and muddies it. */
+  letter-spacing: -0.012em;
   text-wrap: balance;
   color: var(--sh-hull);
+  text-shadow: var(--sh-glow-strong);
 }
 
 .ship-title em {
-  font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
+  /* The one phrase that carries the emphasis glows a little harder, so the
+     hierarchy inside the headline is luminance rather than another colour. */
+  text-shadow: var(--sh-glow-strong), 0 0 30px rgba(180, 210, 255, 0.22);
 }
 
 .ship-blurb {
@@ -175,18 +219,30 @@
 }
 
 .ship-btn:hover {
-  border-color: var(--sh-accent);
-  color: var(--sh-accent);
+  border-color: var(--sh-hull);
+  color: var(--sh-hull);
+  text-shadow: var(--sh-glow);
+  background: color-mix(in oklab, var(--sh-hull) 7%, transparent);
 }
 
+/* The primary action is the brightest piece of type on the page, which is the
+   whole hierarchy now that hue is gone: it glows hardest, so it reads first. */
 .ship-btn-primary {
-  border-color: var(--sh-accent);
-  background: color-mix(in oklab, var(--sh-accent) 16%, transparent);
+  border-color: color-mix(in oklab, var(--sh-hull) 70%, transparent);
+  background: color-mix(in oklab, var(--sh-hull) 10%, transparent);
+  text-shadow: var(--sh-glow);
+  box-shadow:
+    0 0 14px rgba(180, 210, 255, 0.12),
+    inset 0 0 12px rgba(233, 235, 238, 0.06);
 }
 
 .ship-btn-primary:hover {
-  background: color-mix(in oklab, var(--sh-accent) 26%, transparent);
+  border-color: var(--sh-hull);
+  background: color-mix(in oklab, var(--sh-hull) 18%, transparent);
   color: var(--sh-hull);
+  box-shadow:
+    0 0 22px rgba(180, 210, 255, 0.2),
+    inset 0 0 14px rgba(233, 235, 238, 0.1);
 }
 
 /* ── Ship computer ────────────────────────────────────────────────────── */
@@ -224,10 +280,6 @@
   display: none;
 }
 
-.hud-title:focus-visible {
-  outline: 2px solid var(--sh-accent);
-  outline-offset: 3px;
-}
 
 .hud-title-text {
   /* Allowed to shrink before the compartment name does. On a narrow collapsed
@@ -243,7 +295,8 @@
 .hud-title-current {
   margin-left: auto;
   padding-left: 0.5rem;
-  color: var(--sh-accent);
+  color: var(--sh-hull);
+  text-shadow: var(--sh-glow);
   white-space: nowrap;
   flex: none;
   display: none;
@@ -257,11 +310,15 @@
   display: inline;
 }
 
+/* The one deliberate exception in the HUD. A status LED is atmosphere rather
+   than type — the same class of thing as the deck seams and the dais ring — so
+   it keeps the accent. Everything with letterforms goes white. */
 .hud-title-mark {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--sh-accent);
+  box-shadow: 0 0 8px rgba(79, 168, 255, 0.7);
   flex: none;
 }
 
@@ -301,11 +358,15 @@
 
 .hud-link:hover {
   color: var(--sh-hull);
-  background: color-mix(in oklab, var(--sh-accent) 12%, transparent);
+  text-shadow: var(--sh-glow-soft);
+  background: color-mix(in oklab, var(--sh-hull) 8%, transparent);
 }
 
+/* "You are here" is now the brightest row rather than the blue one. Hierarchy
+   by luminance and glow, which is the room's own language. */
 .hud-link[aria-current="page"] {
-  color: var(--sh-accent);
+  color: var(--sh-hull);
+  text-shadow: var(--sh-glow);
 }
 
 /* Sealed compartments read as scheduled rather than broken, and they are not
@@ -325,7 +386,8 @@
 }
 
 .hud-link[aria-current="page"] .hud-status {
-  color: var(--sh-accent);
+  color: var(--sh-hull);
+  text-shadow: var(--sh-glow-soft);
 }
 
 /* `accentDim` would be the obvious colour here and it measures 3.73:1, so it
@@ -336,11 +398,15 @@
 
 /* ── Focus. Never suppressed, never invisible. ────────────────────────── */
 
+/* White rather than accent. 16.39:1 on the scrim against the accent's 7.81:1,
+   so the indicator got more visible, not less, by losing its colour. */
 .ship a:focus-visible,
-.ship button:focus-visible {
-  outline: 2px solid var(--sh-accent);
+.ship button:focus-visible,
+.hud-title:focus-visible {
+  outline: 2px solid var(--sh-hull);
   outline-offset: 3px;
   border-radius: 2px;
+  box-shadow: 0 0 12px rgba(180, 210, 255, 0.35);
 }
 
 .ship-skip {
@@ -385,11 +451,13 @@
 }
 
 .ship-readout h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.375rem, 1.1rem + 1.1vw, 1.75rem);
-  letter-spacing: -0.02em;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.625rem, 1.2rem + 1.6vw, 2.25rem);
+  letter-spacing: -0.008em;
   color: var(--sh-hull);
-  margin: 0 0 0.75rem;
+  text-shadow: var(--sh-glow-soft);
+  margin: 0 0 0.875rem;
 }
 
 .ship-readout p {
@@ -400,7 +468,15 @@
 }
 
 .ship-readout a {
-  color: var(--sh-accent);
+  color: var(--sh-hull);
+  text-shadow: var(--sh-glow-soft);
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in oklab, var(--sh-hull) 45%, transparent);
+}
+
+.ship-readout a:hover {
+  text-shadow: var(--sh-glow);
+  text-decoration-color: var(--sh-hull);
 }
 
 /* ── Narrow ───────────────────────────────────────────────────────────── */

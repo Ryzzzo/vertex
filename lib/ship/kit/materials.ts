@@ -73,15 +73,28 @@ export function hullMaterial(bag: MaterialBag): MeshPhysicalNodeMaterial {
   // over it — and that second highlight is most of what reads as
   // manufacturing quality rather than as a shaded polygon.
   //
-  // These values do nothing without `scene.environment`. At metalness 0.92
-  // there is almost no diffuse term, so with nothing to reflect the panel
-  // resolves to flat grey — which is precisely how the first pass looked and
-  // why it read as an untextured primitive.
+  /**
+   * Metalness 0.18, down from 0.92 — and this is exactly why the console pods
+   * were rendering dark.
+   *
+   * A metal has essentially no diffuse term: all it can return is its
+   * environment. That was the right recipe when the room was bright and flat
+   * panels needed reflections to stop reading as primitives. But the room is
+   * now a black field with a few thin emitters in it, so "return the
+   * environment" means "return black" — and every white form in the scene went
+   * dark along with the walls that were supposed to.
+   *
+   * A white mass has to *hold its albedo* regardless of what surrounds it,
+   * which means diffuse, not metal. Low metalness with a strong clearcoat is a
+   * coated white panel: it keeps its value in shadow and still takes a tight
+   * specular off the strips. Same failure family as the missing environment
+   * map — a material specified for one lighting world and left in another.
+   */
   const m = new MeshPhysicalNodeMaterial({
     color: SHIP.hull,
-    metalness: 0.92,
-    clearcoat: 0.55,
-    clearcoatRoughness: 0.14,
+    metalness: 0.18,
+    clearcoat: 0.65,
+    clearcoatRoughness: 0.12,
   });
 
   /**
@@ -142,14 +155,22 @@ export function markedHullMaterial(
     const p = uv();
     const base = color(SHIP.hull);
 
-    // A block of index marks in the upper-left corner of the panel: four short
-    // bars of varying length, the silhouette of a stamped part number.
-    const ix = p.sub(vec2(0.09, 0.86)).mul(vec2(9.0, 26.0));
+    /**
+     * A block of index marks in the upper-left corner: three heavy bars of
+     * varying length, the silhouette of a stamped part number.
+     *
+     * Coarser than the first pass, which packed four bars into a block a third
+     * of this size and read as fine dither rather than as stencilling. A
+     * stencil is legible as *marking* from across a room — if it dissolves into
+     * texture at viewing distance it is noise, and noise on a hull panel is
+     * worse than a clean panel.
+     */
+    const ix = p.sub(vec2(0.1, 0.72)).mul(vec2(3.6, 6.4));
     const inBlock = step(float(0), ix.x)
       .mul(step(ix.x, 1))
       .mul(step(float(0), ix.y))
       .mul(step(ix.y, 1));
-    const markRow = ix.y.mul(4).floor();
+    const markRow = ix.y.mul(3).floor();
     const markLen = markRow
       .add(uSeed)
       .mul(12.9898)
@@ -160,23 +181,25 @@ export function markedHullMaterial(
       .add(0.35);
     const markInk = inBlock
       .mul(step(ix.x, markLen))
-      .mul(smoothstep(0.0, 0.22, ix.y.mul(4).fract()))
-      .mul(smoothstep(1.0, 0.78, ix.y.mul(4).fract()));
+      .mul(smoothstep(0.0, 0.26, ix.y.mul(3).fract()))
+      .mul(smoothstep(1.0, 0.74, ix.y.mul(3).fract()));
 
     // Hazard chevrons along the bottom edge. Diagonal stripes are the single
-    // most recognisable piece of industrial marking there is.
-    const inHazard = smoothstep(0.055, 0.045, p.y);
-    const chevron = p.x.mul(26).add(p.y.mul(26)).fract();
+    // most recognisable piece of industrial marking there is — but only at a
+    // period wide enough to survive minification. At 26 repeats they aliased
+    // into grey; at 8 they stay chevrons.
+    const inHazard = smoothstep(0.1, 0.08, p.y);
+    const chevron = p.x.mul(8).add(p.y.mul(8)).fract();
     const hazardInk = inHazard.mul(
-      smoothstep(0.46, 0.5, chevron).mul(smoothstep(0.96, 0.92, chevron)),
+      smoothstep(0.44, 0.5, chevron).mul(smoothstep(0.98, 0.9, chevron)),
     );
 
     // Alignment ticks down the right edge.
-    const inTicks = smoothstep(0.955, 0.965, p.x);
-    const tick = smoothstep(0.42, 0.5, p.y.mul(14).fract().sub(0.5).abs().mul(2));
+    const inTicks = smoothstep(0.93, 0.95, p.x);
+    const tick = smoothstep(0.34, 0.46, p.y.mul(5).fract().sub(0.5).abs().mul(2));
     const tickInk = inTicks.mul(tick);
 
-    const ink = max(max(markInk, hazardInk), tickInk).mul(0.72);
+    const ink = max(max(markInk, hazardInk), tickInk).mul(0.82);
     return mix(base, color(SHIP.recess), ink);
   })();
 
@@ -186,12 +209,15 @@ export function markedHullMaterial(
 /** Panel sides and secondary structure — a step down, slightly rougher. */
 export function hullEdgeMaterial(bag: MaterialBag): MeshPhysicalNodeMaterial {
   return bag.add(
+    // Trim and desk surfaces. Kept a little more metallic than the masses so
+    // there is still a material difference between a panel and its edge, but
+    // nowhere near enough to lose its albedo in a dark room.
     new MeshPhysicalNodeMaterial({
       color: SHIP.hullEdge,
-      metalness: 0.95,
-      roughness: 0.38,
-      clearcoat: 0.3,
-      clearcoatRoughness: 0.25,
+      metalness: 0.32,
+      roughness: 0.34,
+      clearcoat: 0.45,
+      clearcoatRoughness: 0.18,
     }),
   );
 }
