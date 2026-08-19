@@ -18,7 +18,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { ROOMS, DEFAULT_ROOM, preloadRoom } from "@/lib/ship/rooms";
+// From the registry, never from the scene. The registry is plain data with no
+// three import; reaching for the room loader here would drag the renderer's
+// module graph into the layout's initial bundle.
+import { ROOMS, DEFAULT_ROOM } from "@/lib/ship/registry";
 
 export default function Hud() {
   const pathname = usePathname();
@@ -34,16 +37,10 @@ export default function Hud() {
     }
   }, []);
 
-  // Adjacency preloading: warm the rooms either side of this one. With five
-  // compartments this is nearly academic — the discipline exists so that room
-  // nine does not require an architecture change.
-  useEffect(() => {
-    const i = ROOMS.findIndex((r) => r.slug === current);
-    for (const n of [i - 1, i + 1]) {
-      const adjacent = ROOMS[n];
-      if (adjacent && adjacent.status === "open") preloadRoom(adjacent.slug);
-    }
-  }, [current]);
+  // Adjacency preloading lived here and is gone for now: with every room in one
+  // chunk there is nothing left to warm. It returns when a room is expensive
+  // enough to deserve its own boundary — deliberately, rather than as a
+  // side effect of how the imports happened to fall.
 
   return (
     <details className="hud" ref={ref} open>

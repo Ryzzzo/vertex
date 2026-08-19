@@ -29,6 +29,13 @@ export type QualityTier = {
   scatterScale: number;
   /** Bloom on the strips and screens. */
   bloom: boolean;
+  /** Bloom strength. Restrained on purpose — bloom is what makes a scene read
+   *  as dated faster than any other single effect. */
+  bloomStrength: number;
+  /** Screen-space ambient occlusion. The thing that makes a recess look
+   *  recessed; without it a chamfered joint and a painted line are the same
+   *  picture. Expensive, so it is the first thing off on a phone. */
+  ao: boolean;
   /** Star count behind the viewport. */
   stars: number;
   /** Shadow-casting lights. Zero on reduced — the room is lit by emissive
@@ -45,6 +52,8 @@ const FULL: QualityTier = {
   scatter: true,
   scatterScale: 1,
   bloom: true,
+  bloomStrength: 0.42,
+  ao: true,
   stars: 2600,
   shadowLights: 1,
 };
@@ -58,6 +67,8 @@ const REDUCED: QualityTier = {
   scatter: true,
   scatterScale: 0.5,
   bloom: true,
+  bloomStrength: 0.34,
+  ao: false,
   stars: 900,
   shadowLights: 0,
 };

@@ -12,15 +12,17 @@
  * choice — it *is* the WebGL2 path. Nothing below branches on backend.
  */
 import {
+  ACESFilmicToneMapping,
   PerspectiveCamera,
   Scene,
   Vector3,
   WebGPURenderer,
-  NeutralToneMapping,
 } from "three/webgpu";
 import type { FrameState, RoomModule } from "./types";
 import type { QualityTier } from "./quality";
 import type { Tier } from "./capability";
+import { createShipEnvironment } from "../kit/environment";
+import { createPostChain, type PostChain } from "./post";
 
 export type MemorySnapshot = {
   geometries: number;
@@ -59,6 +61,9 @@ export class SceneManager {
   /** Memory counts with no room mounted. The disposal gate's reference. */
   private baseline: MemorySnapshot | null = null;
 
+  private environment: ReturnType<typeof createShipEnvironment> | null = null;
+  private chain: PostChain | null = null;
+
   private readonly onPointerMove = (e: PointerEvent) => {
     if (this.reducedMotion) return;
     this.pointerTarget.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -92,11 +97,13 @@ export class SceneManager {
     // Neutral rather than ACES. ACES pulls saturated highlights toward orange,
     // and this room's entire palette premise is that nothing in it is warm —
     // a blown white LED strip tinting amber is the exact failure being avoided.
-    this.renderer.toneMapping = NeutralToneMapping;
-    // The reference bridge is a bright white room. At 1.05 the #E9EBEE panels
-    // were landing as mid grey and the whole space read dim and murky, which is
-    // the opposite of the direction — professional and spacious, not gritty.
-    this.renderer.toneMappingExposure = 1.22;
+    // ACES, matching the PBR reference demo. The earlier Neutral choice was
+    // made to stop white LEDs tinting warm, but that was solving a symptom of
+    // having no environment map: with real reflections the highlights carry
+    // their own colour and ACES's shoulder is what stops a bright metal panel
+    // clipping to flat white.
+    this.renderer.toneMapping = ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.1;
 
     this.camera = new PerspectiveCamera(55, 1, 0.1, 300);
   }
@@ -104,6 +111,23 @@ export class SceneManager {
   async init(): Promise<void> {
     await this.renderer.init();
     this.resize();
+
+    // The environment before anything else. Every metallic surface in every
+    // room resolves to flat colour without it — there is nothing else for a
+    // metal to do but reflect, and with no environment there is nothing to
+    // reflect. Generated once per renderer, shared by every room, zero bytes
+    // downloaded.
+    this.environment = createShipEnvironment(this.renderer);
+    this.scene.environment = this.environment.texture;
+    this.scene.environmentIntensity = 0.85;
+
+    this.chain = createPostChain(
+      this.renderer,
+      this.scene,
+      this.camera,
+      this.quality,
+    );
+
     this.baseline = this.memory();
 
     window.addEventListener("resize", this.onResize, { passive: true });
@@ -231,7 +255,11 @@ export class SceneManager {
     };
 
     this.room?.update(state);
-    this.renderer.render(this.scene, this.camera);
+    // Through the post chain, never `renderer.render` directly — the direct
+    // path skips AO, bloom and the MRT entirely and silently produces the
+    // untouched beauty pass.
+    if (this.chain) this.chain.post.render();
+    else this.renderer.render(this.scene, this.camera);
   };
 
   dispose(): void {
@@ -239,6 +267,11 @@ export class SceneManager {
     this.disposed = true;
     this.stop();
     this.unmount();
+    this.chain?.dispose();
+    this.chain = null;
+    this.scene.environment = null;
+    this.environment?.dispose();
+    this.environment = null;
     window.removeEventListener("resize", this.onResize);
     window.removeEventListener("pointermove", this.onPointerMove);
     document.removeEventListener("visibilitychange", this.onVisibility);

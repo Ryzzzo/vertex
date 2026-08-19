@@ -24,8 +24,14 @@
   min-height: 100svh;
   color: var(--sh-text);
   background: var(--sh-space);
-  /* One curve for the whole site, matching --easing-linear in globals.css. */
-  --sh-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  /**
+   * One curve for the whole site. Rule 5, and the first pass broke it: this
+   * hardcoded cubic-bezier(0.32, 0.72, 0, 1) while globals.css defines
+   * --easing-linear as cubic-bezier(0.22, 1, 0.36, 1), so the ship animated on
+   * a different hand from every other page. `npm run audit-repo` caught it.
+   * Reference the token; never restate the value.
+   */
+  --sh-ease: var(--easing-linear);
   --ship-gutter: clamp(1.25rem, 0.75rem + 2.4vw, 2.75rem);
 }
 

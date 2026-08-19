@@ -108,7 +108,49 @@ export function bevelFrame(
   return g;
 }
 
-/** A plain box, centred. Structure that never catches a highlight. */
+/**
+ * A box with every visible edge chamfered. Centred.
+ *
+ * This replaces the plain `BoxGeometry` the first pass used everywhere, and the
+ * difference is the whole "boxy and dated" complaint in one function. A hard
+ * 90° edge returns a single discontinuity between two flat shaded faces — there
+ * is nothing there for a light to catch, so the form reads as an untextured
+ * primitive no matter how good the material is. A chamfer as small as 0.02 m
+ * puts a third surface at 45° between them, which catches the ceiling runs and
+ * draws a bright line down every edge in the room. That line is what the eye
+ * reads as "machined".
+ *
+ * Built by extruding a chamfered rectangle and bevelling the extrusion, so the
+ * chamfer runs in all three axes rather than only around the profile.
+ */
+export function bevelBox(
+  w: number,
+  h: number,
+  d: number,
+  chamfer = 0.02,
+): BufferGeometry {
+  // Keep the chamfer under a third of the smallest dimension, or the shape
+  // collapses into a wedge on thin parts like LED strips.
+  const c = Math.min(chamfer, w / 3, h / 3, d / 3);
+  const g = new ExtrudeGeometry(chamferRect(w, h, c), {
+    depth: Math.max(d - c * 2, 0.001),
+    bevelEnabled: true,
+    bevelThickness: c,
+    bevelSize: c,
+    bevelSegments: 1,
+    curveSegments: 1,
+  });
+  g.translate(0, 0, -d / 2);
+  g.computeVertexNormals();
+  return g;
+}
+
+/**
+ * A plain box, centred.
+ *
+ * Retained only for parts no edge of which is ever visible — interior blocking,
+ * and the backing behind a recess. If it can be seen, it wants `bevelBox`.
+ */
 export function slab(w: number, h: number, d: number): BufferGeometry {
   return new BoxGeometry(w, h, d);
 }

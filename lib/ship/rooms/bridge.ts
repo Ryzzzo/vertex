@@ -48,15 +48,16 @@ import {
   type PerspectiveCamera,
 } from "three/webgpu";
 import {
+  bevelBox,
   bevelFrame,
   bevelPanel,
   post,
   quad,
   seatBack,
-  slab,
 } from "../kit/shapes";
 import {
   accentStripMaterial,
+  chromeMaterial,
   deckMaterial,
   gasGiantMaterial,
   hullEdgeMaterial,
@@ -129,6 +130,7 @@ export function createBridge(opts: {
 
   const hull = hullMaterial(bag);
   const hullEdge = hullEdgeMaterial(bag);
+  const chrome = chromeMaterial(bag);
   const recess = recessMaterial(bag);
   const strip = stripMaterial(bag);
   const accentStrip = accentStripMaterial(bag);
@@ -178,7 +180,7 @@ export function createBridge(opts: {
   const ribSpan = deckLength / (quality.ceilingRibs + 1);
   for (let i = 1; i <= quality.ceilingRibs; i++) {
     const z = ROOM.farZ + ribSpan * i;
-    add(slab(ROOM.halfWidth * 2 - 0.4, 0.17, 0.3), recess, [
+    add(bevelBox(ROOM.halfWidth * 2 - 0.4, 0.17, 0.3), recess, [
       0,
       ROOM.ceiling - 0.09,
       z,
@@ -188,13 +190,13 @@ export function createBridge(opts: {
   // The two longitudinal runs. These are the room's actual light source, and
   // their convergence toward the viewport is the strongest depth cue in frame.
   for (const x of [-2.8, 2.8]) {
-    add(slab(0.3, 0.1, deckLength - 1.2), strip, [
+    add(bevelBox(0.3, 0.1, deckLength - 1.2), strip, [
       x,
       ROOM.ceiling - 0.28,
       (ROOM.nearZ + ROOM.farZ) / 2,
     ]);
     // A recessed housing around each run so the light reads as built in.
-    add(slab(0.72, 0.3, deckLength - 1.0), recess, [
+    add(bevelBox(0.72, 0.3, deckLength - 1.0), recess, [
       x,
       ROOM.ceiling - 0.16,
       (ROOM.nearZ + ROOM.farZ) / 2,
@@ -240,12 +242,12 @@ export function createBridge(opts: {
     // Continuous strips: one in the channel between panel courses, one at the
     // deck line washing the floor.
     add(
-      slab(0.08, 0.1, deckLength - 0.6),
+      bevelBox(0.08, 0.1, deckLength - 0.6, 0.015),
       strip,
       [x - 0.22 * side, 2.62, (ROOM.nearZ + ROOM.farZ) / 2],
     );
     add(
-      slab(0.08, 0.08, deckLength - 0.6),
+      bevelBox(0.08, 0.08, deckLength - 0.6, 0.015),
       strip,
       [x - 0.22 * side, 0.16, (ROOM.nearZ + ROOM.farZ) / 2],
     );
@@ -339,7 +341,7 @@ export function createBridge(opts: {
     [VIEWPORT.width * 0.24, 1.06, ROOM.farZ + 0.94],
     [-1.15, 0, 0],
   );
-  add(slab(VIEWPORT.width + 1.2, 0.04, 0.05), accentStrip, [
+  add(bevelBox(VIEWPORT.width + 1.2, 0.04, 0.05), accentStrip, [
     0,
     0.87,
     ROOM.farZ + 1.12,
@@ -349,14 +351,14 @@ export function createBridge(opts: {
   // blank. Recessed, because the joint is what makes a panel read as a panel.
   for (const s of [-1, 1] as const) {
     for (const d of [0, 1] as const) {
-      add(slab(0.09, ROOM.ceiling - 0.4, 0.06), recess, [
+      add(bevelBox(0.09, ROOM.ceiling - 0.4, 0.06), recess, [
         s * (vpHalf + 0.95 + d * 1.65),
         ROOM.ceiling / 2,
         ROOM.farZ + 0.06,
       ]);
     }
     // A strip washing the wall either side of the window.
-    add(slab(0.05, VIEWPORT.height * 0.8, 0.05), strip, [
+    add(bevelBox(0.05, VIEWPORT.height * 0.8, 0.05), strip, [
       s * (vpHalf + 0.62),
       VIEWPORT.sill + VIEWPORT.height / 2,
       ROOM.farZ + 0.1,
@@ -417,9 +419,18 @@ export function createBridge(opts: {
         [-1.32, yaw, 0],
       );
       // Screen, canted back so it faces the camera rather than the ceiling.
+      // Each station runs a different readout — code, bar chart, plot, wave —
+      // so the bridge reads as a room where several different things are being
+      // watched, rather than six copies of one panel. Blank rectangles were a
+      // large part of why the first pass read as empty.
       add(
         quad(2.0, 0.78),
-        screenMaterial(bag, seed + i * 13 + (side > 0 ? 101 : 0)),
+        screenMaterial(
+          bag,
+          seed + i * 13 + (side > 0 ? 101 : 0),
+          22,
+          (i * 2 + (side > 0 ? 1 : 0)) % 4,
+        ),
         [x, 1.32, z - 0.34],
         [-0.34, yaw, 0],
       );
@@ -431,7 +442,7 @@ export function createBridge(opts: {
         [-0.34, yaw, 0],
       );
       // Base accent — one of the three places blue is allowed.
-      add(slab(2.4, 0.05, 0.05), accentStrip, [x, 0.88, z + 0.62], [0, yaw, 0]);
+      add(bevelBox(2.4, 0.05, 0.05), accentStrip, [x, 0.88, z + 0.62], [0, yaw, 0]);
     }
   });
 
@@ -465,8 +476,9 @@ export function createBridge(opts: {
     CHAIR.daisHeight * 0.55,
     CHAIR.z,
   ]);
-  // Pedestal.
-  add(post(0.2, 0.46, 16), recess, [0, CHAIR.daisHeight + 0.23, CHAIR.z]);
+  // Pedestal, in polished chrome. One chrome element against brushed metal
+  // reads as engineering; a room of chrome reads as a car advert.
+  add(post(0.2, 0.46, 24), chrome, [0, CHAIR.daisHeight + 0.23, CHAIR.z]);
 
   /**
    * Seat, back and arms, all in hull so the chair is the bright object on a
@@ -507,8 +519,8 @@ export function createBridge(opts: {
   // into one white mass and the whole chair read as a pillar; the flare is what
   // makes the silhouette say "seat" at ninety pixels.
   for (const s of [-1, 1] as const) {
-    add(slab(0.13, 0.11, 0.8), hullEdge, [s * 0.62, seatY + 0.27, CHAIR.z + 0.2]);
-    add(slab(0.1, 0.28, 0.1), hullEdge, [s * 0.62, seatY + 0.13, CHAIR.z + 0.52]);
+    add(bevelBox(0.13, 0.11, 0.8), hullEdge, [s * 0.62, seatY + 0.27, CHAIR.z + 0.2]);
+    add(bevelBox(0.1, 0.28, 0.1), hullEdge, [s * 0.62, seatY + 0.13, CHAIR.z + 0.52]);
   }
 
   /* ── Rear bulkhead ─────────────────────────────────────────────────────

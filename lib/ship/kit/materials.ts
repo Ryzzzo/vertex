@@ -20,6 +20,7 @@
 import {
   DoubleSide,
   MeshBasicNodeMaterial,
+  MeshPhysicalNodeMaterial,
   MeshStandardNodeMaterial,
   type Material,
 } from "three/webgpu";
@@ -32,6 +33,7 @@ import {
   mx_fractal_noise_float,
   normalWorld,
   positionLocal,
+  select,
   smoothstep,
   step,
   time,
@@ -64,22 +66,55 @@ export function materialBag(): MaterialBag {
  * white panels read as charcoal plastic. A previous build learned this on hull
  * ribs at metalness 1 and had to buy the surface back with reflectance.
  */
-export function hullMaterial(bag: MaterialBag): MeshStandardNodeMaterial {
-  const m = new MeshStandardNodeMaterial({
+export function hullMaterial(bag: MaterialBag): MeshPhysicalNodeMaterial {
+  // Physical rather than Standard, for the clearcoat. A coated panel has two
+  // reflections — a broad one from the metal and a tight one from the lacquer
+  // over it — and that second highlight is most of what reads as
+  // manufacturing quality rather than as a shaded polygon.
+  //
+  // These values do nothing without `scene.environment`. At metalness 0.92
+  // there is almost no diffuse term, so with nothing to reflect the panel
+  // resolves to flat grey — which is precisely how the first pass looked and
+  // why it read as an untextured primitive.
+  const m = new MeshPhysicalNodeMaterial({
     color: SHIP.hull,
-    metalness: 0.62,
-    roughness: 0.34,
+    metalness: 0.92,
+    roughness: 0.3,
+    clearcoat: 0.55,
+    clearcoatRoughness: 0.14,
   });
   return bag.add(m);
 }
 
 /** Panel sides and secondary structure — a step down, slightly rougher. */
-export function hullEdgeMaterial(bag: MaterialBag): MeshStandardNodeMaterial {
+export function hullEdgeMaterial(bag: MaterialBag): MeshPhysicalNodeMaterial {
   return bag.add(
-    new MeshStandardNodeMaterial({
+    new MeshPhysicalNodeMaterial({
       color: SHIP.hullEdge,
-      metalness: 0.55,
-      roughness: 0.42,
+      metalness: 0.95,
+      roughness: 0.38,
+      clearcoat: 0.3,
+      clearcoatRoughness: 0.25,
+    }),
+  );
+}
+
+/**
+ * Polished chrome. Stanchions, trim rings, fasteners.
+ *
+ * Roughness 0.12 is a near-mirror, which is only worth having because there is
+ * now an authored environment for it to mirror. Used sparingly — a room of
+ * chrome reads as a car advert, and one chrome detail against brushed metal
+ * reads as engineering.
+ */
+export function chromeMaterial(bag: MaterialBag): MeshPhysicalNodeMaterial {
+  return bag.add(
+    new MeshPhysicalNodeMaterial({
+      color: "#DDE4EC",
+      metalness: 1,
+      roughness: 0.12,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.08,
     }),
   );
 }
@@ -152,23 +187,36 @@ export function deckMaterial(
  */
 export function stripMaterial(
   bag: MaterialBag,
-  intensity = 1.6,
-): MeshBasicNodeMaterial {
-  const m = new MeshBasicNodeMaterial();
-  m.colorNode = color(SHIP.strip).mul(intensity);
-  m.toneMapped = false;
+  intensity = 3.2,
+): MeshStandardNodeMaterial {
+  // Standard with an emissive term rather than Basic. Basic ignores the
+  // environment entirely, so the strip's own housing got no reflection off it
+  // and the fitting read as a white sticker on a grey wall. This still emits,
+  // and it also sits in the room.
+  const m = new MeshStandardNodeMaterial({
+    color: SHIP.recess,
+    metalness: 0.1,
+    roughness: 0.5,
+    emissive: SHIP.strip,
+    emissiveIntensity: intensity,
+  });
   return bag.add(m);
 }
 
 /** The same, in the accent. Console trim and active indicators only. */
 export function accentStripMaterial(
   bag: MaterialBag,
-  intensity = 1.35,
-): MeshBasicNodeMaterial {
-  const m = new MeshBasicNodeMaterial();
-  m.colorNode = color(SHIP.accent).mul(intensity);
-  m.toneMapped = false;
-  return bag.add(m);
+  intensity = 2.6,
+): MeshStandardNodeMaterial {
+  return bag.add(
+    new MeshStandardNodeMaterial({
+      color: SHIP.recess,
+      metalness: 0.1,
+      roughness: 0.5,
+      emissive: SHIP.accent,
+      emissiveIntensity: intensity,
+    }),
+  );
 }
 
 /**
@@ -185,47 +233,117 @@ export function screenMaterial(
   bag: MaterialBag,
   seed: number,
   rows = 22,
-): MeshBasicNodeMaterial {
-  const m = new MeshBasicNodeMaterial({ side: DoubleSide });
+  /** 0 code · 1 bar chart · 2 plot grid · 3 waveform. */
+  kind = 0,
+): MeshStandardNodeMaterial {
+  // Standard with emissive so screens bloom and light their own bezels, rather
+  // than sitting on the surface as flat colour.
+  const m = new MeshStandardNodeMaterial({
+    side: DoubleSide,
+    color: SHIP.recess,
+    metalness: 0.2,
+    roughness: 0.35,
+    emissiveIntensity: 1.9,
+  });
   const uSeed = uniform(float(seed));
 
   const face = Fn(() => {
     const p = uv();
-    const row = p.y.mul(rows).floor();
 
-    // Classic sin-fract hash. Deterministic per row per screen, so a screen's
-    // rhythm is a property of its seed and survives a reload.
-    const h = row
+    /* ── 0 · Code. Indent depth and line-length variance, never glyphs. ──
+       Baking legible type into a texture fails WCAG 1.4.5, and it is also the
+       wrong picture: a screen six metres away at a yaw renders eight-pixel
+       glyphs, which is a smear. What actually reads as code at that distance
+       is the rhythm, so the compliant version is the more filmic one. */
+    const row = p.y.mul(rows).floor();
+    // Classic sin-fract hash, inlined at both use sites. Deterministic per row
+    // per screen, so a console's content is a property of its seed and survives
+    // a reload. Not extracted into a helper because typing a parameter that
+    // accepts both `float()` (a VarNode) and `.floor()` (a plain Node) costs
+    // more than the duplicated line saves.
+    const h = row.mul(12.9898).add(uSeed.mul(7.13)).sin().mul(43758.5453).fract();
+    const indent = h.mul(0.22);
+    const len = h.mul(0.52).add(0.18).add(indent);
+    const inBar = step(indent, p.x).mul(step(p.x, len));
+    const rowGap = smoothstep(0.0, 0.16, p.y.mul(rows).fract()).mul(
+      smoothstep(1.0, 0.84, p.y.mul(rows).fract()),
+    );
+    const codeInk = inBar.mul(rowGap).mul(h.mul(0.5).add(0.5));
+
+    /* ── 1 · Bar chart. Twelve columns, heights from the hash, one sweeping
+           highlight so the console reads as live rather than printed. ── */
+    const colCount = float(12);
+    const col = p.x.mul(colCount).floor();
+    const ch = col
+      .add(31.0)
       .mul(12.9898)
       .add(uSeed.mul(7.13))
       .sin()
       .mul(43758.5453)
       .fract();
+    const barH = ch.mul(0.72).add(0.12);
+    const inCol = smoothstep(0.06, 0.14, p.x.mul(colCount).fract()).mul(
+      smoothstep(0.94, 0.86, p.x.mul(colCount).fract()),
+    );
+    const inBarH = step(p.y, barH);
+    const sweep = smoothstep(
+      0.14,
+      0.0,
+      col.div(colCount).sub(time.mul(0.16).fract()).abs(),
+    );
+    const chartInk = inCol.mul(inBarH).mul(sweep.mul(0.75).add(0.45));
 
-    // Indent and length, both from the same hash — the two things that make a
-    // block of code recognisable in silhouette.
-    const indent = h.mul(0.22);
-    const len = h.mul(0.52).add(0.18).add(indent);
+    /* ── 2 · Plot grid with a trace across it. ── */
+    const gx = smoothstep(0.94, 1.0, p.x.mul(9).fract().sub(0.5).abs().mul(2));
+    const gy = smoothstep(0.94, 1.0, p.y.mul(5).fract().sub(0.5).abs().mul(2));
+    const gridInk = max(gx, gy).mul(0.3);
+    const traceY = mx_fractal_noise_float(
+      vec3(p.x.mul(4.2), uSeed.mul(0.4), time.mul(0.08)),
+      3,
+      2.0,
+      0.5,
+      1.0,
+    )
+      .mul(0.22)
+      .add(0.5);
+    const traceInk = smoothstep(0.022, 0.0, p.y.sub(traceY).abs());
+    const plotInk = max(gridInk, traceInk);
 
-    const inBar = step(indent, p.x).mul(step(p.x, len));
-    // Leave a gap between rows so they read as discrete lines rather than fill.
-    const rowGap = smoothstep(0.0, 0.16, p.y.mul(rows).fract()).mul(
-      smoothstep(1.0, 0.84, p.y.mul(rows).fract()),
+    /* ── 3 · Waveform, mirrored about the centre line. ── */
+    const amp = mx_fractal_noise_float(
+      vec3(p.x.mul(13.0), uSeed, time.mul(0.9)),
+      2,
+      2.0,
+      0.6,
+      1.0,
+    )
+      .abs()
+      .mul(0.4)
+      .add(0.02);
+    const waveInk = smoothstep(0.012, 0.0, p.y.sub(0.5).abs().sub(amp));
+
+    // Select by kind. `select` keeps this one shader with a branch resolved at
+    // compile time per material instance, rather than four shader programs.
+    const k = float(kind);
+    const ink = select(
+      k.lessThan(0.5),
+      codeInk,
+      select(
+        k.lessThan(1.5),
+        chartInk,
+        select(k.lessThan(2.5), plotInk, waveInk),
+      ),
     );
 
-    // One row per screen is "active" and brighter, drifting slowly. It is the
-    // only thing on a console that moves at rest, which is enough.
-    const active = step(
-      float(0.5),
-      float(1).sub(row.sub(time.mul(0.55).add(uSeed).floor().mod(rows)).abs()),
-    );
+    // A faint scanline and a vignette, so the panel reads as a lit display
+    // rather than as a decal.
+    const scan = p.y.mul(rows * 3).fract().mul(0.06).add(0.94);
+    const vig = smoothstep(1.05, 0.35, p.sub(vec2(0.5, 0.5)).length());
 
-    const lit = color(SHIP.accent).mul(inBar.mul(rowGap).mul(active.mul(0.9).add(0.42)));
-    return mix(color(SHIP.screen), lit.add(color(SHIP.screen)), inBar.mul(rowGap));
+    return color(SHIP.accent).mul(ink).mul(scan).mul(vig.mul(0.5).add(0.6));
   });
 
-  m.colorNode = face();
-  m.toneMapped = false;
+  m.emissiveNode = face();
   return bag.add(m);
 }
 
