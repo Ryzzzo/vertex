@@ -24,6 +24,7 @@ import {
 } from "three/tsl";
 import { ao } from "three/addons/tsl/display/GTAONode.js";
 import { bloom } from "three/addons/tsl/display/BloomNode.js";
+import { dof } from "three/addons/tsl/display/DepthOfFieldNode.js";
 import type { QualityTier } from "./quality";
 
 export type PostChain = {
@@ -107,9 +108,34 @@ export function createPostChain(
   // is meant to glow, so there is nothing to threshold out. Thresholding total
   // luminance instead is what makes a bright white panel bloom as hard as an
   // LED, which is the single fastest way to make a scene look dated.
-  const composed = quality.bloom
+  const bloomed = quality.bloom
     ? occluded.add(bloom(emissiveTex, quality.bloomStrength, 0.62, 0))
     : occluded;
+
+  /**
+   * Depth of field, kept deliberately shallow in effect.
+   *
+   * Focus sits on the command dais and the near consoles; the far wall and the
+   * ceiling run soften slightly. The point is not a photographic bokeh — a
+   * heavy blur on an interior reads as a miniature, which is the opposite of
+   * the scale this room is trying to convey. It is there so the eye has
+   * somewhere to rest and the back of the room recedes.
+   */
+  // `getViewZNode()`, not `getTextureNode('depth')`. DOF wants view-space Z,
+  // and the depth attachment is non-linear device depth — feeding it straight
+  // in produces a focal plane that sits almost on the near clip and blurs
+  // essentially the whole room. Same class of mistake as the AO red channel:
+  // the buffer exists and has the right shape, and means something else.
+  //
+  // focalLength 9 / bokeh 1.1 blurred the entire room including the viewport,
+  // which is the miniature-model failure this effect is one parameter away from
+  // at all times. The focal plane now sits on the far wall at ~21 units with a
+  // long focal range and a small bokeh, so the near consoles and the ceiling
+  // run soften by a few pixels and nothing else moves. If it is noticeable, it
+  // is too strong.
+  const composed = quality.dof
+    ? dof(bloomed, scenePass.getViewZNode(), 19.0, 1.1, 0.32)
+    : bloomed;
 
   post.outputNode = composed;
 

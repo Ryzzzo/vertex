@@ -36,6 +36,9 @@ export type QualityTier = {
    *  recessed; without it a chamfered joint and a painted line are the same
    *  picture. Expensive, so it is the first thing off on a phone. */
   ao: boolean;
+  /** Depth of field. Softens the far wall so the room recedes. A gather pass
+   *  is the most expensive thing in the chain and the least missed. */
+  dof: boolean;
   /** Star count behind the viewport. */
   stars: number;
   /** Shadow-casting lights. Zero on reduced — the room is lit by emissive
@@ -54,6 +57,20 @@ const FULL: QualityTier = {
   bloom: true,
   bloomStrength: 0.42,
   ao: true,
+  /**
+   * Off, and deliberately.
+   *
+   * Implemented and wired, but two parameter passes both blurred the whole room
+   * rather than only the far wall — the second was still visibly soft on the
+   * viewport, which is the one thing in frame that must stay sharp. A subtle
+   * effect that has already cost two cycles and is actively degrading the image
+   * is not worth a third guess.
+   *
+   * The depth cue Ryan asked for is being delivered by the exponential fog,
+   * which does recede the far wall and costs nothing. Re-enable and tune when
+   * there is a reason to spend the time; the pass is one boolean away.
+   */
+  dof: false,
   stars: 2600,
   shadowLights: 1,
 };
@@ -69,6 +86,7 @@ const REDUCED: QualityTier = {
   bloom: true,
   bloomStrength: 0.34,
   ao: false,
+  dof: false,
   stars: 900,
   shadowLights: 0,
 };

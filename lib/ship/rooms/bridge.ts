@@ -62,12 +62,14 @@ import {
   gasGiantMaterial,
   hullEdgeMaterial,
   hullMaterial,
+  markedHullMaterial,
   materialBag,
   recessMaterial,
   screenMaterial,
   starFieldMaterial,
   stripMaterial,
 } from "../kit/materials";
+import { createVideoScreen } from "../kit/videoScreen";
 import type { FrameState, RoomModule } from "../scene/types";
 import type { QualityTier } from "../scene/quality";
 
@@ -129,6 +131,7 @@ export function createBridge(opts: {
   };
 
   const hull = hullMaterial(bag);
+  const marked = markedHullMaterial(bag, seed);
   const hullEdge = hullEdgeMaterial(bag);
   const chrome = chromeMaterial(bag);
   const recess = recessMaterial(bag);
@@ -225,15 +228,20 @@ export function createBridge(opts: {
       const z = ROOM.farZ + panelPitch * (i + 0.5);
       // Upper panel and lower panel, split by a continuous strip channel — the
       // horizontal break is what gives a long wall a scale reference.
+      //
+      // Every third panel carries hull stencilling — part index, hazard
+      // chevrons, alignment ticks. Every panel marked would read as wallpaper;
+      // one in three reads as a serviceable hull where only some plates are
+      // access panels, which is what real hardware looks like.
       add(
         bevelPanel(panelPitch - 0.22, 2.5, 0.18),
-        hull,
+        i % 3 === 1 ? marked : hull,
         [x - 0.1 * side, 4.0, z],
         [0, (-Math.PI / 2) * side, 0],
       );
       add(
         bevelPanel(panelPitch - 0.22, 2.1, 0.18),
-        hull,
+        i % 3 === 2 ? marked : hull,
         [x - 0.1 * side, 1.35, z],
         [0, (-Math.PI / 2) * side, 0],
       );
@@ -383,6 +391,34 @@ export function createBridge(opts: {
   // A planet centred in a centred window is a target; offset, it is a view.
   giant.position.set(-9.5, 5.5, -58);
   group.add(giant);
+
+  /**
+   * The viewport display, showing the rendered gas giant.
+   *
+   * Sits just inside the aperture, sized to the opening. The procedural planet
+   * above stays in the scene behind it — if the video never plays, that is what
+   * shows through, and it is a correct frame rather than a hole. So the
+   * fallback needs no state machine: one surface becomes opaque in front of
+   * another, or it does not.
+   */
+  const screen = createVideoScreen({
+    webm: "/ship/bridge/gasgiant.webm",
+    mp4: "/ship/bridge/gasgiant.mp4",
+  });
+  const screenMesh = new Mesh(
+    track(quad(VIEWPORT.width - 0.06, VIEWPORT.height - 0.06)),
+    screen.material,
+  );
+  screenMesh.position.set(
+    0,
+    VIEWPORT.sill + VIEWPORT.height / 2,
+    ROOM.farZ + 0.05,
+  );
+  screenMesh.visible = false;
+  group.add(screenMesh);
+  void screen.ready.then((ok) => {
+    screenMesh.visible = ok;
+  });
 
   /* ── Console pods ──────────────────────────────────────────────────────
      Three per side on the full tier. Each is a plinth, a canted desk and a
@@ -538,14 +574,15 @@ export function createBridge(opts: {
      not actually light anything — three has no global illumination. These are
      the lights that do the work, positioned to agree with the strips so the
      lie is consistent. */
-  // A white room genuinely does bounce this hard, and the first pass under-lit
-  // it badly — the panels are #E9EBEE and were rendering as mid charcoal, which
-  // made the whole room read dim and murky rather than clean.
-  const hemi = new HemisphereLight(0xdfe8f5, 0x1a1e24, 0.95);
+  // 0.35, down from 0.95. Ambient is what fills the recesses, and the recesses
+  // are supposed to be the black the white panels read against — the reference
+  // is a dark room with lit accents, not a lit room. The strips carry the
+  // illumination now; this only stops the shadow side going to pure zero.
+  const hemi = new HemisphereLight(0xbcd0e8, 0x090c11, 0.35);
   group.add(hemi);
 
   // Key, coming through the viewport. Cold, and the only shadow caster.
-  const key = new DirectionalLight(0xcfe0f5, 1.15);
+  const key = new DirectionalLight(0xcfe0f5, 0.85);
   key.position.set(-4, 7, -18);
   key.target.position.set(0, 1.6, -2);
   if (quality.shadowLights > 0) {
@@ -562,7 +599,7 @@ export function createBridge(opts: {
   const practicals: PointLight[] = [];
   for (const x of [-2.8, 2.8]) {
     for (const z of [-11, -6.5, -2, 2.5]) {
-      const p = new PointLight(0xdce8f7, 16, 20, 2);
+      const p = new PointLight(0xdce8f7, 10, 18, 2);
       p.position.set(x, ROOM.ceiling - 0.5, z);
       practicals.push(p);
       group.add(p);
@@ -581,7 +618,7 @@ export function createBridge(opts: {
    * Kept dim and cool so it lifts the near surfaces off black without
    * flattening the key's modelling.
    */
-  const fill = new DirectionalLight(0xb9c8dc, 0.42);
+  const fill = new DirectionalLight(0xb9c8dc, 0.22);
   fill.position.set(2.5, 5.5, 12);
   fill.target.position.set(0, 1.4, -4);
   group.add(fill, fill.target);
@@ -637,12 +674,15 @@ export function createBridge(opts: {
       // The boot brings the practicals and the strips up. Held on one channel
       // so the whole room resolves together rather than in pieces.
       const lit = state.boot;
-      hemi.intensity = 0.95 * lit;
-      key.intensity = 1.15 * lit;
-      fill.intensity = 0.42 * lit;
-      for (const p of practicals) p.intensity = 16 * lit;
+      hemi.intensity = 0.35 * lit;
+      key.intensity = 0.85 * lit;
+      fill.intensity = 0.22 * lit;
+      for (const p of practicals) p.intensity = 10 * lit;
     },
     dispose() {
+      // The video element holds a decoder and a network handle, neither of
+      // which the geometry sweep below would touch.
+      screen.dispose();
       for (const g of geometries) g.dispose();
       for (const m of bag.list) m.dispose();
       group.clear();

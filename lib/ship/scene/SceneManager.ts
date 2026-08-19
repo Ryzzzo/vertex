@@ -13,6 +13,7 @@
  */
 import {
   ACESFilmicToneMapping,
+  FogExp2,
   PerspectiveCamera,
   Scene,
   Vector3,
@@ -103,7 +104,13 @@ export class SceneManager {
     // their own colour and ACES's shoulder is what stops a bright metal panel
     // clipping to flat white.
     this.renderer.toneMapping = ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.1;
+    // 0.7, down from 1.1. The reference is a black room with white panel
+    // accents; at 1.1 this was a white room, which inverts the whole
+    // composition — the panels became the subject and the light strips stopped
+    // being the brightest thing in frame. Exposure is the correct lever for
+    // that rather than repainting every material, because it moves the whole
+    // curve and leaves the relationships between surfaces intact.
+    this.renderer.toneMappingExposure = 0.7;
 
     this.camera = new PerspectiveCamera(55, 1, 0.1, 300);
   }
@@ -119,7 +126,17 @@ export class SceneManager {
     // downloaded.
     this.environment = createShipEnvironment(this.renderer);
     this.scene.environment = this.environment.texture;
-    this.scene.environmentIntensity = 0.85;
+    // 0.4, down from 0.85. The environment is what stops metal being flat, but
+    // at full strength it also becomes a second ambient light and lifts every
+    // shadow in the room off black. Reflections stay; the fill they were
+    // smuggling in does not.
+    this.scene.environmentIntensity = 0.4;
+
+    // Atmospheric depth. Far walls recede into a faintly blue haze instead of
+    // holding full contrast to the back of the room, which is most of what
+    // separates a rendered box from a space with air in it. Exponential rather
+    // than linear so it never has a visible start plane.
+    this.scene.fog = new FogExp2(0x0a0f18, 0.017);
 
     this.chain = createPostChain(
       this.renderer,

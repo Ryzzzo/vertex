@@ -18,8 +18,14 @@
  * Setup — playwright is deliberately NOT a dependency of this project. It is a
  * verification tool, not a shipped one:
  *
- *   npm install --no-save playwright
+ *   npm install --no-save playwright ffmpeg-static
  *   node scripts/capture-ship.mjs http://localhost:3311 ./shots
+ *
+ * Install BOTH in one command. `--no-save` packages are not in package.json, so
+ * the next `npm install --no-save <other>` reconciles node_modules against the
+ * manifest and silently removes the ones already there. That is how playwright
+ * disappeared mid-session once, and the error it produces points at this file
+ * rather than at the install that caused it.
  *
  * Prints a JSON report: which backend resolved per width, whether the room's
  * memory returns to baseline, horizontal-overflow, console errors, and — the
@@ -82,11 +88,17 @@ for (const w of WIDTHS) {
 
   const errors = [];
   const requested3D = [];
+  const media = [];
   page.on("console", (m) => {
     if (m.type() === "error") errors.push(m.text());
   });
   page.on("request", (r) => {
     if (/three|webgpu/i.test(r.url())) requested3D.push(r.url());
+    // The viewport video. Recorded because "is it playing" is otherwise
+    // unanswerable from a still — the element is detached from the DOM, and a
+    // blurred frame of a procedural planet and a blurred frame of a rendered
+    // one look identical.
+    if (/gasgiant\.(webm|mp4)/i.test(r.url())) media.push(r.url());
   });
 
   await page.goto(`${BASE}/ship/${ROOM}`, { waitUntil: "load" });
@@ -132,6 +144,13 @@ for (const w of WIDTHS) {
       frameMedian: sorted[Math.floor(sorted.length / 2)],
       frameP95: sorted[Math.floor(sorted.length * 0.95)],
       frameWorst: sorted[sorted.length - 1],
+      // `currentTime > 0` on a detached element is the only honest proof that
+      // frames are actually being decoded rather than the source merely having
+      // been fetched.
+      videoPlaying: (() => {
+        const v = window.__shipVideo;
+        return v ? { t: Number(v.currentTime.toFixed(2)), paused: v.paused } : null;
+      })(),
     };
   });
 
@@ -147,6 +166,8 @@ for (const w of WIDTHS) {
     overflow: probe.scrollWidth > probe.clientWidth,
     errors: errors.slice(0, 6),
     requested3D: requested3D.length,
+    video: media.length ? media[0].split("/").pop() : null,
+    videoPlaying: probe.videoPlaying,
   });
 
   await ctx.close();

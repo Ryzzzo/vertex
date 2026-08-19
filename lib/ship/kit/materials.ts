@@ -31,6 +31,7 @@ import {
   max,
   mix,
   mx_fractal_noise_float,
+  mx_noise_float,
   normalWorld,
   positionLocal,
   select,
@@ -79,10 +80,106 @@ export function hullMaterial(bag: MaterialBag): MeshPhysicalNodeMaterial {
   const m = new MeshPhysicalNodeMaterial({
     color: SHIP.hull,
     metalness: 0.92,
-    roughness: 0.3,
     clearcoat: 0.55,
     clearcoatRoughness: 0.14,
   });
+
+  /**
+   * Roughness is a map, not a constant.
+   *
+   * A uniformly polished panel is the tell of a render. Real hardware has
+   * brushed direction, patchy wear where hands and tools reach, and slightly
+   * duller edges where coating is thinner. None of that needs a texture: two
+   * octaves of noise stretched along one axis give the brushing, a broader
+   * octave gives the wear, and both cost nothing to download.
+   */
+  m.roughnessNode = Fn(() => {
+    const p = positionLocal;
+    // Stretched hard along Y so the grain runs one way, like a brushed sheet.
+    const brushed = mx_noise_float(
+      vec3(p.x.mul(1.4), p.y.mul(46.0), p.z.mul(1.4)),
+    ).mul(0.055);
+    // Broad patches, so the surface is not uniformly anything.
+    const wear = mx_fractal_noise_float(
+      vec3(p.x.mul(0.55), p.y.mul(0.55), p.z.mul(0.55)),
+      3,
+      2.0,
+      0.5,
+      1.0,
+    ).mul(0.07);
+    return float(0.3).add(brushed).add(wear).clamp(0.12, 0.62);
+  })();
+
+  return bag.add(m);
+}
+
+/**
+ * Stencilled hull markings — panel indices, hazard striping, alignment ticks.
+ *
+ * Not typography, and deliberately not legible. There is no font atlas here and
+ * baking real text into a surface would fail WCAG 1.4.5 anyway. What this
+ * draws is the *rhythm* of hull stencilling: a block of index marks, a run of
+ * hazard chevrons, a row of alignment ticks. At the distance these are seen it
+ * is the same information a real stencil delivers — that the surface is a
+ * manufactured part with a part number — without pretending to words.
+ *
+ * Applied as a darkening over the hull, so markings read as printed onto the
+ * panel rather than glowing out of it.
+ */
+export function markedHullMaterial(
+  bag: MaterialBag,
+  seed: number,
+): MeshPhysicalNodeMaterial {
+  const m = new MeshPhysicalNodeMaterial({
+    metalness: 0.9,
+    roughness: 0.34,
+    clearcoat: 0.4,
+    clearcoatRoughness: 0.2,
+  });
+  const uSeed = uniform(float(seed % 53));
+
+  m.colorNode = Fn(() => {
+    const p = uv();
+    const base = color(SHIP.hull);
+
+    // A block of index marks in the upper-left corner of the panel: four short
+    // bars of varying length, the silhouette of a stamped part number.
+    const ix = p.sub(vec2(0.09, 0.86)).mul(vec2(9.0, 26.0));
+    const inBlock = step(float(0), ix.x)
+      .mul(step(ix.x, 1))
+      .mul(step(float(0), ix.y))
+      .mul(step(ix.y, 1));
+    const markRow = ix.y.mul(4).floor();
+    const markLen = markRow
+      .add(uSeed)
+      .mul(12.9898)
+      .sin()
+      .mul(43758.5453)
+      .fract()
+      .mul(0.55)
+      .add(0.35);
+    const markInk = inBlock
+      .mul(step(ix.x, markLen))
+      .mul(smoothstep(0.0, 0.22, ix.y.mul(4).fract()))
+      .mul(smoothstep(1.0, 0.78, ix.y.mul(4).fract()));
+
+    // Hazard chevrons along the bottom edge. Diagonal stripes are the single
+    // most recognisable piece of industrial marking there is.
+    const inHazard = smoothstep(0.055, 0.045, p.y);
+    const chevron = p.x.mul(26).add(p.y.mul(26)).fract();
+    const hazardInk = inHazard.mul(
+      smoothstep(0.46, 0.5, chevron).mul(smoothstep(0.96, 0.92, chevron)),
+    );
+
+    // Alignment ticks down the right edge.
+    const inTicks = smoothstep(0.955, 0.965, p.x);
+    const tick = smoothstep(0.42, 0.5, p.y.mul(14).fract().sub(0.5).abs().mul(2));
+    const tickInk = inTicks.mul(tick);
+
+    const ink = max(max(markInk, hazardInk), tickInk).mul(0.72);
+    return mix(base, color(SHIP.recess), ink);
+  })();
+
   return bag.add(m);
 }
 
@@ -169,8 +266,12 @@ export function deckMaterial(
       smoothstep(0.485, 0.5, fe.y),
     ).mul(0.35);
 
-    const base = color(SHIP.deck);
-    const line = color(SHIP.deckLine);
+    // Near-black, with the blue undertone living in the specular rather than
+    // in the albedo. A dark floor that is *tinted* blue reads as painted; a
+    // near-black floor that *reflects* blue reads as a wet-looking coated deck,
+    // which is the difference the reference is showing.
+    const base = color("#0B0D11");
+    const line = color("#1A1F27");
     return mix(base, line, max(seam, score));
   });
 
