@@ -82,11 +82,16 @@ export function createPostChain(
       scenePass.getTextureNode("normal"),
       camera,
     );
-    occlusion.distanceExponent.value = 1.2;
-    occlusion.distanceFallOff.value = 0.7;
-    occlusion.radius.value = 0.32;
-    occlusion.scale.value = 1.1;
-    occlusion.thickness.value = 1.0;
+    // Pushed harder than the first pass. The corners where wall meets ceiling,
+    // where a panel recesses into its frame, and behind the command dais are
+    // the places a room gets its depth from — a wide radius reaches across
+    // those junctions instead of only darkening the millimetre either side of
+    // a seam.
+    occlusion.distanceExponent.value = 1.6;
+    occlusion.distanceFallOff.value = 0.9;
+    occlusion.radius.value = 0.85;
+    occlusion.scale.value = 1.9;
+    occlusion.thickness.value = 1.4;
     /**
      * `.r`, not the whole vec4.
      *
@@ -130,15 +135,27 @@ export function createPostChain(
   // in produces a focal plane that sits almost on the near clip and blurs
   // essentially the whole room. Same class of mistake as the AO red channel:
   // the buffer exists and has the right shape, and means something else.
-  //
-  // focalLength 9 / bokeh 1.1 blurred the entire room including the viewport,
-  // which is the miniature-model failure this effect is one parameter away from
-  // at all times. The focal plane now sits on the far wall at ~21 units with a
-  // long focal range and a small bokeh, so the near consoles and the ceiling
-  // run soften by a few pixels and nothing else moves. If it is noticeable, it
-  // is too strong.
+  /**
+   * Depth of field, third attempt — and the first one derived rather than
+   * guessed.
+   *
+   * The node's own maths is:
+   *
+   *   CoC = smoothstep(0, focalLength, abs(-viewZ - focusDistance))
+   *
+   * So `focalLength` is **how far past the focal plane something is FULLY out
+   * of focus**, not a lens length. Both earlier attempts read it backwards: 1.1
+   * meant everything more than 1.1 units off the focal plane was at maximum
+   * blur, which is why "subtle" produced a soft room. A *large* focalLength is
+   * the gentle one.
+   *
+   * Distances from the camera at (0, 3.5, 7): chair ~9.4, near consoles ~11.6,
+   * far consoles ~18.2, viewport wall ~21.3. Focus at 17 with a 30-unit range
+   * puts the viewport at CoC ≈ 0.06 and the chair at ≈ 0.16 — the hero stays
+   * sharp, the room softens by a few pixels at its extremes.
+   */
   const composed = quality.dof
-    ? dof(bloomed, scenePass.getViewZNode(), 19.0, 1.1, 0.32)
+    ? dof(bloomed, scenePass.getViewZNode(), 17.0, 30.0, 1.6)
     : bloomed;
 
   post.outputNode = composed;

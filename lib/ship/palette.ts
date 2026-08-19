@@ -47,8 +47,33 @@ export const SHIP = {
   hullEdge: "#C2C8D1",
   /** Panel side and hairline. Structural only — see the contrast note. */
   hullShade: "#7C8595",
-  /** Deep recessed channel between panels. The black that makes white read. */
+  /**
+   * The base metal. Brushed titanium / gunmetal.
+   *
+   * Not near-black. An earlier pass put the panel faces at #0A0D14 and they
+   * lost their form — a plate with no value left in it cannot show its own
+   * bevel, so the glowing outlines had nothing to sit on. Slate keeps enough
+   * luminance to model while still reading as the dark field the white accents
+   * are measured against.
+   */
+  slate: "#1F2530",
+  /** The lighter slate, for faces catching the ceiling runs. */
+  slateLit: "#2D3540",
+  /**
+   * Deep recessed channel between panels. Stays near-black — the recess is the
+   * joint, not the plate, and it is what gives the slate somewhere to be light
+   * against.
+   */
   recess: "#0C0E11",
+  /**
+   * Phosphor green. Terminal readouts and status indicators only.
+   *
+   * Roughly one part in ten of the emissive budget. Calibrated down from a pure
+   * #00FF88 — at emissive intensity through bloom, full-saturation green is
+   * eye-watering and drags the whole room toward a colour the brief explicitly
+   * caps at a tenth. Green is a signal here, never a wash.
+   */
+  phosphor: "#3BE89A",
   /** Deck plate. */
   deck: "#16181C",
   /** Inscribed seam in the deck plating. */

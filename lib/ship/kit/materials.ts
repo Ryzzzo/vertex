@@ -106,21 +106,14 @@ export function hullMaterial(bag: MaterialBag): MeshPhysicalNodeMaterial {
    * octaves of noise stretched along one axis give the brushing, a broader
    * octave gives the wear, and both cost nothing to download.
    */
+  // Brushed grain only — the wear octave is gone. See `darkPanelMaterial`:
+  // freshly commissioned means manufacturing artefacts, never damage ones.
   m.roughnessNode = Fn(() => {
     const p = positionLocal;
-    // Stretched hard along Y so the grain runs one way, like a brushed sheet.
     const brushed = mx_noise_float(
-      vec3(p.x.mul(1.4), p.y.mul(46.0), p.z.mul(1.4)),
-    ).mul(0.055);
-    // Broad patches, so the surface is not uniformly anything.
-    const wear = mx_fractal_noise_float(
-      vec3(p.x.mul(0.55), p.y.mul(0.55), p.z.mul(0.55)),
-      3,
-      2.0,
-      0.5,
-      1.0,
-    ).mul(0.07);
-    return float(0.3).add(brushed).add(wear).clamp(0.12, 0.62);
+      vec3(p.x.mul(1.4), p.y.mul(48.0), p.z.mul(1.4)),
+    ).mul(0.045);
+    return float(0.36).add(brushed).clamp(0.3, 0.44);
   })();
 
   return bag.add(m);
@@ -355,12 +348,30 @@ export function darkPanelMaterial(
    * absence.
    */
   const m = new MeshPhysicalNodeMaterial({
-    color: "#0A0D14",
-    metalness: 0.9,
-    roughness: 0.35,
+    color: SHIP.slate,
+    metalness: 0.85,
     clearcoat: 0.35,
     clearcoatRoughness: 0.22,
   });
+
+  /**
+   * Brushed grain, and nothing else.
+   *
+   * An earlier pass added a second broad octave as patchy "wear", which was
+   * asked for then and is explicitly wrong now: the ship is freshly
+   * commissioned, so there is no grime, no oxidation and no scuffing anywhere
+   * on it. What survives is the directional grain of a brushed sheet, which is
+   * a manufacturing artefact rather than a damage one — it says the plate was
+   * finished, not that it has been used.
+   */
+  m.roughnessNode = Fn(() => {
+    const p = positionLocal;
+    const brushed = mx_noise_float(
+      vec3(p.x.mul(1.4), p.y.mul(52.0), p.z.mul(1.4)),
+    ).mul(0.04);
+    return float(0.34).add(brushed).clamp(0.28, 0.42);
+  })();
+
   return bag.add(m);
 }
 
@@ -390,6 +401,31 @@ export function stripMaterial(
     emissiveIntensity: intensity,
   });
   return bag.add(m);
+}
+
+/**
+ * A status indicator. Small, emissive, and the only other place green appears.
+ *
+ * Scale is the whole discipline here: these are pinhead-sized, so at viewing
+ * distance a green one is a *point* of colour rather than an area of it. That
+ * is what keeps the ratio honest — a hundred tiny green LEDs still read as a
+ * white room with green telltales, while one large green panel reads as a green
+ * room.
+ */
+export function ledMaterial(
+  bag: MaterialBag,
+  colour: string,
+  intensity = 3.4,
+): MeshStandardNodeMaterial {
+  return bag.add(
+    new MeshStandardNodeMaterial({
+      color: SHIP.recess,
+      metalness: 0.1,
+      roughness: 0.4,
+      emissive: colour,
+      emissiveIntensity: intensity,
+    }),
+  );
 }
 
 /** The same, in the accent. Console trim and active indicators only. */
@@ -424,6 +460,16 @@ export function screenMaterial(
   rows = 22,
   /** 0 code · 1 bar chart · 2 plot grid · 3 waveform. */
   kind = 0,
+  /**
+   * Readout colour. Defaults to the blue accent; pass `SHIP.phosphor` for a
+   * terminal. One or two panels green out of six is the ratio — green is a
+   * signal that something specific is being monitored, and every panel green
+   * would make it a wash.
+   */
+  // Typed as `string`, not inferred — `SHIP.accent` is a const literal, so
+  // inference would narrow the parameter to that one hex and reject every other
+  // colour including the phosphor.
+  ink: string = SHIP.accent,
 ): MeshStandardNodeMaterial {
   // Standard with emissive so screens bloom and light their own bezels, rather
   // than sitting on the surface as flat colour.
@@ -514,7 +560,7 @@ export function screenMaterial(
     // Select by kind. `select` keeps this one shader with a branch resolved at
     // compile time per material instance, rather than four shader programs.
     const k = float(kind);
-    const ink = select(
+    const mark = select(
       k.lessThan(0.5),
       codeInk,
       select(
@@ -529,7 +575,7 @@ export function screenMaterial(
     const scan = p.y.mul(rows * 3).fract().mul(0.06).add(0.94);
     const vig = smoothstep(1.05, 0.35, p.sub(vec2(0.5, 0.5)).length());
 
-    return color(SHIP.accent).mul(ink).mul(scan).mul(vig.mul(0.5).add(0.6));
+    return color(ink).mul(mark).mul(scan).mul(vig.mul(0.5).add(0.6));
   });
 
   m.emissiveNode = face();

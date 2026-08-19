@@ -58,19 +58,12 @@ const FULL: QualityTier = {
   bloomStrength: 0.2,
   ao: true,
   /**
-   * Off, and deliberately.
-   *
-   * Implemented and wired, but two parameter passes both blurred the whole room
-   * rather than only the far wall — the second was still visibly soft on the
-   * viewport, which is the one thing in frame that must stay sharp. A subtle
-   * effect that has already cost two cycles and is actively degrading the image
-   * is not worth a third guess.
-   *
-   * The depth cue Ryan asked for is being delivered by the exponential fog,
-   * which does recede the far wall and costs nothing. Re-enable and tune when
-   * there is a reason to spend the time; the pass is one boolean away.
+   * Back on. Two earlier passes over-blurred because `focalLength` was read as
+   * a lens length when it is the distance at which blur *saturates* — see the
+   * derivation in `post.ts`. The third set is computed from the actual camera
+   * distances rather than guessed.
    */
-  dof: false,
+  dof: true,
   stars: 2600,
   shadowLights: 1,
 };

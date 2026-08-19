@@ -63,6 +63,7 @@ import {
   gasGiantMaterial,
   hullEdgeMaterial,
   hullMaterial,
+  ledMaterial,
   markedHullMaterial,
   materialBag,
   recessMaterial,
@@ -71,6 +72,7 @@ import {
   stripMaterial,
 } from "../kit/materials";
 import { createVideoScreen } from "../kit/videoScreen";
+import { SHIP } from "../palette";
 import type { FrameState, RoomModule } from "../scene/types";
 import type { QualityTier } from "../scene/quality";
 
@@ -139,6 +141,8 @@ export function createBridge(opts: {
   const recess = recessMaterial(bag);
   const strip = stripMaterial(bag);
   const accentStrip = accentStripMaterial(bag);
+  const ledGreen = ledMaterial(bag, SHIP.phosphor);
+  const ledWhite = ledMaterial(bag, "#E4ECF7", 2.6);
 
   const add = (
     g: BufferGeometry,
@@ -149,6 +153,11 @@ export function createBridge(opts: {
     const mesh = new Mesh(track(g), m);
     mesh.position.set(...pos);
     if (rot) mesh.rotation.set(...rot);
+    // Both flags, on everything. Meshes default to neither, so a scene can have
+    // a correctly configured shadow-casting light and render no shadows at all
+    // — which is what was happening here.
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
     group.add(mesh);
     return mesh;
   };
@@ -259,6 +268,8 @@ export function createBridge(opts: {
     const mesh = new Mesh(g, m);
     mesh.position.set(...pos);
     mesh.rotation.set(...rot);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
     group.add(mesh);
   };
 
@@ -528,17 +539,37 @@ export function createBridge(opts: {
       // so the bridge reads as a room where several different things are being
       // watched, rather than six copies of one panel. Blank rectangles were a
       // large part of why the first pass read as empty.
+      //
+      // Exactly one station of six runs a green phosphor terminal. That is the
+      // ratio the brief caps at roughly a tenth — green as the thing one
+      // console is doing, not as a colour the room is painted. Two would start
+      // to read as a scheme; six would be a Matrix wall.
+      const station = i * 2 + (side > 0 ? 1 : 0);
       add(
         quad(2.0, 0.78),
         screenMaterial(
           bag,
           seed + i * 13 + (side > 0 ? 101 : 0),
           22,
-          (i * 2 + (side > 0 ? 1 : 0)) % 4,
+          station % 4,
+          station === 2 ? SHIP.phosphor : SHIP.accent,
         ),
         [x, 1.32, z - 0.34],
         [-0.34, yaw, 0],
       );
+
+      // Two telltales on the desk edge — one green, one white. Pinhead scale,
+      // so they read as points of colour rather than areas of it.
+      add(bevelBox(0.06, 0.05, 0.06, 0.012), ledGreen, [
+        x - 0.86,
+        0.95,
+        z + 0.52,
+      ]);
+      add(bevelBox(0.06, 0.05, 0.06, 0.012), ledWhite, [
+        x - 0.74,
+        0.95,
+        z + 0.52,
+      ]);
       // Screen bezel behind it, so the glow sits in something.
       add(
         bevelPanel(2.2, 0.96, 0.1, 0.1),
@@ -655,13 +686,48 @@ export function createBridge(opts: {
   key.position.set(-4, 7, -18);
   key.target.position.set(0, 1.6, -2);
   if (quality.shadowLights > 0) {
+    /**
+     * The shadow camera has to be *sized*, and this was the bug.
+     *
+     * `castShadow = true` was already set, but a DirectionalLight's shadow
+     * camera is an orthographic one that defaults to a ±5 unit box. This room
+     * is 18 m across and 23 m deep, so the frustum covered a fifth of it and
+     * everything outside simply had no shadow map to sample — which reads as
+     * "shadows are subtle" rather than as "shadows are absent from most of the
+     * frame". Nothing in the material or light setup was wrong.
+     */
     key.castShadow = true;
-    key.shadow.mapSize.set(1024, 1024);
-    key.shadow.camera.near = 1;
-    key.shadow.camera.far = 60;
-    key.shadow.bias = -0.0012;
+    key.shadow.mapSize.set(2048, 2048);
+    const sc = key.shadow.camera;
+    sc.left = -ROOM.halfWidth - 2;
+    sc.right = ROOM.halfWidth + 2;
+    sc.top = ROOM.ceiling + 4;
+    sc.bottom = -ROOM.ceiling - 4;
+    sc.near = 0.5;
+    sc.far = 70;
+    sc.updateProjectionMatrix();
+    // Normal bias rather than a large constant bias: a constant one large
+    // enough to stop acne on the deck also detaches the chair's shadow from its
+    // own base, which is the one shadow that has to be anchored.
+    key.shadow.bias = -0.0004;
+    key.shadow.normalBias = 0.035;
   }
   group.add(key, key.target);
+
+  /**
+   * The chair's own light: a rim from behind and above.
+   *
+   * Its job is the silhouette. The key comes through the viewport, so the
+   * chair's camera-facing side is by definition its shadow side and the form
+   * dies into the dark dais behind it. A soft light above and behind draws a
+   * bright edge down the seat back and the arms, which is what separates a hero
+   * object from a placeholder — and it is the cheapest possible version of the
+   * treatment, one light aimed at one thing.
+   */
+  const rim = new DirectionalLight(0xd6e4f7, 0.9);
+  rim.position.set(2.2, 5.2, -8.5);
+  rim.target.position.set(0, CHAIR.daisHeight + 0.9, CHAIR.z);
+  group.add(rim, rim.target);
 
   // Practicals along the ceiling runs, so the room has falloff down its length
   // rather than one flat exposure.
