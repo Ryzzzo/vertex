@@ -9,7 +9,13 @@
   --surface: #101112;
   --text-primary: #f7f8f8;
   --text-secondary: #8a8f98;
-  --text-tertiary: #5e6068;
+  /* Lifted from #5e6068, which measured 3.01:1 on --surface and is used on
+     10px labels — a WCAG 1.4.3 failure everywhere it appears at that size, not
+     only at the one call site the audit names. #7c7f88 is 5.03:1 on the same
+     ground, keeps the cool hue, and stays clearly tertiary against
+     --text-secondary. Lifting the token fixes every use; patching call sites
+     would have left the same defect wherever it is reached next. */
+  --text-tertiary: #7c7f88;
   --accent: #5e6ad2;
   --hairline: #1f2023;
 
@@ -38,8 +44,8 @@
   --duration-hover: 150ms;
 
   --content-max: 1200px;
-  --section-rhythm: clamp(6rem, 10vw, 9rem);
-  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --section-rhythm: clamp(6rem, 3rem + 6.667vw, 9rem);
+  --gutter: clamp(1.25rem, 0.625rem + 3vw, 2.5rem);
 }
 
 /* Expose tokens to Tailwind utilities */
@@ -424,13 +430,13 @@ a {
    ───────────────────────────────────────────────────────────── */
 
 .hero {
-  padding-block-start: clamp(3rem, 6vw, 5rem);
+  padding-block-start: clamp(3rem, 1.5rem + 4.2vw, 5rem);
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: 5fr 7fr;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
+  gap: clamp(2.5rem, 1.25rem + 3.611vw, 4.5rem);
   align-items: center;
 }
 
@@ -485,16 +491,25 @@ a {
 }
 
 /*
- * Word-by-word entrance. ~0.11s apart, each word arriving out of focus and a
- * little low. Declared only under no-preference, so a reduced-motion visitor
- * gets the finished sentence with no rule to undo — and because it is CSS, the
- * first frame is the browser's first paint rather than React's first commit.
+ * Word-by-word entrance. ~0.11s apart, each word arriving soft and a little
+ * low. Declared only under no-preference, so a reduced-motion visitor gets the
+ * finished sentence with no rule to undo — and because it is CSS, the first
+ * frame is the browser's first paint rather than React's first commit.
+ *
+ * The softness used to come from `filter: blur(7px)`, which the audit flags and
+ * is right to: a filter animating across a block of type forces a full repaint
+ * of that subtree every frame of the entrance, on the page's very first paint,
+ * which is the worst possible moment to spend it.
+ *
+ * `scale` plus a slightly longer travel reads as the same arrival — the eye
+ * takes "small, low and transparent, settling up" as the word coming into
+ * focus — and both properties are compositor-only, so the whole entrance runs
+ * off the main thread.
  */
 @keyframes word-in {
   from {
     opacity: 0;
-    transform: translateY(0.35em);
-    filter: blur(7px);
+    transform: translateY(0.42em) scale(0.965);
   }
 }
 
@@ -637,7 +652,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  margin-bottom: clamp(3rem, 1.5rem + 3.333vw, 4.5rem);
   max-width: 62ch;
 }
 
@@ -656,13 +671,13 @@ a {
 .chapters {
   display: flex;
   flex-direction: column;
-  gap: clamp(3.5rem, 7vw, 6rem);
+  gap: clamp(3.5rem, 1.75rem + 4.958vw, 6rem);
 }
 
 .chapter {
   display: grid;
   grid-template-columns: 5fr 7fr;
-  gap: clamp(2rem, 4vw, 3.5rem);
+  gap: clamp(2rem, 1rem + 2.857vw, 3.5rem);
   align-items: center;
 }
 
@@ -1129,7 +1144,7 @@ a {
 .cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.75rem, 3vw, 2.75rem);
+  gap: clamp(1.75rem, 0.875rem + 2.045vw, 2.75rem);
 }
 
 .card,
@@ -1356,10 +1371,10 @@ a {
 .card-featured {
   display: grid;
   grid-template-columns: 7fr 5fr;
-  gap: clamp(2rem, 4vw, 3.25rem);
+  gap: clamp(2rem, 1rem + 2.769vw, 3.25rem);
   align-items: center;
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
-  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: clamp(2.5rem, 1.25rem + 3.438vw, 4rem);
+  padding-bottom: clamp(2.5rem, 1.25rem + 3.438vw, 4rem);
   border-bottom: 1px solid var(--hairline);
 }
 
@@ -1410,7 +1425,7 @@ a {
   border: 1px solid var(--hairline);
   border-radius: 12px;
   background: var(--surface);
-  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: clamp(1.75rem, 0.875rem + 1.95vw, 2.5rem);
 }
 
 /*
@@ -1432,7 +1447,7 @@ a {
 .lab-body {
   display: grid;
   grid-template-columns: 5fr 7fr;
-  gap: clamp(2rem, 4vw, 3.5rem);
+  gap: clamp(2rem, 1rem + 2.857vw, 3.5rem);
   align-items: start;
 }
 
@@ -1504,7 +1519,7 @@ a {
 }
 
 .lab-more {
-  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  margin: clamp(2rem, 1rem + 2.667vw, 3rem) 0 0;
 }
 
 .lab-more-link {
@@ -1612,7 +1627,7 @@ a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  margin-bottom: clamp(1.5rem, 0.75rem + 2vw, 2.25rem);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   letter-spacing: var(--tracking-wider);
@@ -1637,7 +1652,7 @@ a {
 }
 
 .labs-item-head {
-  margin-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: clamp(2rem, 1rem + 2.667vw, 3rem);
 }
 
 .labs-item-titlerow {
@@ -1685,7 +1700,9 @@ a {
 .labs-iframe {
   display: block;
   width: 100%;
-  height: clamp(560px, 78vh, 880px);
+  /* Half the ramp in rem so the frame still grows under browser zoom; a bare
+     viewport unit freezes at a fixed window size. Tops out at the same 880px. */
+  height: clamp(560px, 17.5rem + 39vh, 880px);
   border: 0;
   background: #08090a;
 }
@@ -1696,7 +1713,7 @@ a {
 }
 
 .labs-back {
-  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  margin: clamp(2rem, 1rem + 2.667vw, 3rem) 0 0;
 }
 
 /* The ops table is a full application screen rather than a single panel, so it

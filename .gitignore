@@ -15,3 +15,12 @@ yarn-error.log*
 next-env.d.ts
 /scripts/.cache
 /.claude
+
+# Capture output from scripts/capture-ship.mjs
+/shots
+
+# Commit message scratch. Narrative commit bodies are written here and passed
+# with `git commit -F`, so the command string stays short — a heredoc puts
+# newlines in the command itself, which no permission pattern matches.
+/.cmsg.txt
+
