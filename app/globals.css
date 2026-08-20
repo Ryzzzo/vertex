@@ -39,7 +39,17 @@
    * hero's entrance and everything already on this token stay a single family
    * rather than the hero introducing a second curve alongside the old one.
    */
-  --easing-linear: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Retargeted so the whole repo runs one curve — Rule 5. The Labs exports
+     were already on this value, and it is the one carrying provenance:
+     measured as the only easing curve on linear.app, 2026-08-05. The previous
+     value was a long-tail ease-out too, so the visible change is small; what
+     changes is that the site and its embedded labs stop animating on two
+     different hands. `ship.css` reads this token, so the Bridge follows.
+
+     Do not name the superseded value here. The auditor greps raw strings and
+     counts one inside a comment as a live second curve — the same trap this
+     file's own history and `ship.css` both fell into. */
+  --easing-linear: cubic-bezier(0.32, 0.72, 0, 1);
   --duration-reveal: 320ms;
   --duration-hover: 150ms;
 
