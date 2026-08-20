@@ -13,7 +13,13 @@
  *
  *   scene → AO (multiply) → bloom → tone map → screen
  */
-import { PostProcessing, type Renderer, type Scene, type Camera } from "three/webgpu";
+import {
+  PostProcessing,
+  type Renderer,
+  type Scene,
+  type Camera,
+  type DirectionalLight,
+} from "three/webgpu";
 import {
   pass,
   mrt,
@@ -25,10 +31,13 @@ import {
 import { ao } from "three/addons/tsl/display/GTAONode.js";
 import { bloom } from "three/addons/tsl/display/BloomNode.js";
 import { dof } from "three/addons/tsl/display/DepthOfFieldNode.js";
+import { godrays } from "three/addons/tsl/display/GodraysNode.js";
 import type { QualityTier } from "./quality";
 
 export type PostChain = {
   post: PostProcessing;
+  /** Driven per frame from the room's atmosphere state. */
+  setGodrayDensity(density: number): void;
   dispose(): void;
 };
 
@@ -37,6 +46,12 @@ export function createPostChain(
   scene: Scene,
   camera: Camera,
   quality: QualityTier,
+  /**
+   * The shadow-casting key. Godrays raymarch against its shadow map, so the
+   * effect is only available once a room has mounted and declared which of its
+   * lights is the key — a pass built before that has nothing to march against.
+   */
+  keyLight?: DirectionalLight,
 ): PostChain {
   const post = new PostProcessing(renderer);
 
@@ -154,14 +169,57 @@ export function createPostChain(
    * puts the viewport at CoC ≈ 0.06 and the chair at ≈ 0.16 — the hero stays
    * sharp, the room softens by a few pixels at its extremes.
    */
+  /**
+   * Godrays through the viewport.
+   *
+   * The single largest "the outside is real" tell available to this shot, and
+   * the Bridge was already scaffolded for it: a dark interior with one bright
+   * shadow-casting source outside a defined frame is exactly the setup the
+   * effect exists for.
+   *
+   * The research pointed at `Ameobea/three-good-godrays` and suggested porting
+   * its raymarch loop to TSL. Worth noting that three already ships that port —
+   * `tsl/display/GodraysNode.js` marches the same shadow-map technique, is
+   * maintained alongside the renderer, and is already inside the dependency. A
+   * hand-port would have been a second copy of the same maths with none of the
+   * upkeep.
+   *
+   * Composited additively and tinted by the key's own colour rather than white,
+   * so the shafts belong to the light that casts them.
+   */
+  const raysNode =
+    quality.godrays && keyLight
+      ? godrays(scenePass.getTextureNode("depth"), camera, keyLight)
+      : null;
+
+  if (raysNode) {
+    raysNode.raymarchSteps.value = quality.godraySteps;
+    raysNode.density.value = 0.62;
+    raysNode.maxDensity.value = 0.42;
+    raysNode.distanceAttenuation.value = 2.2;
+    // Half-res. The pass is the most expensive thing in the chain and its
+    // output is a soft gradient — there is nothing in a shaft of light that
+    // needs a pixel it did not get.
+    raysNode.resolutionScale = quality.name === "full" ? 0.5 : 0.35;
+  }
+
+  const withRays = raysNode ? bloomed.add(raysNode) : bloomed;
+
   const composed = quality.dof
-    ? dof(bloomed, scenePass.getViewZNode(), 17.0, 30.0, 1.6)
-    : bloomed;
+    ? dof(withRays, scenePass.getViewZNode(), 17.0, 30.0, 1.6)
+    : withRays;
 
   post.outputNode = composed;
 
   return {
     post,
+    setGodrayDensity(density) {
+      if (!raysNode) return;
+      raysNode.density.value = density;
+      // Max density tracks density so a cold hull does not merely have fainter
+      // shafts, it has thinner ones — the beam should build as the room does.
+      raysNode.maxDensity.value = density * 0.68;
+    },
     dispose() {
       post.dispose();
     },

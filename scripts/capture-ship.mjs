@@ -42,6 +42,11 @@ const ROOM = process.argv[4] ?? "bridge";
 
 const WIDTHS = [
   { name: "1440", width: 1440, height: 900, dsf: 1 },
+  // Landscape tablet. Added because it is the aspect where the portrait
+  // recompose has not kicked in but the frame is already much squarer than
+  // 16:9 — the one width where a composition tuned at both extremes can still
+  // be wrong in the middle.
+  { name: "1024", width: 1024, height: 768, dsf: 1 },
   { name: "768", width: 768, height: 1024, dsf: 1 },
   { name: "375", width: 375, height: 812, dsf: 2, mobile: true },
 ];
@@ -161,7 +166,14 @@ for (const w of WIDTHS) {
 
   report.runs.push({
     width: w.name,
-    painted,
+    // The probe's own reading is the authority, not `waitForFunction`'s return.
+    // That helper reported `false` on two of four widths in a run where the
+    // attribute was demonstrably set on all four — it races an attribute that
+    // may already be present when polling starts. A gate that reports "did not
+    // render" about a frame that rendered is worse than no gate, because the
+    // next real failure gets waved through as another false negative.
+    painted: probe.scene === "live",
+    waitedForPaint: painted,
     ...probe,
     overflow: probe.scrollWidth > probe.clientWidth,
     errors: errors.slice(0, 6),

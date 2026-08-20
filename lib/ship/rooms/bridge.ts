@@ -69,6 +69,7 @@ import {
 } from "../kit/materials";
 import { createVideoScreen } from "../kit/videoScreen";
 import { SHIP } from "../palette";
+import { bootAtmosphere } from "../scene/atmosphere";
 import type { FrameState, RoomModule } from "../scene/types";
 import type { QualityTier } from "../scene/quality";
 
@@ -76,11 +77,25 @@ import type { QualityTier } from "../scene/quality";
 
 const PLAN = octagonPlan();
 
+/**
+ * Lowered from 8.6/6.2.
+ *
+ * The upper third of frame was dark because the vault sat above the camera's
+ * cone entirely — the room had a ceiling nobody could see, so the top of the
+ * shot was the *absence* of one. Dropping the crown by 1.6 m brings the stepped
+ * courses and their lit risers into frame, which fills that band with
+ * structure instead of void and adds a second set of converging lines above the
+ * deck's.
+ *
+ * The spring still has to clear the viewport top at 5.7, so it only comes down
+ * to 5.95 — the crown does most of the travel, which also deepens the vault's
+ * curve rather than flattening it.
+ */
 const ROOM = {
   /** At the spine. The vault rises to this at the centre line. */
-  ceilingCrown: 8.6,
-  /** Where the vault meets the side walls. Must clear the viewport top. */
-  ceilingSpring: 6.2,
+  ceilingCrown: 7.0,
+  /** Where the vault meets the side walls. Must clear the viewport top (5.7). */
+  ceilingSpring: 5.95,
 } as const;
 
 /** ~72% of the 14 m front wall. The room's defining feature. */
@@ -140,6 +155,9 @@ export function createBridge(opts: {
   const accentStrip = accentStripMaterial(bag);
   const ledGreen = ledMaterial(bag, SHIP.phosphor);
   const ledWhite = ledMaterial(bag, "#E4ECF7", 2.6);
+  // Bright enough to read in a mirror, dim enough not to bloom or light the
+  // room. See the placement below for why this is not just `hull`.
+  const viewportSurround = ledMaterial(bag, SHIP.hull, 0.55);
 
   const add = (
     g: BufferGeometry,
@@ -298,7 +316,7 @@ export function createBridge(opts: {
     // 6.18 is the cornice, where the wall meets the vault. Without it the top
     // of frame is unlit ceiling with no edge on it, and a dark band with no
     // boundary reads as the room having no ceiling rather than a dark one.
-    for (const railY of [6.18, 4.68, 2.44, 0.16]) {
+    for (const railY of [5.92, 4.68, 2.44, 0.16]) {
       reuse(railGeo, strip, [
         mx + inward[0] * 0.22,
         railY,
@@ -374,6 +392,17 @@ export function createBridge(opts: {
   // Structural surround in pale metal, then the glowing outline traced around
   // it — the same motif as every wall bay, at the scale of the thing the room
   // is built around.
+  /**
+   * The structural surround, emissive at low intensity.
+   *
+   * This is drei's `Lightformer` idea: a mesh bright enough to appear in
+   * reflections without contributing meaningful diffuse light. The chair's
+   * chrome pedestal is metalness 1 at roughness 0.12, which means it is almost
+   * entirely a mirror — and until now the brightest thing in the room reflected
+   * in it as a vague smear rather than as a *rectangle*. A reflective surface in
+   * a room with a window should show the window; not showing it is a small,
+   * specific wrongness the eye notices without being able to name.
+   */
   add(
     bevelFrame(
       VIEWPORT.width + VIEWPORT.frame * 2,
@@ -382,7 +411,7 @@ export function createBridge(opts: {
       VIEWPORT.height,
       0.34,
     ),
-    hull,
+    viewportSurround,
     [0, VIEWPORT.sill + VIEWPORT.height / 2, PLAN.frontZ + 0.2],
   );
   add(
@@ -604,7 +633,10 @@ export function createBridge(opts: {
     ]);
   }
 
-  /* ── Light ─────────────────────────────────────────────────────────────*/
+  /* ── Light ─────────────────────────────────────────────────────────────
+     Every value below is a placeholder overwritten on the first frame from the
+     atmosphere state. Nothing here is authored — the numbers live in
+     `scene/atmosphere.ts` as named beats, and the room reads them. */
   const hemi = new HemisphereLight(0xbcd0e8, 0x090c11, 0.35);
   group.add(hemi);
 
@@ -659,6 +691,7 @@ export function createBridge(opts: {
 
   return {
     group,
+    keyLight: key,
     camera: {
       position: [...restPos] as [number, number, number],
       target: [...restTarget] as [number, number, number],
@@ -671,9 +704,21 @@ export function createBridge(opts: {
       const px = state.pointer.x * 0.6;
       const py = state.pointer.y * 0.32;
 
-      // Portrait recompose. At 0.46 aspect a target set for 16:9 puts the
-      // viewport dead centre, which is exactly where the copy card sits.
-      const portrait = Math.max(0, Math.min(1, (0.95 - state.aspect) / 0.4));
+      /**
+       * Recompose for narrowing frames — and it has to start well before
+       * portrait.
+       *
+       * The first version only engaged below 0.95 aspect, which meant a
+       * landscape tablet at 1.33 got the full 16:9 composition on a frame a
+       * third squarer. The deck cropped away, the chair went behind the copy
+       * card, and the room lost the depth the wide shot is built on. That is
+       * the failure mode of tuning at two extremes: the middle is not between
+       * them, it is simply untested.
+       *
+       * Now ramps from 1.45 down, so 1.33 gets a fifth of the correction, 16:9
+       * gets none, and portrait still gets all of it.
+       */
+      const portrait = Math.max(0, Math.min(1, (1.45 - state.aspect) / 0.55));
       const targetY = restTarget[1] + portrait * 1.7;
       const camY = restPos[1] + portrait * 0.8;
       const camZ = restPos[2] - portrait * 3.2;
@@ -683,12 +728,32 @@ export function createBridge(opts: {
       cam.position.z = camZ;
       cam.lookAt(restTarget[0] + px * 0.35, targetY + py * 0.2, restTarget[2]);
 
-      const lit = state.boot;
-      hemi.intensity = 0.35 * lit;
-      key.intensity = 0.85 * lit;
-      rim.intensity = 0.9 * lit;
-      fill.intensity = 0.22 * lit;
-      for (const p of practicals) p.intensity = 11 * lit;
+      /**
+       * Read the atmosphere; never a literal.
+       *
+       * `boot` no longer scales a set of constants — it interpolates the room
+       * from a cold-hull preset toward the resting one, so the arrival is a
+       * room powering up rather than a fade-in of the finished shot. Colour,
+       * fog and exposure travel with intensity, which is the part a scalar
+       * could never do.
+       */
+      const atmos = bootAtmosphere(state.boot);
+      state.setAtmosphere(atmos);
+
+      hemi.color.setHex(atmos.hemiSky);
+      hemi.groundColor.setHex(atmos.hemiGround);
+      hemi.intensity = atmos.hemiIntensity;
+
+      key.color.setHex(atmos.keyColor);
+      key.intensity = atmos.keyIntensity;
+      rim.intensity = atmos.rimIntensity;
+      fill.intensity = atmos.fillIntensity;
+      for (const p of practicals) p.intensity = atmos.practicalIntensity;
+
+      strip.emissiveIntensity = 2.2 * atmos.stripLevel;
+      accentStrip.emissiveIntensity = 2.6 * atmos.stripLevel;
+      ledGreen.emissiveIntensity = 3.4 * atmos.stripLevel;
+      ledWhite.emissiveIntensity = 2.6 * atmos.stripLevel;
     },
     dispose() {
       // The video element holds a decoder and a network handle, neither of

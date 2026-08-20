@@ -13,8 +13,13 @@
  * a leak caught by an assertion costs minutes and one caught by a visitor costs
  * the build.
  */
-import type { Group, PerspectiveCamera } from "three/webgpu";
+import type {
+  DirectionalLight,
+  Group,
+  PerspectiveCamera,
+} from "three/webgpu";
 import type { QualityTier } from "./quality";
+import type { Atmosphere } from "./atmosphere";
 
 /** Per-frame state handed to every room. Read-only from the room's side. */
 export type FrameState = {
@@ -36,6 +41,16 @@ export type FrameState = {
    */
   aspect: number;
   quality: QualityTier;
+  /**
+   * Hand the manager the atmosphere this room wants.
+   *
+   * The room owns its lighting state; the manager owns fog, exposure and the
+   * post chain. Rather than have the manager guess, the room pushes its
+   * resolved atmosphere once per frame and the manager applies the parts that
+   * are not its to author. That keeps the dependency one-directional — rooms
+   * never reach into the renderer.
+   */
+  setAtmosphere(atmosphere: Atmosphere): void;
 };
 
 export type RoomModule = {
@@ -47,6 +62,14 @@ export type RoomModule = {
     target: [number, number, number];
     fov: number;
   };
+  /**
+   * The room's shadow-casting key, if it has one.
+   *
+   * Handed up so the post chain can raymarch godrays against its shadow map.
+   * A room without one simply renders without shafts rather than failing —
+   * which is the right default, because not every compartment has a window.
+   */
+  keyLight?: DirectionalLight;
   update(state: FrameState): void;
   dispose(): void;
 };

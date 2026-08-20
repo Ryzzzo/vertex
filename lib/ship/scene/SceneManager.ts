@@ -64,6 +64,8 @@ export class SceneManager {
 
   private environment: ReturnType<typeof createShipEnvironment> | null = null;
   private chain: PostChain | null = null;
+  private fog: FogExp2 | null = null;
+  private hasGodrays = false;
 
   private readonly onPointerMove = (e: PointerEvent) => {
     if (this.reducedMotion) return;
@@ -143,15 +145,14 @@ export class SceneManager {
     // holding full contrast to the back of the room, which is most of what
     // separates a rendered box from a space with air in it. Exponential rather
     // than linear so it never has a visible start plane.
-    this.scene.fog = new FogExp2(0x0a0f18, 0.017);
+    //
+    // Colour and density are placeholders — both are driven per frame from the
+    // room's atmosphere state, so the fog thickens on a cold hull and thins as
+    // the room comes up.
+    this.fog = new FogExp2(0x0a0f18, 0.017);
+    this.scene.fog = this.fog;
 
-    this.chain = createPostChain(
-      this.renderer,
-      this.scene,
-      this.camera,
-      this.quality,
-    );
-
+    this.rebuildChain(false);
     this.baseline = this.memory();
 
     window.addEventListener("resize", this.onResize, { passive: true });
@@ -181,11 +182,53 @@ export class SceneManager {
     };
   }
 
+  /**
+   * Build (or rebuild) the post chain.
+   *
+   * Rebuilt on every room mount because godrays raymarch against a specific
+   * light's shadow map, and which light that is belongs to the room. The
+   * alternative — a chain that outlives rooms and reaches into whatever is
+   * currently mounted — inverts the dependency and leaves a dangling reference
+   * the moment a room disposes.
+   */
+  private rebuildChain(withGodrays: boolean): void {
+    this.chain?.dispose();
+    this.chain = createPostChain(
+      this.renderer,
+      this.scene,
+      this.camera,
+      this.quality,
+      withGodrays ? this.room?.keyLight : undefined,
+    );
+    this.hasGodrays = withGodrays;
+  }
+
+  /**
+   * Upgrade the chain to include godrays once the shadow map exists.
+   *
+   * `GodraysNode` reads `light.shadow.map.depthTexture` when it builds, and
+   * three does not allocate that map until the renderer has actually run a
+   * shadow pass. Building the chain at mount therefore throws on a null map —
+   * the pass is asking for a texture that will not exist until a frame has been
+   * drawn, and a frame cannot be drawn until the chain exists.
+   *
+   * Breaking the cycle by rendering once without the effect and upgrading after
+   * is deterministic and self-healing: if the map never appears, the room keeps
+   * rendering, just without shafts.
+   */
+  private tryUpgradeGodrays(): void {
+    if (this.hasGodrays || !this.quality.godrays) return;
+    const map = this.room?.keyLight?.shadow?.map;
+    if (!map) return;
+    this.rebuildChain(true);
+  }
+
   mount(name: string, room: RoomModule): void {
     if (this.room) this.unmount();
     this.room = room;
     this.roomName = name;
     this.scene.add(room.group);
+    this.rebuildChain(false);
 
     this.camera.fov = room.camera.fov;
     this.camera.position.set(...room.camera.position);
@@ -276,6 +319,16 @@ export class SceneManager {
       boot: 1 - Math.pow(1 - this.boot, 3),
       aspect: this.camera.aspect,
       quality: this.quality,
+      // The room resolves its own atmosphere and hands back the parts the
+      // renderer owns. One-directional: rooms never touch the renderer.
+      setAtmosphere: (atmos) => {
+        if (this.fog) {
+          this.fog.color.setHex(atmos.fogColor);
+          this.fog.density = atmos.fogDensity;
+        }
+        this.renderer.toneMappingExposure = atmos.exposure;
+        this.chain?.setGodrayDensity(atmos.godrayDensity);
+      },
     };
 
     this.room?.update(state);
@@ -284,6 +337,10 @@ export class SceneManager {
     // untouched beauty pass.
     if (this.chain) this.chain.post.render();
     else this.renderer.render(this.scene, this.camera);
+
+    // After the first frame the key's shadow map exists, so the chain can be
+    // upgraded to include the volumetric pass.
+    this.tryUpgradeGodrays();
   };
 
   dispose(): void {

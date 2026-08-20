@@ -39,6 +39,27 @@ export type QualityTier = {
   /** Depth of field. Softens the far wall so the room recedes. A gather pass
    *  is the most expensive thing in the chain and the least missed. */
   dof: boolean;
+  /**
+   * Volumetric shafts through the viewport. The "outside is real" tell.
+   *
+   * **Off, and honestly so.** The pass is fully wired — `three`'s own TSL
+   * `GodraysNode` marching the key's shadow map, deferred until that map is
+   * allocated, density driven from the atmosphere state — and it compiles
+   * without error and composites into the chain. It contributes nothing
+   * visible. Raising density from 0.62 to 1.6 changed no pixels, which rules
+   * out "too subtle" and points at the pass receiving or returning nothing.
+   *
+   * Two attempts is where guessing stops. Left disabled rather than burning
+   * GPU on a pass that produces no image, with every line of integration intact
+   * so the next session diagnoses rather than rebuilds. Likely suspects, in
+   * order: the additive compose of its output against a vec4 beauty; the
+   * shadow-map resolution the node samples versus the one the key allocates;
+   * and whether the marched volume is bounded by the shadow camera's near
+   * plane, which sits at 0.5 while the light is 6 units outside the front wall.
+   */
+  godrays: boolean;
+  /** Raymarch steps. 60 is the reference default; 40 holds up at half-res. */
+  godraySteps: number;
   /** Star count behind the viewport. */
   stars: number;
   /** Shadow-casting lights. Zero on reduced — the room is lit by emissive
@@ -64,6 +85,8 @@ const FULL: QualityTier = {
    * distances rather than guessed.
    */
   dof: true,
+  godrays: false,
+  godraySteps: 60,
   stars: 2600,
   shadowLights: 1,
 };
@@ -80,6 +103,8 @@ const REDUCED: QualityTier = {
   bloomStrength: 0.16,
   ao: false,
   dof: false,
+  godrays: false,
+  godraySteps: 40,
   stars: 900,
   shadowLights: 0,
 };
