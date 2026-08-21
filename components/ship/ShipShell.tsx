@@ -15,6 +15,7 @@
  */
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 import type { Capability } from "@/lib/ship/scene/capability";
 
 // `ssr: false` because there is no renderer on the server, and the chunk this
@@ -22,10 +23,21 @@ import type { Capability } from "@/lib/ship/scene/capability";
 // actually renders — which a Tier C client never does.
 const ShipCanvas = dynamic(() => import("./ShipCanvas"), { ssr: false });
 
+/**
+ * Compartments served by a pre-rendered frame rather than the renderer. The canvas is
+ * mounted by the ship layout, so without this it would still boot behind the photoreal
+ * plate — a WebGPU context, the room's geometry and the whole `three` chunk, all
+ * downloaded to sit invisibly under an opaque image.
+ */
+const PRERENDERED = new Set(["/ship/bridge"]);
+
 export default function ShipShell() {
+  const pathname = usePathname();
+  const prerendered = PRERENDERED.has(pathname);
   const [capability, setCapability] = useState<Capability | null>(null);
 
   useEffect(() => {
+    if (prerendered) return;
     let cancelled = false;
 
     void (async () => {
@@ -46,9 +58,13 @@ export default function ShipShell() {
       delete document.documentElement.dataset.shipMotion;
       delete document.documentElement.dataset.shipScene;
     };
-  }, []);
+    // `prerendered` belongs here. This component is mounted by the layout and survives
+    // navigation between compartments, so with an empty dep list a visitor who arrived
+    // on the bridge and then walked to another room would take the early return once
+    // and never detect capability again — every later room would be blank.
+  }, [prerendered]);
 
-  if (!capability || capability.tier === "none") return null;
+  if (prerendered || !capability || capability.tier === "none") return null;
 
   return (
     <ShipCanvas

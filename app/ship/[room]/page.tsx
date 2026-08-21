@@ -18,8 +18,14 @@ import { ROOMS, getRoom } from "@/lib/ship/registry";
  * and it cost nothing extra.
  */
 
+/**
+ * The bridge is deliberately absent from this list. It is served by the static segment
+ * `app/ship/bridge/page.tsx` — the photoreal render — and generating it here as well
+ * would emit two pages for one path. Every other compartment still renders procedurally
+ * through the shared canvas.
+ */
 export function generateStaticParams() {
-  return ROOMS.map((r) => ({ room: r.slug }));
+  return ROOMS.filter((r) => r.slug !== "bridge").map((r) => ({ room: r.slug }));
 }
 
 export async function generateMetadata({

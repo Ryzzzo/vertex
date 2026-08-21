@@ -1,0 +1,80 @@
+/**
+ * Colophon page.
+ *
+ * Scoped to this route rather than added to globals.css: it is one long-form text page
+ * and the site has no prose primitive yet. Inventing one here — and having it drift from
+ * whatever a second long-form page needs later — is worse than a small local sheet.
+ *
+ * Every value below is a token. Links get an explicit underline because the global reset
+ * strips it, and a licence attribution whose link is invisible does not attribute.
+ */
+
+.credits {
+  padding-block: clamp(4rem, 2rem + 8vw, 7rem) var(--section-rhythm);
+  max-width: 68ch;
+}
+
+.credits-eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.credits h1 {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+}
+
+.credits h2 {
+  margin: 2.75rem 0 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  letter-spacing: var(--tracking-tight);
+}
+
+.credits p {
+  margin: 0 0 1rem;
+  color: var(--text-secondary);
+}
+
+.credits ul {
+  margin: 0 0 1rem;
+  padding-left: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.credits li {
+  margin-bottom: 0.6rem;
+}
+
+.credits a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--text-tertiary);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--duration-hover) var(--easing-linear);
+}
+
+.credits a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* The attribution string itself, reproduced verbatim from docs/credits.md. Set apart so
+   it reads as a quoted licence line rather than as body copy. */
+.credits-attribution {
+  margin: 0 0 1rem;
+  padding: 1rem 1.15rem;
+  border-left: 2px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 4px 4px 0;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+}

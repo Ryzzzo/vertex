@@ -24,3 +24,11 @@ next-env.d.ts
 # newlines in the command itself, which no permission pattern matches.
 /.cmsg.txt
 
+# Render masters. The 4K PNG and the EXR are ~70 MB of sources, not deliverables —
+# what ships is the web-sized AVIF/WebP in public/images/bridge, encoded from them.
+# Binaries that large are painful to remove from history once committed, and the
+# .blend scenes they came from live outside the repo in vertex-assets/ anyway.
+# The render log beside them is text and stays tracked.
+/renders/*
+!/renders/*.md
+

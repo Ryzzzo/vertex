@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { affordances } from "@/lib/content";
 
 export default function SiteFooter() {
@@ -19,6 +20,14 @@ export default function SiteFooter() {
               </a>
             </li>
           ))}
+          {/* Not an affordance — a licence obligation. CC-BY requires the attribution
+              to be reachable from wherever the work appears, so it lives in the
+              colophon on every page that renders this footer. */}
+          <li>
+            <Link className="link" href="/legal/credits">
+              Credits
+            </Link>
+          </li>
         </ul>
       </div>
     </footer>
