@@ -80,10 +80,12 @@ export const work: WorkItem[] = [
     slug: "villa-lestagne",
     name: "Villa L’Estagne",
     line: "A booking site for a Mediterranean villa, built to the property’s standard rather than a template’s.",
-    note: "Preview coming soon.",
+    url: "https://kay-holidays.com",
     stack: "Next.js · Supabase RLS · Resend · no cookies",
     approach:
       "Row-level security lets an anonymous visitor write a booking request and read nothing back, so one guest's dates and contact details are never visible to another. Overlapping requests are allowed by design — two parties can hold the same week as on_request and the owner arbitrates from the admin panel. Bilingual FR/EN with French primary. No cookies, no analytics, no payment processing — a direct-booking site without a platform in the middle.",
+    shot: "/work/villa-lestagne/hero-desktop.avif",
+    shotAlt: "The Villa L’Estagne booking site rendered on desktop.",
   },
 ];
 
