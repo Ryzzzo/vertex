@@ -89,7 +89,27 @@ export const work: WorkItem[] = [
   },
 ];
 
-export const lab = {
+/**
+ * A Lab shown at hero scale on the homepage. `status` is the optional amber
+ * chip beside the title, for work that is genuinely usable but not yet whole —
+ * distinct from the live/concept chip on the /labs index, which answers the
+ * different question of whether the thing runs at all.
+ */
+export type FeaturedLab = {
+  slug: string;
+  name: string;
+  line: string;
+  stack: string;
+  approach: string;
+  url: string;
+  shot: string;
+  shotAlt: string;
+  status?: string;
+  meta?: string;
+};
+
+export const lab: FeaturedLab = {
+  slug: "nc-housing-terminal",
   name: "NC Housing Terminal",
   line: "A Bloomberg-style housing map of North Carolina: every ZIP code rendered as a live choropleth of Zillow home-value change.",
   stack: "Mapbox GL · Next.js · static data pipeline · Vercel",
@@ -102,6 +122,23 @@ export const lab = {
   meta: "Designed, built, and deployed in one evening.",
 };
 
+export const queryGrid: FeaturedLab = {
+  slug: "query-grid",
+  name: "Query Grid",
+  line: "A SQL puzzle campaign. Learn the language of data, one puzzle at a time.",
+  stack: "Next.js · DuckDB-Wasm · Monaco Editor · Vercel",
+  approach:
+    "DuckDB runs entirely in the browser, so there is no backend to keep alive and no data to send anywhere — the schema, the queries, and the correctness check all execute on the visitor's machine. The Toolkit panel names the SQL keywords each level uses before the player runs anything, inverting the teach-by-failure loop most tutorials fall into. Currently one scenario × five levels; the campaign structure supports twelve scenarios totaling sixty puzzles.",
+  url: "https://sql-game-zeta.vercel.app",
+  shot: "/work/query-grid/hero-desktop.avif",
+  shotAlt:
+    "The Query Grid board on level one: the scenario brief, a two-table schema, the Toolkit keyword panel, and the query editor.",
+  status: "In Development",
+};
+
+/** The Labs shown at hero scale on the homepage, in order. */
+export const featuredLabs: FeaturedLab[] = [lab, queryGrid];
+
 export type LabItem = {
   slug: string;
   name: string;
@@ -111,6 +148,11 @@ export type LabItem = {
   external?: boolean;
   /** Sets the card's status chip: a running demo vs. a static interface study. */
   kind: "live" | "concept";
+  /**
+   * Optional amber chip beside the title. Orthogonal to `kind` — an item can be
+   * fully live and still be building out, which is what this says.
+   */
+  status?: string;
   /** Real capture, where one exists; concept items render a drawn placeholder. */
   shot?: string;
   shotAlt?: string;
@@ -145,6 +187,17 @@ export const labs: LabItem[] = [
     kind: "live",
     shot: lab.shot,
     shotAlt: lab.shotAlt,
+  },
+  {
+    slug: queryGrid.slug,
+    name: queryGrid.name,
+    line: queryGrid.line,
+    href: queryGrid.url,
+    external: true,
+    kind: "live",
+    status: queryGrid.status,
+    shot: queryGrid.shot,
+    shotAlt: queryGrid.shotAlt,
   },
 ];
 

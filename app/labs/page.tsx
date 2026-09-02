@@ -198,6 +198,11 @@ function LabsCard({ item }: { item: LabItem }) {
               {heading}
             </Link>
           )}
+          {item.status ? (
+            <span className="labs-tag labs-tag-inline labs-tag-wip">
+              {item.status}
+            </span>
+          ) : null}
         </h2>
         <p className="body card-line">{item.line}</p>
       </div>
