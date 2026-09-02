@@ -1424,6 +1424,17 @@ a {
    Lab
    ───────────────────────────────────────────────────────────── */
 
+/*
+ * Featured Labs stack rather than sitting side by side: each card is a 21:9
+ * plate over a two-column body, and halving that width would shrink the
+ * treatment rather than repeat it.
+ */
+.lab-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 1.5rem + 4vw, 5rem);
+}
+
 .lab-card {
   position: relative;
 }
@@ -1624,11 +1635,39 @@ a {
   background: var(--accent);
 }
 
+/*
+ * Building out, but usable now. Warm rather than indigo so it reads as a
+ * different axis from the live/concept chip beside it — that one says whether
+ * the thing runs, this one says whether it is finished.
+ */
+.labs-tag-wip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 0.4375rem;
+  border-radius: 999px;
+  background: #e3a33c;
+}
+
 /* Inline chip beside the item-page heading, not floated over media */
 .labs-tag-inline {
   position: static;
   backdrop-filter: none;
   background: color-mix(in oklab, var(--surface) 70%, var(--bg));
+}
+
+/*
+ * The title link's ::after stretches over the whole card, so a chip sharing the
+ * heading has to sit above it to stay selectable. Titles carrying one also wrap
+ * rather than overflow on a narrow card.
+ */
+.card-title:has(.labs-tag-inline) {
+  flex-wrap: wrap;
+}
+
+.card-title .labs-tag-inline {
+  position: relative;
+  z-index: 2;
 }
 
 /* ── Item page ── */

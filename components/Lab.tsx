@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { lab } from "@/lib/content";
+import { featuredLabs, lab, type FeaturedLab } from "@/lib/content";
 
 /**
  * The clamped diverging ramp the map itself uses. Rendering it on the card
@@ -40,6 +40,60 @@ function Chevron() {
   );
 }
 
+function LabCard({ item }: { item: FeaturedLab }) {
+  return (
+    <article className="lab-card reveal">
+      <div className="lab-media">
+        <Image
+          src={item.shot}
+          alt={item.shotAlt}
+          width={1920}
+          height={1080}
+          sizes="(max-width: 900px) 100vw, 1200px"
+          className="card-shot"
+        />
+        <div className="lab-media-veil" aria-hidden="true" />
+      </div>
+
+      <div className="lab-body">
+        <div className="lab-lede">
+          <h3 className="h3 card-title">
+            <a
+              className="card-title-link"
+              href={item.url}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              {item.name}
+              <Chevron />
+            </a>
+            {item.status ? (
+              <span className="labs-tag labs-tag-inline labs-tag-wip">
+                {item.status}
+              </span>
+            ) : null}
+          </h3>
+          <p className="body lab-line">{item.line}</p>
+          {/* The legend is the map's own ramp, so it belongs to that item only. */}
+          {item.slug === lab.slug ? <Scale /> : null}
+        </div>
+
+        <div className="lab-detail">
+          <div className="card-detail-row">
+            <p className="card-detail-label">Stack</p>
+            <p className="card-detail-stack">{item.stack}</p>
+          </div>
+          <div className="card-detail-row">
+            <p className="card-detail-label">Approach</p>
+            <p className="card-detail-approach">{item.approach}</p>
+          </div>
+          {item.meta ? <p className="marker lab-meta">{item.meta}</p> : null}
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function Lab() {
   return (
     <section className="section" aria-labelledby="lab">
@@ -54,49 +108,11 @@ export default function Lab() {
           </p>
         </header>
 
-        <article className="lab-card reveal">
-          <div className="lab-media">
-            <Image
-              src={lab.shot}
-              alt={lab.shotAlt}
-              width={1920}
-              height={1080}
-              sizes="(max-width: 900px) 100vw, 1200px"
-              className="card-shot"
-            />
-            <div className="lab-media-veil" aria-hidden="true" />
-          </div>
-
-          <div className="lab-body">
-            <div className="lab-lede">
-              <h3 className="h3 card-title">
-                <a
-                  className="card-title-link"
-                  href={lab.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  {lab.name}
-                  <Chevron />
-                </a>
-              </h3>
-              <p className="body lab-line">{lab.line}</p>
-              <Scale />
-            </div>
-
-            <div className="lab-detail">
-              <div className="card-detail-row">
-                <p className="card-detail-label">Stack</p>
-                <p className="card-detail-stack">{lab.stack}</p>
-              </div>
-              <div className="card-detail-row">
-                <p className="card-detail-label">Approach</p>
-                <p className="card-detail-approach">{lab.approach}</p>
-              </div>
-              <p className="marker lab-meta">{lab.meta}</p>
-            </div>
-          </div>
-        </article>
+        <div className="lab-stack">
+          {featuredLabs.map((item) => (
+            <LabCard key={item.slug} item={item} />
+          ))}
+        </div>
 
         <p className="lab-more reveal">
           <a className="lab-more-link" href="/labs">
