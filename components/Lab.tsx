@@ -53,6 +53,11 @@ function LabCard({ item }: { item: FeaturedLab }) {
           className="card-shot"
         />
         <div className="lab-media-veil" aria-hidden="true" />
+        {/* aria-hidden: repeats the name and line already in .lab-lede. */}
+        <div className="zoom-caption" aria-hidden="true">
+          <p className="zoom-caption-title">{lab.name}</p>
+          <p className="zoom-caption-line">{lab.line}</p>
+        </div>
       </div>
 
       <div className="lab-body">

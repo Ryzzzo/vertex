@@ -1341,38 +1341,174 @@ a {
   transform: rotate(180deg);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .card-toggle {
-    display: none;
+/* ─────────────────────────────────────────────────────────────
+   Hover-enlarge
+   The plate scales, not the image inside it — scaling `.card-shot` within an
+   `overflow: hidden` frame only crops tighter, where scaling the frame lets the
+   enlarged card sit over its neighbours. Transform and opacity only, so nothing
+   in the grid reflows and the enlarge stays on the compositor.
+
+   `--card-zoom` drives both the scale and the caption's counter-scale, so the
+   overlay type stays at its authored size instead of growing with the plate.
+   ───────────────────────────────────────────────────────────── */
+
+.zoom-caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  gap: calc(0.1875rem / var(--card-zoom, 1));
+  padding: calc(2.25rem / var(--card-zoom, 1)) calc(1.125rem / var(--card-zoom, 1))
+    calc(0.9375rem / var(--card-zoom, 1));
+  /*
+   * The brief asked for a 40% scrim. Over the near-white captures — ConsultBase,
+   * Parenting Plan Pro, Revoix — white on 40% black measures ~2.3:1 and fails
+   * AA, so the ramp reaches ~82% behind the text and feathers out above it.
+   * Reads as a veil, still passes.
+   */
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, #000 82%, transparent) 0%,
+    color-mix(in oklab, #000 62%, transparent) 55%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+
+.zoom-caption-title {
+  margin: 0;
+  font-size: calc(0.9375rem / var(--card-zoom, 1));
+  font-weight: 500;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.zoom-caption-line {
+  margin: 0;
+  font-size: calc(0.8125rem / var(--card-zoom, 1));
+  line-height: 1.45;
+  color: color-mix(in oklab, #fff 78%, transparent);
+  text-wrap: pretty;
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 768px) {
+  /*
+   * The toggle stays visible on pointer devices now. The hover state no longer
+   * carries stack and approach, so without it that copy would be unreachable
+   * on desktop entirely.
+   *
+   * The repo is on one easing curve by audit rule, and 0.32/0.72/0/1 is already
+   * an ease-out shape, so the scale uses it rather than introducing a second.
+   */
+  .card:not(.card-featured) .card-media,
+  .lab-card .lab-media {
+    transition: transform 250ms var(--easing-linear);
   }
 
-  .card:not(.card-featured) .card-detail {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    grid-template-rows: 1fr;
-    padding: 1.25rem;
-    border: 1px solid var(--hairline);
-    border-radius: 10px;
-    background: color-mix(in oklab, var(--bg) 82%, transparent);
-    backdrop-filter: blur(14px);
-    opacity: 0;
+  /*
+   * `.card-body` follows `.card-frame` in the DOM, so its title painted over
+   * the enlarged plate. Lifting the plate fixes that; making it transparent to
+   * the pointer keeps clicks landing on the title link's stretched ::after,
+   * which is what carries the destination.
+   */
+  .card:not(.card-featured):hover .card-media,
+  .card:not(.card-featured):focus-within .card-media,
+  .lab-card:hover .lab-media,
+  .lab-card:focus-within .lab-media {
+    z-index: 2;
+  }
+
+  .card:not(.card-featured) .card-media,
+  .lab-card .lab-media {
     pointer-events: none;
-    transform: translateY(6px);
-    transition:
-      opacity 260ms var(--easing-linear),
-      transform 260ms var(--easing-linear);
   }
 
-  .card:not(.card-featured) .card-detail-inner {
-    height: 100%;
-    justify-content: flex-end;
+  /*
+   * The plate is transparent to the pointer, so the cursor has to come from an
+   * ancestor. `.card-frame` wraps just the image region; the Lab plate has no
+   * such wrapper, so it takes the card and accepts the cursor over its copy.
+   */
+  .card:not(.card-featured) .card-frame,
+  .lab-card {
+    cursor: zoom-in;
   }
 
-  .card:not(.card-featured):hover .card-detail,
-  .card:not(.card-featured):focus-within .card-detail {
+  .zoom-caption {
+    display: flex;
+    /* Fades over the last 100ms of the 250ms scale. */
+    transition: opacity 100ms var(--easing-linear) 150ms;
+  }
+
+  /* Standard work cards rest near 536px; 1.5x lands them around 804px. */
+  .card:not(.card-featured) {
+    --card-zoom: 1.5;
+  }
+
+  /*
+   * Lab plates already rest near 1118px. The brief's 1.5x would put them at
+   * ~1677px — wider than the viewport at this breakpoint — so they take the
+   * factor that reaches the same ~1250px target the enlarge is actually for.
+   */
+  .lab-card {
+    --card-zoom: 1.12;
+  }
+
+  .card-slot:hover,
+  .card-slot:focus-within,
+  .card:not(.card-featured):hover,
+  .card:not(.card-featured):focus-within,
+  .lab-card:hover,
+  .lab-card:focus-within {
+    z-index: 5;
+  }
+
+  .card:not(.card-featured):hover .card-media,
+  .card:not(.card-featured):focus-within .card-media,
+  .lab-card:hover .lab-media,
+  .lab-card:focus-within .lab-media {
+    transform: scale(var(--card-zoom));
+  }
+
+  .card:not(.card-featured):hover .zoom-caption,
+  .card:not(.card-featured):focus-within .zoom-caption,
+  .lab-card:hover .zoom-caption,
+  .lab-card:focus-within .zoom-caption {
     opacity: 1;
-    transform: translateY(0);
+  }
+
+  /* The shot's own 1.02 nudge would compound with the plate scale. */
+  .card:hover .card-shot,
+  .lab-card:hover .card-shot {
+    transform: none;
+  }
+
+  /* Keyboard only — a mouse press should not leave a ring behind. */
+  .card:not(.card-featured):has(:focus-visible) .card-media,
+  .lab-card:has(:focus-visible) .lab-media {
+    outline: 2px solid var(--accent);
+    outline-offset: calc(3px / var(--card-zoom, 1));
+  }
+
+  /* Between 768 and 1200 the margins are too tight for the full factor. */
+  @media (max-width: 1200px) {
+    .card:not(.card-featured) {
+      --card-zoom: 1.28;
+    }
+
+    .lab-card {
+      --card-zoom: 1.06;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The detail still arrives, it just arrives without travel. */
+  .card:not(.card-featured) .card-media,
+  .lab-card .lab-media,
+  .zoom-caption {
+    transition: none;
   }
 }
 
