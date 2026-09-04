@@ -1253,8 +1253,9 @@ a {
 }
 
 /* ── Detail layer ──
-   Touch: an inline disclosure under the shot, driven by the toggle.
-   Pointer: an overlay across the shot, revealed on hover or focus-within. */
+   An inline disclosure under the shot, driven by the toggle, on every input
+   type. The pointer overlay it used to become is now the hover-enlarge
+   caption, which carries name and line instead of stack and approach. */
 
 .card-detail {
   display: grid;
@@ -1414,9 +1415,9 @@ a {
    * which is what carries the destination.
    */
   .card:not(.card-featured):hover .card-media,
-  .card:not(.card-featured):focus-within .card-media,
+  .card:not(.card-featured):has(:focus-visible) .card-media,
   .lab-card:hover .lab-media,
-  .lab-card:focus-within .lab-media {
+  .lab-card:has(:focus-visible) .lab-media {
     z-index: 2;
   }
 
@@ -1455,26 +1456,35 @@ a {
     --card-zoom: 1.12;
   }
 
+  /*
+   * `:has(:focus-visible)`, never `:focus-within`. The title links open in a
+   * new tab, so a click leaves focus sitting on the link in this document and
+   * `:focus-within` held the card enlarged indefinitely — pointer position
+   * irrelevant. Hovering anything afterwards then stacked a second enlarged
+   * plate over the stuck one, which is the ghosting that was reported.
+   * `:focus-visible` does not match a mouse click, so keyboard users keep the
+   * enlarge and clicking no longer strands one.
+   */
   .card-slot:hover,
-  .card-slot:focus-within,
+  .card-slot:has(:focus-visible),
   .card:not(.card-featured):hover,
-  .card:not(.card-featured):focus-within,
+  .card:not(.card-featured):has(:focus-visible),
   .lab-card:hover,
-  .lab-card:focus-within {
+  .lab-card:has(:focus-visible) {
     z-index: 5;
   }
 
   .card:not(.card-featured):hover .card-media,
-  .card:not(.card-featured):focus-within .card-media,
+  .card:not(.card-featured):has(:focus-visible) .card-media,
   .lab-card:hover .lab-media,
-  .lab-card:focus-within .lab-media {
+  .lab-card:has(:focus-visible) .lab-media {
     transform: scale(var(--card-zoom));
   }
 
   .card:not(.card-featured):hover .zoom-caption,
-  .card:not(.card-featured):focus-within .zoom-caption,
+  .card:not(.card-featured):has(:focus-visible) .zoom-caption,
   .lab-card:hover .zoom-caption,
-  .lab-card:focus-within .zoom-caption {
+  .lab-card:has(:focus-visible) .zoom-caption {
     opacity: 1;
   }
 
