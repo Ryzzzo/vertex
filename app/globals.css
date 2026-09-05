@@ -1412,6 +1412,14 @@ a {
   .card:not(.card-featured) .card-media,
   .lab-card .lab-media {
     transition: transform 250ms var(--easing-linear);
+    /*
+     * Own compositor layer from the start. Promoting the plate only at hover
+     * time meant the enlarged frame was rasterised over neighbours whose
+     * damage rects were computed from the un-scaled box, which is how stale
+     * outlines were left behind on the way back down. Eight plates at rest
+     * size is a trivial texture budget.
+     */
+    will-change: transform;
   }
 
   /*
