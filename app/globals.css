@@ -1260,7 +1260,7 @@ a {
 
 /* ── Detail layer ──
    Touch: an inline disclosure under the shot, driven by the toggle.
-   Pointer: an overlay across the shot, revealed on hover or focus-within. */
+   Pointer: an overlay across the shot, revealed on hover or keyboard focus. */
 
 .card-detail {
   display: grid;
@@ -1375,8 +1375,14 @@ a {
     justify-content: flex-end;
   }
 
+  /*
+   * `:has(:focus-visible)`, not `:focus-within`. The title links open in a new
+   * tab, so a click leaves focus on the link in this document and
+   * `:focus-within` held the overlay open until the next click elsewhere.
+   * `:focus-visible` ignores pointer clicks and still catches keyboard focus.
+   */
   .card:not(.card-featured):hover .card-detail,
-  .card:not(.card-featured):focus-within .card-detail {
+  .card:not(.card-featured):has(:focus-visible) .card-detail {
     opacity: 1;
     transform: translateY(0);
   }
