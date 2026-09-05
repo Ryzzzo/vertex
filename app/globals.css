@@ -1177,6 +1177,12 @@ a {
   background: var(--surface);
 }
 
+/* `<picture>` is only a source switch; the img sizes against the media box. */
+.card-media picture,
+.lab-media picture {
+  display: contents;
+}
+
 .card-shot {
   width: 100%;
   height: 100%;

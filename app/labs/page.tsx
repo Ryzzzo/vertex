@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import Shot from "@/components/Shot";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { labs, type LabItem } from "@/lib/content";
@@ -167,13 +167,10 @@ function LabsCard({ item }: { item: LabItem }) {
     <article className="card labs-card-index">
       <div className="card-media labs-card-media">
         {item.shot ? (
-          <Image
+          <Shot
             src={item.shot}
             alt={item.shotAlt ?? ""}
-            width={1920}
-            height={1080}
             sizes="(max-width: 720px) 100vw, 50vw"
-            className="card-shot"
           />
         ) : (
           <Thumb />

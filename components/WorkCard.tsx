@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Shot from "./Shot";
 import type { WorkItem } from "@/lib/content";
 
 function Chevron() {
@@ -57,11 +57,9 @@ function Media({ item }: { item: WorkItem }) {
 
   return (
     <div className="card-media">
-      <Image
+      <Shot
         src={item.shot}
         alt={item.shotAlt ?? ""}
-        width={1920}
-        height={1080}
         /*
          * The desktop hint describes the *enlarged* width, not the resting one.
          * A transform never re-requests a source, so the file has to be big
@@ -72,7 +70,6 @@ function Media({ item }: { item: WorkItem }) {
             ? "(max-width: 900px) 100vw, 60vw"
             : "(max-width: 720px) 100vw, (max-width: 1200px) 50vw, 820px"
         }
-        className="card-shot"
         priority={item.featured}
       />
       {item.featured ? null : (
