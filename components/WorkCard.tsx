@@ -60,25 +60,9 @@ function Media({ item }: { item: WorkItem }) {
       <Shot
         src={item.shot}
         alt={item.shotAlt ?? ""}
-        /*
-         * The desktop hint describes the *enlarged* width, not the resting one.
-         * A transform never re-requests a source, so the file has to be big
-         * enough for the zoomed state at the moment it first loads.
-         */
-        sizes={
-          item.featured
-            ? "(max-width: 900px) 100vw, 60vw"
-            : "(max-width: 720px) 100vw, (max-width: 1200px) 50vw, 820px"
-        }
+        sizes={item.featured ? "(max-width: 900px) 100vw, 60vw" : "(max-width: 720px) 100vw, 50vw"}
         priority={item.featured}
       />
-      {item.featured ? null : (
-        /* aria-hidden: this repeats the name and line already in .card-body. */
-        <div className="zoom-caption" aria-hidden="true">
-          <p className="zoom-caption-title">{item.name}</p>
-          <p className="zoom-caption-line">{item.line}</p>
-        </div>
-      )}
     </div>
   );
 }
