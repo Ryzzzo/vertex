@@ -1,4 +1,5 @@
 import VxMark from "@/components/VxMark";
+import HeaderNav from "@/components/HeaderNav";
 
 /**
  * `wordmarkHref` defaults to the site root so the mark navigates home from any
@@ -18,11 +19,14 @@ export default function SiteHeader({
           <span>Vertex Business Solutions</span>
         </a>
         <nav className="site-nav" aria-label="Primary">
-          <a className="site-nav-link" href="/labs">
-            Labs
+          <HeaderNav />
+          <a className="site-nav-link site-nav-page" href="/labs">
+            All labs
           </a>
         </nav>
       </div>
+      {/* Reading progress, one hairline. Width is --progress from HeaderNav. */}
+      <span className="site-progress" aria-hidden="true" />
     </header>
   );
 }

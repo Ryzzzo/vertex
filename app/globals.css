@@ -359,7 +359,76 @@ a {
    ───────────────────────────────────────────────────────────── */
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
   padding-block: 1.75rem;
+  --progress: 0;
+  transition:
+    padding 300ms var(--easing-linear),
+    background-color 300ms var(--easing-linear),
+    border-color 300ms var(--easing-linear);
+  border-bottom: 1px solid transparent;
+}
+
+/* Once the page moves, the header becomes glass and tightens. */
+.site-header[data-scrolled] {
+  padding-block: 0.875rem;
+  background: color-mix(in oklab, var(--bg) 74%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom-color: color-mix(in oklab, var(--hairline) 70%, transparent);
+}
+
+.site-progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(var(--progress));
+  background: linear-gradient(90deg, var(--accent), #8b96ff);
+  opacity: 0;
+  transition: opacity 300ms var(--easing-linear);
+  pointer-events: none;
+}
+
+.site-header[data-scrolled] .site-progress {
+  opacity: 1;
+}
+
+/* Section links: quieter than the page link, lit when their section is on screen.
+   Compound selector so these beat .site-nav-link, which is declared later. */
+.site-nav-link.site-nav-section {
+  color: var(--text-secondary);
+  text-decoration-color: transparent;
+}
+
+.site-nav-link.site-nav-section[aria-current="location"] {
+  color: var(--text-primary);
+  text-decoration-color: var(--accent);
+}
+
+.site-nav-page {
+  margin-left: 0.5rem;
+}
+
+/* Anchored headings clear the sticky header. */
+.h2[id] {
+  scroll-margin-top: 6rem;
+}
+
+@media (max-width: 720px) {
+  .site-nav-section {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-progress {
+    transition: none;
+  }
 }
 
 .site-header-inner {
