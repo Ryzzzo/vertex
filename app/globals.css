@@ -2228,8 +2228,16 @@ a {
   width: 100%;
   overflow: hidden;
   pointer-events: none;
+  /*
+   * Own stacking context. Without it the scrim's and fade's z-indexes escape
+   * into the section's context and paint over the copy column — the headline
+   * read grey on the left, white on the right, which is the scrim's gradient.
+   */
+  isolation: isolate;
   --px: 0;
   --py: 0;
+  --mx: 50%;
+  --my: 50%;
 }
 
 /*
@@ -2332,19 +2340,30 @@ a {
   transition: transform 700ms var(--easing-linear);
 }
 
-/* The glass: a soft specular highlight that sits where the pointer is. */
+/*
+ * The light. Drawn in screen space over the whole stage — not inside the
+ * rotated plane, whose tilted coordinates put the highlight a few hundred
+ * pixels from the pointer — so it sits exactly under the cursor. `--mx`/`--my`
+ * are the pointer's position within the stage, in px.
+ */
 .hero-stage-sheen {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 8;
   pointer-events: none;
+  mix-blend-mode: screen;
   background: radial-gradient(
-    640px circle at calc(50% + var(--px) * 42%) calc(50% + var(--py) * 42%),
-    rgba(255, 255, 255, 0.11) 0%,
-    rgba(255, 255, 255, 0.04) 28%,
+    520px circle at var(--mx) var(--my),
+    rgba(160, 172, 255, 0.16) 0%,
+    rgba(160, 172, 255, 0.06) 30%,
     transparent 62%
   );
-  transition: background-position 700ms var(--easing-linear);
+  opacity: 0;
+  transition: opacity 400ms var(--easing-linear);
+}
+
+.hero-stage[data-lit] .hero-stage-sheen {
+  opacity: 1;
 }
 
 /* Light the console throws onto the page beneath it. */

@@ -70,22 +70,31 @@ export default function HeroStage({
     let px = 0;
     let py = 0;
 
+    let mx = 0;
+    let my = 0;
+
     const apply = () => {
       frame = 0;
       stage.style.setProperty("--px", px.toFixed(3));
       stage.style.setProperty("--py", py.toFixed(3));
+      stage.style.setProperty("--mx", `${mx.toFixed(0)}px`);
+      stage.style.setProperty("--my", `${my.toFixed(0)}px`);
     };
 
     const onMove = (e: PointerEvent) => {
       const r = stage.getBoundingClientRect();
-      px = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
-      py = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
+      mx = e.clientX - r.left;
+      my = e.clientY - r.top;
+      px = Math.max(-1, Math.min(1, (mx / r.width) * 2 - 1));
+      py = Math.max(-1, Math.min(1, (my / r.height) * 2 - 1));
+      stage.dataset.lit = "";
       if (!frame) frame = requestAnimationFrame(apply);
     };
 
     const onLeave = () => {
       px = 0;
       py = 0;
+      delete stage.dataset.lit;
       if (!frame) frame = requestAnimationFrame(apply);
     };
 
@@ -130,12 +139,14 @@ export default function HeroStage({
           }}
         >
           <VertexDashboardMockup shiplog={shiplog} buildSha={buildSha} />
-          {/* The glass. Sits over the console and carries the pointer sheen. */}
-          <div className="hero-stage-sheen" aria-hidden="true" />
         </motion.div>
         {/* Light the console throws onto the page beneath it. */}
         <div className="hero-stage-spill" aria-hidden="true" />
       </div>
+
+      {/* The light that follows the pointer — screen space, so it is under the
+          cursor rather than under where the tilted plane thinks the cursor is. */}
+      <div className="hero-stage-sheen" aria-hidden="true" />
 
       {/* Ground fade — the stage dissolves into the page rather than ending.
           Painted last so it sits over the plane. */}
