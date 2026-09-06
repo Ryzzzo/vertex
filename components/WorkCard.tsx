@@ -46,7 +46,45 @@ function Caret() {
   );
 }
 
-function Media({ item }: { item: WorkItem }) {
+type View = "desktop" | "phone";
+
+/**
+ * Desktop / phone. Every phone capture is a real render of the live site at
+ * 390 CSS px; the switch flips the plate in 3D rather than swapping images,
+ * so the two are read as one object seen from two sides.
+ */
+function DeviceSwitch({
+  view,
+  onChange,
+  label,
+}: {
+  view: View;
+  onChange: (v: View) => void;
+  label: string;
+}) {
+  return (
+    <div className="card-devices" role="group" aria-label={`${label}: choose a device`}>
+      {(
+        [
+          ["desktop", "Desktop"],
+          ["phone", "Phone"],
+        ] as const
+      ).map(([v, text]) => (
+        <button
+          key={v}
+          type="button"
+          className="card-device"
+          aria-pressed={view === v}
+          onClick={() => onChange(v)}
+        >
+          {text}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function Media({ item, view = "desktop" }: { item: WorkItem; view?: View }) {
   if (!item.shot) {
     return (
       <div className="card-media card-media-empty">
@@ -55,14 +93,38 @@ function Media({ item }: { item: WorkItem }) {
     );
   }
 
+  const desktop = (
+    <Shot
+      src={item.shot}
+      alt={item.shotAlt ?? ""}
+      sizes={item.featured ? "(max-width: 900px) 100vw, 60vw" : "(max-width: 720px) 100vw, 50vw"}
+      priority={item.featured}
+    />
+  );
+
+  if (!item.shotMobile) {
+    return <div className="card-media">{desktop}</div>;
+  }
+
   return (
-    <div className="card-media">
-      <Shot
-        src={item.shot}
-        alt={item.shotAlt ?? ""}
-        sizes={item.featured ? "(max-width: 900px) 100vw, 60vw" : "(max-width: 720px) 100vw, 50vw"}
-        priority={item.featured}
-      />
+    <div className="card-media card-flip" data-view={view}>
+      <div className="card-flip-inner">
+        <div className="card-face card-face-front">{desktop}</div>
+        <div className="card-face card-face-back" aria-hidden={view !== "phone"}>
+          <div className="card-phone">
+            {/* 780×1688 native; the frame shows the top and pans on hover. */}
+            <img
+              src={item.shotMobile}
+              alt={item.shotAlt ? item.shotAlt.replace("on desktop", "on a phone") : ""}
+              width={780}
+              height={1688}
+              loading="lazy"
+              decoding="async"
+              className="card-phone-shot"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -133,13 +195,15 @@ function Title({ item }: { item: WorkItem }) {
  * approach sit inline rather than behind an interaction.
  */
 function FeaturedCard({ item }: { item: WorkItem }) {
+  const [view, setView] = useState<View>("desktop");
   return (
     <article className="card card-featured reveal">
-      <Media item={item} />
+      <Media item={item} view={view} />
       <div className="card-body">
         <p className="marker card-eyebrow">Featured</p>
         <Title item={item} />
         <p className="body card-line">{item.line}</p>
+        {item.shotMobile ? <DeviceSwitch view={view} onChange={setView} label={item.name} /> : null}
         <Detail item={item} fixed />
       </div>
     </article>
@@ -148,17 +212,20 @@ function FeaturedCard({ item }: { item: WorkItem }) {
 
 function StandardCard({ item }: { item: WorkItem }) {
   const [open, setOpen] = useState(false);
+  const [view, setView] = useState<View>("desktop");
   const detailId = `card-detail-${item.slug}`;
 
   return (
     <article className="card" data-open={open ? "" : undefined}>
       <div className="card-frame">
-        <Media item={item} />
+        <Media item={item} view={view} />
         <Detail item={item} id={detailId} />
       </div>
       <div className="card-body">
         <Title item={item} />
         <p className="body card-line">{item.line}</p>
+        <div className="card-controls">
+        {item.shotMobile ? <DeviceSwitch view={view} onChange={setView} label={item.name} /> : null}
         <button
           type="button"
           className="card-toggle"
@@ -169,6 +236,7 @@ function StandardCard({ item }: { item: WorkItem }) {
           {open ? "Hide detail" : "Stack & approach"}
           <Caret />
         </button>
+        </div>
       </div>
     </article>
   );

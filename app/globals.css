@@ -3261,3 +3261,126 @@ a {
     animation-delay: calc(var(--i) * 0.55s);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Selected work — desktop / phone flip
+   The plate turns over; the back carries the phone capture in a frame.
+   ───────────────────────────────────────────────────────────── */
+
+.card-flip {
+  perspective: 1600px;
+  overflow: visible;
+  border: 0;
+  background: none;
+}
+
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 720ms var(--easing-linear);
+}
+
+.card-flip[data-view="phone"] .card-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: var(--surface);
+  backface-visibility: hidden;
+}
+
+.card-face-back {
+  transform: rotateY(180deg);
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(60% 80% at 50% 30%, rgba(94, 106, 210, 0.22), transparent 70%),
+    linear-gradient(180deg, #14171d 0%, #0c0e12 100%);
+}
+
+/* The phone: an 18:39 frame that fills the plate's height, showing the top
+   of the capture. Hovering pans to the foot and back. */
+.card-phone {
+  height: 92%;
+  aspect-ratio: 9 / 19.5;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  background: #000;
+  box-shadow:
+    inset 0 0 0 3px #0a0b0d,
+    0 30px 60px -20px rgba(0, 0, 0, 0.8),
+    0 0 40px -10px rgba(94, 106, 210, 0.5);
+}
+
+.card-phone-shot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: object-position 7s linear;
+}
+
+@media (hover: hover) {
+  .card-flip[data-view="phone"]:hover .card-phone-shot {
+    object-position: bottom center;
+  }
+}
+
+/* Controls row under a card: device switch beside the detail toggle. */
+.card-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.card-devices {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface) 70%, var(--bg));
+}
+
+.card-device {
+  padding: 0.25rem 0.625rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color var(--duration-hover) var(--easing-linear),
+    background-color var(--duration-hover) var(--easing-linear);
+}
+
+.card-device[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--text-primary) 10%, transparent);
+  color: var(--text-primary);
+}
+
+.card-featured .card-devices {
+  align-self: flex-start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-flip-inner,
+  .card-phone-shot {
+    transition: none;
+  }
+}

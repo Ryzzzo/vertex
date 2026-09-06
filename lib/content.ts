@@ -15,6 +15,8 @@ export type WorkItem = {
   /** Present only where a real capture exists under /public/work/{slug}/ */
   shot?: string;
   shotAlt?: string;
+  /** Phone capture, 780×1688, where one exists. Enables the desktop/phone flip. */
+  shotMobile?: string;
   /** Renders at hero scale at the top of the grid. Exactly one item. */
   featured?: boolean;
 };
@@ -30,6 +32,7 @@ export const work: WorkItem[] = [
       "Multi-tenant from the schema up: row-level security on all sixty tables, so a tenant boundary is a database guarantee rather than a filter someone remembered to write. Scheduled work runs inside Postgres on pg_cron instead of an external scheduler that can silently stop. Plan gating is enforced at the query layer, so the interface cannot leak a feature the tier does not include.",
     shot: "/work/consultbase/hero-desktop.avif",
     shotAlt: "The ConsultBase marketing site rendered on desktop.",
+    shotMobile: "/work/consultbase/hero-mobile.avif",
     featured: true,
   },
   {
@@ -42,6 +45,7 @@ export const work: WorkItem[] = [
       "The plan's legal language lives in a protected-text registry, and the build fails if rendered output drifts from its source by a character. One codebase renders jurisdiction-aware plans across US/Canada, UK, and Australia school-calendar systems. Contested arrangements — supervised visitation, step-up schedules — are gated behind professional mediation, so self-authored legal language never reaches a branded, court-ready PDF.",
     shot: "/work/parenting-plan-pro/hero-desktop.avif",
     shotAlt: "The Parenting Plan Pro landing page rendered on desktop.",
+    shotMobile: "/work/parenting-plan-pro/hero-mobile.avif",
   },
   {
     slug: "villa-lestagne",
@@ -64,6 +68,7 @@ export const work: WorkItem[] = [
       "A credibility site for a practice that sells judgment, so the detail work went where a federal buyer actually looks — the footer carries live UEI, CAGE, and NAICS identifiers beside the SDVOSB certification, because that audience verifies before it inquires. Motion is engineered rather than avoided: the gradient wave animates on background-position across an oversized canvas, so it never jumps at the seam. This is the second generation of the site for the same client, staged behind a passphrase gate for review before it took the root domain.",
     shot: "/work/civic-strategy-partners/hero-desktop.avif",
     shotAlt: "The Civic Strategy Partners site rendered on desktop.",
+    shotMobile: "/work/civic-strategy-partners/hero-mobile.avif",
   },
   {
     slug: "revoix",
@@ -75,6 +80,7 @@ export const work: WorkItem[] = [
       "Static-feel front-end for a language platform. Backend-free — the served HTML has zero third-party requests, no analytics, no cookies, not even Vercel Insights. Locale routes carry independently linkable metadata (title, description, OG) even though the body copy renders client-side.",
     shot: "/work/revoix/hero-desktop.avif",
     shotAlt: "The Revoix product site rendered on desktop.",
+    shotMobile: "/work/revoix/hero-mobile.avif",
   },
   {
     slug: "fm24",
@@ -86,6 +92,7 @@ export const work: WorkItem[] = [
       "Static export shipped into infrastructure with no Node runtime — the client hosts on a legacy Apache stack, so the entire built site is prerendered files. Backend-free. Bilingual DE/EN with build-time i18n. GDPR-conformant cookie consent gate.",
     shot: "/work/fm24/hero-desktop.avif",
     shotAlt: "The FM24 public site rendered on desktop.",
+    shotMobile: "/work/fm24/hero-mobile.avif",
   },
 ];
 
