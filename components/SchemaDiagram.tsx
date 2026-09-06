@@ -10,17 +10,21 @@ function Table({
   y,
   name,
   fields,
+  order,
 }: {
   x: number;
   y: number;
   name: string;
   fields: Field[];
+  /** Position in the insert ripple: the write lands here this many beats in. */
+  order: number;
 }) {
   const h = HEAD_H + fields.length * ROW_H + PAD;
 
   return (
-    <g>
+    <g className="schema-table" style={{ ["--i" as string]: order }}>
       <rect
+        className="schema-rect"
         x={x}
         y={y}
         width={W}
@@ -119,6 +123,7 @@ export default function SchemaDiagram() {
       </g>
 
       <Table
+        order={0}
         x={20}
         y={16}
         name="plans"
@@ -129,6 +134,7 @@ export default function SchemaDiagram() {
         ]}
       />
       <Table
+        order={1}
         x={20}
         y={186}
         name="reviews"
@@ -139,6 +145,7 @@ export default function SchemaDiagram() {
         ]}
       />
       <Table
+        order={1}
         x={214}
         y={111}
         name="clauses"
@@ -149,6 +156,7 @@ export default function SchemaDiagram() {
         ]}
       />
       <Table
+        order={2}
         x={400}
         y={111}
         name="protected_text"

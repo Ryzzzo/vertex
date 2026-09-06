@@ -17,7 +17,9 @@
      would have left the same defect wherever it is reached next. */
   --text-tertiary: #7c7f88;
   --accent: #5e6ad2;
-  --hairline: #1f2023;
+  /* Lifted from #1f2023: the borders were reading as absent on most panels,
+     which is most of why the page felt darker than its colours are. */
+  --hairline: #26292f;
 
   /* Display and body are deliberately different families; see app/layout.tsx */
   --font-display: var(--font-instrument-sans, "Instrument Sans", ui-sans-serif, system-ui);
@@ -748,8 +750,131 @@ a {
   height: auto;
   border: 1px solid var(--hairline);
   border-radius: 12px;
-  background: color-mix(in oklab, var(--surface) 55%, var(--bg));
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--surface) 78%, var(--bg)) 0%,
+    color-mix(in oklab, var(--surface) 45%, var(--bg)) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   padding: 0.5rem;
+  overflow: visible;
+}
+
+/*
+ * Light behind every chapter visual. Two masked radial fields — the accent
+ * and its cooler neighbour — so the panels sit in a lit room rather than on
+ * black. Static, GPU-composited, no filters.
+ */
+.chapter-visual {
+  position: relative;
+}
+
+.chapter-visual::before {
+  content: "";
+  position: absolute;
+  inset: -18% -12%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 62% 40%, rgba(94, 106, 210, 0.22), transparent 70%),
+    radial-gradient(45% 45% at 25% 75%, rgba(72, 196, 226, 0.10), transparent 70%);
+  mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+}
+
+/* ── Packets: requests in flight on the drawings ──
+   A dot travelling a motion path. Compositor-only; declared under
+   no-preference so a reduced-motion visitor sees the still drawing. */
+/* Halo is a wide translucent stroke, not a filter — nothing in these loops
+   should force a repaint beyond the dot itself. */
+.packet {
+  fill: #9aa4ff;
+  stroke: rgba(138, 150, 255, 0.35);
+  stroke-width: 6;
+  paint-order: stroke;
+  opacity: 0;
+}
+
+.packet-tick {
+  fill: var(--accent);
+  opacity: 0.25;
+}
+
+@keyframes packet-a {
+  0% { offset-distance: 0%; opacity: 0; }
+  6% { opacity: 1; }
+  44% { opacity: 1; }
+  50% { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes packet-b {
+  0%, 50% { offset-distance: 0%; opacity: 0; }
+  56% { opacity: 1; }
+  92% { opacity: 1; }
+  98% { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes packet-tick {
+  0%, 60% { opacity: 0.25; r: 3; }
+  66% { opacity: 1; r: 5; }
+  80%, 100% { opacity: 0.25; r: 3; }
+}
+
+@keyframes packet-down {
+  0% { offset-distance: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  42% { opacity: 1; }
+  48% { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes packet-up {
+  0%, 52% { offset-distance: 0%; opacity: 0; }
+  58% { opacity: 1; }
+  92% { opacity: 1; }
+  98% { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .packet-a {
+    offset-path: path("M120 116 H186 M190 116 H324 H386");
+    animation: packet-a 4.8s var(--easing-linear) infinite;
+  }
+  .packet-b {
+    offset-path: path("M386 116 H452 V166");
+    animation: packet-b 4.8s var(--easing-linear) infinite;
+  }
+  .packet-tick {
+    animation: packet-tick 4.8s var(--easing-linear) infinite;
+  }
+  .iso-packet-down {
+    offset-path: path("M336 30 V252");
+    animation: packet-down 4s var(--easing-linear) infinite;
+  }
+  .iso-packet-up {
+    fill: #c9cdd6;
+    stroke: rgba(255, 255, 255, 0.22);
+    offset-path: path("M352 264 V44");
+    animation: packet-up 4s var(--easing-linear) infinite;
+  }
+}
+
+/*
+ * The stack comes apart under the pointer. `translate` is its own property,
+ * so it composes with the scroll-driven `transform` on the same plate instead
+ * of being overwritten by it.
+ */
+.iso-plate {
+  translate: 0 0;
+  transition: translate 500ms var(--easing-linear);
+}
+
+@media (hover: hover) {
+  .iso:hover .iso-plate {
+    translate: 0 calc((var(--i) - 1) * 12px);
+  }
 }
 
 @keyframes flow-dash {
@@ -888,6 +1013,61 @@ a {
   font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--text-secondary);
+}
+
+.tokens-hint {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  opacity: 0.7;
+}
+
+/* Hover a token on the left; where it lands on the card lights up. */
+.tokens-swatch {
+  cursor: default;
+  border-radius: 6px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  transition: background-color var(--duration-hover) var(--easing-linear);
+}
+
+.tokens-card,
+.tokens-card-title,
+.tokens-card-body,
+.tokens-card-cta {
+  transition:
+    box-shadow 220ms var(--easing-linear),
+    color 220ms var(--easing-linear),
+    border-color 220ms var(--easing-linear),
+    background-color 220ms var(--easing-linear);
+}
+
+@media (hover: hover) {
+  .tokens-swatch:hover {
+    background: color-mix(in oklab, var(--text-primary) 7%, transparent);
+  }
+  .tokens:has(.tokens-swatch[data-token="surface"]:hover) .tokens-card {
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .tokens:has(.tokens-swatch[data-token="bg"]:hover) .tokens-applied {
+    box-shadow: inset 0 0 0 2px var(--accent);
+    border-radius: 10px;
+  }
+  .tokens:has(.tokens-swatch[data-token="hairline"]:hover) .tokens-card {
+    border-color: var(--accent);
+  }
+  .tokens:has(.tokens-swatch[data-token="text"]:hover) .tokens-card-title {
+    color: var(--accent);
+  }
+  .tokens:has(.tokens-swatch[data-token="muted"]:hover) .tokens-card-body {
+    color: var(--accent);
+  }
+  .tokens:has(.tokens-swatch[data-token="accent"]:hover) .tokens-card-cta {
+    box-shadow: 0 0 0 2px var(--text-primary), 0 0 18px rgba(94, 106, 210, 0.7);
+  }
 }
 
 .tokens-card-cta {
@@ -3049,4 +3229,35 @@ a {
 
 .vx-verify-when {
   color: var(--text-tertiary);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Chapter 3 — schema: an insert ripples through the foreign keys.
+   plans first, then reviews and clauses, then the protected-text gate.
+   ───────────────────────────────────────────────────────────── */
+
+.schema-rect {
+  transition: stroke 300ms var(--easing-linear);
+}
+
+@keyframes schema-ripple {
+  0%, 100% {
+    stroke: var(--hairline);
+    stroke-width: 1;
+  }
+  8% {
+    stroke: #8b96ff;
+    stroke-width: 1.5;
+  }
+  30% {
+    stroke: var(--hairline);
+    stroke-width: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .schema-rect {
+    animation: schema-ripple 7s var(--easing-linear) infinite;
+    animation-delay: calc(var(--i) * 0.55s);
+  }
 }

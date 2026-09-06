@@ -37,6 +37,7 @@ export default function IsometricFlow() {
   return (
     <svg
       className="schematic iso"
+      style={{ ["--dy" as string]: `${plates[2].y - 36}px`, ["--x1" as string]: `${CX + 96}px`, ["--x2" as string]: `${CX + 112}px`, ["--y2" as string]: `${plates[2].y + 6}px` }}
       viewBox="0 0 480 380"
       role="img"
       aria-label="Request flow descending through three tiers: edge, API, and database, and returning."
@@ -74,6 +75,10 @@ export default function IsometricFlow() {
         className="iso-path iso-path-return flow"
         fill="none"
       />
+
+      {/* One request descending and its response climbing back out, on a loop. */}
+      <circle r="3.4" className="packet iso-packet-down" aria-hidden="true" />
+      <circle r="3" className="packet iso-packet-up" aria-hidden="true" />
 
       <circle cx={CX + 96} cy={30} r="3" className="iso-node" />
       <circle cx={CX + 112} cy={44} r="3" className="iso-node iso-node-return" />
