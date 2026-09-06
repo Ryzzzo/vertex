@@ -740,6 +740,28 @@ a {
   font-style: italic;
 }
 
+/* The technical register, set apart from the buyer's paragraph. */
+.chapter-code {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.25rem 0 0;
+  padding-top: 0.875rem;
+  border-top: 1px solid var(--hairline);
+  max-width: 46ch;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.chapter-code-label {
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
 .chapter-visual {
   min-width: 0;
 }
