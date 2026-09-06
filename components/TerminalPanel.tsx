@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { getBuildSha } from "@/lib/shiplog";
 
 type Line =
   | { kind: "cmd"; text: string }
@@ -10,16 +11,20 @@ type Line =
  * deployment all reconciled against one SHA. Chapter 4 claims this is the bar;
  * the panel shows the commands that actually enforce it.
  */
-const lines: Line[] = [
-  { kind: "cmd", text: "git rev-parse HEAD" },
-  { kind: "out", text: "7bc02179ccec9e64eb16bc5da756fe32ce" },
-  { kind: "cmd", text: "git ls-remote origin refs/heads/main" },
-  { kind: "out", text: "7bc02179ccec9e64eb16bc5da756fe32ce" },
-  { kind: "cmd", text: "vercel inspect --prod" },
-  { kind: "ok", text: "Ready · deployed 7bc0217" },
-];
+function linesFor(sha: string): Line[] {
+  return [
+    { kind: "cmd", text: "git rev-parse HEAD" },
+    { kind: "out", text: sha },
+    { kind: "cmd", text: "git ls-remote origin refs/heads/main" },
+    { kind: "out", text: sha },
+    { kind: "cmd", text: "vercel inspect --prod" },
+    { kind: "ok", text: `Ready · deployed ${sha.slice(0, 7)}` },
+  ];
+}
 
 export default function TerminalPanel() {
+  /* The build's own commit — the check shown is the check this deploy passed. */
+  const lines = linesFor(getBuildSha());
   /*
    * The session types itself out as the panel scrolls through the viewport.
    * Scroll-driven animations ignore animation-delay, so the per-line stagger is

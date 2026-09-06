@@ -2937,3 +2937,75 @@ a {
   font-family: var(--font-mono);
   font-size: 9.5px;
 }
+
+.vx-feed-sha {
+  flex: none;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+}
+
+.vx-kpi-unit {
+  margin-left: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-secondary);
+}
+
+.vx-kpi-sub-mono {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-tertiary);
+}
+
+.vx-chip-ok {
+  color: #3fb68b;
+  border-color: rgba(63, 182, 139, 0.4);
+}
+
+/* The deploy check, in the console's own type. */
+.vx-verify {
+  padding: 10px 14px 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.vx-verify-line {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  min-width: 0;
+}
+
+.vx-verify-line > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-verify-prompt {
+  color: var(--text-tertiary);
+}
+
+.vx-verify-cmd {
+  color: var(--text-primary);
+}
+
+.vx-verify-out {
+  padding-left: 14px;
+  color: #aab0bc;
+}
+
+.vx-verify-ok {
+  justify-content: space-between;
+  margin-top: 2px;
+  color: #3fb68b;
+}
+
+.vx-verify-when {
+  color: var(--text-tertiary);
+}

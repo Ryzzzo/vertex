@@ -1,0 +1,38 @@
+[
+  {
+    "sha": "079570602f832cb49191c07b2c35673eb173e5ab",
+    "short": "0795706",
+    "date": "2026-09-06",
+    "subject": "feat(hero): console in the fold, boot sequence, pointer lean and sheen"
+  },
+  {
+    "sha": "1e03bdb33029d1860090bb3d5cf2255d59696705",
+    "short": "1e03bdb",
+    "date": "2026-09-05",
+    "subject": "docs: track the asset-vetting and GetLayers research; ignore the reference PNGs"
+  },
+  {
+    "sha": "48ab51efd585011350b09e57b2a50876f9e34215",
+    "short": "48ab51e",
+    "date": "2026-09-05",
+    "subject": "Merge fix/shot-variants: sized shot variants, hover-enlarge reverted to the stack & approach overlay"
+  },
+  {
+    "sha": "ba35e01570d486b74e582a5e704bcf255a40c117",
+    "short": "ba35e01",
+    "date": "2026-09-04",
+    "subject": "fix(cards): overlay keys off :has(:focus-visible), not :focus-within"
+  },
+  {
+    "sha": "378a5291e02842973f3555b8ed64cbdfe8fca563",
+    "short": "378a529",
+    "date": "2026-09-04",
+    "subject": "revert(cards): drop hover-enlarge, restore the stack & approach overlay"
+  },
+  {
+    "sha": "41b79f569803b4e519e9c0755196d5fe3cb5ebc4",
+    "short": "41b79f5",
+    "date": "2026-09-04",
+    "subject": "fix(cards): keep hover plates on their own compositor layer"
+  }
+]

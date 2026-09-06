@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import VertexDashboardMockup from "./VertexDashboardMockup";
+import type { Commit } from "@/lib/shiplog";
 
 /* The site's one curve — see --easing-linear in globals.css. */
 const EASE = [0.32, 0.72, 0, 1] as const;
@@ -29,7 +30,13 @@ const EASE = [0.32, 0.72, 0, 1] as const;
  * entrance, no scroll coupling and no pointer coupling: a still frame of the
  * same image, rather than the same movement played slowly.
  */
-export default function HeroStage() {
+export default function HeroStage({
+  shiplog,
+  buildSha,
+}: {
+  shiplog: Commit[];
+  buildSha: string;
+}) {
   const reduced = useReducedMotion();
   const [drift, setDrift] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -122,7 +129,7 @@ export default function HeroStage() {
             },
           }}
         >
-          <VertexDashboardMockup />
+          <VertexDashboardMockup shiplog={shiplog} buildSha={buildSha} />
           {/* The glass. Sits over the console and carries the pointer sheen. */}
           <div className="hero-stage-sheen" aria-hidden="true" />
         </motion.div>
