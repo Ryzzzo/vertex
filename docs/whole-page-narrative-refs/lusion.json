@@ -1,0 +1,510 @@
+{
+  "url": "https://lusion.co/",
+  "slug": "lusion",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 3,
+      "el": 1480,
+      "draws": 11405
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 3,
+      "el": 1480,
+      "draws": 20564,
+      "shaders": 48,
+      "raf": 501
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 3,
+      "el": 1480,
+      "draws": 23456,
+      "shaders": 48,
+      "raf": 694
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 3,
+      "el": 1480,
+      "draws": 26580,
+      "shaders": 48,
+      "raf": 887
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 3,
+      "el": 1480,
+      "draws": 29852,
+      "shaders": 48,
+      "raf": 1077
+    }
+  ],
+  "loadMs": 6336,
+  "title": "Lusion - Award Winning 3D and Interactive Web Studio",
+  "viewport": "1440x900",
+  "scrollHeight": 900,
+  "screensDeep": 1,
+  "counts": {
+    "elements": 1480,
+    "interactive": 42,
+    "svg": 41,
+    "svgPaths": 46,
+    "img": 0,
+    "picture": 0,
+    "video": 0,
+    "canvas": 3,
+    "sections": 0,
+    "headings": 3,
+    "cssRules": 1084
+  },
+  "instrumented": {
+    "shaderPrograms": 48,
+    "shaderSources": 96,
+    "glslChars": 288765,
+    "glslHeads": [
+      "#version 300 es\n#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\t\t\tprecision highp int;\n\t\t\t#define IS_WEBGL2 true\n\t\t\n\t\t\t\tpreci",
+      "#version 300 es\n#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\t\t\tprecision highp int;\n\t\t\t#define IS_WEBGL2 true\n\t\t\n\t\t\t\t#defi",
+      "#version 300 es\n#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\t\t\tprecision highp int;\n\t\t\t#define IS_WEBGL2 true\n\t\t\n\t\t\t\tpreci"
+    ],
+    "canvasContexts": [
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 11,
+        "h": 11
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 9960,
+    "drawInstanced": 0,
+    "texUploads": 31,
+    "rafTicks": 303,
+    "intersectionObservers": 0,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [
+    {
+      "css": "1440x900",
+      "buffer": "1440x900"
+    },
+    {
+      "css": "45x45",
+      "buffer": "45x45"
+    },
+    {
+      "css": "0x0",
+      "buffer": "1442x902"
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "36px",
+      "line-height": "39.6px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Aeonik",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": 1.1,
+      "trackingEm": 0
+    },
+    "h2": {
+      "font-size": "21.6px",
+      "line-height": "30.24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Aeonik",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": 1.4,
+      "trackingEm": 0
+    },
+    "h3": {
+      "font-size": "38px",
+      "line-height": "43.7px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Aeonik",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": 1.15,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "14px",
+      "line-height": "16.1px",
+      "font-weight": "500",
+      "letter-spacing": "normal",
+      "font-family": "Aeonik",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "uppercase",
+      "ratio": 1.15,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "18.4px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Aeonik",
+      "color": "rgb(240, 241, 250)",
+      "text-transform": "none",
+      "ratio": 1.15,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 4100985
+      },
+      {
+        "color": "rgb(18, 20, 22)",
+        "area": 450855
+      },
+      {
+        "color": "rgb(0, 22, 236)",
+        "area": 66749
+      },
+      {
+        "color": "rgb(240, 241, 250)",
+        "area": 52233
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 44595
+      },
+      {
+        "color": "rgb(43, 46, 58)",
+        "area": 6008
+      },
+      {
+        "color": "rgb(228, 230, 239)",
+        "area": 4587
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.1)",
+        "area": 1080
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 991717
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 437816
+      },
+      {
+        "color": "rgb(240, 241, 250)",
+        "area": 2421
+      }
+    ]
+  },
+  "tokens": {
+    "--color-error": "#e90000",
+    "--color-off-white": "#f0f1fa",
+    "--color-white": "#fff",
+    "--color-dark-white": "#e4e6ef",
+    "--color-off-white-semi": "rgba(240, 241, 250, .7)",
+    "--color-black": "#000000",
+    "--color-green": "#c1ff00",
+    "--color-blue": "#1a2ffb",
+    "--color-red": "#ff4c41",
+    "--color-grey-blue": "#2b2e3a",
+    "--color-dark-blue": "#071bdf",
+    "--color-purple": "#8832f7",
+    "--color-project-details-logo-color": "#f0f",
+    "--grid-space": "calc((100% - 11 * 2vw) / 12)",
+    "--grid-gap": "2vw",
+    "--global-border-radius": "20px",
+    "--base-padding-x": "max(5vw, 40px)",
+    "--base-padding-y": "clamp(30px, 4vw, 50px)",
+    "--header-color": "#0016ec",
+    "--header-text-color": "#000000",
+    "--project-details-bg": "#000",
+    "--project-details-highlight": "#000",
+    "--project-details-btn-bg": "#000",
+    "--project-details-btn-text": "#000",
+    "--project-details-icon-bg": "#000",
+    "--project-details-icon-color": "#000",
+    "--project-details-text": "#000",
+    "--project-details-btn-bg-hover": "#000",
+    "--project-details-btn-text-hover": "#fff",
+    "--header-size": "clamp(1rem, 1vw, 2rem)",
+    "--cross-size": "clamp(.875rem, 1vw, 2rem)"
+  },
+  "tokenCount": 31,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(0.4, 0, 0.1, 1)",
+    "cubic-bezier(.4,0,.1,1)",
+    "cubic-bezier(0.35, 0, 0, 1)",
+    "cubic-bezier(0.4, 0, 0, 1)",
+    "cubic-bezier(0.4, 0.1, 0, 1)",
+    "cubic-bezier(0.16, 1, 0.3, 1)",
+    "cubic-bezier(0.1, 0, 0.1, 1)"
+  ],
+  "keywordEasings": [],
+  "faceFamilies": {
+    "Aeonik": 3,
+    "IBMPlexMono": 2,
+    "LusionMono": 1
+  },
+  "loadedFamilies": [
+    "Aeonik",
+    "IBMPlexMono",
+    "LusionMono"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 0,
+    "maskImage": 0,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 39,
+    "reducedMotion": 0,
+    "perspective": 3,
+    "transform3d": 83
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 1,
+    "maskImage": 0,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 106,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": true,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 1056,
+    "text": 2
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 48,
+      "shaderSources": 96,
+      "glslChars": 288765,
+      "glslHeads": [
+        "#version 300 es\n#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\t\t\tprecision highp int;\n\t\t\t#define IS_WEBGL2 true\n\t\t\n\t\t\t\tpreci",
+        "#version 300 es\n#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\t\t\tprecision highp int;\n\t\t\t#define IS_WEBGL2 true\n\t\t\n\t\t\t\t#defi",
+        "#version 300 es\n#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\t\t\tprecision highp int;\n\t\t\t#define IS_WEBGL2 true\n\t\t\n\t\t\t\tpreci"
+      ],
+      "canvasContexts": [
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 11,
+          "h": 11
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 29852,
+      "drawInstanced": 0,
+      "texUploads": 394,
+      "rafTicks": 1077,
+      "intersectionObservers": 0,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 1480,
+      "interactive": 42,
+      "svg": 41,
+      "svgPaths": 46,
+      "img": 0,
+      "picture": 0,
+      "video": 0,
+      "canvas": 3,
+      "sections": 0,
+      "headings": 3,
+      "cssRules": 1084
+    },
+    "scrollHeight": 900,
+    "screensDeep": 1,
+    "canvases": [
+      {
+        "css": "1440x900",
+        "buffer": "1440x900"
+      },
+      {
+        "css": "45x45",
+        "buffer": "45x45"
+      },
+      {
+        "css": "0x0",
+        "buffer": "1442x902"
+      }
+    ],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": true,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 4112678
+        },
+        {
+          "color": "rgb(18, 20, 22)",
+          "area": 450855
+        },
+        {
+          "color": "rgb(0, 22, 236)",
+          "area": 66749
+        },
+        {
+          "color": "rgb(240, 241, 250)",
+          "area": 52233
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 44595
+        },
+        {
+          "color": "rgb(43, 46, 58)",
+          "area": 6008
+        },
+        {
+          "color": "rgb(228, 230, 239)",
+          "area": 4587
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.1)",
+          "area": 1080
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 988221
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 437816
+        },
+        {
+          "color": "rgb(240, 241, 250)",
+          "area": 2421
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 115,
+    "totalKB": 24779,
+    "jsKB": 779,
+    "videoKB": 13215,
+    "threeDCount": 1,
+    "threeDKB": 589,
+    "threeDSample": [
+      {
+        "u": "https://lusion.dev/assets/textures/home/matcap.exr",
+        "len": 602702
+      }
+    ],
+    "topHosts": [
+      "lusion.dev 23272KB",
+      "lusion.co 498KB",
+      "i.vimeocdn.com 492KB",
+      "f.vimeocdn.com 339KB",
+      "www.googletagmanager.com 166KB",
+      "vod-adaptive-ak.vimeocdn.com 13KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

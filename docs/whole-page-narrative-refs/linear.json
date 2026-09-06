@@ -1,0 +1,426 @@
+{
+  "url": "https://linear.app/",
+  "slug": "linear",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 4489,
+      "draws": 0
+    },
+    {
+      "y": 1600,
+      "pct": 16,
+      "canvas": 0,
+      "el": 4543,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 118
+    },
+    {
+      "y": 3600,
+      "pct": 36,
+      "canvas": 0,
+      "el": 4553,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 130
+    },
+    {
+      "y": 5600,
+      "pct": 56,
+      "canvas": 0,
+      "el": 4563,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 140
+    },
+    {
+      "y": 8000,
+      "pct": 80,
+      "canvas": 0,
+      "el": 4578,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 152
+    },
+    {
+      "y": 9998,
+      "pct": 100,
+      "canvas": 0,
+      "el": 4707,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 162
+    }
+  ],
+  "loadMs": 6595,
+  "title": "Linear – The system for product development",
+  "viewport": "1440x900",
+  "scrollHeight": 10898,
+  "screensDeep": 12.11,
+  "counts": {
+    "elements": 4489,
+    "interactive": 175,
+    "svg": 180,
+    "svgPaths": 1217,
+    "img": 32,
+    "picture": 0,
+    "video": 0,
+    "canvas": 0,
+    "sections": 9,
+    "headings": 16,
+    "cssRules": 6601
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 76,
+    "intersectionObservers": 2,
+    "audioContexts": 0,
+    "webAnimationsApi": 36
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "64px",
+      "line-height": "64px",
+      "font-weight": "510",
+      "letter-spacing": "-1.408px",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(247, 248, 248)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": -0.022
+    },
+    "h2": {
+      "font-size": "48px",
+      "line-height": "48px",
+      "font-weight": "510",
+      "letter-spacing": "-1.056px",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(138, 143, 152)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": -0.022
+    },
+    "h3": {
+      "font-size": "20px",
+      "line-height": "26.6px",
+      "font-weight": "590",
+      "letter-spacing": "-0.24px",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(208, 214, 224)",
+      "text-transform": "none",
+      "ratio": 1.33,
+      "trackingEm": -0.012
+    },
+    "p": {
+      "font-size": "15px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "-0.165px",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(138, 143, 152)",
+      "text-transform": "none",
+      "ratio": 1.6,
+      "trackingEm": -0.011
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(247, 248, 248)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(8, 9, 10)",
+        "area": 47795694
+      },
+      {
+        "color": "rgb(15, 16, 17)",
+        "area": 4048802
+      },
+      {
+        "color": "rgb(9, 10, 11)",
+        "area": 950400
+      },
+      {
+        "color": "rgb(16, 17, 18)",
+        "area": 950400
+      },
+      {
+        "color": "rgb(18, 19, 20)",
+        "area": 754688
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.02)",
+        "area": 589992
+      },
+      {
+        "color": "rgb(228, 242, 34)",
+        "area": 207360
+      },
+      {
+        "color": "rgb(22, 23, 24)",
+        "area": 195200
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(208, 214, 224)",
+        "area": 601131
+      },
+      {
+        "color": "rgb(247, 248, 248)",
+        "area": 533593
+      },
+      {
+        "color": "rgba(0, 0, 0, 0)",
+        "area": 287303
+      },
+      {
+        "color": "rgb(138, 143, 152)",
+        "area": 248089
+      },
+      {
+        "color": "rgb(8, 9, 10)",
+        "area": 123145
+      },
+      {
+        "color": "rgb(98, 102, 109)",
+        "area": 83766
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 51,
+  "customEasings": [
+    "steps(1)",
+    "cubic-bezier(0.32, 0.72, 0, 1)",
+    "cubic-bezier(0.16, 1, 0.3, 1)"
+  ],
+  "keywordEasings": [
+    "ease-out"
+  ],
+  "faceFamilies": {},
+  "loadedFamilies": [
+    "Inter Variable",
+    "Berkeley Mono"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 0,
+    "maskImage": 4,
+    "backdropFilter": 7,
+    "filterBlur": 7,
+    "positionSticky": 1,
+    "containerQuery": 5,
+    "has": 39,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 6,
+    "subgrid": 0,
+    "willChange": 2,
+    "reducedMotion": 9,
+    "perspective": 0,
+    "transform3d": 29
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 19,
+    "maskImage": 16,
+    "clipPath": 15,
+    "transform3d": 3,
+    "willChange": 4,
+    "sticky": 0,
+    "filterBlur": 9
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 537,
+    "text": 5
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 162,
+      "intersectionObservers": 2,
+      "audioContexts": 0,
+      "webAnimationsApi": 37
+    },
+    "counts": {
+      "elements": 4707,
+      "interactive": 175,
+      "svg": 183,
+      "svgPaths": 1227,
+      "img": 32,
+      "picture": 0,
+      "video": 0,
+      "canvas": 0,
+      "sections": 9,
+      "headings": 16,
+      "cssRules": 8345
+    },
+    "scrollHeight": 10898,
+    "screensDeep": 12.11,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(8, 9, 10)",
+          "area": 47795694
+        },
+        {
+          "color": "rgb(15, 16, 17)",
+          "area": 4048802
+        },
+        {
+          "color": "rgb(9, 10, 11)",
+          "area": 950400
+        },
+        {
+          "color": "rgb(16, 17, 18)",
+          "area": 950400
+        },
+        {
+          "color": "rgb(18, 19, 20)",
+          "area": 754688
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.02)",
+          "area": 620882
+        },
+        {
+          "color": "rgb(228, 242, 34)",
+          "area": 207360
+        },
+        {
+          "color": "rgb(22, 23, 24)",
+          "area": 195200
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(208, 214, 224)",
+          "area": 634093
+        },
+        {
+          "color": "rgb(247, 248, 248)",
+          "area": 533593
+        },
+        {
+          "color": "rgba(0, 0, 0, 0)",
+          "area": 286416
+        },
+        {
+          "color": "rgb(138, 143, 152)",
+          "area": 252723
+        },
+        {
+          "color": "rgb(8, 9, 10)",
+          "area": 123145
+        },
+        {
+          "color": "rgb(98, 102, 109)",
+          "area": 83766
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 693,
+    "totalKB": 2659,
+    "jsKB": 0,
+    "videoKB": 0,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "linear.app 1463KB",
+      "static.linear.app 1193KB",
+      "webassets.linear.app 2KB",
+      "e.linear.app 0KB",
+      "api.linear.app 0KB",
+      "constellation.linear.app 0KB"
+    ],
+    "libHints": [
+      "motion",
+      "motion"
+    ]
+  },
+  "consoleErrors": []
+}

@@ -1,0 +1,540 @@
+{
+  "url": "https://nabilissa.com/",
+  "slug": "nabil-issa",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 3744,
+      "pct": 10,
+      "canvas": 1,
+      "el": 2517,
+      "draws": 0,
+      "programs": 0,
+      "raf": 3173,
+      "texVideo": 0
+    },
+    {
+      "y": 8424,
+      "pct": 22,
+      "canvas": 1,
+      "el": 2517,
+      "draws": 0,
+      "programs": 0,
+      "raf": 3677,
+      "texVideo": 0
+    },
+    {
+      "y": 13104,
+      "pct": 35,
+      "canvas": 1,
+      "el": 2517,
+      "draws": 0,
+      "programs": 0,
+      "raf": 4163,
+      "texVideo": 0
+    },
+    {
+      "y": 18720,
+      "pct": 50,
+      "canvas": 1,
+      "el": 2517,
+      "draws": 0,
+      "programs": 0,
+      "raf": 4758,
+      "texVideo": 0
+    },
+    {
+      "y": 23400,
+      "pct": 62,
+      "canvas": 1,
+      "el": 2517,
+      "draws": 0,
+      "programs": 0,
+      "raf": 5247,
+      "texVideo": 0
+    },
+    {
+      "y": 29016,
+      "pct": 77,
+      "canvas": 1,
+      "el": 2517,
+      "draws": 0,
+      "programs": 0,
+      "raf": 5836,
+      "texVideo": 0
+    },
+    {
+      "y": 33696,
+      "pct": 90,
+      "canvas": 1,
+      "el": 2517,
+      "draws": 0,
+      "programs": 0,
+      "raf": 6342,
+      "texVideo": 0
+    }
+  ],
+  "loadMs": 10486,
+  "title": "Nabil Issa",
+  "viewport": "1440x900",
+  "scrollHeight": 38357,
+  "screensDeep": 42.62,
+  "counts": {
+    "elements": 2517,
+    "interactive": 37,
+    "svg": 16,
+    "svgPaths": 90,
+    "img": 83,
+    "video": 0,
+    "canvas": 1,
+    "sections": 23,
+    "headings": 23,
+    "cssRules": 1569
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "wgslModules": 0,
+    "wgslChars": 0,
+    "wgslHeads": [],
+    "gpuAdapterRequested": 0,
+    "gpuDevices": 0,
+    "gpuPipelines": 0,
+    "gpuSubmits": 0,
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": true
+      }
+    ],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "videoTextureUploads": 0,
+    "glExtensions": [],
+    "rafTicks": 2205,
+    "intersectionObservers": 0,
+    "resizeObservers": 69,
+    "audioContexts": 0,
+    "webAnimationsApi": 0,
+    "workers": [],
+    "offscreenTransfers": 0,
+    "wasmCompiles": 0,
+    "pointerListeners": 2,
+    "wheelListeners": 4
+  },
+  "canvases": [
+    {
+      "css": "1440x900",
+      "buffer": "1440x900",
+      "dpr": 1
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "100px",
+      "line-height": "90px",
+      "font-weight": "400",
+      "letter-spacing": "-8px",
+      "font-family": "GothamThin",
+      "color": "rgb(241, 241, 241)",
+      "text-transform": "uppercase",
+      "ratio": 0.9,
+      "trackingEm": -0.08
+    },
+    "h2": {
+      "font-size": "100px",
+      "line-height": "90px",
+      "font-weight": "400",
+      "letter-spacing": "-8px",
+      "font-family": "GothamThin",
+      "color": "rgb(11, 11, 11)",
+      "text-transform": "uppercase",
+      "ratio": 0.9,
+      "trackingEm": -0.08
+    },
+    "p": {
+      "font-size": "15px",
+      "line-height": "20.25px",
+      "font-weight": "400",
+      "letter-spacing": "-0.1504px",
+      "font-family": "HelveticaNeueLight",
+      "color": "rgb(11, 11, 11)",
+      "text-transform": "none",
+      "ratio": 1.35,
+      "trackingEm": -0.01
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "16px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "HelveticaNeueLight",
+      "color": "rgb(241, 241, 241)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(11, 11, 11)",
+        "area": 139407698
+      },
+      {
+        "color": "rgb(1, 1, 1)",
+        "area": 1296000
+      },
+      {
+        "color": "rgb(241, 241, 241)",
+        "area": 1231968
+      },
+      {
+        "color": "rgba(242, 242, 242, 0.01)",
+        "area": 17480
+      },
+      {
+        "color": "rgba(242, 242, 242, 0.2)",
+        "area": 588
+      }
+    ],
+    "text": [
+      {
+        "color": "rgba(0, 0, 0, 0)",
+        "area": 719842
+      },
+      {
+        "color": "rgb(241, 241, 241)",
+        "area": 294745
+      },
+      {
+        "color": "rgb(11, 11, 11)",
+        "area": 1644
+      }
+    ]
+  },
+  "tokens": {
+    "--viewport": "1440",
+    "--font-helvetica-light": "\"HelveticaNeueLight\"",
+    "--font-helvetica-bold": "\"HelveticaNeueBold\"",
+    "--font-helvetica-thin": "\"HelveticaNeueThin\"",
+    "--font-gotham-book": "\"GothamBook\"",
+    "--font-gotham-light": "\"GothamLight\"",
+    "--font-gotham-medium": "\"GothamMedium\"",
+    "--font-gotham-thin": "\"GothamThin\"",
+    "--font-gotham-con-thin": "\"GothamConThin\"",
+    "--default-ease": "cubic-bezier(.83,0,.17,1)",
+    "--c-obsidian-dust": "#0b0b0b",
+    "--c-obsidian-dust-50": "hsla(0,0%,4%,.5)",
+    "--c-obsidian-dust-20": "hsla(0,0%,4%,.2)",
+    "--c-obsidian-dust-6": "hsla(0,0%,4%,.06)",
+    "--c-obsidian-dust-1": "hsla(0,0%,4%,.01)",
+    "--c-soft-concrete": "#f1f1f1",
+    "--c-soft-concrete-20": "hsla(0,0%,95%,.2)",
+    "--c-soft-concrete-6": "hsla(0,0%,95%,.06)",
+    "--c-soft-concrete-1": "hsla(0,0%,95%,.01)",
+    "--c-voltage-red": "#e10000",
+    "--c-voltage-red-20": "rgba(225,0,0,.2)",
+    "--c-greenline-circuit": "#2e9a00",
+    "--c-pure-white": "#fff",
+    "--144": "8.75rem",
+    "--120": "7.5rem",
+    "--96": "6rem",
+    "--72": "4.5rem",
+    "--56": "3.5rem",
+    "--40": "2.5rem",
+    "--20": "1.25rem",
+    "--16": "1rem",
+    "--4": ".25rem",
+    "--z-header": "1000",
+    "--z-form": "1100",
+    "--z-menu": "900",
+    "--z-chapters": "700",
+    "--z-cookie": "800",
+    "--swiper-theme-color": "#007aff"
+  },
+  "tokenCount": 38,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(.83,0,.17,1)",
+    "cubic-bezier(var(--easing)"
+  ],
+  "faceFamilies": {
+    "HelveticaNeueThin": 1,
+    "HelveticaNeueLight": 1,
+    "HelveticaNeueBold": 1,
+    "GothamLight": 1,
+    "GothamMedium": 1,
+    "GothamBook": 1,
+    "GothamThin": 1,
+    "GothamConThin": 1
+  },
+  "loadedFamilies": [
+    "HelveticaNeueThin",
+    "HelveticaNeueLight",
+    "HelveticaNeueBold",
+    "GothamLight",
+    "GothamMedium",
+    "GothamBook",
+    "GothamThin",
+    "GothamConThin"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 1,
+    "scrollTimeline": 1,
+    "timelineScope": 1,
+    "mixBlend": 19,
+    "clipPath": 11,
+    "maskImage": 2,
+    "backdropFilter": 11,
+    "filterBlur": 10,
+    "positionSticky": 22,
+    "containerQuery": 0,
+    "has": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "willChange": 7,
+    "reducedMotion": 2,
+    "perspective": 3,
+    "transform3d": 2
+  },
+  "computedFeature": {
+    "mixBlend": 8,
+    "maskImage": 19,
+    "clipPath": 14,
+    "transform3d": 208,
+    "willChange": 75,
+    "sticky": 11,
+    "filterBlur": 75,
+    "fixed": 5
+  },
+  "libs": {
+    "three": false,
+    "threeRevision": null,
+    "ogl": false,
+    "babylon": false,
+    "playcanvas": false,
+    "pixi": false,
+    "curtains": false,
+    "r3f": false,
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": true,
+    "locomotive": false,
+    "rive": false,
+    "lottie": false,
+    "spline": false,
+    "unicorn": false,
+    "theatre": false,
+    "react": false,
+    "next": false,
+    "nuxt": true,
+    "vue": true,
+    "svelte": false,
+    "barba": false,
+    "splitting": false,
+    "swup": false,
+    "webflow": false,
+    "webgpuSupported": true
+  },
+  "cursors": {
+    "pointer": 1100,
+    "text": 3
+  },
+  "videos": [],
+  "afterPointer": {
+    "draws": 0,
+    "raf": 2770
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "wgslModules": 0,
+      "wgslChars": 0,
+      "wgslHeads": [],
+      "gpuAdapterRequested": 0,
+      "gpuDevices": 0,
+      "gpuPipelines": 0,
+      "gpuSubmits": 0,
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": true
+        }
+      ],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "videoTextureUploads": 0,
+      "glExtensions": [],
+      "rafTicks": 6588,
+      "intersectionObservers": 0,
+      "resizeObservers": 69,
+      "audioContexts": 0,
+      "webAnimationsApi": 0,
+      "workers": [],
+      "offscreenTransfers": 0,
+      "wasmCompiles": 0,
+      "pointerListeners": 2,
+      "wheelListeners": 4
+    },
+    "counts": {
+      "elements": 2517,
+      "interactive": 37,
+      "svg": 16,
+      "svgPaths": 90,
+      "img": 83,
+      "video": 0,
+      "canvas": 1,
+      "sections": 23,
+      "headings": 23,
+      "cssRules": 1569
+    },
+    "canvases": [
+      {
+        "css": "1440x900",
+        "buffer": "1440x900",
+        "dpr": 1
+      }
+    ],
+    "scrollHeight": 38357,
+    "screensDeep": 42.62,
+    "libs": {
+      "three": false,
+      "threeRevision": null,
+      "ogl": false,
+      "babylon": false,
+      "playcanvas": false,
+      "pixi": false,
+      "curtains": false,
+      "r3f": false,
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": true,
+      "locomotive": false,
+      "rive": false,
+      "lottie": false,
+      "spline": false,
+      "unicorn": false,
+      "theatre": false,
+      "react": false,
+      "next": false,
+      "nuxt": true,
+      "vue": true,
+      "svelte": false,
+      "barba": false,
+      "splitting": false,
+      "swup": false,
+      "webflow": false,
+      "webgpuSupported": true
+    },
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(11, 11, 11)",
+          "area": 140710058
+        },
+        {
+          "color": "rgb(241, 241, 241)",
+          "area": 1232535
+        },
+        {
+          "color": "rgba(242, 242, 242, 0.01)",
+          "area": 17480
+        },
+        {
+          "color": "rgba(242, 242, 242, 0.2)",
+          "area": 588
+        }
+      ],
+      "text": [
+        {
+          "color": "rgba(0, 0, 0, 0)",
+          "area": 719842
+        },
+        {
+          "color": "rgb(241, 241, 241)",
+          "area": 294745
+        },
+        {
+          "color": "rgb(11, 11, 11)",
+          "area": 1644
+        }
+      ]
+    },
+    "videos": [],
+    "computedFeature": {
+      "mixBlend": 8,
+      "maskImage": 20,
+      "clipPath": 14,
+      "transform3d": 50,
+      "willChange": 75,
+      "sticky": 11,
+      "filterBlur": 74,
+      "fixed": 5
+    },
+    "cursors": {
+      "pointer": 1100,
+      "text": 3
+    }
+  },
+  "net": {
+    "requests": 68,
+    "totalKB": 7596,
+    "byExtKB": {
+      "webp": 6037,
+      "ttf": 737,
+      "otf": 468,
+      "png": 240,
+      "svg": 114,
+      "html;charset=utf-8": 0,
+      "css": 0,
+      "js": 0,
+      "json": 0
+    },
+    "topAssets": [],
+    "topHosts": [
+      "nabilissa.com 7596KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

@@ -32,3 +32,9 @@ next-env.d.ts
 /renders/*
 !/renders/*.md
 
+# Reference captures behind docs/*.md research. ~135 MB of PNG screenshots of
+# other people's sites — evidence, not source. The JSON instrumentation dumps
+# beside them are small and cited by build-plan.md, so those stay tracked.
+/docs/hero-refs/
+/docs/whole-page-narrative-refs/**/*.png
+/docs/whole-page-narrative-refs/*.png

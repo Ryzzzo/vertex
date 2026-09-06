@@ -1,0 +1,466 @@
+{
+  "url": "https://teenage.engineering/",
+  "slug": "teenage-engineering",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 1204,
+      "draws": 0
+    },
+    {
+      "y": 2390,
+      "pct": 17,
+      "canvas": 0,
+      "el": 1204,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4
+    },
+    {
+      "y": 4780,
+      "pct": 33,
+      "canvas": 0,
+      "el": 1204,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4
+    },
+    {
+      "y": 8126,
+      "pct": 57,
+      "canvas": 0,
+      "el": 1204,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4
+    },
+    {
+      "y": 11472,
+      "pct": 80,
+      "canvas": 0,
+      "el": 1204,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4
+    }
+  ],
+  "loadMs": 5234,
+  "title": "teenage engineering",
+  "viewport": "1440x900",
+  "scrollHeight": 15233,
+  "screensDeep": 16.93,
+  "counts": {
+    "elements": 1204,
+    "interactive": 90,
+    "svg": 16,
+    "svgPaths": 137,
+    "img": 39,
+    "picture": 38,
+    "video": 0,
+    "canvas": 0,
+    "sections": 6,
+    "headings": 0,
+    "cssRules": 1418
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 4,
+    "intersectionObservers": 0,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "p": {
+      "font-size": "19.102px",
+      "line-height": "22.0408px",
+      "font-weight": "100",
+      "letter-spacing": "normal",
+      "font-family": "te-20, Unicode, sans-serif",
+      "color": "rgb(229, 229, 229)",
+      "text-transform": "none",
+      "ratio": 1.154,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "23.5102px",
+      "line-height": "35.2652px",
+      "font-weight": "300",
+      "letter-spacing": "normal",
+      "font-family": "te-20, Unicode, sans-serif",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 43871040
+      },
+      {
+        "color": "rgb(246, 248, 247)",
+        "area": 18099968
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 3343140
+      },
+      {
+        "color": "rgb(15, 14, 18)",
+        "area": 289842
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(229, 229, 229)",
+        "area": 86814
+      },
+      {
+        "color": "rgb(15, 14, 18)",
+        "area": 33279
+      },
+      {
+        "color": "rgb(0, 113, 187)",
+        "area": 15198
+      },
+      {
+        "color": "rgb(178, 178, 178)",
+        "area": 2417
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 1192
+      }
+    ]
+  },
+  "tokens": {
+    "--white": "#fff",
+    "--te-white": "#f5f5f5",
+    "--te-black": "#0f0e12",
+    "--te-grey-100": "#e5e5e5",
+    "--te-grey-200": "#ccc",
+    "--te-grey-300": "#b2b2b2",
+    "--te-grey-500": "#a1a7af",
+    "--te-grey-600": "#767676",
+    "--te-grey-700": "#7f7f7f",
+    "--te-grey-900": "#4d4d4d",
+    "--te-grey-1000": "#272727",
+    "--te-blue": "#0071bb",
+    "--te-green": "#006837",
+    "--te-orange": "#f05a24",
+    "--te-red": "#b81d13",
+    "--te-yellow": "#fab413",
+    "--success": "#006837",
+    "--error": "#c0262c",
+    "--z-over": "100",
+    "--z-navigation": "1000",
+    "--z-modal-backdrop": "2000",
+    "--z-dialog": "2001",
+    "--viewport-height": "100vh",
+    "--base-design-width": "980",
+    "--header-height": "calc(.0816327 * 100vw)",
+    "--footer-height": "calc(.0663265 * 100vw)",
+    "--page-height": "calc(100vh - calc(.0816327 * 100vw))",
+    "--footer-column": "calc(.219388 * 100vw)",
+    "--product-background-color": "#f5f5f5",
+    "--theme-body-bc": "rgba(255,255,255,1)",
+    "--theme-bc": "transparent",
+    "--theme-fc": "rgba(15,14,18,1)",
+    "--theme-fct": "#e5e5e5",
+    "--theme-mc": "rgba(15,14,18,1)",
+    "--theme-c1": "",
+    "--theme-c10": "",
+    "--theme-c11": "",
+    "--theme-c3": "",
+    "--theme-c4": "",
+    "--theme-c5": "",
+    "--theme-c6": "",
+    "--theme-c7": "",
+    "--theme-c8": "",
+    "--theme-c8b": "",
+    "--theme-c9": "",
+    "--theme-mobile-cart": "rgba(15,14,18,1)",
+    "--theme-mobile-cart-text": "rgba(229,229,229,1)",
+    "--theme-mobile-search": "rgba(15,14,18,1)",
+    "--theme-op": "1",
+    "--theme-dt": "0",
+    "--header-adjustment-primary": "calc(.00306122 * 100vw)",
+    "--header-adjustment-secondary": "calc(-.00204082 * 100vw)",
+    "--space-xs": "calc(.00510204 * 100vw)",
+    "--space-sm": "calc(.0102041 * 100vw)",
+    "--space-md": "calc(.0153061 * 100vw)",
+    "--space-lg": "calc(.0229592 * 100vw)",
+    "--space-xl": "calc(.0459184 * 100vw)",
+    "--tile-border-radius": "0",
+    "--tile-padding": "1vw",
+    "--btn-min-click-area": "48px",
+    "--te-20": "\"te-20\", \"Unicode\", sans-serif",
+    "--te-40": "\"te-40\", \"Unicode\", sans-serif",
+    "--fw-thin": "100",
+    "--fw-light": "300",
+    "--fs-10": "calc(.00918367 * 100vw)",
+    "--fs-15": "calc(.0132653 * 100vw)",
+    "--fs-20": "calc(.0183673 * 100vw)",
+    "--fs-25": "calc(.0234694 * 100vw)",
+    "--fs-30": "calc(.027551 * 100vw)",
+    "--fs-40": "calc(.0367347 * 100vw)",
+    "--lh-10": "calc(.0102041 * 100vw)",
+    "--lh-15": "calc(.0153061 * 100vw)",
+    "--lh-20": "calc(.0204082 * 100vw)",
+    "--lh-25": "calc(.0306122 * 100vw)",
+    "--lh-30": "calc(.0306122 * 100vw)",
+    "--lh-40": "calc(.0408163 * 100vw)",
+    "--round": "9999px",
+    "--client-width": "100vw",
+    "--icon-size": "calc(.0244898 * 100vw)",
+    "--field-padding": "calc(.0102041 * 100vw)",
+    "--field-color": "#000",
+    "--field-color-disabled": "#b2b2b2",
+    "--field-background": "#fff",
+    "--field-background-disabled": "#e5e5e5",
+    "--field-placeholder": "#7f7f7f",
+    "--field-font-size": "calc(.0132653 * 100vw)",
+    "--field-line-height": "1.5em",
+    "--field-border-color": "#e5e5e5",
+    "--field-border": "calc(.00102041 * 100vw) solid #e5e5e5",
+    "--field-border-radius": "0",
+    "--field-label-padding-top": "calc(.0153061 * 100vw)",
+    "--field-label-padding-bottom": "calc(.00510204 * 100vw)",
+    "--field-size": "calc(1.5em + (calc(.0102041 * 100vw) * 2))",
+    "--grid-divider": "calc(.00102041 * 100vw)",
+    "--grid-divider-color": "#b2b2b2",
+    "--bag-overlay-right": ".7vw",
+    "--bag-overlay-bottom": "1.25vw",
+    "--bag-overlay-width": "3.25vw",
+    "--bag-overlay-height": "6.25vw",
+    "--footer-link-height": "calc(.107143 * 100vw)",
+    "--footer-link-divider": "calc(.00306122 * 100vw)"
+  },
+  "tokenCount": 101,
+  "unreadableSheets": 1,
+  "customEasings": [
+    "cubic-bezier(0.6, 0.2, 0, 0.8)"
+  ],
+  "keywordEasings": [
+    "ease-out",
+    "ease-in"
+  ],
+  "faceFamilies": {
+    "te-20": 2,
+    "te-40": 2,
+    "Unicode": 3,
+    "franxurter": 1,
+    "TechnoType": 3,
+    "swingus": 1,
+    "riddim": 1,
+    "riddimscript": 1,
+    "te-vjs": 1,
+    "UniversTE20T": 1,
+    "UniversTE40L": 1,
+    "ttregular": 3,
+    "VideoJS": 1
+  },
+  "loadedFamilies": [
+    "te-20",
+    "te-40",
+    "Unicode",
+    "franxurter",
+    "TechnoType",
+    "swingus",
+    "riddim",
+    "riddimscript",
+    "te-vjs",
+    "UniversTE20T",
+    "UniversTE40L",
+    "ttregular",
+    "VideoJS"
+  ],
+  "cssFeature": {
+    "animationTimeline": 1,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 2,
+    "maskImage": 0,
+    "backdropFilter": 1,
+    "filterBlur": 1,
+    "positionSticky": 3,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 1,
+    "reducedMotion": 1,
+    "perspective": 0,
+    "transform3d": 2
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 2,
+    "clipPath": 30,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 608
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 4,
+      "intersectionObservers": 0,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 1204,
+      "interactive": 90,
+      "svg": 16,
+      "svgPaths": 137,
+      "img": 39,
+      "picture": 38,
+      "video": 0,
+      "canvas": 0,
+      "sections": 6,
+      "headings": 0,
+      "cssRules": 1418
+    },
+    "scrollHeight": 15233,
+    "screensDeep": 16.93,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 43871040
+        },
+        {
+          "color": "rgb(246, 248, 247)",
+          "area": 18099968
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 3343140
+        },
+        {
+          "color": "rgb(15, 14, 18)",
+          "area": 289842
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(229, 229, 229)",
+          "area": 86814
+        },
+        {
+          "color": "rgb(15, 14, 18)",
+          "area": 33279
+        },
+        {
+          "color": "rgb(0, 113, 187)",
+          "area": 15198
+        },
+        {
+          "color": "rgb(178, 178, 178)",
+          "area": 2417
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 1192
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 122,
+    "totalKB": 2598,
+    "jsKB": 355,
+    "videoKB": 0,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "assets.teenage.engineering 2175KB",
+      "www.googletagmanager.com 342KB",
+      "teenage.engineering 78KB",
+      "googleads.g.doubleclick.net 3KB",
+      "www.google.com 0KB",
+      "cdn.fonts.net 0KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

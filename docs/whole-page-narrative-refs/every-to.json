@@ -1,0 +1,456 @@
+{
+  "url": "https://every.to/",
+  "slug": "every-to",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 1176,
+      "draws": 0
+    },
+    {
+      "y": 1574,
+      "pct": 18,
+      "canvas": 0,
+      "el": 1177,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 6
+    },
+    {
+      "y": 3174,
+      "pct": 36,
+      "canvas": 0,
+      "el": 1192,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 10
+    },
+    {
+      "y": 5174,
+      "pct": 58,
+      "canvas": 0,
+      "el": 1195,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 15
+    },
+    {
+      "y": 7174,
+      "pct": 80,
+      "canvas": 0,
+      "el": 1198,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 20
+    },
+    {
+      "y": 8933,
+      "pct": 100,
+      "canvas": 0,
+      "el": 1199,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 25
+    }
+  ],
+  "loadMs": 11570,
+  "title": "Every",
+  "viewport": "1440x900",
+  "scrollHeight": 9859,
+  "screensDeep": 10.95,
+  "counts": {
+    "elements": 1176,
+    "interactive": 218,
+    "svg": 22,
+    "svgPaths": 22,
+    "img": 176,
+    "picture": 0,
+    "video": 1,
+    "canvas": 0,
+    "sections": 14,
+    "headings": 53,
+    "cssRules": 5879
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 1,
+    "intersectionObservers": 34,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h2": {
+      "font-size": "91.6704px",
+      "line-height": "82.5034px",
+      "font-weight": "400",
+      "letter-spacing": "-1.83341px",
+      "font-family": "Signifier, ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+      "color": "rgb(253, 250, 247)",
+      "text-transform": "none",
+      "ratio": 0.9,
+      "trackingEm": -0.02
+    },
+    "h3": {
+      "font-size": "24px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Signifier, \"Hoefler Text\", \"Baskerville Old Face\", Garamond, Georgia, \"Times New Roman\", serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "38.2032px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "-0.764064px",
+      "font-family": "\"Founders Grotesk\", Switzer, ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+      "color": "rgb(253, 250, 247)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": -0.02
+    },
+    "body": {
+      "font-size": "15px",
+      "line-height": "22.5px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Switzer, Signifier, \"Hoefler Text\", \"Baskerville Old Face\", Garamond, Georgia, \"Times New Roman\", serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 15510698
+      },
+      {
+        "color": "rgb(2, 2, 2)",
+        "area": 14196780
+      },
+      {
+        "color": "rgb(26, 26, 26)",
+        "area": 2322432
+      },
+      {
+        "color": "rgb(205, 239, 249)",
+        "area": 1296000
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.45)",
+        "area": 1296000
+      },
+      {
+        "color": "rgb(192, 240, 251)",
+        "area": 1030096
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 178704
+      },
+      {
+        "color": "rgb(42, 42, 42)",
+        "area": 172543
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(214, 211, 209)",
+        "area": 846720
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 629305
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 223275
+      },
+      {
+        "color": "rgb(208, 208, 208)",
+        "area": 135949
+      },
+      {
+        "color": "rgb(253, 250, 247)",
+        "area": 98718
+      },
+      {
+        "color": "rgb(68, 68, 68)",
+        "area": 56235
+      }
+    ]
+  },
+  "tokens": {
+    "--ease-swift": "cubic-bezier(.2, 0, 0, 1)",
+    "--ease-out-soft": "cubic-bezier(.16, 1, .3, 1)",
+    "--dur-fast": ".12s",
+    "--dur-base": ".2s",
+    "--dur-slow": ".3s"
+  },
+  "tokenCount": 5,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(0.16, 1, 0.3, 1)",
+    "cubic-bezier(0, 0, 0.2, 1)",
+    "cubic-bezier(0.4, 0, 0.6, 1)",
+    "cubic-bezier(0.4, 0, 0.2, 1)",
+    "cubic-bezier(0.4, 0, 1, 1)",
+    "cubic-bezier(.2, 0, 0, 1)",
+    "cubic-bezier(.16, 1, .3, 1)",
+    "cubic-bezier(0.22, 1, 0.36, 1)"
+  ],
+  "keywordEasings": [
+    "ease-in-out",
+    "linear",
+    "ease-out"
+  ],
+  "faceFamilies": {
+    "Open Runde": 2,
+    "Signifier": 12,
+    "Every": 3,
+    "Switzer": 6,
+    "Founders Grotesk": 9,
+    "Technology": 3
+  },
+  "loadedFamilies": [
+    "Open Runde",
+    "Geist Mono",
+    "Signifier",
+    "Every",
+    "Switzer",
+    "Founders Grotesk"
+  ],
+  "cssFeature": {
+    "animationTimeline": 1,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 6,
+    "clipPath": 0,
+    "maskImage": 1,
+    "backdropFilter": 8,
+    "filterBlur": 1,
+    "positionSticky": 7,
+    "containerQuery": 0,
+    "has": 39,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 1,
+    "textWrapBalance": 7,
+    "subgrid": 0,
+    "willChange": 2,
+    "reducedMotion": 5,
+    "perspective": 0,
+    "transform3d": 4
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 2,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 1,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 1
+  },
+  "videos": [
+    {
+      "src": "https://every.to/thesis-2027/stone-1-i1.webm",
+      "w": 750,
+      "h": 750,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    }
+  ],
+  "cursors": {
+    "pointer": 727,
+    "text": 3
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 25,
+      "intersectionObservers": 34,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 1199,
+      "interactive": 218,
+      "svg": 22,
+      "svgPaths": 22,
+      "img": 176,
+      "picture": 0,
+      "video": 1,
+      "canvas": 0,
+      "sections": 14,
+      "headings": 53,
+      "cssRules": 5879
+    },
+    "scrollHeight": 9833,
+    "screensDeep": 10.93,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 1
+    },
+    "videos": [
+      {
+        "src": "https://every.to/thesis-2027/stone-1-i1.webm",
+        "w": 750,
+        "h": 750,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      }
+    ],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 15368631
+        },
+        {
+          "color": "rgb(2, 2, 2)",
+          "area": 14159340
+        },
+        {
+          "color": "rgb(26, 26, 26)",
+          "area": 2322432
+        },
+        {
+          "color": "rgb(205, 239, 249)",
+          "area": 1296000
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.45)",
+          "area": 1296000
+        },
+        {
+          "color": "rgb(192, 240, 251)",
+          "area": 1030096
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 178704
+        },
+        {
+          "color": "rgb(42, 42, 42)",
+          "area": 172543
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(214, 211, 209)",
+          "area": 846720
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 629305
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 223275
+        },
+        {
+          "color": "rgb(208, 208, 208)",
+          "area": 135949
+        },
+        {
+          "color": "rgb(253, 250, 247)",
+          "area": 98718
+        },
+        {
+          "color": "rgb(68, 68, 68)",
+          "area": 56235
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 319,
+    "totalKB": 30245,
+    "jsKB": 1638,
+    "videoKB": 3981,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "d24ovhgu8s7341.cloudfront.net 16585KB",
+      "every.to 11940KB",
+      "www.gstatic.com 1051KB",
+      "www.googletagmanager.com 438KB",
+      "connect.facebook.net 170KB",
+      "fonts.gstatic.com 39KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": [
+    "requestStorageAccess: Permission denied."
+  ]
+}

@@ -1,0 +1,822 @@
+{
+  "url": "https://www.warp.dev/",
+  "slug": "warp",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 1,
+      "el": 2087,
+      "draws": 0
+    },
+    {
+      "y": 1200,
+      "pct": 18,
+      "canvas": 1,
+      "el": 1967,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 1509
+    },
+    {
+      "y": 2400,
+      "pct": 35,
+      "canvas": 1,
+      "el": 1967,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 1842
+    },
+    {
+      "y": 4000,
+      "pct": 59,
+      "canvas": 1,
+      "el": 1967,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 2235
+    },
+    {
+      "y": 5600,
+      "pct": 82,
+      "canvas": 1,
+      "el": 1967,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 2625
+    },
+    {
+      "y": 6827,
+      "pct": 100,
+      "canvas": 1,
+      "el": 1967,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 3009
+    }
+  ],
+  "networkIdle": false,
+  "loadMs": 24519,
+  "title": "Warp — The open platform for automating development",
+  "viewport": "1440x900",
+  "scrollHeight": 7727,
+  "screensDeep": 8.59,
+  "counts": {
+    "elements": 2087,
+    "interactive": 182,
+    "svg": 213,
+    "svgPaths": 283,
+    "img": 53,
+    "picture": 0,
+    "video": 1,
+    "canvas": 1,
+    "sections": 6,
+    "headings": 17,
+    "cssRules": 3366
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 1213,
+    "intersectionObservers": 9,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [
+    {
+      "css": "1440x760",
+      "buffer": "1440x760"
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "72px",
+      "line-height": "90px",
+      "font-weight": "400",
+      "letter-spacing": "-2.52px",
+      "font-family": "theFuture, \"theFuture Fallback\", \"The Future\", system-ui, sans-serif",
+      "color": "oklch(0.07 0.007 220)",
+      "text-transform": "none",
+      "ratio": 1.25,
+      "trackingEm": -0.035
+    },
+    "h2": {
+      "font-size": "50.4px",
+      "line-height": "63px",
+      "font-weight": "400",
+      "letter-spacing": "-1.764px",
+      "font-family": "theFuture, \"theFuture Fallback\", \"The Future\", system-ui, sans-serif",
+      "color": "oklch(0.07 0.007 220)",
+      "text-transform": "none",
+      "ratio": 1.25,
+      "trackingEm": -0.035
+    },
+    "h3": {
+      "font-size": "30px",
+      "line-height": "40px",
+      "font-weight": "400",
+      "letter-spacing": "-1.05px",
+      "font-family": "theFuture, \"theFuture Fallback\", \"The Future\", system-ui, sans-serif",
+      "color": "oklch(0.07 0.007 220)",
+      "text-transform": "none",
+      "ratio": 1.333,
+      "trackingEm": -0.035
+    },
+    "p": {
+      "font-size": "14px",
+      "line-height": "21px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Matter, system-ui, sans-serif",
+      "color": "lab(96.5815 -2.55355 -2.46191)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Matter, system-ui, sans-serif",
+      "color": "oklch(0.07 0.007 220)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "oklch(0.992495 0.00178735 220)",
+        "area": 16062548
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 3368438
+      },
+      {
+        "color": "rgb(243, 236, 255)",
+        "area": 1094400
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 870544
+      },
+      {
+        "color": "oklch(0.95 0.007 220)",
+        "area": 673920
+      },
+      {
+        "color": "oklab(0.992495 -0.00136919 -0.00114889 / 0.6)",
+        "area": 120960
+      },
+      {
+        "color": "oklch(0.07 0.007 220)",
+        "area": 70381
+      },
+      {
+        "color": "lab(2.48968 -0.45754 -0.465265)",
+        "area": 60480
+      }
+    ],
+    "text": [
+      {
+        "color": "oklch(0.07 0.007 220)",
+        "area": 1431570
+      },
+      {
+        "color": "oklch(0.4 0.007 220)",
+        "area": 318616
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.9)",
+        "area": 88142
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 73080
+      },
+      {
+        "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+        "area": 44080
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.4)",
+        "area": 36788
+      }
+    ]
+  },
+  "tokens": {
+    "--font-sans": "\"Matter\", system-ui, sans-serif",
+    "--font-serif": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+    "--font-mono": "\"matterMono\", \"matterMono Fallback\", \"Azeret Mono\", \"Azeret Mono Fallback\", ui-monospace, monospace",
+    "--color-red-50": "lab(96.5005% 4.18508 1.52328)",
+    "--color-red-400": "lab(63.7053% 60.745 31.3109)",
+    "--color-red-500": "lab(55.4814% 75.0732 48.8528)",
+    "--color-red-600": "lab(48.4493% 77.4328 61.5452)",
+    "--color-red-700": "lab(40.4273% 67.2623 53.7441)",
+    "--color-red-950": "lab(13.003% 29.04 16.7519)",
+    "--color-amber-50": "lab(98.6252% -.635922 8.42309)",
+    "--color-amber-400": "lab(80.1641% 16.6016 99.2089)",
+    "--color-amber-500": "lab(72.7183% 31.8672 97.9407)",
+    "--color-amber-600": "lab(60.3514% 40.5624 87.1228)",
+    "--color-amber-700": "lab(47.2709% 42.9082 69.2966)",
+    "--color-amber-950": "lab(15.8111% 20.9107 23.3752)",
+    "--color-yellow-500": "lab(76.3898% 14.5258 98.4589)",
+    "--color-yellow-700": "lab(47.8202% 25.2426 66.5015)",
+    "--color-green-500": "lab(70.5521% -66.5147 45.8073)",
+    "--color-green-700": "lab(47.0329% -47.0239 31.4788)",
+    "--color-emerald-50": "lab(97.8462% -6.94966 1.85487)",
+    "--color-emerald-400": "lab(75.0771% -60.7313 19.4147)",
+    "--color-emerald-500": "lab(66.9756% -58.27 19.5419)",
+    "--color-emerald-600": "lab(55.0481% -49.9246 15.93)",
+    "--color-emerald-700": "lab(44.4871% -41.0396 11.0361)",
+    "--color-teal-500": "lab(67.3859% -49.0983 -2.63511)",
+    "--color-teal-700": "lab(44.4134% -33.1436 -4.22149)",
+    "--color-cyan-500": "lab(67.805% -35.3952 -30.2018)",
+    "--color-cyan-700": "lab(44.7267% -21.5987 -26.118)",
+    "--color-sky-400": "lab(70.687% -23.6078 -45.9483)",
+    "--color-blue-300": "lab(77.5052% -6.4629 -36.42)",
+    "--color-blue-400": "lab(65.0361% -1.42065 -56.9802)",
+    "--color-blue-500": "lab(54.1736% 13.3369 -74.6839)",
+    "--color-blue-700": "lab(36.9089% 35.0961 -85.6872)",
+    "--color-indigo-400": "lab(59.866% 22.4834 -64.4485)",
+    "--color-violet-50": "lab(96.2416% 2.28849 -5.51657)",
+    "--color-violet-400": "lab(62.8239% 34.9159 -60.0512)",
+    "--color-violet-500": "lab(49.9355% 55.1776 -81.8963)",
+    "--color-violet-600": "lab(41.088% 68.9966 -91.995)",
+    "--color-violet-700": "lab(35.2783% 67.9912 -88.793)",
+    "--color-purple-500": "lab(52.0183% 66.11 -78.2316)",
+    "--color-purple-700": "lab(36.1758% 69.8525 -80.0381)",
+    "--color-fuchsia-400": "lab(66.1178% 66.0652 -52.4733)",
+    "--color-zinc-950": "lab(2.51107% .242703 -.886115)",
+    "--color-olive-100": "lab(96.0988% -.493258 1.82395)",
+    "--color-olive-400": "lab(69.6658% -2.009 7.72947)",
+    "--color-olive-600": "lab(38.2553% -2.31101 9.30823)",
+    "--color-olive-900": "lab(10.5512% -1.19986 4.84231)",
+    "--color-olive-950": "lab(3.26204% -.309289 1.13377)",
+    "--color-black": "#000",
+    "--color-white": "#fff",
+    "--spacing": "calc(.25rem * 1)",
+    "--container-xs": "20rem",
+    "--container-sm": "24rem",
+    "--container-md": "28rem",
+    "--container-lg": "32rem",
+    "--container-xl": "36rem",
+    "--container-2xl": "42rem",
+    "--container-3xl": "48rem",
+    "--container-4xl": "56rem",
+    "--container-5xl": "64rem",
+    "--container-6xl": "72rem",
+    "--text-xs": "calc(1rem * .75)",
+    "--text-xs--line-height": "1.5",
+    "--text-sm": "calc(1rem * .875)",
+    "--text-sm--line-height": "1.5",
+    "--text-base": "1rem",
+    "--text-base--line-height": "1.5",
+    "--text-lg": "calc(1rem * 1.125)",
+    "--text-lg--line-height": "1.75",
+    "--text-xl": "calc(1rem * 1.25)",
+    "--text-xl--line-height": "1.25",
+    "--text-2xl": "calc(1rem * 1.5)",
+    "--text-2xl--line-height": "1.25",
+    "--text-3xl": "calc(1rem * 1.875)",
+    "--text-3xl--line-height": "1.1",
+    "--text-4xl": "calc(1rem * 2.25)",
+    "--text-4xl--line-height": "1.1",
+    "--text-5xl": "calc(1rem * 3)",
+    "--text-5xl--line-height": "1",
+    "--text-6xl": "calc(1rem * 3.75)",
+    "--text-6xl--line-height": "1",
+    "--text-7xl": "calc(1rem * 4.5)",
+    "--text-7xl--line-height": "1",
+    "--text-8xl": "calc(1rem * 6)",
+    "--text-8xl--line-height": "1",
+    "--font-weight-thin": "100",
+    "--font-weight-extralight": "200",
+    "--font-weight-light": "300",
+    "--font-weight-normal": "400",
+    "--font-weight-medium": "500",
+    "--font-weight-semibold": "600",
+    "--font-weight-bold": "700",
+    "--font-weight-extrabold": "800",
+    "--font-weight-black": "900",
+    "--tracking-tighter": "-.05em",
+    "--tracking-tight": "-.025em",
+    "--tracking-wide": ".025em",
+    "--tracking-wider": ".05em",
+    "--tracking-widest": ".1em",
+    "--leading-tight": "1.25",
+    "--leading-snug": "1.375",
+    "--leading-relaxed": "1.625",
+    "--radius-xs": "calc(.125rem * .375)",
+    "--radius-sm": "calc(.125rem * .5)",
+    "--radius-md": ".125rem",
+    "--radius-lg": "calc(.125rem * 1.5)",
+    "--radius-xl": "calc(.125rem * 2)",
+    "--radius-2xl": "calc(.125rem * 3)",
+    "--radius-3xl": "calc(.125rem * 4)",
+    "--ease-in": "cubic-bezier(.4, 0, 1, 1)",
+    "--ease-out": "cubic-bezier(0, 0, .2, 1)",
+    "--ease-in-out": "cubic-bezier(.4, 0, .2, 1)",
+    "--animate-spin": "spin 1s linear infinite",
+    "--animate-pulse": "pulse 2s cubic-bezier(.4, 0, .6, 1) infinite",
+    "--blur-sm": "8px",
+    "--blur-md": "12px",
+    "--blur-xl": "24px",
+    "--blur-2xl": "40px",
+    "--aspect-video": "16 / 9",
+    "--default-transition-duration": ".15s",
+    "--default-transition-timing-function": "cubic-bezier(.4, 0, .2, 1)",
+    "--default-font-family": "\"Matter\", system-ui, sans-serif",
+    "--default-mono-font-family": "\"matterMono\", \"matterMono Fallback\", \"Azeret Mono\", \"Azeret Mono Fallback\", ui-monospace, monospace",
+    "--font-display": "\"theFuture\", \"theFuture Fallback\", \"The Future\", system-ui, sans-serif",
+    "--font-hack": "\"Hack\", \"Azeret Mono\", \"Azeret Mono Fallback\", ui-monospace, monospace",
+    "--font-matter": "\"Matter\", system-ui, sans-serif",
+    "--color-background": "color-mix(in oklch, white 75%, oklch(97% .007 220))",
+    "--color-foreground": "lab(96.5592% .310391 3.81117)",
+    "--color-card": "lab(9.53514% .133313 1.53074)",
+    "--color-card-foreground": "lab(96.5592% .310391 3.81117)",
+    "--color-primary": "oklch(40% .007 220)",
+    "--color-primary-foreground": "#121212",
+    "--color-secondary": "lab(17.659% .165299 1.91246)",
+    "--color-secondary-foreground": "lab(96.5592% .310391 3.81117)",
+    "--color-muted": "color-mix(in oklch, oklch(40% .007 220) 80%, oklch(53% .007 220))",
+    "--color-muted-foreground": "lab(66.9712% .25034 3.0503)",
+    "--color-accent": "oklch(40% .007 220)",
+    "--color-accent-foreground": "lab(96.5592% .310391 3.81117)",
+    "--color-border": "oklch(78% .007 220)",
+    "--color-input": "lab(29.263% .195071 2.29271)",
+    "--color-ring": "lab(96.5592% .310391 3.81117)",
+    "--color-theme-accent": "#00c2ff",
+    "--color-theme-cursor": "#00c2ff",
+    "--color-status-success": "lab(69.7863% -53.411 45.1934)",
+    "--color-status-active": "lab(57.7421% 5.71477 -72.009)",
+    "--color-status-warning": "lab(79.2935% 13.5666 82.2486)",
+    "--color-status-error": "lab(53.6853% 69.6775 43.7724)",
+    "--color-factory-subtle-bg": "#0000000d",
+    "--color-factory-blue": "#3e7cb8",
+    "--color-factory-blue-bg": "#ebf2f8",
+    "--color-factory-pink": "#523c79",
+    "--color-factory-pink-bg": "#eceaf0",
+    "--color-factory-green": "#4e7b44",
+    "--color-factory-green-bg": "#eaf1ea",
+    "--color-factory-warning-bg": "#a89c141a",
+    "--color-factory-stage": "#f3ecff",
+    "--gray-hue": "220",
+    "--gray-chroma": ".007",
+    "--gray-50": "oklch(97% .007 220)",
+    "--gray-100": "oklch(95% .007 220)",
+    "--gray-200": "oklch(91% .007 220)",
+    "--gray-300": "oklch(78% .007 220)",
+    "--gray-400": "oklch(66% .007 220)",
+    "--gray-500": "oklch(53% .007 220)",
+    "--gray-600": "oklch(40% .007 220)",
+    "--gray-700": "oklch(30% .007 220)",
+    "--gray-800": "oklch(20% .007 220)",
+    "--gray-900": "oklch(12% .007 220)",
+    "--gray-950": "oklch(7% .007 220)",
+    "--color-text": "oklch(7% .007 220)",
+    "--color-text-secondary": "oklch(40% .007 220)",
+    "--color-text-body": "lab(16.4913% .1041 1.1425)",
+    "--color-surface": "oklch(95% .007 220)",
+    "--color-panel": "oklch(95% .007 220)",
+    "--color-surface-hover": "color-mix(in oklch, oklch(7% .007 220) 5%, transparent)",
+    "--color-surface-active": "color-mix(in oklch, oklch(7% .007 220) 10%, transparent)",
+    "--color-border-subtle": "color-mix(in oklch, oklch(78% .007 220) 40%, transparent)",
+    "--color-border-dim": "color-mix(in oklch, oklch(78% .007 220) 20%, transparent)",
+    "--color-accent-purple": "#cbb0f7",
+    "--color-tertiary": "#c59fff",
+    "--radius": ".125rem",
+    "--shadow": "none",
+    "--type-base": "1rem",
+    "--heading-size": "calc(1rem * 5)",
+    "--body-size": "1rem",
+    "--type-xs": "calc(1rem * .75)",
+    "--type-sm": "calc(1rem * .875)",
+    "--type-md": "1rem",
+    "--type-lg": "calc(1rem * 1.125)",
+    "--type-xl": "calc(1rem * 1.25)",
+    "--type-2xl": "calc(1rem * 1.5)",
+    "--type-3xl": "calc(1rem * 1.875)",
+    "--type-4xl": "calc(1rem * 2.25)",
+    "--type-5xl": "calc(1rem * 3)",
+    "--type-6xl": "calc(1rem * 3.75)",
+    "--type-7xl": "calc(1rem * 4.5)",
+    "--type-8xl": "calc(1rem * 6)",
+    "--type-display": "calc(1rem * 5)",
+    "--type-h2": "calc(calc(1rem * 5) * .7)",
+    "--type-h3": "calc(1rem * 1.5)",
+    "--type-h4": "calc(1rem * 1.25)",
+    "--type-body": "1rem",
+    "--type-small": "calc(1rem * .875)",
+    "--lh-none": "1",
+    "--lh-tight": "1.1",
+    "--lh-snug": "1.25",
+    "--lh-normal": "1.5",
+    "--lh-relaxed": "1.75",
+    "--lh-loose": "2",
+    "--font-heading": "\"theFuture\", \"theFuture Fallback\", \"The Future\", system-ui, sans-serif",
+    "--font-body": "\"Matter\", system-ui, sans-serif",
+    "--heading-weight": "400",
+    "--heading-letter-spacing": "-.035em",
+    "--body-weight": "400",
+    "--body-line-height": "1.5",
+    "--layout-max-width": "80rem",
+    "--content-max-width": "80rem",
+    "--nav-max-width": "80rem",
+    "--section-bg-alt": "transparent",
+    "--surface-texture": "none",
+    "--surface-texture-size": "200px 200px",
+    "--surface-texture-opacity": "0",
+    "--border-treatment": "none",
+    "--border-width": "0px",
+    "--heading-transform": "none",
+    "--heading-font-style": "normal",
+    "--easing": "cubic-bezier(.4, 0, .2, 1)",
+    "--hover-transform": "none",
+    "--divider-display": "none",
+    "--divider-style": "none",
+    "--card-bg": "#fff",
+    "--card-backdrop-blur": "0px",
+    "--card-border": "none",
+    "--color-agent-kit-surface": "color-mix(in oklch, oklch(95% .007 220) 50%, oklch(91% .007 220))",
+    "--btn-font-family": "\"matterMono\", \"matterMono Fallback\", \"Azeret Mono\", \"Azeret Mono Fallback\", ui-monospace, monospace",
+    "--btn-bg": "oklch(7% .007 220)",
+    "--btn-border": "none",
+    "--btn-text-color": "oklch(97% .007 220)",
+    "--btn-padding": "calc(.25rem * 1) calc(1rem * 1)",
+    "--btn-radius": "0rem",
+    "--btn-transform": "uppercase",
+    "--btn-height": "2.5rem",
+    "--btn-icon-display": "none",
+    "--accent-heading-color": "",
+    "--img-radius": ".125rem",
+    "--img-shadow": "0 8px 30px #0000001f",
+    "--img-border": "none",
+    "--density": "1",
+    "--motion-speed": "1",
+    "--space-xs": "calc(.25rem * 1)",
+    "--space-sm": "calc(.5rem * 1)",
+    "--space-md": "calc(1rem * 1)",
+    "--space-lg": "calc(1.5rem * 1)",
+    "--space-xl": "calc(2rem * 1)",
+    "--space-2xl": "calc(3rem * 1)",
+    "--space-section": "calc(4rem * 1)",
+    "--color-primary-green": "lab(69.7863% -53.411 45.1934)",
+    "--color-primary-yellow": "lab(79.2935% 13.5666 82.2486)",
+    "--color-primary-red": "lab(53.6853% 69.6775 43.7724)",
+    "--color-lighten-50": "lab(59.4% 0 0)",
+    "--color-error": "lab(53.6853% 69.6775 43.7724)",
+    "--color-success": "lab(69.7863% -53.411 45.1934)",
+    "--color-warning": "lab(79.2935% 13.5666 82.2486)",
+    "--terminus-blue-hue": "255",
+    "--terminus-green-hue": "145",
+    "--terminus-purple-hue": "300",
+    "--terminus-red-hue": "45",
+    "--terminus-fuchsia-hue": "335",
+    "--terminus-theme-blue-bg": "oklch(65% .21 255)",
+    "--terminus-theme-blue-fg": "oklch(18% .07 255)",
+    "--terminus-theme-green-bg": "oklch(78% .22 145)",
+    "--terminus-theme-green-fg": "oklch(20% .08 145)",
+    "--terminus-theme-purple-bg": "oklch(62% .22 300)",
+    "--terminus-theme-purple-fg": "oklch(18% .07 300)",
+    "--terminus-theme-red-bg": "oklch(72% .2 45)",
+    "--terminus-theme-red-fg": "oklch(20% .07 45)",
+    "--terminus-theme-fuchsia-bg": "oklch(68% .27 335)",
+    "--terminus-theme-fuchsia-fg": "oklch(20% .08 335)",
+    "--terminus-sticky-top": "6rem",
+    "--duration-fast": "calc(.1s * 1)",
+    "--duration-normal": "calc(.2s * 1)",
+    "--duration-slow": "calc(.4s * 1)",
+    "--scroll-padding-top": "5.25rem"
+  },
+  "tokenCount": 283,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(.4, 0, 1, 1)",
+    "cubic-bezier(0, 0, .2, 1)",
+    "cubic-bezier(.4, 0, .2, 1)",
+    "cubic-bezier(.4, 0, .6, 1)",
+    "cubic-bezier(0,0,.2,1)",
+    "cubic-bezier(0, 0, 0.2, 1)",
+    "cubic-bezier(.4,0,.2,1)",
+    "cubic-bezier(0.4, 0, 0.2, 1)",
+    "cubic-bezier(.16,1,.3,1)",
+    "cubic-bezier(0.16, 1, 0.3, 1)"
+  ],
+  "keywordEasings": [
+    "ease",
+    "ease-in",
+    "ease-in-out",
+    "ease-out"
+  ],
+  "faceFamilies": {
+    "theFuture": 2,
+    "theFuture Fallback": 1,
+    "Inter": 14,
+    "Inter Fallback": 1,
+    "Azeret Mono": 4,
+    "Azeret Mono Fallback": 1,
+    "matterMono": 1,
+    "matterMono Fallback": 1,
+    "Instrument Serif": 4,
+    "Instrument Serif Fallback": 1,
+    "Abel": 1,
+    "Abel Fallback": 1,
+    "Matter": 2,
+    "Hack": 2
+  },
+  "loadedFamilies": [
+    "theFuture",
+    "theFuture Fallback",
+    "Inter",
+    "Inter Fallback",
+    "Azeret Mono",
+    "Azeret Mono Fallback",
+    "matterMono",
+    "matterMono Fallback",
+    "Instrument Serif",
+    "Instrument Serif Fallback",
+    "Abel",
+    "Abel Fallback",
+    "Matter",
+    "Hack"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 1,
+    "clipPath": 4,
+    "maskImage": 5,
+    "backdropFilter": 10,
+    "filterBlur": 2,
+    "positionSticky": 4,
+    "containerQuery": 2,
+    "has": 16,
+    "startingStyle": 5,
+    "anchor": 0,
+    "oklch": 3,
+    "colorMix": 614,
+    "textWrapBalance": 2,
+    "subgrid": 3,
+    "willChange": 6,
+    "reducedMotion": 8,
+    "perspective": 0,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 5,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 7,
+    "sticky": 2,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": true,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [
+    {
+      "src": "https://cdn.sanity.io/files/1ygbk6d0/production/5635a874362dea06816f057556e44f666103609f.mp4",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false,
+      "muted": true
+    }
+  ],
+  "cursors": {
+    "pointer": 879,
+    "nwse-resize": 2,
+    "ns-resize": 2,
+    "nesw-resize": 2,
+    "ew-resize": 2
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 1440,
+          "h": 760
+        }
+      ],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 3009,
+      "intersectionObservers": 9,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 1967,
+      "interactive": 181,
+      "svg": 200,
+      "svgPaths": 268,
+      "img": 41,
+      "picture": 0,
+      "video": 1,
+      "canvas": 1,
+      "sections": 6,
+      "headings": 17,
+      "cssRules": 3366
+    },
+    "scrollHeight": 7727,
+    "screensDeep": 8.59,
+    "canvases": [
+      {
+        "css": "1440x760",
+        "buffer": "1440x760"
+      }
+    ],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": true,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [
+      {
+        "src": "https://cdn.sanity.io/files/1ygbk6d0/production/5635a874362dea06816f057556e44f666103609f.mp4",
+        "w": 1280,
+        "h": 720,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      }
+    ],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "oklch(0.992495 0.00178735 220)",
+          "area": 15990548
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 3368515
+        },
+        {
+          "color": "rgb(243, 236, 255)",
+          "area": 1094400
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 867272
+        },
+        {
+          "color": "oklch(0.95 0.007 220)",
+          "area": 673920
+        },
+        {
+          "color": "oklab(0.992495 -0.00136919 -0.00114889 / 0.6)",
+          "area": 120960
+        },
+        {
+          "color": "oklch(0.07 0.007 220)",
+          "area": 69101
+        },
+        {
+          "color": "lab(2.48968 -0.45754 -0.465265)",
+          "area": 60480
+        }
+      ],
+      "text": [
+        {
+          "color": "oklch(0.07 0.007 220)",
+          "area": 1484290
+        },
+        {
+          "color": "oklch(0.4 0.007 220)",
+          "area": 303260
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.9)",
+          "area": 88162
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 73080
+        },
+        {
+          "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+          "area": 44080
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.4)",
+          "area": 36820
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 186,
+    "totalKB": 4693,
+    "jsKB": 1494,
+    "videoKB": 2472,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "cdn.sanity.io 2511KB",
+      "www.googletagmanager.com 731KB",
+      "www.warp.dev 687KB",
+      " 305KB",
+      "dev.visualwebsiteoptimizer.com 199KB",
+      "connect.facebook.net 105KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": [
+    "Loading the script 'https://googleads.g.doubleclick.net/pagead/viewthroughconversion/10817224442/?random=1787004233968&cv=11&fst=1787004233968&bg=ffffff&guid=ON&async=1&en=gtag.config&gtm=45be68e1h2v9",
+    "Loading the image 'https://image6.pubmatic.com/AdServer/UCookieSetPug?rd=https%3A%2F%2Fevent-va1.pubmatic.com%2Fevent%3Fadv%3D28875%26cb%3D3484818000%26ref%3Dhttps%3A%2F%2Fwww.warp.dev%2F&gdpr=0' viol",
+    "Connecting to 'https://3.212.39.155/is?cb=1787004234587' violates the following Content Security Policy directive: \"connect-src 'self' https://api.sanity.io https://*.api.sanity.io https://sanity-cdn.",
+    "Fetch API cannot load https://3.212.39.155/is?cb=1787004234587. Refused to connect because it violates the document's Content Security Policy.",
+    "Loading the script 'https://googleads.g.doubleclick.net/pagead/viewthroughconversion/10817224442/?random=1787004235532&cv=11&fst=1787004235532&bg=ffffff&guid=ON&async=1&en=gtag.config&gtm=45be68e1h2v9",
+    "Loading the script 'https://googleads.g.doubleclick.net/pagead/viewthroughconversion/10817224442/?random=1787004235924&cv=11&fst=1787004235924&bg=ffffff&guid=ON&async=1&en=gtag.config&gtm=45be68e1h2v9",
+    "Loading the image 'https://www.linkedin.com/px/li_sync?redirect=https%3A%2F%2Fpx.ads.linkedin.com%2Fcollect%3Fv%3D2%26fmt%3Djs%26pid%3D4810452%26time%3D1787004235888%26li_adsId%3D5752da53-761f-4588-ad",
+    "Framing 'https://i.liadm.com/' violates the following Content Security Policy directive: \"frame-src 'self' https://www.googletagmanager.com https://www.youtube.com https://www.youtube-nocookie.com htt"
+  ]
+}

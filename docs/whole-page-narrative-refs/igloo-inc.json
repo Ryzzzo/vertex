@@ -1,0 +1,310 @@
+{
+  "url": "https://www.igloo.inc/",
+  "slug": "igloo-inc",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 27,
+      "draws": 11171
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 0,
+      "el": 27,
+      "draws": 20199,
+      "shaders": 90,
+      "raf": 519
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 0,
+      "el": 27,
+      "draws": 28866,
+      "shaders": 90,
+      "raf": 715
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 0,
+      "el": 27,
+      "draws": 38514,
+      "shaders": 90,
+      "raf": 916
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 0,
+      "el": 27,
+      "draws": 50254,
+      "shaders": 90,
+      "raf": 1113
+    }
+  ],
+  "loadMs": 6191,
+  "title": "Igloo Inc.",
+  "viewport": "1440x900",
+  "scrollHeight": 900,
+  "screensDeep": 1,
+  "counts": {
+    "elements": 27,
+    "interactive": 0,
+    "svg": 0,
+    "svgPaths": 0,
+    "img": 0,
+    "picture": 0,
+    "video": 0,
+    "canvas": 0,
+    "sections": 0,
+    "headings": 0,
+    "cssRules": 12
+  },
+  "instrumented": {
+    "shaderPrograms": 90,
+    "shaderSources": 180,
+    "glslChars": 1042176,
+    "glslHeads": [
+      "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr",
+      "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#def",
+      "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr"
+    ],
+    "canvasContexts": [
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 10252,
+    "drawInstanced": 423,
+    "texUploads": 61,
+    "rafTicks": 309,
+    "intersectionObservers": 0,
+    "audioContexts": 1,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "body": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Times New Roman\"",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(160, 165, 177)",
+        "area": 2592000
+      }
+    ],
+    "text": []
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 0,
+  "customEasings": [],
+  "keywordEasings": [],
+  "faceFamilies": {
+    "IBMPlexMono-Medium": 1,
+    "IBMPlexMono-Regular": 1
+  },
+  "loadedFamilies": [
+    "IBMPlexMono-Medium",
+    "IBMPlexMono-Regular"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 0,
+    "maskImage": 0,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 0,
+    "reducedMotion": 0,
+    "perspective": 0,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": true,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {},
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 90,
+      "shaderSources": 180,
+      "glslChars": 1042176,
+      "glslHeads": [
+        "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr",
+        "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#def",
+        "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr"
+      ],
+      "canvasContexts": [
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 50254,
+      "drawInstanced": 844,
+      "texUploads": 61,
+      "rafTicks": 1113,
+      "intersectionObservers": 0,
+      "audioContexts": 1,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 27,
+      "interactive": 0,
+      "svg": 0,
+      "svgPaths": 0,
+      "img": 0,
+      "picture": 0,
+      "video": 0,
+      "canvas": 0,
+      "sections": 0,
+      "headings": 0,
+      "cssRules": 12
+    },
+    "scrollHeight": 900,
+    "screensDeep": 1,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": true,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(160, 165, 177)",
+          "area": 2592000
+        }
+      ],
+      "text": []
+    }
+  },
+  "net": {
+    "requests": 108,
+    "totalKB": 15690,
+    "jsKB": 0,
+    "videoKB": 0,
+    "threeDCount": 50,
+    "threeDKB": 12656,
+    "threeDSample": [
+      {
+        "u": "https://www.igloo.inc/assets/images/frost-datatexture.ktx2",
+        "len": 134781
+      },
+      {
+        "u": "https://www.igloo.inc/assets/fonts/IBMPlexMono-Medium-datatexture.ktx2",
+        "len": 110330
+      },
+      {
+        "u": "https://www.igloo.inc/assets/images/ui/sound-datatexture.ktx2",
+        "len": 4405
+      },
+      {
+        "u": "https://www.igloo.inc/assets/images/perlin-datatexture.ktx2",
+        "len": 3789
+      },
+      {
+        "u": "https://www.igloo.inc/assets/images/bokeh.ktx2",
+        "len": 21582
+      },
+      {
+        "u": "https://www.igloo.inc/assets/images/cubes/dot_pattern.ktx2",
+        "len": 725
+      }
+    ],
+    "topHosts": [
+      "www.igloo.inc 15560KB",
+      " 130KB",
+      "igloo.inc 0KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

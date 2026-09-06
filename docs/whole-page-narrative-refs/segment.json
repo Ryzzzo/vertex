@@ -1,0 +1,604 @@
+{
+  "url": "https://www.twilio.com/en-us/segment",
+  "slug": "segment",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 896,
+      "draws": 0
+    },
+    {
+      "y": 400,
+      "pct": 16,
+      "canvas": 0,
+      "el": 904,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 32
+    },
+    {
+      "y": 1200,
+      "pct": 47,
+      "canvas": 0,
+      "el": 904,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 32
+    },
+    {
+      "y": 1600,
+      "pct": 63,
+      "canvas": 0,
+      "el": 904,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 32
+    },
+    {
+      "y": 2000,
+      "pct": 78,
+      "canvas": 0,
+      "el": 904,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 32
+    },
+    {
+      "y": 2551,
+      "pct": 100,
+      "canvas": 0,
+      "el": 904,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 32
+    }
+  ],
+  "networkIdle": false,
+  "loadMs": 25161,
+  "title": "Twilio Segment Customer Data Platform | Twilio",
+  "viewport": "1440x900",
+  "scrollHeight": 3451,
+  "screensDeep": 3.83,
+  "counts": {
+    "elements": 885,
+    "interactive": 95,
+    "svg": 29,
+    "svgPaths": 79,
+    "img": 8,
+    "picture": 0,
+    "video": 0,
+    "canvas": 0,
+    "sections": 1,
+    "headings": 4,
+    "cssRules": 6484
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 100,
+        "h": 100
+      }
+    ],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 7,
+    "intersectionObservers": 0,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "48px",
+      "line-height": "60px",
+      "font-weight": "700",
+      "letter-spacing": "-1.44px",
+      "font-family": "\"Whitney SSm\", helvetica, arial, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.25,
+      "trackingEm": -0.03
+    },
+    "h2": {
+      "font-size": "40px",
+      "line-height": "52px",
+      "font-weight": "700",
+      "letter-spacing": "-0.8px",
+      "font-family": "\"Whitney SSm\", helvetica, arial, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.3,
+      "trackingEm": -0.02
+    },
+    "p": {
+      "font-size": "16px",
+      "line-height": "28px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Whitney SSm\", helvetica, arial, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.75,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "28px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Whitney SSm\", helvetica, arial, sans-serif",
+      "color": "rgb(0, 13, 37)",
+      "text-transform": "none",
+      "ratio": 1.75,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(0, 13, 37)",
+        "area": 4810185
+      },
+      {
+        "color": "rgb(25, 31, 54)",
+        "area": 1020666
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 171478
+      },
+      {
+        "color": "rgb(243, 244, 247)",
+        "area": 46080
+      },
+      {
+        "color": "rgb(239, 34, 58)",
+        "area": 31104
+      },
+      {
+        "color": "rgb(24, 102, 238)",
+        "area": 11752
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 675973
+      },
+      {
+        "color": "rgb(202, 205, 216)",
+        "area": 123283
+      },
+      {
+        "color": "rgb(58, 206, 250)",
+        "area": 16947
+      },
+      {
+        "color": "rgb(18, 28, 45)",
+        "area": 10198
+      },
+      {
+        "color": "rgb(24, 102, 238)",
+        "area": 1857
+      },
+      {
+        "color": "rgb(0, 13, 37)",
+        "area": 473
+      }
+    ]
+  },
+  "tokens": {
+    "--swiper-theme-color": "#007aff",
+    "--swiper-navigation-size": "44px",
+    "--font-family-text": "Whitney SSm,helvetica,arial,sans-serif",
+    "--font-family-mono": "Twilio Sans Mono,monospace",
+    "--font-family-buffalo": "Buffalo",
+    "--font-family-default": "Whitney SSm,helvetica,arial,sans-serif",
+    "--font-weight-regular": "400",
+    "--font-weight-book": "400",
+    "--font-weight-medium": "500",
+    "--font-weight-semi-bold": "600",
+    "--font-weight-bold": "700",
+    "--font-weight-extra-bold": "700",
+    "--font-weight-titles": "400",
+    "--font-size-00": "1rem",
+    "--font-size-10": "1.2rem",
+    "--font-size-20": "1.4rem",
+    "--font-size-25": "1.5rem",
+    "--font-size-30": "1.6rem",
+    "--font-size-40": "1.8rem",
+    "--font-size-50": "2rem",
+    "--font-size-55": "2.2rem",
+    "--font-size-60": "2.4rem",
+    "--font-size-65": "2.6rem",
+    "--font-size-68": "2.8rem",
+    "--font-size-70": "3.2rem",
+    "--font-size-75": "4rem",
+    "--font-size-78": "3.6rem",
+    "--font-size-80": "4rem",
+    "--font-size-85": "4.4rem",
+    "--font-size-90": "4.8rem",
+    "--font-size-100": "5.6rem",
+    "--font-copy-extra-small": "1.2rem",
+    "--font-copy-small": "1.4rem",
+    "--font-copy-medium": "1.6rem",
+    "--font-copy-large": "1.8rem",
+    "--font-copy-extra-large": "2rem",
+    "--font-copy-xxl": "2.4rem",
+    "--font-copy-default": "1.6rem",
+    "--font-title-super-text": "1.6rem",
+    "--font-title-xxs": "1.8rem",
+    "--font-title-extra-small": "2rem",
+    "--font-title-small": "2.4rem",
+    "--font-title-medium": "3.2rem",
+    "--font-title-large": "4.8rem",
+    "--font-title-extra-large": "4.8rem",
+    "--line-height-extra-extra-small": "1.1",
+    "--line-height-extra-smaller-small": "1.15",
+    "--line-height-extra-small": "1.25",
+    "--line-height-small": "1.3",
+    "--line-height-medium": "1.5",
+    "--line-height-large": "1.75",
+    "--line-height-body": "1.75",
+    "--line-height-titles": "1.25",
+    "--color-white": "255 255 255",
+    "--color-black": "0 0 0",
+    "--color-twilio-red": "219 19 42",
+    "--color-ink": "0 13 37",
+    "--color-paper": "253 247 244",
+    "--color-night": "0 20 137",
+    "--color-red-light": "239 34 58",
+    "--color-red-dark": "177 15 35",
+    "--color-accessible-red": "177 15 35",
+    "--color-red-10": "254 236 236",
+    "--color-red-20": "252 207 207",
+    "--color-red-30": "246 177 177",
+    "--color-red-40": "245 137 138",
+    "--color-red-50": "235 86 86",
+    "--color-red-60": "177 15 35",
+    "--color-red-70": "173 17 17",
+    "--color-blue-10": "235 244 255",
+    "--color-blue-20": "204 228 255",
+    "--color-blue-30": "153 205 255",
+    "--color-blue-40": "102 179 255",
+    "--color-blue-50": "228 247 255",
+    "--color-blue-50-legacy": "0,140,255",
+    "--color-blue-60": "2 99 224",
+    "--color-blue-70": "4 60 181",
+    "--color-blue-80": "0 20 137",
+    "--color-blue-90": "3 11 93",
+    "--color-blue-100": "6 3 58",
+    "--color-blue-200": "58 206 250",
+    "--color-blue-500": "24 102 238",
+    "--color-blue-700": "14 62 146",
+    "--color-blue-800": "11 42 96",
+    "--color-blue-850": "8 31 71",
+    "--color-blue-900": "0 13 37",
+    "--color-orange-10": "254 245 238",
+    "--color-orange-20": "253 220 196",
+    "--color-orange-30": "250 194 160",
+    "--color-orange-60": "244 124 34",
+    "--color-orange-70": "195 85 35",
+    "--color-green-10": "237 253 243",
+    "--color-green-20": "209 250 224",
+    "--color-green-50": "54 213 118",
+    "--color-green-70": "14 124 58",
+    "--color-purple-20": "231 220 250",
+    "--color-purple-70": "88 23 189",
+    "--color-gray-10": "244 244 246",
+    "--color-gray-20": "225 227 234",
+    "--color-gray-30": "202 205 216",
+    "--color-gray-40": "174 178 193",
+    "--color-gray-50": "243 244 247",
+    "--color-gray-50-legacy": "134 145 170",
+    "--color-gray-60": "96 107 133",
+    "--color-gray-70": "75 86 113",
+    "--color-gray-80": "57 71 98",
+    "--color-gray-90": "31 48 76",
+    "--color-gray-100": "221 224 230",
+    "--color-gray-100-legacy": "18 28 45",
+    "--color-gray-300": "154 160 180",
+    "--color-gray-400": "126 134 156",
+    "--color-gray-800": "35 43 69",
+    "--color-gray-850": "25 31 54",
+    "--color-yellow-30": "255 233 128",
+    "--color-yellow-40": "255 221 53",
+    "--color-paper-accent": "254 240 230",
+    "--color-paper-accent-hover": "253 227 209",
+    "--color-paper-accent-active": "251 217 192",
+    "--color-saffron": "242 190 90",
+    "--color-ship-cove": "120 140 175",
+    "--color-mint": "106 221 178",
+    "--color-sky": "81 169 227",
+    "--color-ink-accent": "23 36 59",
+    "--color-ink-light": "30 47 77",
+    "--color-sun": "255 122 0",
+    "--color-red-accent": "243 70 90",
+    "--color-white-accent": "241 250 255",
+    "--color-chart-red": "253 247 244",
+    "--color-chart-sky": "238 246 252",
+    "--color-chart-mint": "240 252 247",
+    "--color-default": "0 13 37",
+    "--color-link": "2 99 224",
+    "--color-focus-visible": "11 42 96",
+    "--color-error": "177 15 35",
+    "--spacing-size-0": "0",
+    "--spacing-size-1": "0.8rem",
+    "--spacing-size-2": "1.2rem",
+    "--spacing-size-3": "1.6rem",
+    "--spacing-size-4": "2.4rem",
+    "--spacing-size-5": "3.2rem",
+    "--spacing-size-6": "4.8rem",
+    "--spacing-size-7": "6.4rem",
+    "--spacing-size-8": "9.6rem",
+    "--spacing-size-9": "12.8rem",
+    "--radius-small": "0.2rem",
+    "--radius-checkbox": "0.2rem",
+    "--radius-base": "0.4rem",
+    "--radius-large": "1rem",
+    "--radius-extra-large": "2rem",
+    "--radius-2x-large": "5rem",
+    "--radius-circle": "50%",
+    "--border-thin": "0.1rem",
+    "--border-light": "0.2rem",
+    "--border-medium": "0.4rem",
+    "--shadow-image": "0 4px 16px 0 rgb(18 28 45/0.15)",
+    "--shadow-card": "0 8px 24px 0 rgb(18 28 45/0.1)",
+    "--shadow-navigation": "0 14px 25px 0 rgb(18 28 45/0.12)",
+    "--shadow-large": "0 16px 60px 0 rgb(18 28 45/0.15)",
+    "--zindex-base": "1",
+    "--zindex-navigation": "2",
+    "--zindex-dropdown": "3",
+    "--zindex-tooltip": "4",
+    "--zindex-popup": "5",
+    "--filter-shadow": "drop-shadow(0 0.6rem 1.2rem rgba(13,21,55,.1))",
+    "--error-factor": "0.1rem",
+    "--top-nav-height": "3.2rem",
+    "--main-nav-height": "8rem",
+    "--bottom-nav-height": "8rem",
+    "--subnav-height": "0rem",
+    "--nav-height": "calc(3.2rem + 8rem)",
+    "--header-height": "calc(calc(3.2rem + 8rem) + 0rem - 0.1rem)",
+    "--vwo-el-opacity": "0",
+    "--vwo-el-filter": "alpha(opacity=0)",
+    "--vwo-el-bg": "none",
+    "--vwo-el-ts": "none"
+  },
+  "tokenCount": 175,
+  "unreadableSheets": 1,
+  "customEasings": [
+    "cubic-bezier(0.25,1,0.5,1)",
+    "cubic-bezier(0.4, 0, 0.2, 1)",
+    "cubic-bezier(0.23, 1, 0.32, 1)",
+    "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
+    "cubic-bezier(0.215, 0.61, 0.355, 1)"
+  ],
+  "keywordEasings": [
+    "ease-out",
+    "ease-in-out",
+    "linear",
+    "ease-in"
+  ],
+  "faceFamilies": {
+    "Whitney SSm": 10,
+    "Twilio Sans Mono": 1,
+    "Buffalo": 1
+  },
+  "loadedFamilies": [
+    "Whitney SSm",
+    "Twilio Sans Mono",
+    "Buffalo"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 6,
+    "clipPath": 1,
+    "maskImage": 4,
+    "backdropFilter": 0,
+    "filterBlur": 6,
+    "positionSticky": 20,
+    "containerQuery": 0,
+    "has": 93,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 26,
+    "reducedMotion": 10,
+    "perspective": 4,
+    "transform3d": 22
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 4,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 326
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 100,
+          "h": 100
+        }
+      ],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 32,
+      "intersectionObservers": 0,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 904,
+      "interactive": 101,
+      "svg": 29,
+      "svgPaths": 79,
+      "img": 10,
+      "picture": 0,
+      "video": 0,
+      "canvas": 0,
+      "sections": 1,
+      "headings": 4,
+      "cssRules": 6494
+    },
+    "scrollHeight": 3451,
+    "screensDeep": 3.83,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(0, 13, 37)",
+          "area": 4810185
+        },
+        {
+          "color": "rgb(25, 31, 54)",
+          "area": 1020666
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 171478
+        },
+        {
+          "color": "rgb(243, 244, 247)",
+          "area": 46080
+        },
+        {
+          "color": "rgb(239, 34, 58)",
+          "area": 31104
+        },
+        {
+          "color": "rgb(24, 102, 238)",
+          "area": 11752
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 675973
+        },
+        {
+          "color": "rgb(202, 205, 216)",
+          "area": 123283
+        },
+        {
+          "color": "rgb(58, 206, 250)",
+          "area": 16947
+        },
+        {
+          "color": "rgb(18, 28, 45)",
+          "area": 10198
+        },
+        {
+          "color": "rgb(24, 102, 238)",
+          "area": 1857
+        },
+        {
+          "color": "rgb(2, 99, 224)",
+          "area": 1188
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 499,
+    "totalKB": 10435,
+    "jsKB": 5318,
+    "videoKB": 567,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "www.twilio.com 5055KB",
+      "www.googletagmanager.com 2244KB",
+      "assets.qualified.com 966KB",
+      " 613KB",
+      "dev.visualwebsiteoptimizer.com 403KB",
+      "connect.facebook.net 344KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

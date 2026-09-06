@@ -1,0 +1,852 @@
+{
+  "url": "https://bruno-simon.com/",
+  "slug": "bruno-simon",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 1,
+      "el": 970,
+      "draws": 79856
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 1,
+      "el": 970,
+      "draws": 129299,
+      "shaders": 78,
+      "raf": 1128
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 1,
+      "el": 970,
+      "draws": 176699,
+      "shaders": 80,
+      "raf": 1482
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 1,
+      "el": 970,
+      "draws": 225982,
+      "shaders": 80,
+      "raf": 1852
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 1,
+      "el": 970,
+      "draws": 275301,
+      "shaders": 80,
+      "raf": 2224
+    }
+  ],
+  "loadMs": 12419,
+  "title": "Bruno's",
+  "viewport": "1440x900",
+  "scrollHeight": 900,
+  "screensDeep": 1,
+  "counts": {
+    "elements": 970,
+    "interactive": 64,
+    "svg": 7,
+    "svgPaths": 8,
+    "img": 44,
+    "picture": 0,
+    "video": 0,
+    "canvas": 1,
+    "sections": 0,
+    "headings": 6,
+    "cssRules": 426
+  },
+  "instrumented": {
+    "shaderPrograms": 78,
+    "shaderSources": 128,
+    "glslChars": 498072,
+    "glslHeads": [
+      "#version 300 es\n\n// Three.js r183 - Node System\n\n\n// extensions\n\n\n// precision\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\nprecision",
+      "#version 300 es\n\n// Three.js r183 - Node System\n\n\n// extensions\n\n\n// precision\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\nprecision",
+      "#version 300 es\n\n// Three.js r183 - Node System\n\n\n// extensions\n\n\n// precision\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\nprecision"
+    ],
+    "canvasContexts": [
+      {
+        "type": "webgl2",
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 16
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 16
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 280,
+        "h": 90
+      },
+      {
+        "type": "2d",
+        "w": 280,
+        "h": 90
+      },
+      {
+        "type": "2d",
+        "w": 280,
+        "h": 90
+      },
+      {
+        "type": "2d",
+        "w": 250,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 250,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 800,
+        "h": 120
+      },
+      {
+        "type": "2d",
+        "w": 800,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 800,
+        "h": 120
+      },
+      {
+        "type": "2d",
+        "w": 800,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 40
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 256,
+        "h": 64
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 76192,
+    "drawInstanced": 10842,
+    "texUploads": 0,
+    "rafTicks": 730,
+    "intersectionObservers": 0,
+    "audioContexts": 2,
+    "webAnimationsApi": 0
+  },
+  "canvases": [
+    {
+      "css": "1440x900",
+      "buffer": "1440x900"
+    }
+  ],
+  "type": {
+    "h2": {
+      "font-size": "40px",
+      "line-height": "normal",
+      "font-weight": "700",
+      "letter-spacing": "normal",
+      "font-family": "\"Amatic SC\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "20px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Nunito, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "20px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Nunito, sans-serif",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [],
+    "text": []
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 1,
+  "customEasings": [
+    "cubic-bezier(0.4, 1.6, 0.65, 1)",
+    "cubic-bezier(0.42, 0, 0.47, -0.55)",
+    "cubic-bezier(0.49, 2.2, 0.53, 0.75)",
+    "cubic-bezier(0.65, -1, 0.45, 1)"
+  ],
+  "keywordEasings": [],
+  "faceFamilies": {
+    "Pally-Regular": 1,
+    "Pally-Medium": 1,
+    "Pally-Bold": 1
+  },
+  "loadedFamilies": [
+    "Amatic SC",
+    "Nunito",
+    "Pally-Regular",
+    "Pally-Medium",
+    "Pally-Bold"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 0,
+    "maskImage": 0,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 1,
+    "reducedMotion": 0,
+    "perspective": 0,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": true,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "grab": 1,
+    "pointer": 141,
+    "help": 7,
+    "not-allowed": 30,
+    "text": 4
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 80,
+      "shaderSources": 131,
+      "glslChars": 503143,
+      "glslHeads": [
+        "#version 300 es\n\n// Three.js r183 - Node System\n\n\n// extensions\n\n\n// precision\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\nprecision",
+        "#version 300 es\n\n// Three.js r183 - Node System\n\n\n// extensions\n\n\n// precision\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\nprecision",
+        "#version 300 es\n\n// Three.js r183 - Node System\n\n\n// extensions\n\n\n// precision\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\nprecision"
+      ],
+      "canvasContexts": [
+        {
+          "type": "webgl2",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 16
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 16
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 280,
+          "h": 90
+        },
+        {
+          "type": "2d",
+          "w": 280,
+          "h": 90
+        },
+        {
+          "type": "2d",
+          "w": 280,
+          "h": 90
+        },
+        {
+          "type": "2d",
+          "w": 250,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 250,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 800,
+          "h": 120
+        },
+        {
+          "type": "2d",
+          "w": 800,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 800,
+          "h": 120
+        },
+        {
+          "type": "2d",
+          "w": 800,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 40
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 256,
+          "h": 64
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 275301,
+      "drawInstanced": 38481,
+      "texUploads": 0,
+      "rafTicks": 2224,
+      "intersectionObservers": 0,
+      "audioContexts": 2,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 970,
+      "interactive": 64,
+      "svg": 7,
+      "svgPaths": 8,
+      "img": 44,
+      "picture": 0,
+      "video": 0,
+      "canvas": 1,
+      "sections": 0,
+      "headings": 6,
+      "cssRules": 426
+    },
+    "scrollHeight": 900,
+    "screensDeep": 1,
+    "canvases": [
+      {
+        "css": "1440x900",
+        "buffer": "1440x900"
+      }
+    ],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": true,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [],
+      "text": []
+    }
+  },
+  "net": {
+    "requests": 155,
+    "totalKB": 7044,
+    "jsKB": 154,
+    "videoKB": 0,
+    "threeDCount": 23,
+    "threeDKB": 974,
+    "threeDSample": [
+      {
+        "u": "https://bruno-simon.com/respawns/respawnsReferences-compressed.glb",
+        "len": 2836
+      },
+      {
+        "u": "https://bruno-simon.com/respawns/respawnsReferences-compressed.glb?cb=1",
+        "len": 2836
+      },
+      {
+        "u": "https://bruno-simon.com/bushes/bushesReferences-compressed.glb?cb=1",
+        "len": 25588
+      },
+      {
+        "u": "https://bruno-simon.com/playground/playgroundPhysical-compressed.glb?cb=1",
+        "len": 1904
+      },
+      {
+        "u": "https://bruno-simon.com/flowers/flowersReferences-compressed.glb?cb=1",
+        "len": 19412
+      },
+      {
+        "u": "https://bruno-simon.com/fences/fences-compressed.glb?cb=1",
+        "len": 8692
+      }
+    ],
+    "topHosts": [
+      "bruno-simon.com 6213KB",
+      " 612KB",
+      "www.googletagmanager.com 154KB",
+      "fonts.gstatic.com 65KB",
+      "fonts.googleapis.com 0KB",
+      "www.google-analytics.com 0KB"
+    ],
+    "libHints": [
+      "rapier"
+    ]
+  },
+  "consoleErrors": []
+}

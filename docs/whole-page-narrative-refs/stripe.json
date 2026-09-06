@@ -1,0 +1,530 @@
+{
+  "url": "https://stripe.com/",
+  "slug": "stripe",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 915,
+      "canvas": 5,
+      "el": 4182,
+      "draws": 595
+    },
+    {
+      "y": 915,
+      "pct": 6,
+      "canvas": 5,
+      "el": 4182,
+      "draws": 595,
+      "shaders": 10,
+      "raf": 2147
+    },
+    {
+      "y": 915,
+      "pct": 6,
+      "canvas": 5,
+      "el": 4182,
+      "draws": 595,
+      "shaders": 10,
+      "raf": 2739
+    },
+    {
+      "y": 915,
+      "pct": 6,
+      "canvas": 5,
+      "el": 4182,
+      "draws": 595,
+      "shaders": 10,
+      "raf": 3495
+    },
+    {
+      "y": 915,
+      "pct": 6,
+      "canvas": 5,
+      "el": 4182,
+      "draws": 595,
+      "shaders": 10,
+      "raf": 4243
+    }
+  ],
+  "loadMs": 11212,
+  "title": "Stripe | Financial Infrastructure to Grow Your Revenue",
+  "viewport": "1440x900",
+  "scrollHeight": 15082,
+  "screensDeep": 16.76,
+  "counts": {
+    "elements": 4182,
+    "interactive": 232,
+    "svg": 284,
+    "svgPaths": 762,
+    "img": 48,
+    "picture": 46,
+    "video": 0,
+    "canvas": 5,
+    "sections": 16,
+    "headings": 33,
+    "cssRules": 0
+  },
+  "instrumented": {
+    "shaderPrograms": 9,
+    "shaderSources": 18,
+    "glslChars": 108375,
+    "glslHeads": [
+      "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr",
+      "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#def",
+      "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr"
+    ],
+    "canvasContexts": [
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 2160,
+        "h": 1080
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 594,
+    "drawInstanced": 0,
+    "texUploads": 40,
+    "rafTicks": 1496,
+    "intersectionObservers": 66,
+    "audioContexts": 0,
+    "webAnimationsApi": 181
+  },
+  "canvases": [
+    {
+      "css": "1393x761",
+      "buffer": "1392x761"
+    },
+    {
+      "css": "447x728",
+      "buffer": "447x728"
+    },
+    {
+      "css": "447x728",
+      "buffer": "447x728"
+    },
+    {
+      "css": "447x728",
+      "buffer": "447x728"
+    },
+    {
+      "css": "1232x460",
+      "buffer": "300x150"
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "48px",
+      "line-height": "55.2px",
+      "font-weight": "300",
+      "letter-spacing": "-0.96px",
+      "font-family": "sohne-var, \"SF Pro Display\", sans-serif",
+      "color": "rgb(129, 184, 26)",
+      "text-transform": "none",
+      "ratio": 1.15,
+      "trackingEm": -0.02
+    },
+    "h2": {
+      "font-size": "32px",
+      "line-height": "35.2px",
+      "font-weight": "300",
+      "letter-spacing": "-0.64px",
+      "font-family": "sohne-var, \"SF Pro Display\", sans-serif",
+      "color": "rgb(6, 27, 49)",
+      "text-transform": "none",
+      "ratio": 1.1,
+      "trackingEm": -0.02
+    },
+    "h3": {
+      "font-size": "26px",
+      "line-height": "29.12px",
+      "font-weight": "300",
+      "letter-spacing": "-0.26px",
+      "font-family": "sohne-var, \"SF Pro Display\", sans-serif",
+      "color": "rgb(6, 27, 49)",
+      "text-transform": "none",
+      "ratio": 1.12,
+      "trackingEm": -0.01
+    },
+    "p": {
+      "font-size": "32px",
+      "line-height": "35.2px",
+      "font-weight": "300",
+      "letter-spacing": "-0.64px",
+      "font-family": "sohne-var, \"SF Pro Display\", sans-serif",
+      "color": "rgb(100, 116, 141)",
+      "text-transform": "none",
+      "ratio": 1.1,
+      "trackingEm": -0.02
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "sohne-var, \"SF Pro Display\", sans-serif",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 25339259
+      },
+      {
+        "color": "rgb(13, 23, 56)",
+        "area": 4779135
+      },
+      {
+        "color": "rgb(248, 250, 253)",
+        "area": 4100158
+      },
+      {
+        "color": "rgb(229, 237, 245)",
+        "area": 3711784
+      },
+      {
+        "color": "rgba(229, 237, 245, 0.9)",
+        "area": 1296000
+      },
+      {
+        "color": "rgba(248, 250, 253, 0.45)",
+        "area": 703192
+      },
+      {
+        "color": "rgb(242, 247, 254)",
+        "area": 294840
+      },
+      {
+        "color": "rgb(230, 235, 241)",
+        "area": 276120
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(100, 116, 141)",
+        "area": 1184920
+      },
+      {
+        "color": "rgb(6, 27, 49)",
+        "area": 1128877
+      },
+      {
+        "color": "rgb(80, 97, 122)",
+        "area": 856564
+      },
+      {
+        "color": "rgb(131, 155, 200)",
+        "area": 252518
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 244700
+      },
+      {
+        "color": "rgb(129, 184, 26)",
+        "area": 159411
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 8,
+  "customEasings": [],
+  "keywordEasings": [],
+  "faceFamilies": {},
+  "loadedFamilies": [
+    "sohne-var",
+    "SourceCodePro"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 0,
+    "maskImage": 0,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 0,
+    "reducedMotion": 0,
+    "perspective": 0,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 5,
+    "maskImage": 5,
+    "clipPath": 98,
+    "transform3d": 0,
+    "willChange": 67,
+    "sticky": 0,
+    "filterBlur": 23
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": true,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 2396,
+    "grab": 78
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 10,
+      "shaderSources": 20,
+      "glslChars": 116767,
+      "glslHeads": [
+        "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr",
+        "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#def",
+        "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr"
+      ],
+      "canvasContexts": [
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 2160,
+          "h": 1080
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 595,
+      "drawInstanced": 0,
+      "texUploads": 40,
+      "rafTicks": 4707,
+      "intersectionObservers": 66,
+      "audioContexts": 0,
+      "webAnimationsApi": 181
+    },
+    "counts": {
+      "elements": 4182,
+      "interactive": 232,
+      "svg": 284,
+      "svgPaths": 762,
+      "img": 48,
+      "picture": 46,
+      "video": 0,
+      "canvas": 5,
+      "sections": 16,
+      "headings": 33,
+      "cssRules": 0
+    },
+    "scrollHeight": 15082,
+    "screensDeep": 16.76,
+    "canvases": [
+      {
+        "css": "1393x761",
+        "buffer": "1392x761"
+      },
+      {
+        "css": "447x728",
+        "buffer": "447x728"
+      },
+      {
+        "css": "447x728",
+        "buffer": "447x728"
+      },
+      {
+        "css": "447x728",
+        "buffer": "447x728"
+      },
+      {
+        "css": "1232x460",
+        "buffer": "300x150"
+      }
+    ],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": true,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 25339259
+        },
+        {
+          "color": "rgb(13, 23, 56)",
+          "area": 4779135
+        },
+        {
+          "color": "rgb(248, 250, 253)",
+          "area": 4100159
+        },
+        {
+          "color": "rgb(229, 237, 245)",
+          "area": 3711784
+        },
+        {
+          "color": "rgba(229, 237, 245, 0.9)",
+          "area": 1296000
+        },
+        {
+          "color": "rgba(248, 250, 253, 0.45)",
+          "area": 703192
+        },
+        {
+          "color": "rgb(242, 247, 254)",
+          "area": 294840
+        },
+        {
+          "color": "rgb(230, 235, 241)",
+          "area": 276120
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(100, 116, 141)",
+          "area": 1184920
+        },
+        {
+          "color": "rgb(6, 27, 49)",
+          "area": 1128877
+        },
+        {
+          "color": "rgb(80, 97, 122)",
+          "area": 856564
+        },
+        {
+          "color": "rgb(131, 155, 200)",
+          "area": 252518
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 244700
+        },
+        {
+          "color": "rgb(129, 184, 26)",
+          "area": 159411
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 209,
+    "totalKB": 2830,
+    "jsKB": 2179,
+    "videoKB": 0,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "b.stripecdn.com 1361KB",
+      "www.googletagmanager.com 830KB",
+      "images.stripeassets.com 517KB",
+      "snap.licdn.com 41KB",
+      "www.redditstatic.com 19KB",
+      "bat.bing.com 15KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

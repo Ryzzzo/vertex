@@ -1,0 +1,460 @@
+{
+  "url": "https://valmont.com/",
+  "slug": "valmont",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 300,
+      "pct": 7,
+      "canvas": 0,
+      "el": 1691,
+      "draws": 0,
+      "programs": 0,
+      "raf": 1898,
+      "texVideo": 0
+    },
+    {
+      "y": 800,
+      "pct": 19,
+      "canvas": 0,
+      "el": 1691,
+      "draws": 0,
+      "programs": 0,
+      "raf": 2335,
+      "texVideo": 0
+    },
+    {
+      "y": 1400,
+      "pct": 32,
+      "canvas": 0,
+      "el": 1691,
+      "draws": 0,
+      "programs": 0,
+      "raf": 2827,
+      "texVideo": 0
+    },
+    {
+      "y": 1900,
+      "pct": 44,
+      "canvas": 0,
+      "el": 1691,
+      "draws": 0,
+      "programs": 0,
+      "raf": 3261,
+      "texVideo": 0
+    },
+    {
+      "y": 2500,
+      "pct": 58,
+      "canvas": 0,
+      "el": 1691,
+      "draws": 0,
+      "programs": 0,
+      "raf": 3747,
+      "texVideo": 0
+    },
+    {
+      "y": 3100,
+      "pct": 72,
+      "canvas": 0,
+      "el": 1691,
+      "draws": 0,
+      "programs": 0,
+      "raf": 4227,
+      "texVideo": 0
+    },
+    {
+      "y": 3600,
+      "pct": 83,
+      "canvas": 0,
+      "el": 1691,
+      "draws": 0,
+      "programs": 0,
+      "raf": 4661,
+      "texVideo": 0
+    }
+  ],
+  "loadMs": 10398,
+  "title": "Valmont Industries | Infrastructure & Agriculture",
+  "viewport": "1440x900",
+  "scrollHeight": 5218,
+  "screensDeep": 5.8,
+  "counts": {
+    "elements": 1691,
+    "interactive": 92,
+    "svg": 34,
+    "svgPaths": 37,
+    "img": 14,
+    "video": 0,
+    "canvas": 0,
+    "sections": 11,
+    "headings": 4,
+    "cssRules": 4
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "wgslModules": 0,
+    "wgslChars": 0,
+    "wgslHeads": [],
+    "gpuAdapterRequested": 0,
+    "gpuDevices": 0,
+    "gpuPipelines": 0,
+    "gpuSubmits": 0,
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "videoTextureUploads": 0,
+    "glExtensions": [],
+    "rafTicks": 1208,
+    "intersectionObservers": 0,
+    "resizeObservers": 1,
+    "audioContexts": 0,
+    "webAnimationsApi": 0,
+    "workers": [],
+    "offscreenTransfers": 0,
+    "wasmCompiles": 0,
+    "pointerListeners": 0,
+    "wheelListeners": 4
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "76.5px",
+      "line-height": "80.325px",
+      "font-weight": "400",
+      "letter-spacing": "-2.295px",
+      "font-family": "Roboto, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif",
+      "color": "oklch(1 0 0)",
+      "text-transform": "none",
+      "ratio": 1.05,
+      "trackingEm": -0.03
+    },
+    "h2": {
+      "font-size": "46.8px",
+      "line-height": "49.14px",
+      "font-weight": "400",
+      "letter-spacing": "-1.404px",
+      "font-family": "Roboto, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif",
+      "color": "oklch(0 0 0)",
+      "text-transform": "none",
+      "ratio": 1.05,
+      "trackingEm": -0.03
+    },
+    "p": {
+      "font-size": "32.4px",
+      "line-height": "34.02px",
+      "font-weight": "400",
+      "letter-spacing": "-0.972px",
+      "font-family": "Roboto, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif",
+      "color": "oklch(1 0 0)",
+      "text-transform": "none",
+      "ratio": 1.05,
+      "trackingEm": -0.03
+    },
+    "body": {
+      "font-size": "9px",
+      "line-height": "13.5px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Roboto, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "oklch(0 0 0)",
+        "area": 2262305
+      },
+      {
+        "color": "oklab(0 0 0 / 0.1)",
+        "area": 1772443
+      },
+      {
+        "color": "oklch(1 0 0)",
+        "area": 1739948
+      },
+      {
+        "color": "rgb(221, 230, 235)",
+        "area": 1473743
+      },
+      {
+        "color": "oklab(0 0 0 / 0.3)",
+        "area": 1451520
+      }
+    ],
+    "text": [
+      {
+        "color": "oklch(0 0 0)",
+        "area": 155971
+      },
+      {
+        "color": "oklch(1 0 0)",
+        "area": 122670
+      },
+      {
+        "color": "oklch(0.8078 0 0)",
+        "area": 46680
+      },
+      {
+        "color": "oklch(0.6066 0 0)",
+        "area": 5628
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 5,
+  "customEasings": [],
+  "faceFamilies": {},
+  "loadedFamilies": [
+    "swiper-icons",
+    "Roboto",
+    "Roboto Mono",
+    "Material Icons"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 0,
+    "maskImage": 0,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "willChange": 0,
+    "reducedMotion": 0,
+    "perspective": 0,
+    "transform3d": 0
+  },
+  "computedFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 19,
+    "transform3d": 0,
+    "willChange": 46,
+    "sticky": 0,
+    "filterBlur": 1,
+    "fixed": 3
+  },
+  "libs": {
+    "three": false,
+    "threeRevision": null,
+    "ogl": false,
+    "babylon": false,
+    "playcanvas": false,
+    "pixi": false,
+    "curtains": false,
+    "r3f": false,
+    "gsap": true,
+    "gsapVersion": "3.13.0",
+    "scrollTrigger": true,
+    "lenis": true,
+    "locomotive": false,
+    "rive": false,
+    "lottie": false,
+    "spline": false,
+    "unicorn": false,
+    "theatre": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "vue": false,
+    "svelte": false,
+    "barba": false,
+    "splitting": false,
+    "swup": false,
+    "webflow": false,
+    "webgpuSupported": true
+  },
+  "cursors": {
+    "pointer": 748
+  },
+  "videos": [],
+  "afterPointer": {
+    "draws": 0,
+    "raf": 1576
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "wgslModules": 0,
+      "wgslChars": 0,
+      "wgslHeads": [],
+      "gpuAdapterRequested": 0,
+      "gpuDevices": 0,
+      "gpuPipelines": 0,
+      "gpuSubmits": 0,
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "videoTextureUploads": 0,
+      "glExtensions": [],
+      "rafTicks": 4887,
+      "intersectionObservers": 0,
+      "resizeObservers": 1,
+      "audioContexts": 0,
+      "webAnimationsApi": 0,
+      "workers": [],
+      "offscreenTransfers": 0,
+      "wasmCompiles": 0,
+      "pointerListeners": 0,
+      "wheelListeners": 4
+    },
+    "counts": {
+      "elements": 1691,
+      "interactive": 92,
+      "svg": 34,
+      "svgPaths": 37,
+      "img": 14,
+      "video": 0,
+      "canvas": 0,
+      "sections": 11,
+      "headings": 4,
+      "cssRules": 4
+    },
+    "canvases": [],
+    "scrollHeight": 5218,
+    "screensDeep": 5.8,
+    "libs": {
+      "three": false,
+      "threeRevision": null,
+      "ogl": false,
+      "babylon": false,
+      "playcanvas": false,
+      "pixi": false,
+      "curtains": false,
+      "r3f": false,
+      "gsap": true,
+      "gsapVersion": "3.13.0",
+      "scrollTrigger": true,
+      "lenis": true,
+      "locomotive": false,
+      "rive": false,
+      "lottie": false,
+      "spline": false,
+      "unicorn": false,
+      "theatre": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "vue": false,
+      "svelte": false,
+      "barba": false,
+      "splitting": false,
+      "swup": false,
+      "webflow": false,
+      "webgpuSupported": true
+    },
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "oklch(0 0 0)",
+          "area": 2262305
+        },
+        {
+          "color": "oklab(0 0 0 / 0.1)",
+          "area": 1772443
+        },
+        {
+          "color": "oklch(1 0 0)",
+          "area": 1739948
+        },
+        {
+          "color": "rgb(221, 230, 235)",
+          "area": 1473743
+        },
+        {
+          "color": "oklab(0 0 0 / 0.3)",
+          "area": 1451520
+        },
+        {
+          "color": "oklch(0.1638 0 0)",
+          "area": 79520
+        }
+      ],
+      "text": [
+        {
+          "color": "oklch(0 0 0)",
+          "area": 155971
+        },
+        {
+          "color": "oklch(1 0 0)",
+          "area": 122670
+        },
+        {
+          "color": "oklch(0.8078 0 0)",
+          "area": 46680
+        },
+        {
+          "color": "oklch(0.6066 0 0)",
+          "area": 5628
+        }
+      ]
+    },
+    "videos": [],
+    "computedFeature": {
+      "mixBlend": 0,
+      "maskImage": 0,
+      "clipPath": 19,
+      "transform3d": 0,
+      "willChange": 46,
+      "sticky": 0,
+      "filterBlur": 1,
+      "fixed": 3
+    },
+    "cursors": {
+      "pointer": 748
+    }
+  },
+  "net": {
+    "requests": 41,
+    "totalKB": 5900,
+    "byExtKB": {
+      "webp": 2802,
+      "jpg": 2717,
+      "js": 200,
+      "javascript; charset=UTF-8": 118,
+      "html; charset=utf-8": 36,
+      "woff2": 21,
+      "css": 6,
+      "gif": 0,
+      "css; charset=utf-8": 0,
+      "plain": 0
+    },
+    "topAssets": [],
+    "topHosts": [
+      "webassetsprod.valmont.com 2717KB",
+      "webassets.valmont.com 2541KB",
+      "ux.valmont.com 347KB",
+      "www.googletagmanager.com 118KB",
+      "cdnjs.cloudflare.com 82KB",
+      "valmont.com 36KB"
+    ],
+    "libHints": [
+      "gsap",
+      "lenis",
+      "scrolltrigger",
+      "ogl"
+    ]
+  },
+  "consoleErrors": []
+}

@@ -1,0 +1,434 @@
+{
+  "url": "https://nautil.us/",
+  "slug": "nautilus",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 1324,
+      "draws": 0
+    },
+    {
+      "y": 1504,
+      "pct": 20,
+      "canvas": 0,
+      "el": 1324,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 2704,
+      "pct": 37,
+      "canvas": 0,
+      "el": 1324,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 4304,
+      "pct": 58,
+      "canvas": 0,
+      "el": 1324,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 5904,
+      "pct": 80,
+      "canvas": 0,
+      "el": 1324,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 7372,
+      "pct": 100,
+      "canvas": 0,
+      "el": 1324,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    }
+  ],
+  "loadMs": 7488,
+  "title": "Nautilus | Science Connected",
+  "viewport": "1440x900",
+  "scrollHeight": 8368,
+  "screensDeep": 9.3,
+  "counts": {
+    "elements": 1324,
+    "interactive": 228,
+    "svg": 33,
+    "svgPaths": 39,
+    "img": 54,
+    "picture": 0,
+    "video": 0,
+    "canvas": 0,
+    "sections": 0,
+    "headings": 50,
+    "cssRules": 3758
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 0,
+    "intersectionObservers": 5,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h2": {
+      "font-size": "36px",
+      "line-height": "41.4px",
+      "font-weight": "600",
+      "letter-spacing": "0.32px",
+      "font-family": "\"Freight Display\", sans-serif",
+      "color": "rgb(25, 25, 25)",
+      "text-transform": "none",
+      "ratio": 1.15,
+      "trackingEm": 0.0089
+    },
+    "h3": {
+      "font-size": "24px",
+      "line-height": "27.6px",
+      "font-weight": "600",
+      "letter-spacing": "normal",
+      "font-family": "\"Freight Display\", sans-serif",
+      "color": "rgb(25, 25, 25)",
+      "text-transform": "none",
+      "ratio": 1.15,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "16px",
+      "line-height": "24.8px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Freight Sans\", sans-serif",
+      "color": "rgb(25, 25, 25)",
+      "text-transform": "none",
+      "ratio": 1.55,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "20px",
+      "line-height": "31px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Freight Sans\", sans-serif",
+      "color": "rgb(25, 25, 25)",
+      "text-transform": "none",
+      "ratio": 1.55,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 12315773
+      },
+      {
+        "color": "rgb(7, 134, 60)",
+        "area": 1252017
+      },
+      {
+        "color": "rgb(255, 245, 205)",
+        "area": 721260
+      },
+      {
+        "color": "rgb(25, 25, 25)",
+        "area": 461583
+      },
+      {
+        "color": "rgb(250, 250, 250)",
+        "area": 32880
+      },
+      {
+        "color": "rgb(51, 51, 51)",
+        "area": 9600
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(25, 25, 25)",
+        "area": 1215427
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 152259
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 76904
+      },
+      {
+        "color": "rgb(7, 134, 60)",
+        "area": 12892
+      },
+      {
+        "color": "rgb(51, 51, 51)",
+        "area": 1116
+      }
+    ]
+  },
+  "tokens": {
+    "--cc-font-family": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\"",
+    "--cc-font-size": "16px",
+    "--cc-bg": "#fff",
+    "--cc-z-index": "2147483647",
+    "--cc-text": "#2d4156",
+    "--cc-border-radius": ".45rem",
+    "--cc-btn-primary-bg": "#2d4156",
+    "--cc-btn-primary-text": "#fff",
+    "--cc-btn-primary-hover-bg": "#1d2e38",
+    "--cc-btn-primary-hover-text": "#fff",
+    "--cc-btn-secondary-bg": "#eaeff2",
+    "--cc-btn-secondary-text": "#2d4156",
+    "--cc-btn-secondary-hover-bg": "#d8e0e6",
+    "--cc-btn-secondary-hover-text": "#2d4156",
+    "--cc-btn-border-radius": "0.375rem",
+    "--cc-toggle-bg-off": "#919ea6",
+    "--cc-toggle-bg-on": "#2d4156",
+    "--cc-toggle-bg-readonly": "#d5dee2",
+    "--cc-toggle-knob-bg": "#fff",
+    "--cc-toggle-knob-icon-color": "#ecf2fa",
+    "--cc-block-text": "#2d4156",
+    "--cc-cookie-category-block-bg": "#f0f4f7",
+    "--cc-cookie-category-block-bg-hover": "#e9eff4",
+    "--cc-section-border": "#f1f3f5",
+    "--cc-cookie-table-border": "#e9edf2",
+    "--cc-overlay-bg": "#040608",
+    "--cc-overlay-opacity": ".85",
+    "--cc-consent-modal-box-shadow": "0 0.625rem 1.875rem rgba(2,2,3,.28)",
+    "--cc-webkit-scrollbar-bg": "#cfd5db",
+    "--cc-webkit-scrollbar-bg-hover": "#9199a0",
+    "--wp--preset--font-size--normal": "16px",
+    "--wp--preset--font-size--huge": "42px"
+  },
+  "tokenCount": 32,
+  "unreadableSheets": 0,
+  "customEasings": [],
+  "keywordEasings": [
+    "linear",
+    "ease-out",
+    "ease-in-out"
+  ],
+  "faceFamilies": {
+    "Freight Sans": 2,
+    "Freight Display": 1
+  },
+  "loadedFamilies": [
+    "Freight Sans",
+    "Freight Display"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 13,
+    "maskImage": 3,
+    "backdropFilter": 2,
+    "filterBlur": 2,
+    "positionSticky": 6,
+    "containerQuery": 14,
+    "has": 31,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 4,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 1,
+    "reducedMotion": 41,
+    "perspective": 0,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 1,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 480,
+    "text": 3
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 0,
+      "intersectionObservers": 5,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 1324,
+      "interactive": 228,
+      "svg": 33,
+      "svgPaths": 39,
+      "img": 54,
+      "picture": 0,
+      "video": 0,
+      "canvas": 0,
+      "sections": 0,
+      "headings": 50,
+      "cssRules": 3758
+    },
+    "scrollHeight": 8272,
+    "screensDeep": 9.19,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 12039293
+        },
+        {
+          "color": "rgb(7, 134, 60)",
+          "area": 1252017
+        },
+        {
+          "color": "rgb(255, 245, 205)",
+          "area": 721260
+        },
+        {
+          "color": "rgb(25, 25, 25)",
+          "area": 461583
+        },
+        {
+          "color": "rgb(250, 250, 250)",
+          "area": 32880
+        },
+        {
+          "color": "rgb(51, 51, 51)",
+          "area": 9600
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(25, 25, 25)",
+          "area": 1215427
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 152259
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 76904
+        },
+        {
+          "color": "rgb(7, 134, 60)",
+          "area": 12892
+        },
+        {
+          "color": "rgb(51, 51, 51)",
+          "area": 1116
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 187,
+    "totalKB": 3934,
+    "jsKB": 1045,
+    "videoKB": 0,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "lede-admin.nautil.us 2725KB",
+      "www.googletagmanager.com 492KB",
+      "securepubads.g.doubleclick.net 261KB",
+      "s3.us-east-2.amazonaws.com 220KB",
+      "nautil.us 129KB",
+      "s3-us-west-2.amazonaws.com 93KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

@@ -1,0 +1,524 @@
+{
+  "url": "https://basement.studio/",
+  "slug": "basement-studio",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 2,
+      "el": 646,
+      "draws": 56048
+    },
+    {
+      "y": 1200,
+      "pct": 22,
+      "canvas": 2,
+      "el": 646,
+      "draws": 64122,
+      "shaders": 37,
+      "raf": 816
+    },
+    {
+      "y": 2000,
+      "pct": 37,
+      "canvas": 2,
+      "el": 646,
+      "draws": 64122,
+      "shaders": 37,
+      "raf": 913
+    },
+    {
+      "y": 3200,
+      "pct": 59,
+      "canvas": 2,
+      "el": 646,
+      "draws": 64122,
+      "shaders": 37,
+      "raf": 1033
+    },
+    {
+      "y": 4400,
+      "pct": 81,
+      "canvas": 2,
+      "el": 646,
+      "draws": 64122,
+      "shaders": 37,
+      "raf": 1146
+    },
+    {
+      "y": 5417,
+      "pct": 100,
+      "canvas": 2,
+      "el": 646,
+      "draws": 64122,
+      "shaders": 37,
+      "raf": 1258
+    }
+  ],
+  "loadMs": 11515,
+  "title": "basement.studio | We make cool shit that performs.",
+  "viewport": "1440x900",
+  "scrollHeight": 6317,
+  "screensDeep": 7.02,
+  "counts": {
+    "elements": 646,
+    "interactive": 91,
+    "svg": 10,
+    "svgPaths": 25,
+    "img": 36,
+    "picture": 0,
+    "video": 0,
+    "canvas": 2,
+    "sections": 2,
+    "headings": 9,
+    "cssRules": 1055
+  },
+  "instrumented": {
+    "shaderPrograms": 37,
+    "shaderSources": 74,
+    "glslChars": 484393,
+    "glslHeads": [
+      "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr",
+      "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#def",
+      "#version 300 es\n#extension GL_ANGLE_multi_draw : require\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision hi"
+    ],
+    "canvasContexts": [
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 51048,
+    "drawInstanced": 0,
+    "texUploads": 305,
+    "rafTicks": 616,
+    "intersectionObservers": 1,
+    "audioContexts": 0,
+    "webAnimationsApi": 2
+  },
+  "canvases": [
+    {
+      "css": "1440x900",
+      "buffer": "1440x900"
+    },
+    {
+      "css": "1440x900",
+      "buffer": "1440x900"
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "87px",
+      "line-height": "78px",
+      "font-weight": "600",
+      "letter-spacing": "-3.48px",
+      "font-family": "Geist, \"Geist Fallback\"",
+      "color": "rgb(230, 230, 230)",
+      "text-transform": "none",
+      "ratio": 0.897,
+      "trackingEm": -0.04
+    },
+    "h2": {
+      "font-size": "24px",
+      "line-height": "24px",
+      "font-weight": "600",
+      "letter-spacing": "-0.72px",
+      "font-family": "Geist, \"Geist Fallback\"",
+      "color": "rgb(117, 117, 117)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": -0.03
+    },
+    "h3": {
+      "font-size": "20px",
+      "line-height": "20px",
+      "font-weight": "600",
+      "letter-spacing": "-0.4px",
+      "font-family": "Geist, \"Geist Fallback\"",
+      "color": "rgb(230, 230, 230)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": -0.02
+    },
+    "p": {
+      "font-size": "12px",
+      "line-height": "16px",
+      "font-weight": "600",
+      "letter-spacing": "normal",
+      "font-family": "Geist, \"Geist Fallback\"",
+      "color": "rgb(230, 230, 230)",
+      "text-transform": "none",
+      "ratio": 1.333,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Geist, \"Geist Fallback\"",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 18584844
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.9)",
+        "area": 1296000
+      },
+      {
+        "color": "rgb(46, 46, 46)",
+        "area": 24244
+      },
+      {
+        "color": "rgb(26, 26, 26)",
+        "area": 10080
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(196, 196, 196)",
+        "area": 1023392
+      },
+      {
+        "color": "rgb(230, 230, 230)",
+        "area": 418678
+      },
+      {
+        "color": "color(srgb 0.901961 0.901961 0.901961)",
+        "area": 122414
+      },
+      {
+        "color": "rgb(117, 117, 117)",
+        "area": 44853
+      },
+      {
+        "color": "rgb(255, 77, 0)",
+        "area": 2297
+      }
+    ]
+  },
+  "tokens": {
+    "--leva-colors-elevation1": "#292d39",
+    "--leva-colors-elevation2": "#181c20",
+    "--leva-colors-elevation3": "#373c4b",
+    "--leva-colors-accent1": "#0066dc",
+    "--leva-colors-accent2": "#007bff",
+    "--leva-colors-accent3": "#3c93ff",
+    "--leva-colors-highlight1": "#535760",
+    "--leva-colors-highlight2": "#8c92a4",
+    "--leva-colors-highlight3": "#fefefe",
+    "--leva-colors-vivid1": "#ffcc00",
+    "--leva-colors-folderWidgetColor": "#8c92a4",
+    "--leva-colors-folderTextColor": "#fefefe",
+    "--leva-colors-toolTipBackground": "#fefefe",
+    "--leva-colors-toolTipText": "#181c20",
+    "--leva-radii-xs": "2px",
+    "--leva-radii-sm": "3px",
+    "--leva-radii-lg": "10px",
+    "--leva-space-xs": "3px",
+    "--leva-space-sm": "6px",
+    "--leva-space-md": "10px",
+    "--leva-space-rowGap": "7px",
+    "--leva-space-colGap": "7px",
+    "--leva-fonts-mono": "ui-monospace, SFMono-Regular, Menlo, 'Roboto Mono', monospace",
+    "--leva-fonts-sans": "system-ui, sans-serif",
+    "--leva-fontSizes-root": "11px",
+    "--leva-fontSizes-toolTip": "11px",
+    "--leva-sizes-rootWidth": "280px",
+    "--leva-sizes-controlWidth": "160px",
+    "--leva-sizes-numberInputMinWidth": "38px",
+    "--leva-sizes-scrubberWidth": "8px",
+    "--leva-sizes-scrubberHeight": "16px",
+    "--leva-sizes-rowHeight": "24px",
+    "--leva-sizes-folderTitleHeight": "20px",
+    "--leva-sizes-checkboxSize": "16px",
+    "--leva-sizes-joystickWidth": "100px",
+    "--leva-sizes-joystickHeight": "100px",
+    "--leva-sizes-colorPickerWidth": "160px",
+    "--leva-sizes-colorPickerHeight": "100px",
+    "--leva-sizes-imagePreviewWidth": "160px",
+    "--leva-sizes-imagePreviewHeight": "100px",
+    "--leva-sizes-monitorHeight": "60px",
+    "--leva-sizes-titleBarHeight": "39px",
+    "--leva-shadows-level1": "0 0 9px 0 #00000088",
+    "--leva-shadows-level2": "0 4px 14px #00000033",
+    "--leva-borderWidths-root": "0px",
+    "--leva-borderWidths-input": "1px",
+    "--leva-borderWidths-focus": "1px",
+    "--leva-borderWidths-hover": "1px",
+    "--leva-borderWidths-active": "1px",
+    "--leva-borderWidths-folder": "1px",
+    "--leva-fontWeights-label": "normal",
+    "--leva-fontWeights-folder": "normal",
+    "--leva-fontWeights-button": "normal"
+  },
+  "tokenCount": 53,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(0.4, 0, 0.6, 1)",
+    "cubic-bezier(0.4, 0, 0.2, 1)",
+    "steps(32)",
+    "steps(var(--mask-frames)"
+  ],
+  "keywordEasings": [
+    "linear",
+    "ease-in-out"
+  ],
+  "faceFamilies": {
+    "Geist": 5,
+    "Geist Fallback": 1,
+    "Geist Mono": 6,
+    "Geist Mono Fallback": 1,
+    "flauta": 1,
+    "flauta Fallback": 1
+  },
+  "loadedFamilies": [
+    "Geist",
+    "Geist Fallback",
+    "Geist Mono",
+    "Geist Mono Fallback",
+    "flauta",
+    "flauta Fallback"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 1,
+    "clipPath": 0,
+    "maskImage": 2,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 4,
+    "containerQuery": 0,
+    "has": 5,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 1,
+    "textWrapBalance": 2,
+    "subgrid": 0,
+    "willChange": 2,
+    "reducedMotion": 1,
+    "perspective": 0,
+    "transform3d": 1
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 0,
+    "transform3d": 1,
+    "willChange": 0,
+    "sticky": 4,
+    "filterBlur": 1
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": true,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 106,
+    "alias": 186,
+    "text": 6
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 37,
+      "shaderSources": 74,
+      "glslChars": 484393,
+      "glslHeads": [
+        "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tpr",
+        "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#def",
+        "#version 300 es\n#extension GL_ANGLE_multi_draw : require\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision hi"
+      ],
+      "canvasContexts": [
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 64122,
+      "drawInstanced": 0,
+      "texUploads": 385,
+      "rafTicks": 1258,
+      "intersectionObservers": 1,
+      "audioContexts": 0,
+      "webAnimationsApi": 2
+    },
+    "counts": {
+      "elements": 646,
+      "interactive": 91,
+      "svg": 10,
+      "svgPaths": 25,
+      "img": 36,
+      "picture": 0,
+      "video": 0,
+      "canvas": 2,
+      "sections": 2,
+      "headings": 9,
+      "cssRules": 1055
+    },
+    "scrollHeight": 6317,
+    "screensDeep": 7.02,
+    "canvases": [
+      {
+        "css": "1440x900",
+        "buffer": "1440x900"
+      },
+      {
+        "css": "1440x900",
+        "buffer": "1440x900"
+      }
+    ],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": true,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 18584844
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.9)",
+          "area": 1296000
+        },
+        {
+          "color": "rgb(46, 46, 46)",
+          "area": 24244
+        },
+        {
+          "color": "rgb(26, 26, 26)",
+          "area": 10080
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(196, 196, 196)",
+          "area": 1023392
+        },
+        {
+          "color": "rgb(230, 230, 230)",
+          "area": 418678
+        },
+        {
+          "color": "color(srgb 0.901961 0.901961 0.901961)",
+          "area": 122414
+        },
+        {
+          "color": "rgb(117, 117, 117)",
+          "area": 44853
+        },
+        {
+          "color": "rgb(255, 77, 0)",
+          "area": 2297
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 289,
+    "totalKB": 12382,
+    "jsKB": 40,
+    "videoKB": 942,
+    "threeDCount": 31,
+    "threeDKB": 2909,
+    "threeDSample": [
+      {
+        "u": "https://basement.studio/3d/models/contactPhone-bee96b6d.glb",
+        "len": 0
+      },
+      {
+        "u": "https://basement.studio/3d/models/officeWireframe-d770f1ee.glb",
+        "len": 0
+      },
+      {
+        "u": "https://basement.studio/3d/textures/mapTextures-basketballVa-f77e5faf.exr",
+        "len": 16027
+      },
+      {
+        "u": "https://basement.studio/3d/textures/bake-00-lightmap-5f8d79f7.ktx2",
+        "len": 200331
+      },
+      {
+        "u": "https://basement.studio/3d/textures/bake-02-lightmap-420bb0f8.ktx2",
+        "len": 168540
+      },
+      {
+        "u": "https://basement.studio/3d/textures/bake-03-lightmap-0131918c.ktx2",
+        "len": 198452
+      }
+    ],
+    "topHosts": [
+      " 6190KB",
+      "basement.studio 5818KB",
+      "www.gstatic.com 294KB",
+      "cdn.sanity.io 77KB",
+      "analytics.ahrefs.com 3KB",
+      "o4509039968911360.ingest.us.sentry.io 0KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

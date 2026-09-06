@@ -1,0 +1,903 @@
+{
+  "url": "https://60fps.fr/",
+  "slug": "60fps",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 960,
+      "pct": 16,
+      "canvas": 1,
+      "el": 1409,
+      "draws": 3719,
+      "programs": 3,
+      "raf": 2934,
+      "texVideo": 0
+    },
+    {
+      "y": 1600,
+      "pct": 26,
+      "canvas": 1,
+      "el": 1409,
+      "draws": 4247,
+      "programs": 3,
+      "raf": 3333,
+      "texVideo": 0
+    },
+    {
+      "y": 2240,
+      "pct": 37,
+      "canvas": 1,
+      "el": 1409,
+      "draws": 4735,
+      "programs": 3,
+      "raf": 3703,
+      "texVideo": 0
+    },
+    {
+      "y": 3200,
+      "pct": 53,
+      "canvas": 1,
+      "el": 1409,
+      "draws": 5271,
+      "programs": 3,
+      "raf": 4107,
+      "texVideo": 0
+    },
+    {
+      "y": 3840,
+      "pct": 63,
+      "canvas": 1,
+      "el": 1409,
+      "draws": 5723,
+      "programs": 3,
+      "raf": 4449,
+      "texVideo": 0
+    },
+    {
+      "y": 4800,
+      "pct": 79,
+      "canvas": 1,
+      "el": 1409,
+      "draws": 6243,
+      "programs": 3,
+      "raf": 4841,
+      "texVideo": 0
+    },
+    {
+      "y": 5760,
+      "pct": 95,
+      "canvas": 1,
+      "el": 1409,
+      "draws": 6771,
+      "programs": 3,
+      "raf": 5239,
+      "texVideo": 0
+    },
+    {
+      "y": 6053,
+      "pct": 100,
+      "canvas": 1,
+      "el": 1409,
+      "draws": 7187,
+      "programs": 3,
+      "raf": 5555,
+      "texVideo": 0
+    }
+  ],
+  "loadMs": 10650,
+  "title": "60fps | creative digital production studio",
+  "viewport": "1440x900",
+  "scrollHeight": 6953,
+  "screensDeep": 7.73,
+  "counts": {
+    "elements": 1409,
+    "interactive": 48,
+    "svg": 11,
+    "svgPaths": 16,
+    "img": 25,
+    "video": 22,
+    "canvas": 1,
+    "sections": 6,
+    "headings": 1,
+    "cssRules": 335
+  },
+  "instrumented": {
+    "shaderPrograms": 3,
+    "shaderSources": 6,
+    "glslChars": 9772,
+    "glslHeads": [
+      "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\nuniform mat4 modelViewMatrix;\nuniform mat4 modelMatrix;\nuniform mat4 projectionMatrix;\n\nattribute vec2 uv;\nattribute vec3 position;\nattribute mat4 instanceMatrix;\n\nvarying vec2 vUv;\nvarying vec3 vSeed;\nvarying vec3 vPosition;\nvarying vec3 vViewPosition;\n\nvoid main() {\n\tvUv = uv;\n\t\n\tvSeed.x = fract(sin((instanceMatrix[3].z + instanceMatrix[3].y + instanceMatrix[3].x) * 287.) * 209.);\n\tvSeed.y = fract(cos((instanceMatrix[3].z + instanceMatrix[3].y - instanceMatrix[3].x) * 27.) * 20.);\n\tvSeed.z = fract(sin((instanceMatrix[3].z - instanceMatrix[3].y + instanceMatrix[3].x) * 9.) * 309.);\n\n\tvPosition = vec3(modelMatr",
+      "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\nuniform sampler2D tNoise, tNoise1, tFluid;\nuniform float uTime, uEffect, uScroll;\n\nvarying vec3 vSeed;\nvarying vec2 vUv;\nvarying vec3 vPosition;\nvarying vec3 vViewPosition;\n\n#define PI 3.14159265\n\nvec3 hueShift(vec3 color, float hue) {\n    vec3 k = vec3(0.57735, 0.57735, 0.57735);\n    float cosAngle = cos(hue);\n    return vec3(color * cosAngle + cross(k, color) * sin(hue) + k * dot(k, color) * (1.0 - cosAngle));\n}\n\nvec3 pow2(vec3 x) {return x*x;}\n\nvoid main() {\n\tvec2 dUv = vUv * (.1 + vSeed.x * 2.);\n\tvec3 fluid = texture2D(tFluid, vUv + vViewPosition.zz).rgb;\n\n\tfloat effectIntensity = smoothstep(.0, .2, uEffec",
+      "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\nattribute vec2 uv;\nattribute vec3 position;\n\nvarying vec2 vUv;\n\nvoid main() {\n\tvUv = uv;\n\tgl_Position = vec4(position, 1.0);\n}",
+      "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\nuniform sampler2D tNoise, tLast;\nuniform vec2 uMouse;\nuniform float uTime, uEffect, uScroll, uRatio, uSpeed;\n\nvarying vec2 vUv;\n\n#define PI 3.14159265\n\nvec3 pow2(vec3 x) {return x*x;}\n\nvoid main() {\n\tvec2 rUv = vUv;\n\trUv.y = (rUv.y - .5) * uRatio + .5;\n\tvec2 delta = (vUv - (uMouse + 1.) * .5) * vec2(uRatio, 1.);\n\tfloat intensity = smoothstep(uSpeed * .3 + .05, 0., length(delta)) * (1. + uSpeed);\n\tvec3 color = vec3(intensity, delta * intensity);\n\n\tvec3 last = texture2D(tLast, vUv - delta * .01 + (texture2D(tNoise, vUv * .04 + delta + uTime).rg - .5) * .01).rgb;\n\tlast = texture2D(tLast, vUv - delta * .02 - last.",
+      "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \n#define USE_SCREEN_DEFORMATION true\n#define USE_GAMMA true\n#define USE_RGB_SPLIT true\n#define USE_NOISE true\n#define USE_VIGNETTING true\n#define USE_AFTER_IMAGE true\nprecision highp float;\n\nattribute vec2 uv;\nattribute vec3 position;\n\nvarying vec2 vUv;\n\nvoid main() {\n\tvUv = uv;\n\tgl_Position = vec4(position, 1.0);\n}",
+      "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \n#define USE_SCREEN_DEFORMATION true\n#define USE_GAMMA true\n#define USE_RGB_SPLIT true\n#define USE_NOISE true\n#define USE_VIGNETTING true\n#define USE_AFTER_IMAGE true\nprecision highp float;\n\nuniform sampler2D tDiffuse, tDepth, tTexts, tAnalyser, tSolidNoise, tBlur, tNoise, tFluid;\nuniform vec2 uResolution;\nuniform float uMobile, uTime, uToonGlitch, uThunder, uLongpress, uBlur, uBlackFade;\nvarying vec2 vUv;\n\n#ifdef USE_SCREEN_DEFORMATION\nuniform float uScreenDeformation;\n#endif\n\n#ifdef USE_GAMMA\nuniform float uGamma;\n#endif\n\n#ifdef USE_CONTRAST\nuniform float uContrast;\n#endif\n\n#ifdef USE_BRIGHTNESS\nuniform float uBrightness;\n#endif\n\n#i"
+    ],
+    "wgslModules": 0,
+    "wgslChars": 0,
+    "wgslHeads": [],
+    "gpuAdapterRequested": 0,
+    "gpuDevices": 0,
+    "gpuPipelines": 0,
+    "gpuSubmits": 0,
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 256,
+        "h": 256,
+        "inDom": false
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "offscreen:2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      }
+    ],
+    "drawCalls": 2343,
+    "drawInstanced": 585,
+    "texUploads": 15,
+    "videoTextureUploads": 0,
+    "glExtensions": [
+      "EXT_color_buffer_float",
+      "WEBGL_clip_cull_distance",
+      "OES_texture_float_linear",
+      "EXT_color_buffer_half_float",
+      "WEBGL_multisampled_render_to_texture",
+      "EXT_texture_filter_anisotropic",
+      "KHR_parallel_shader_compile"
+    ],
+    "rafTicks": 1885,
+    "intersectionObservers": 0,
+    "resizeObservers": 2,
+    "audioContexts": 0,
+    "webAnimationsApi": 0,
+    "workers": [],
+    "offscreenTransfers": 0,
+    "wasmCompiles": 0,
+    "pointerListeners": 2,
+    "wheelListeners": 4
+  },
+  "canvases": [
+    {
+      "css": "1440x900",
+      "buffer": "1440x900",
+      "dpr": 1
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "22px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Nekst, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "13px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "-0.52px",
+      "font-family": "Nekst, sans-serif",
+      "color": "rgb(75, 75, 75)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": -0.04
+    },
+    "body": {
+      "font-size": "14.0625px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Times New Roman\"",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 20025315
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.3)",
+        "area": 2114675
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 821678
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.05)",
+        "area": 810968
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.4)",
+        "area": 278065
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.1)",
+        "area": 144784
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.5)",
+        "area": 20476
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.15)",
+        "area": 8448
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 210706
+      },
+      {
+        "color": "rgb(217, 186, 132)",
+        "area": 67315
+      },
+      {
+        "color": "rgb(75, 75, 75)",
+        "area": 47110
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 5280
+      },
+      {
+        "color": "rgb(175, 175, 175)",
+        "area": 2717
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(0.645, 0.045, 0.355, 1)",
+    "cubic-bezier(0.215, 0.61, 0.355, 1)",
+    "cubic-bezier(0.165, 0.84, 0.44, 1)"
+  ],
+  "faceFamilies": {
+    "Nekst": 11
+  },
+  "loadedFamilies": [
+    "Nekst"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 4,
+    "maskImage": 0,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "willChange": 0,
+    "reducedMotion": 0,
+    "perspective": 1,
+    "transform3d": 4
+  },
+  "computedFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 5,
+    "transform3d": 153,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0,
+    "fixed": 5
+  },
+  "libs": {
+    "three": true,
+    "threeRevision": null,
+    "ogl": false,
+    "babylon": false,
+    "playcanvas": false,
+    "pixi": false,
+    "curtains": false,
+    "r3f": false,
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "locomotive": false,
+    "rive": false,
+    "lottie": false,
+    "spline": false,
+    "unicorn": false,
+    "theatre": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "vue": false,
+    "svelte": true,
+    "barba": false,
+    "splitting": false,
+    "swup": false,
+    "webflow": false,
+    "webgpuSupported": true
+  },
+  "cursors": {
+    "pointer": 245
+  },
+  "videos": [
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "https://60fps.fr/assets/videos/projects/17.mp4",
+      "w": 960,
+      "h": 480,
+      "loop": true,
+      "autoplay": true
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false
+    }
+  ],
+  "afterPointer": {
+    "draws": 3147,
+    "raf": 2502
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 3,
+      "shaderSources": 6,
+      "glslChars": 9772,
+      "glslHeads": [
+        "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\nuniform mat4 modelViewMatrix;\nuniform mat4 modelMatrix;\nuniform mat4 projectionMatrix;\n\nattribute vec2 uv;\nattribute vec3 position;\nattribute mat4 instanceMatrix;\n\nvarying vec2 vUv;\nvarying vec3 vSeed;\nvarying vec3 vPosition;\nvarying vec3 vViewPosition;\n\nvoid main() {\n\tvUv = uv;\n\t\n\tvSeed.x = fract(sin((instanceMatrix[3].z + instanceMatrix[3].y + instanceMatrix[3].x) * 287.) * 209.);\n\tvSeed.y = fract(cos((instanceMatrix[3].z + instanceMatrix[3].y - instanceMatrix[3].x) * 27.) * 20.);\n\tvSeed.z = fract(sin((instanceMatrix[3].z - instanceMatrix[3].y + instanceMatrix[3].x) * 9.) * 309.);\n\n\tvPosition = vec3(modelMatr",
+        "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\nuniform sampler2D tNoise, tNoise1, tFluid;\nuniform float uTime, uEffect, uScroll;\n\nvarying vec3 vSeed;\nvarying vec2 vUv;\nvarying vec3 vPosition;\nvarying vec3 vViewPosition;\n\n#define PI 3.14159265\n\nvec3 hueShift(vec3 color, float hue) {\n    vec3 k = vec3(0.57735, 0.57735, 0.57735);\n    float cosAngle = cos(hue);\n    return vec3(color * cosAngle + cross(k, color) * sin(hue) + k * dot(k, color) * (1.0 - cosAngle));\n}\n\nvec3 pow2(vec3 x) {return x*x;}\n\nvoid main() {\n\tvec2 dUv = vUv * (.1 + vSeed.x * 2.);\n\tvec3 fluid = texture2D(tFluid, vUv + vViewPosition.zz).rgb;\n\n\tfloat effectIntensity = smoothstep(.0, .2, uEffec",
+        "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\nattribute vec2 uv;\nattribute vec3 position;\n\nvarying vec2 vUv;\n\nvoid main() {\n\tvUv = uv;\n\tgl_Position = vec4(position, 1.0);\n}",
+        "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \nprecision highp float;\n\nuniform sampler2D tNoise, tLast;\nuniform vec2 uMouse;\nuniform float uTime, uEffect, uScroll, uRatio, uSpeed;\n\nvarying vec2 vUv;\n\n#define PI 3.14159265\n\nvec3 pow2(vec3 x) {return x*x;}\n\nvoid main() {\n\tvec2 rUv = vUv;\n\trUv.y = (rUv.y - .5) * uRatio + .5;\n\tvec2 delta = (vUv - (uMouse + 1.) * .5) * vec2(uRatio, 1.);\n\tfloat intensity = smoothstep(uSpeed * .3 + .05, 0., length(delta)) * (1. + uSpeed);\n\tvec3 color = vec3(intensity, delta * intensity);\n\n\tvec3 last = texture2D(tLast, vUv - delta * .01 + (texture2D(tNoise, vUv * .04 + delta + uTime).rg - .5) * .01).rgb;\n\tlast = texture2D(tLast, vUv - delta * .02 - last.",
+        "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \n#define USE_SCREEN_DEFORMATION true\n#define USE_GAMMA true\n#define USE_RGB_SPLIT true\n#define USE_NOISE true\n#define USE_VIGNETTING true\n#define USE_AFTER_IMAGE true\nprecision highp float;\n\nattribute vec2 uv;\nattribute vec3 position;\n\nvarying vec2 vUv;\n\nvoid main() {\n\tvUv = uv;\n\tgl_Position = vec4(position, 1.0);\n}",
+        "#define SHADER_TYPE RawShaderMaterial\n#define SHADER_NAME \n#define USE_SCREEN_DEFORMATION true\n#define USE_GAMMA true\n#define USE_RGB_SPLIT true\n#define USE_NOISE true\n#define USE_VIGNETTING true\n#define USE_AFTER_IMAGE true\nprecision highp float;\n\nuniform sampler2D tDiffuse, tDepth, tTexts, tAnalyser, tSolidNoise, tBlur, tNoise, tFluid;\nuniform vec2 uResolution;\nuniform float uMobile, uTime, uToonGlitch, uThunder, uLongpress, uBlur, uBlackFade;\nvarying vec2 vUv;\n\n#ifdef USE_SCREEN_DEFORMATION\nuniform float uScreenDeformation;\n#endif\n\n#ifdef USE_GAMMA\nuniform float uGamma;\n#endif\n\n#ifdef USE_CONTRAST\nuniform float uContrast;\n#endif\n\n#ifdef USE_BRIGHTNESS\nuniform float uBrightness;\n#endif\n\n#i"
+      ],
+      "wgslModules": 0,
+      "wgslChars": 0,
+      "wgslHeads": [],
+      "gpuAdapterRequested": 0,
+      "gpuDevices": 0,
+      "gpuPipelines": 0,
+      "gpuSubmits": 0,
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 256,
+          "h": 256,
+          "inDom": false
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "offscreen:2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        }
+      ],
+      "drawCalls": 7187,
+      "drawInstanced": 1796,
+      "texUploads": 15,
+      "videoTextureUploads": 0,
+      "glExtensions": [
+        "EXT_color_buffer_float",
+        "WEBGL_clip_cull_distance",
+        "OES_texture_float_linear",
+        "EXT_color_buffer_half_float",
+        "WEBGL_multisampled_render_to_texture",
+        "EXT_texture_filter_anisotropic",
+        "KHR_parallel_shader_compile"
+      ],
+      "rafTicks": 5555,
+      "intersectionObservers": 0,
+      "resizeObservers": 2,
+      "audioContexts": 0,
+      "webAnimationsApi": 0,
+      "workers": [],
+      "offscreenTransfers": 0,
+      "wasmCompiles": 0,
+      "pointerListeners": 2,
+      "wheelListeners": 4
+    },
+    "counts": {
+      "elements": 1409,
+      "interactive": 48,
+      "svg": 11,
+      "svgPaths": 16,
+      "img": 25,
+      "video": 22,
+      "canvas": 1,
+      "sections": 6,
+      "headings": 1,
+      "cssRules": 335
+    },
+    "canvases": [
+      {
+        "css": "1440x900",
+        "buffer": "1440x900",
+        "dpr": 1
+      }
+    ],
+    "scrollHeight": 6953,
+    "screensDeep": 7.73,
+    "libs": {
+      "three": true,
+      "threeRevision": null,
+      "ogl": false,
+      "babylon": false,
+      "playcanvas": false,
+      "pixi": false,
+      "curtains": false,
+      "r3f": false,
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "locomotive": false,
+      "rive": false,
+      "lottie": false,
+      "spline": false,
+      "unicorn": false,
+      "theatre": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "vue": false,
+      "svelte": true,
+      "barba": false,
+      "splitting": false,
+      "swup": false,
+      "webflow": false,
+      "webgpuSupported": true
+    },
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 20025315
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.3)",
+          "area": 2114675
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 821678
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.05)",
+          "area": 810968
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.4)",
+          "area": 278065
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.1)",
+          "area": 144784
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.5)",
+          "area": 20476
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.15)",
+          "area": 8448
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 209733
+        },
+        {
+          "color": "rgb(217, 186, 132)",
+          "area": 67315
+        },
+        {
+          "color": "rgb(75, 75, 75)",
+          "area": 47110
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 5280
+        },
+        {
+          "color": "rgb(175, 175, 175)",
+          "area": 2717
+        }
+      ]
+    },
+    "videos": [
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "https://60fps.fr/assets/videos/projects/17.mp4",
+        "w": 960,
+        "h": 480,
+        "loop": true,
+        "autoplay": true
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "https://60fps.fr/assets/videos/projects/15.mp4",
+        "w": 960,
+        "h": 484,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "https://60fps.fr/assets/videos/projects/14.mp4",
+        "w": 960,
+        "h": 540,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "https://60fps.fr/assets/videos/projects/3.mp4",
+        "w": 2225,
+        "h": 1080,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false
+      },
+      {
+        "src": "https://60fps.fr/assets/videos/projects/0.mp4",
+        "w": 2227,
+        "h": 1080,
+        "loop": true,
+        "autoplay": false
+      }
+    ],
+    "computedFeature": {
+      "mixBlend": 0,
+      "maskImage": 0,
+      "clipPath": 5,
+      "transform3d": 165,
+      "willChange": 0,
+      "sticky": 0,
+      "filterBlur": 0,
+      "fixed": 5
+    },
+    "cursors": {
+      "pointer": 245
+    }
+  },
+  "net": {
+    "requests": 72,
+    "totalKB": 13331,
+    "byExtKB": {
+      "mp4": 12234,
+      "jpg": 684,
+      "other": 315,
+      "glb": 49,
+      "woff2": 42,
+      "css": 4,
+      "js": 2,
+      "html": 0,
+      "javascript;charset=UTF-8": 0,
+      "plain": 0,
+      "svg": 0,
+      "plain; charset=UTF-8": 0
+    },
+    "topAssets": [
+      {
+        "u": "14.mp4",
+        "kb": 3742
+      },
+      {
+        "u": "17.mp4",
+        "kb": 2274
+      },
+      {
+        "u": "15.mp4",
+        "kb": 1637
+      },
+      {
+        "u": "0.mp4",
+        "kb": 1551
+      },
+      {
+        "u": "15.mp4",
+        "kb": 1541
+      },
+      {
+        "u": "3.mp4",
+        "kb": 1489
+      },
+      {
+        "u": "room-Cb4bLSll.glb",
+        "kb": 49
+      }
+    ],
+    "topHosts": [
+      "60fps.fr 13016KB",
+      " 315KB",
+      "static.cloudflareinsights.com 0KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

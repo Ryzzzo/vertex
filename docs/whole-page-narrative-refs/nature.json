@@ -1,0 +1,406 @@
+{
+  "url": "https://www.nature.com/",
+  "slug": "nature",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 1376,
+      "draws": 0
+    },
+    {
+      "y": 1200,
+      "pct": 21,
+      "canvas": 0,
+      "el": 1376,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 2000,
+      "pct": 35,
+      "canvas": 0,
+      "el": 1376,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 3200,
+      "pct": 57,
+      "canvas": 0,
+      "el": 1376,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 4800,
+      "pct": 85,
+      "canvas": 0,
+      "el": 1376,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 5646,
+      "pct": 100,
+      "canvas": 0,
+      "el": 1382,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    }
+  ],
+  "loadMs": 7989,
+  "title": "Nature",
+  "viewport": "1440x900",
+  "scrollHeight": 6277,
+  "screensDeep": 6.97,
+  "counts": {
+    "elements": 1373,
+    "interactive": 155,
+    "svg": 16,
+    "svgPaths": 109,
+    "img": 39,
+    "picture": 20,
+    "video": 0,
+    "canvas": 0,
+    "sections": 7,
+    "headings": 55,
+    "cssRules": 1511
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 0,
+    "intersectionObservers": 4,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "32px",
+      "line-height": "0px",
+      "font-weight": "700",
+      "letter-spacing": "-0.625px",
+      "font-family": "Harding, Palatino, serif",
+      "color": "rgb(34, 34, 34)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": -0.0195
+    },
+    "h2": {
+      "font-size": "24px",
+      "line-height": "25.6px",
+      "font-weight": "700",
+      "letter-spacing": "-0.18745px",
+      "font-family": "Harding, Palatino, serif",
+      "color": "rgb(238, 238, 238)",
+      "text-transform": "none",
+      "ratio": 1.067,
+      "trackingEm": -0.0078
+    },
+    "h3": {
+      "font-size": "20px",
+      "line-height": "28px",
+      "font-weight": "400",
+      "letter-spacing": "-0.18745px",
+      "font-family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, \"Helvetica Neue\", sans-serif",
+      "color": "rgb(238, 238, 238)",
+      "text-transform": "none",
+      "ratio": 1.4,
+      "trackingEm": -0.0094
+    },
+    "p": {
+      "font-size": "18px",
+      "line-height": "31.68px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, \"Helvetica Neue\", sans-serif",
+      "color": "rgb(34, 34, 34)",
+      "text-transform": "none",
+      "ratio": 1.76,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "18px",
+      "line-height": "31.68px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, \"Helvetica Neue\", sans-serif",
+      "color": "rgb(34, 34, 34)",
+      "text-transform": "none",
+      "ratio": 1.76,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 9205763
+      },
+      {
+        "color": "rgb(1, 50, 75)",
+        "area": 1093343
+      },
+      {
+        "color": "rgb(41, 48, 60)",
+        "area": 501889
+      },
+      {
+        "color": "rgb(204, 204, 204)",
+        "area": 217440
+      },
+      {
+        "color": "rgb(0, 102, 153)",
+        "area": 63077
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(34, 34, 34)",
+        "area": 1442700
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 344897
+      },
+      {
+        "color": "rgb(51, 51, 51)",
+        "area": 29904
+      },
+      {
+        "color": "rgb(227, 228, 229)",
+        "area": 23241
+      },
+      {
+        "color": "rgb(0, 102, 153)",
+        "area": 4300
+      },
+      {
+        "color": "rgb(183, 70, 22)",
+        "area": 1502
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 0,
+  "customEasings": [],
+  "keywordEasings": [
+    "ease-in-out",
+    "ease-out"
+  ],
+  "faceFamilies": {
+    "Harding": 4
+  },
+  "loadedFamilies": [
+    "Harding"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 3,
+    "maskImage": 0,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 1,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 2,
+    "reducedMotion": 1,
+    "perspective": 0,
+    "transform3d": 2
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 4,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 218,
+    "text": 2
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 0,
+      "intersectionObservers": 13,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 1382,
+      "interactive": 158,
+      "svg": 16,
+      "svgPaths": 109,
+      "img": 46,
+      "picture": 20,
+      "video": 0,
+      "canvas": 0,
+      "sections": 7,
+      "headings": 55,
+      "cssRules": 1511
+    },
+    "scrollHeight": 6546,
+    "screensDeep": 7.27,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 9612050
+        },
+        {
+          "color": "rgb(1, 50, 75)",
+          "area": 1092915
+        },
+        {
+          "color": "rgb(41, 48, 60)",
+          "area": 501889
+        },
+        {
+          "color": "rgb(41, 48, 59)",
+          "area": 219483
+        },
+        {
+          "color": "rgb(204, 204, 204)",
+          "area": 217440
+        },
+        {
+          "color": "rgb(0, 102, 153)",
+          "area": 63077
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(34, 34, 34)",
+          "area": 1407941
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 378005
+        },
+        {
+          "color": "rgb(51, 51, 51)",
+          "area": 42504
+        },
+        {
+          "color": "rgb(227, 228, 229)",
+          "area": 23241
+        },
+        {
+          "color": "rgb(0, 102, 153)",
+          "area": 4300
+        },
+        {
+          "color": "rgb(183, 70, 22)",
+          "area": 1502
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 187,
+    "totalKB": 3143,
+    "jsKB": 1194,
+    "videoKB": 0,
+    "threeDCount": 1,
+    "threeDKB": 7,
+    "threeDSample": [
+      {
+        "u": "https://cdn.permutive.com/models/v2/85d1226e-5b20-4b6e-a867-b25bb35f6639-models.bin",
+        "len": 7138
+      }
+    ],
+    "topHosts": [
+      " 1015KB",
+      "pagead2.googlesyndication.com 597KB",
+      "media.springernature.com 322KB",
+      "www.nature.com 295KB",
+      "tpc.googlesyndication.com 249KB",
+      "2e4b93d1-a8ae-4a89-8885-6109135ac0de.edge.permutive.app 232KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

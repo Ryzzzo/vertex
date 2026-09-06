@@ -1,0 +1,925 @@
+{
+  "url": "https://www.nk.studio/work/",
+  "slug": "nk-studio-work",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 2084,
+      "pct": 10,
+      "canvas": 4,
+      "el": 2560,
+      "draws": 28854,
+      "programs": 60,
+      "raf": 10805,
+      "texVideo": 0
+    },
+    {
+      "y": 4689,
+      "pct": 23,
+      "canvas": 4,
+      "el": 2560,
+      "draws": 28854,
+      "programs": 60,
+      "raf": 13172,
+      "texVideo": 0
+    },
+    {
+      "y": 7294,
+      "pct": 35,
+      "canvas": 4,
+      "el": 2560,
+      "draws": 28854,
+      "programs": 60,
+      "raf": 15393,
+      "texVideo": 0
+    },
+    {
+      "y": 10420,
+      "pct": 50,
+      "canvas": 4,
+      "el": 2560,
+      "draws": 28854,
+      "programs": 60,
+      "raf": 17872,
+      "texVideo": 0
+    },
+    {
+      "y": 13025,
+      "pct": 63,
+      "canvas": 4,
+      "el": 2560,
+      "draws": 28854,
+      "programs": 60,
+      "raf": 20135,
+      "texVideo": 0
+    },
+    {
+      "y": 16151,
+      "pct": 78,
+      "canvas": 4,
+      "el": 2561,
+      "draws": 28854,
+      "programs": 60,
+      "raf": 22632,
+      "texVideo": 0
+    },
+    {
+      "y": 18756,
+      "pct": 90,
+      "canvas": 4,
+      "el": 2561,
+      "draws": 31906,
+      "programs": 60,
+      "raf": 25066,
+      "texVideo": 0
+    }
+  ],
+  "loadMs": 16205,
+  "title": "Selected Work | Digital Platforms, Websites & Brand Experiences - /nk.studio ®",
+  "viewport": "1440x900",
+  "scrollHeight": 21736,
+  "screensDeep": 24.15,
+  "counts": {
+    "elements": 2560,
+    "interactive": 335,
+    "svg": 99,
+    "svgPaths": 130,
+    "img": 77,
+    "video": 0,
+    "canvas": 4,
+    "sections": 2,
+    "headings": 5,
+    "cssRules": 2320
+  },
+  "instrumented": {
+    "shaderPrograms": 60,
+    "shaderSources": 120,
+    "glslChars": 2785871,
+    "glslHeads": [
+      "attribute vec2 vertex;\n                attribute vec2 uv;\n                uniform vec4 mat;\n                uniform vec2 translate;\n                varying vec2 st;\n                void main() {\n                    st = uv;\n                    gl_Position = vec4(mat2(mat) * vertex + translate, 0, 1);\n                }",
+      "precision highp float;\n                uniform sampler2D image;\n                varying vec2 st;\n                void main() {\n                    gl_FragColor = texture2D(image, st);\n                }",
+      "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tprecision highp samplerCube;\n\tprecision highp sampler3D;\n\tprecision highp sampler2DArray;\n\tprecision highp sampler2DShadow;\n\tprecision highp samplerCubeShadow;\n\tprecision highp sampler2DArrayShadow;\n\tprecision highp isampler2D;\n\tprecision highp isampler3D;\n\tprecision highp isamplerCube;\n\tprecision highp isampler2DArray;\n\tprecision highp usampler2D;\n\tprecision highp usampler3D;\n\tprecision highp usamplerCube;\n\tprecision highp usampler2DArray;\n\t\n#define HIGH_PRECISION\n#define SHADER_TYPE MeshStandardMaterial\n#define SHADER_NAME firefly_ski",
+      "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#define texture2D texture\n#define textureCube texture\n#define texture2DProj textureProj\n#define texture2DLodEXT textureLod\n#define texture2DProjLodEXT textureProjLod\n#define textureCubeLodEXT textureLod\n#define texture2DGradEXT textureGrad\n#define texture2DProjGradEXT textureProjGrad\n#define textureCubeGradEXT textureGrad\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tprecision highp samplerCube;\n\tprecision highp sampler3D;\n\tprecision highp sampler2DArray;\n\tprecision highp sampler2DShadow;\n\tprecision highp sampl",
+      "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tprecision highp samplerCube;\n\tprecision highp sampler3D;\n\tprecision highp sampler2DArray;\n\tprecision highp sampler2DShadow;\n\tprecision highp samplerCubeShadow;\n\tprecision highp sampler2DArrayShadow;\n\tprecision highp isampler2D;\n\tprecision highp isampler3D;\n\tprecision highp isamplerCube;\n\tprecision highp isampler2DArray;\n\tprecision highp usampler2D;\n\tprecision highp usampler3D;\n\tprecision highp usamplerCube;\n\tprecision highp usampler2DArray;\n\t\n#define HIGH_PRECISION\n#define SHADER_TYPE MeshPhongMaterial\n#define SHADER_NAME \n#define USE_M",
+      "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#define texture2D texture\n#define textureCube texture\n#define texture2DProj textureProj\n#define texture2DLodEXT textureLod\n#define texture2DProjLodEXT textureProjLod\n#define textureCubeLodEXT textureLod\n#define texture2DGradEXT textureGrad\n#define texture2DProjGradEXT textureProjGrad\n#define textureCubeGradEXT textureGrad\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tprecision highp samplerCube;\n\tprecision highp sampler3D;\n\tprecision highp sampler2DArray;\n\tprecision highp sampler2DShadow;\n\tprecision highp sampl"
+    ],
+    "wgslModules": 0,
+    "wgslChars": 0,
+    "wgslHeads": [],
+    "gpuAdapterRequested": 0,
+    "gpuDevices": 0,
+    "gpuPipelines": 0,
+    "gpuSubmits": 0,
+    "canvasContexts": [
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "offscreen:2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": true
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 200,
+        "h": 40,
+        "inDom": true
+      },
+      {
+        "type": "2d",
+        "w": 200,
+        "h": 40,
+        "inDom": true
+      }
+    ],
+    "drawCalls": 22638,
+    "drawInstanced": 4772,
+    "texUploads": 102,
+    "videoTextureUploads": 0,
+    "glExtensions": [
+      "EXT_color_buffer_float",
+      "WEBGL_clip_cull_distance",
+      "OES_texture_float_linear",
+      "EXT_color_buffer_half_float",
+      "WEBGL_multisampled_render_to_texture",
+      "WEBGL_render_shared_exponent",
+      "EXT_texture_filter_anisotropic",
+      "KHR_parallel_shader_compile"
+    ],
+    "rafTicks": 6702,
+    "intersectionObservers": 55,
+    "resizeObservers": 60,
+    "audioContexts": 1,
+    "webAnimationsApi": 1,
+    "workers": [],
+    "offscreenTransfers": 0,
+    "wasmCompiles": 2,
+    "pointerListeners": 17,
+    "wheelListeners": 10
+  },
+  "canvases": [
+    {
+      "css": "1440x900",
+      "buffer": "1440x900",
+      "dpr": 1
+    },
+    {
+      "css": "200x40",
+      "buffer": "200x40",
+      "dpr": 1
+    },
+    {
+      "css": "200x40",
+      "buffer": "200x40",
+      "dpr": 1
+    },
+    {
+      "css": "70x28",
+      "buffer": "70x28",
+      "dpr": 1
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "56px",
+      "line-height": "67.2px",
+      "font-weight": "400",
+      "letter-spacing": "-1.68px",
+      "font-family": "\"DM Sans\", sans-serif",
+      "color": "rgb(253, 253, 249)",
+      "text-transform": "none",
+      "ratio": 1.2,
+      "trackingEm": -0.03
+    },
+    "h2": {
+      "font-size": "56px",
+      "line-height": "61.04px",
+      "font-weight": "400",
+      "letter-spacing": "-1.68px",
+      "font-family": "\"DM Sans\", sans-serif",
+      "color": "rgb(7, 11, 10)",
+      "text-transform": "none",
+      "ratio": 1.09,
+      "trackingEm": -0.03
+    },
+    "h3": {
+      "font-size": "56px",
+      "line-height": "61.04px",
+      "font-weight": "400",
+      "letter-spacing": "-1.68px",
+      "font-family": "\"DM Sans\", sans-serif",
+      "color": "rgb(253, 253, 249)",
+      "text-transform": "none",
+      "ratio": 1.09,
+      "trackingEm": -0.03
+    },
+    "p": {
+      "font-size": "12px",
+      "line-height": "12px",
+      "font-weight": "700",
+      "letter-spacing": "normal",
+      "font-family": "\"DM Sans\", sans-serif",
+      "color": "rgb(186, 186, 186)",
+      "text-transform": "uppercase",
+      "ratio": 1,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"DM Sans\", sans-serif",
+      "color": "rgb(253, 253, 249)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(7, 11, 10)",
+        "area": 30178723
+      },
+      {
+        "color": "rgb(253, 253, 249)",
+        "area": 27799351
+      },
+      {
+        "color": "rgba(7, 11, 10, 0.3)",
+        "area": 2618478
+      },
+      {
+        "color": "rgb(4, 24, 25)",
+        "area": 1296000
+      },
+      {
+        "color": "color(srgb 0.0862745 0.0666667 0.14902 / 0.4)",
+        "area": 891270
+      },
+      {
+        "color": "color(srgb 0.00392157 0.0901961 0.290196 / 0.4)",
+        "area": 891270
+      },
+      {
+        "color": "color(srgb 0.619608 0.00392157 0.0823529 / 0.4)",
+        "area": 891270
+      },
+      {
+        "color": "color(srgb 0.0431373 0.0392157 0.156863 / 0.4)",
+        "area": 891270
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(7, 11, 10)",
+        "area": 3871463
+      },
+      {
+        "color": "rgb(253, 253, 249)",
+        "area": 882583
+      },
+      {
+        "color": "rgba(253, 253, 249, 0.75)",
+        "area": 345483
+      },
+      {
+        "color": "rgb(19, 24, 23)",
+        "area": 172620
+      },
+      {
+        "color": "rgb(186, 186, 186)",
+        "area": 100985
+      },
+      {
+        "color": "rgb(136, 138, 136)",
+        "area": 14615
+      }
+    ]
+  },
+  "tokens": {
+    "--grid-cols-space": "28px",
+    "--wrapper": "95%",
+    "--max-w-wrapper": "1280px",
+    "--sidebar": "140px"
+  },
+  "tokenCount": 4,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(0.23, 1, 0.32, 1)",
+    "cubic-bezier(0.64, 0.1, 0, 1)",
+    "cubic-bezier(0.77, 0, 0.175, 1)",
+    "cubic-bezier(0.86, 0, 0.07, 1)",
+    "cubic-bezier(0.18, 0.78, 0, 1)"
+  ],
+  "faceFamilies": {
+    "DM Sans": 2,
+    "DM Sans Fallback": 1
+  },
+  "loadedFamilies": [
+    "DM Sans",
+    "DM Sans Fallback"
+  ],
+  "cssFeature": {
+    "animationTimeline": 1,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 4,
+    "clipPath": 23,
+    "maskImage": 4,
+    "backdropFilter": 15,
+    "filterBlur": 24,
+    "positionSticky": 15,
+    "containerQuery": 0,
+    "has": 2,
+    "oklch": 0,
+    "colorMix": 1,
+    "willChange": 5,
+    "reducedMotion": 0,
+    "perspective": 3,
+    "transform3d": 1
+  },
+  "computedFeature": {
+    "mixBlend": 2,
+    "maskImage": 0,
+    "clipPath": 18,
+    "transform3d": 0,
+    "willChange": 1,
+    "sticky": 7,
+    "filterBlur": 0,
+    "fixed": 17
+  },
+  "libs": {
+    "three": true,
+    "threeRevision": null,
+    "ogl": false,
+    "babylon": false,
+    "playcanvas": false,
+    "pixi": false,
+    "curtains": false,
+    "r3f": false,
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "locomotive": false,
+    "rive": false,
+    "lottie": false,
+    "spline": false,
+    "unicorn": false,
+    "theatre": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "vue": false,
+    "svelte": false,
+    "barba": false,
+    "splitting": false,
+    "swup": false,
+    "webflow": false,
+    "webgpuSupported": true
+  },
+  "cursors": {
+    "pointer": 1612,
+    "text": 7
+  },
+  "videos": [],
+  "afterPointer": {
+    "draws": 27734,
+    "raf": 8910
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 60,
+      "shaderSources": 120,
+      "glslChars": 2785871,
+      "glslHeads": [
+        "attribute vec2 vertex;\n                attribute vec2 uv;\n                uniform vec4 mat;\n                uniform vec2 translate;\n                varying vec2 st;\n                void main() {\n                    st = uv;\n                    gl_Position = vec4(mat2(mat) * vertex + translate, 0, 1);\n                }",
+        "precision highp float;\n                uniform sampler2D image;\n                varying vec2 st;\n                void main() {\n                    gl_FragColor = texture2D(image, st);\n                }",
+        "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tprecision highp samplerCube;\n\tprecision highp sampler3D;\n\tprecision highp sampler2DArray;\n\tprecision highp sampler2DShadow;\n\tprecision highp samplerCubeShadow;\n\tprecision highp sampler2DArrayShadow;\n\tprecision highp isampler2D;\n\tprecision highp isampler3D;\n\tprecision highp isamplerCube;\n\tprecision highp isampler2DArray;\n\tprecision highp usampler2D;\n\tprecision highp usampler3D;\n\tprecision highp usamplerCube;\n\tprecision highp usampler2DArray;\n\t\n#define HIGH_PRECISION\n#define SHADER_TYPE MeshStandardMaterial\n#define SHADER_NAME firefly_ski",
+        "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#define texture2D texture\n#define textureCube texture\n#define texture2DProj textureProj\n#define texture2DLodEXT textureLod\n#define texture2DProjLodEXT textureProjLod\n#define textureCubeLodEXT textureLod\n#define texture2DGradEXT textureGrad\n#define texture2DProjGradEXT textureProjGrad\n#define textureCubeGradEXT textureGrad\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tprecision highp samplerCube;\n\tprecision highp sampler3D;\n\tprecision highp sampler2DArray;\n\tprecision highp sampler2DShadow;\n\tprecision highp sampl",
+        "#version 300 es\n\n#define attribute in\n#define varying out\n#define texture2D texture\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tprecision highp samplerCube;\n\tprecision highp sampler3D;\n\tprecision highp sampler2DArray;\n\tprecision highp sampler2DShadow;\n\tprecision highp samplerCubeShadow;\n\tprecision highp sampler2DArrayShadow;\n\tprecision highp isampler2D;\n\tprecision highp isampler3D;\n\tprecision highp isamplerCube;\n\tprecision highp isampler2DArray;\n\tprecision highp usampler2D;\n\tprecision highp usampler3D;\n\tprecision highp usamplerCube;\n\tprecision highp usampler2DArray;\n\t\n#define HIGH_PRECISION\n#define SHADER_TYPE MeshPhongMaterial\n#define SHADER_NAME \n#define USE_M",
+        "#version 300 es\n#define varying in\nlayout(location = 0) out highp vec4 pc_fragColor;\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#define texture2D texture\n#define textureCube texture\n#define texture2DProj textureProj\n#define texture2DLodEXT textureLod\n#define texture2DProjLodEXT textureProjLod\n#define textureCubeLodEXT textureLod\n#define texture2DGradEXT textureGrad\n#define texture2DProjGradEXT textureProjGrad\n#define textureCubeGradEXT textureGrad\nprecision highp float;\n\tprecision highp int;\n\tprecision highp sampler2D;\n\tprecision highp samplerCube;\n\tprecision highp sampler3D;\n\tprecision highp sampler2DArray;\n\tprecision highp sampler2DShadow;\n\tprecision highp sampl"
+      ],
+      "wgslModules": 0,
+      "wgslChars": 0,
+      "wgslHeads": [],
+      "gpuAdapterRequested": 0,
+      "gpuDevices": 0,
+      "gpuPipelines": 0,
+      "gpuSubmits": 0,
+      "canvasContexts": [
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "offscreen:2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": true
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 200,
+          "h": 40,
+          "inDom": true
+        },
+        {
+          "type": "2d",
+          "w": 200,
+          "h": 40,
+          "inDom": true
+        }
+      ],
+      "drawCalls": 34118,
+      "drawInstanced": 5592,
+      "texUploads": 102,
+      "videoTextureUploads": 0,
+      "glExtensions": [
+        "EXT_color_buffer_float",
+        "WEBGL_clip_cull_distance",
+        "OES_texture_float_linear",
+        "EXT_color_buffer_half_float",
+        "WEBGL_multisampled_render_to_texture",
+        "WEBGL_render_shared_exponent",
+        "EXT_texture_filter_anisotropic",
+        "KHR_parallel_shader_compile"
+      ],
+      "rafTicks": 26243,
+      "intersectionObservers": 55,
+      "resizeObservers": 161,
+      "audioContexts": 1,
+      "webAnimationsApi": 1,
+      "workers": [],
+      "offscreenTransfers": 0,
+      "wasmCompiles": 2,
+      "pointerListeners": 17,
+      "wheelListeners": 10
+    },
+    "counts": {
+      "elements": 2561,
+      "interactive": 335,
+      "svg": 99,
+      "svgPaths": 130,
+      "img": 78,
+      "video": 0,
+      "canvas": 4,
+      "sections": 2,
+      "headings": 5,
+      "cssRules": 2320
+    },
+    "canvases": [
+      {
+        "css": "1440x900",
+        "buffer": "1440x900",
+        "dpr": 1
+      },
+      {
+        "css": "200x40",
+        "buffer": "200x40",
+        "dpr": 1
+      },
+      {
+        "css": "200x40",
+        "buffer": "200x40",
+        "dpr": 1
+      },
+      {
+        "css": "70x28",
+        "buffer": "70x28",
+        "dpr": 1
+      }
+    ],
+    "scrollHeight": 21736,
+    "screensDeep": 24.15,
+    "libs": {
+      "three": true,
+      "threeRevision": null,
+      "ogl": false,
+      "babylon": false,
+      "playcanvas": false,
+      "pixi": false,
+      "curtains": false,
+      "r3f": false,
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "locomotive": false,
+      "rive": false,
+      "lottie": false,
+      "spline": false,
+      "unicorn": false,
+      "theatre": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "vue": false,
+      "svelte": false,
+      "barba": false,
+      "splitting": false,
+      "swup": false,
+      "webflow": false,
+      "webgpuSupported": true
+    },
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(7, 11, 10)",
+          "area": 30178723
+        },
+        {
+          "color": "rgb(253, 253, 249)",
+          "area": 27799351
+        },
+        {
+          "color": "rgba(7, 11, 10, 0.3)",
+          "area": 2618478
+        },
+        {
+          "color": "rgb(4, 24, 25)",
+          "area": 1296000
+        },
+        {
+          "color": "color(srgb 0.0862745 0.0666667 0.14902 / 0.4)",
+          "area": 891270
+        },
+        {
+          "color": "color(srgb 0.00392157 0.0901961 0.290196 / 0.4)",
+          "area": 891270
+        },
+        {
+          "color": "color(srgb 0.619608 0.00392157 0.0823529 / 0.4)",
+          "area": 891270
+        },
+        {
+          "color": "color(srgb 0.0431373 0.0392157 0.156863 / 0.4)",
+          "area": 891270
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(7, 11, 10)",
+          "area": 3871463
+        },
+        {
+          "color": "rgb(253, 253, 249)",
+          "area": 893769
+        },
+        {
+          "color": "rgba(253, 253, 249, 0.75)",
+          "area": 345483
+        },
+        {
+          "color": "rgb(19, 24, 23)",
+          "area": 172620
+        },
+        {
+          "color": "rgb(186, 186, 186)",
+          "area": 100985
+        },
+        {
+          "color": "rgb(32, 231, 183)",
+          "area": 19122
+        }
+      ]
+    },
+    "videos": [],
+    "computedFeature": {
+      "mixBlend": 2,
+      "maskImage": 0,
+      "clipPath": 18,
+      "transform3d": 0,
+      "willChange": 1,
+      "sticky": 7,
+      "filterBlur": 0,
+      "fixed": 17
+    },
+    "cursors": {
+      "pointer": 1612,
+      "text": 7
+    }
+  },
+  "net": {
+    "requests": 410,
+    "totalKB": 48565,
+    "byExtKB": {
+      "jpg": 36249,
+      "png": 9071,
+      "mp3": 2236,
+      "wasm": 683,
+      "javascript; charset=UTF-8": 165,
+      "js": 123,
+      "woff2": 36,
+      "css": 1,
+      "svg": 0,
+      "plain; charset=utf-8": 0,
+      "html; charset=utf-8": 0,
+      "json": 0
+    },
+    "topAssets": [
+      {
+        "u": "dotlottie-player.wasm",
+        "kb": 683
+      }
+    ],
+    "topHosts": [
+      "www.nk.studio 28673KB",
+      "images.prismic.io 18923KB",
+      "cdn.jsdelivr.net 683KB",
+      "www.googletagmanager.com 284KB",
+      "analytics.ahrefs.com 3KB",
+      "unpkg.com 0KB"
+    ],
+    "libHints": [
+      "ogl"
+    ]
+  },
+  "consoleErrors": []
+}

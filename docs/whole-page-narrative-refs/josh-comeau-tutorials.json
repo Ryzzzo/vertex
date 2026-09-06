@@ -1,0 +1,320 @@
+{
+  "url": "https://www.joshwcomeau.com/tutorials/",
+  "slug": "josh-comeau-tutorials",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 78,
+      "draws": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 0,
+      "el": 78,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 0,
+      "el": 78,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 0,
+      "el": 78,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 0,
+      "el": 78,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    }
+  ],
+  "loadMs": 4589,
+  "title": "Not found • Josh W. Comeau",
+  "viewport": "1440x900",
+  "scrollHeight": 900,
+  "screensDeep": 1,
+  "counts": {
+    "elements": 78,
+    "interactive": 2,
+    "svg": 1,
+    "svgPaths": 2,
+    "img": 2,
+    "picture": 2,
+    "video": 0,
+    "canvas": 0,
+    "sections": 0,
+    "headings": 1,
+    "cssRules": 241
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 0,
+    "intersectionObservers": 1,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "144px",
+      "line-height": "216px",
+      "font-weight": "600",
+      "letter-spacing": "normal",
+      "font-family": "Wotfard, Wotfard-fallback, sans-serif",
+      "color": "rgb(227, 230, 232)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "48px",
+      "line-height": "72px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Wotfard, Wotfard-fallback, sans-serif",
+      "color": "rgb(227, 230, 232)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Wotfard, Wotfard-fallback, sans-serif",
+      "color": "rgb(10, 12, 16)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 1284036
+      },
+      {
+        "color": "rgb(13, 15, 18)",
+        "area": 1282500
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(227, 230, 232)",
+        "area": 264960
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 1536
+      }
+    ]
+  },
+  "tokens": {
+    "--cursorX": "0px",
+    "--cursorY": "0px"
+  },
+  "tokenCount": 2,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "linear(0,0.1407 4.43%,0.9383 16.72%,1.0774 20.43%,1.1493 24.31%,1.1629 26.95%,1.1536 29.93%,1.0168 43.09%,0.9766 51%,1.0033 76.88%,1)",
+    "cubic-bezier(0.56, 0.1, 0.85, 0.87)"
+  ],
+  "keywordEasings": [
+    "ease"
+  ],
+  "faceFamilies": {
+    "Wotfard-fallback": 1,
+    "Wotfard": 4,
+    "Cartograph CF": 3,
+    "Sriracha": 1
+  },
+  "loadedFamilies": [
+    "Wotfard-fallback",
+    "Wotfard",
+    "Cartograph CF",
+    "Sriracha"
+  ],
+  "cssFeature": {
+    "animationTimeline": 2,
+    "viewTimeline": 1,
+    "scrollTimeline": 1,
+    "timelineScope": 1,
+    "mixBlend": 2,
+    "clipPath": 1,
+    "maskImage": 0,
+    "backdropFilter": 1,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 4,
+    "startingStyle": 0,
+    "anchor": 1,
+    "oklch": 1,
+    "colorMix": 0,
+    "textWrapBalance": 1,
+    "subgrid": 0,
+    "willChange": 3,
+    "reducedMotion": 6,
+    "perspective": 1,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "none": 44,
+    "url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACQSURBVHgBhZA9CsQgEIVnxCJHSJkjpFGw8wh7xD2KtRbmCClzhAVRdx6YLsQHyoifP/MxjeSct1KKl3Jl5kXG2Vo7rLUH9hlTSgmAp+cEY0zgGOMupz/0Eq31V0l2mqTW6lXvfaN5VoC/GSXMgqevGQgDSpSEGQhNyjl3Sv0GB7jkewVNMIDmxr8v6TaMi+gPLrNAA0C8lG8AAAAASUVORK5CYII=\"), auto": 28,
+    "pointer": 6
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 0,
+      "intersectionObservers": 1,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 78,
+      "interactive": 2,
+      "svg": 1,
+      "svgPaths": 2,
+      "img": 2,
+      "picture": 2,
+      "video": 0,
+      "canvas": 0,
+      "sections": 0,
+      "headings": 1,
+      "cssRules": 241
+    },
+    "scrollHeight": 900,
+    "screensDeep": 1,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 1284036
+        },
+        {
+          "color": "rgb(13, 15, 18)",
+          "area": 1282500
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(227, 230, 232)",
+          "area": 264960
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 1536
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 27,
+    "totalKB": 80,
+    "jsKB": 1,
+    "videoKB": 0,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "www.joshwcomeau.com 80KB",
+      "cdn.usefathom.com 0KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 ()"
+  ]
+}

@@ -1,0 +1,555 @@
+{
+  "url": "https://www.metabase.com/",
+  "slug": "metabase",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 1979,
+      "draws": 0
+    },
+    {
+      "y": 1600,
+      "pct": 17,
+      "canvas": 0,
+      "el": 1979,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 58
+    },
+    {
+      "y": 3200,
+      "pct": 35,
+      "canvas": 0,
+      "el": 1979,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 58
+    },
+    {
+      "y": 5200,
+      "pct": 57,
+      "canvas": 0,
+      "el": 1979,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 58
+    },
+    {
+      "y": 7600,
+      "pct": 80,
+      "canvas": 0,
+      "el": 1979,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 60
+    },
+    {
+      "y": 9453,
+      "pct": 100,
+      "canvas": 0,
+      "el": 1979,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 60
+    }
+  ],
+  "loadMs": 6068,
+  "title": "Open source AI analytics you can verify | Metabase",
+  "viewport": "1440x900",
+  "scrollHeight": 10072,
+  "screensDeep": 11.19,
+  "counts": {
+    "elements": 1979,
+    "interactive": 311,
+    "svg": 104,
+    "svgPaths": 472,
+    "img": 165,
+    "picture": 0,
+    "video": 0,
+    "canvas": 0,
+    "sections": 9,
+    "headings": 13,
+    "cssRules": 8286
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 56,
+    "intersectionObservers": 2,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "60px",
+      "line-height": "60px",
+      "font-weight": "700",
+      "letter-spacing": "-2.4px",
+      "font-family": "Lato, \"Helvetica Neue\", Helvetica, sans-serif",
+      "color": "rgb(34, 36, 43)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": -0.04
+    },
+    "h2": {
+      "font-size": "36px",
+      "line-height": "39.9996px",
+      "font-weight": "700",
+      "letter-spacing": "normal",
+      "font-family": "Lato, \"Helvetica Neue\", Helvetica, sans-serif",
+      "color": "rgb(34, 36, 43)",
+      "text-transform": "none",
+      "ratio": 1.111,
+      "trackingEm": 0
+    },
+    "h3": {
+      "font-size": "22px",
+      "line-height": "30px",
+      "font-weight": "700",
+      "letter-spacing": "normal",
+      "font-family": "Lato, \"Helvetica Neue\", Helvetica, sans-serif",
+      "color": "rgb(34, 36, 43)",
+      "text-transform": "none",
+      "ratio": 1.364,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "14px",
+      "line-height": "26px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Lato, \"Helvetica Neue\", Helvetica, sans-serif",
+      "color": "rgb(141, 147, 165)",
+      "text-transform": "none",
+      "ratio": 1.857,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Lato, \"Helvetica Neue\", Helvetica, sans-serif",
+      "color": "rgb(90, 96, 114)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 22263626
+      },
+      {
+        "color": "rgb(249, 250, 251)",
+        "area": 6033109
+      },
+      {
+        "color": "rgb(250, 251, 254)",
+        "area": 2302712
+      },
+      {
+        "color": "rgb(249, 251, 254)",
+        "area": 107680
+      },
+      {
+        "color": "rgb(238, 246, 252)",
+        "area": 77056
+      },
+      {
+        "color": "rgb(80, 158, 227)",
+        "area": 22339
+      },
+      {
+        "color": "rgb(241, 242, 244)",
+        "area": 21591
+      },
+      {
+        "color": "rgb(252, 253, 255)",
+        "area": 20280
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(90, 96, 114)",
+        "area": 1027002
+      },
+      {
+        "color": "rgb(76, 87, 115)",
+        "area": 494210
+      },
+      {
+        "color": "rgb(34, 36, 43)",
+        "area": 440512
+      },
+      {
+        "color": "rgb(141, 147, 165)",
+        "area": 163124
+      },
+      {
+        "color": "rgb(80, 158, 227)",
+        "area": 43231
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 23870
+      }
+    ]
+  },
+  "tokens": {
+    "--bs-blue": "",
+    "--bs-indigo": "",
+    "--bs-purple": "",
+    "--bs-pink": "",
+    "--bs-red": "",
+    "--bs-orange": "",
+    "--bs-yellow": "",
+    "--bs-green": "",
+    "--bs-teal": "",
+    "--bs-cyan": "",
+    "--bs-white": "",
+    "--bs-gray": "",
+    "--bs-gray-dark": "",
+    "--bs-primary": "",
+    "--bs-secondary": "",
+    "--bs-success": "",
+    "--bs-info": "",
+    "--bs-warning": "",
+    "--bs-danger": "",
+    "--bs-light": "",
+    "--bs-dark": "",
+    "--bs-font-sans-serif": "",
+    "--bs-font-monospace": "",
+    "--bs-gradient": "",
+    "--navigation-header-height": "77px",
+    "--font-sans": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+    "--font-mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+    "--color-gray-50": "oklch(98.5% .002 247.839)",
+    "--color-gray-200": "oklch(92.8% .006 264.531)",
+    "--color-neutral-200": "oklch(92.2% 0 none)",
+    "--color-neutral-300": "oklch(87% 0 none)",
+    "--color-black": "#000",
+    "--color-white": "#fff",
+    "--spacing": ".25rem",
+    "--container-2xl": "42rem",
+    "--container-3xl": "48rem",
+    "--text-xs": ".75rem",
+    "--text-xs--line-height": "calc(1 / .75)",
+    "--text-sm": ".875rem",
+    "--text-sm--line-height": "calc(1.25 / .875)",
+    "--text-base": "1rem",
+    "--text-base--line-height": "1.5",
+    "--text-lg": "1.125rem",
+    "--text-lg--line-height": "calc(1.75 / 1.125)",
+    "--text-xl": "1.25rem",
+    "--text-xl--line-height": "calc(1.75 / 1.25)",
+    "--text-2xl": "1.5rem",
+    "--text-2xl--line-height": "calc(2 / 1.5)",
+    "--text-3xl": "1.875rem",
+    "--text-3xl--line-height": "1.2",
+    "--text-4xl": "2.25rem",
+    "--text-4xl--line-height": "calc(2.5 / 2.25)",
+    "--text-5xl": "3rem",
+    "--text-5xl--line-height": "1",
+    "--text-6xl": "3.75rem",
+    "--text-6xl--line-height": "1",
+    "--font-weight-normal": "400",
+    "--font-weight-medium": "500",
+    "--font-weight-semibold": "600",
+    "--font-weight-bold": "700",
+    "--font-weight-black": "900",
+    "--tracking-tight": "-.025em",
+    "--leading-tight": "1.25",
+    "--leading-snug": "1.375",
+    "--leading-normal": "1.5",
+    "--radius-sm": ".25rem",
+    "--radius-md": ".375rem",
+    "--radius-lg": ".5rem",
+    "--radius-xl": ".75rem",
+    "--radius-2xl": "1rem",
+    "--radius-3xl": "1.5rem",
+    "--ease-out": "cubic-bezier(0, 0, .2, 1)",
+    "--ease-in-out": "cubic-bezier(.4, 0, .2, 1)",
+    "--animate-spin": "spin 1s linear infinite",
+    "--aspect-video": "16 / 9",
+    "--default-transition-duration": ".15s",
+    "--default-transition-timing-function": "cubic-bezier(.4, 0, .2, 1)",
+    "--default-font-family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+    "--default-mono-font-family": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+    "--color-brand": "#509ee3",
+    "--color-brand-hover": "#1c6bb0",
+    "--color-brand-muted": "#e4ecfb",
+    "--color-brand-muted-hover": "#cbdaf6",
+    "--color-brand-faint": "#fafbfe",
+    "--color-brand-strong": "#12436e",
+    "--color-success": "#80b946",
+    "--color-success-faint": "#f5f9f0",
+    "--color-success-strong": "#236d00",
+    "--border-color-base": "#0000001a",
+    "--text-color-primary": "#22242b",
+    "--text-color-secondary": "#5a6072",
+    "--text-color-tertiary": "#8d93a5",
+    "--text-color-faint": "#c6c9d2",
+    "--text-color-link": "#1c6bb0",
+    "--text-color-link-hover": "#12436e",
+    "--font-merriweather": "merriweather, georgia, serif",
+    "--font-lato": "lato, \"Helvetica Neue\", helvetica, sans-serif",
+    "--font-roboto-mono": "\"Roboto Mono\", monospace",
+    "--base-color-neutral-15": "#22242b",
+    "--base-color-neutral-20": "#4c5773",
+    "--base-color-neutral-40": "#5a6072",
+    "--base-color-neutral-60": "#8d93a5",
+    "--base-color-neutral-80": "#c6c9d2",
+    "--base-color-neutral-90": "#e2e4e9",
+    "--base-color-neutral-95": "#f1f2f4",
+    "--base-color-neutral-99": "#fcfcfd",
+    "--base-color-blue-25": "#12436e",
+    "--base-color-blue-40": "#1c6bb0",
+    "--base-color-blue-50": "#3685ca",
+    "--base-color-blue-60": "#509ee3",
+    "--base-color-blue-75": "#cbdaf6",
+    "--base-color-blue-85": "#c2daf0",
+    "--base-color-blue-95": "#e4ecfb",
+    "--base-color-blue-105": "#fafbfe"
+  },
+  "tokenCount": 114,
+  "unreadableSheets": 6,
+  "customEasings": [
+    "cubic-bezier(.4, 0, .2, 1)",
+    "cubic-bezier(0.23, 1, 0.32, 1)",
+    "cubic-bezier(0, 0, .2, 1)"
+  ],
+  "keywordEasings": [
+    "linear",
+    "ease-in-out",
+    "ease-out",
+    "ease",
+    "ease-in"
+  ],
+  "faceFamilies": {},
+  "loadedFamilies": [
+    "Merriweather",
+    "Fira Code",
+    "Lato",
+    "Roboto Mono",
+    "VideoJS"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 8,
+    "maskImage": 3,
+    "backdropFilter": 4,
+    "filterBlur": 2,
+    "positionSticky": 18,
+    "containerQuery": 0,
+    "has": 8,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 2,
+    "colorMix": 50,
+    "textWrapBalance": 3,
+    "subgrid": 0,
+    "willChange": 0,
+    "reducedMotion": 29,
+    "perspective": 0,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 3,
+    "clipPath": 4,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 3,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 1121,
+    "text": 1,
+    "grab": 32
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 60,
+      "intersectionObservers": 2,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 1979,
+      "interactive": 311,
+      "svg": 104,
+      "svgPaths": 472,
+      "img": 165,
+      "picture": 0,
+      "video": 0,
+      "canvas": 0,
+      "sections": 9,
+      "headings": 13,
+      "cssRules": 8286
+    },
+    "scrollHeight": 10353,
+    "screensDeep": 11.5,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 23070026
+        },
+        {
+          "color": "rgb(249, 250, 251)",
+          "area": 6033109
+        },
+        {
+          "color": "rgb(250, 251, 254)",
+          "area": 2302712
+        },
+        {
+          "color": "rgb(249, 251, 254)",
+          "area": 107680
+        },
+        {
+          "color": "rgb(238, 246, 252)",
+          "area": 77056
+        },
+        {
+          "color": "rgb(80, 158, 227)",
+          "area": 22339
+        },
+        {
+          "color": "rgb(241, 242, 244)",
+          "area": 21591
+        },
+        {
+          "color": "rgb(252, 253, 255)",
+          "area": 20280
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(90, 96, 114)",
+          "area": 1027002
+        },
+        {
+          "color": "rgb(76, 87, 115)",
+          "area": 494210
+        },
+        {
+          "color": "rgb(34, 36, 43)",
+          "area": 440512
+        },
+        {
+          "color": "rgb(141, 147, 165)",
+          "area": 163124
+        },
+        {
+          "color": "rgb(80, 158, 227)",
+          "area": 43231
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 23870
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 178,
+    "totalKB": 3143,
+    "jsKB": 672,
+    "videoKB": 0,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "cdn.metabase.com 2164KB",
+      "www.googletagmanager.com 481KB",
+      "fonts.gstatic.com 290KB",
+      "script.hotjar.com 56KB",
+      "snap.licdn.com 39KB",
+      "cdnjs.cloudflare.com 37KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": [
+    "The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+    "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+    "The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+    "The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+    "The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+    "The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+    "The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+    "Failed to load resource: net::ERR_BLOCKED_BY_RESPONSE.NotSameOriginAfterDefaultedToSameOriginByCoep"
+  ]
+}

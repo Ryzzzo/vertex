@@ -1,0 +1,459 @@
+{
+  "url": "https://www.joshwcomeau.com/",
+  "slug": "josh-comeau",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 1,
+      "el": 652,
+      "draws": 0
+    },
+    {
+      "y": 800,
+      "pct": 25,
+      "canvas": 1,
+      "el": 652,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 451
+    },
+    {
+      "y": 1200,
+      "pct": 37,
+      "canvas": 1,
+      "el": 652,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 535
+    },
+    {
+      "y": 2000,
+      "pct": 62,
+      "canvas": 1,
+      "el": 652,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 648
+    },
+    {
+      "y": 2800,
+      "pct": 86,
+      "canvas": 1,
+      "el": 652,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 763
+    },
+    {
+      "y": 3243,
+      "pct": 100,
+      "canvas": 1,
+      "el": 658,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 927
+    }
+  ],
+  "loadMs": 5152,
+  "title": "Josh W. Comeau",
+  "viewport": "1440x900",
+  "scrollHeight": 4143,
+  "screensDeep": 4.6,
+  "counts": {
+    "elements": 652,
+    "interactive": 83,
+    "svg": 51,
+    "svgPaths": 154,
+    "img": 4,
+    "picture": 4,
+    "video": 0,
+    "canvas": 1,
+    "sections": 3,
+    "headings": 7,
+    "cssRules": 890
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 1000,
+        "h": 520
+      }
+    ],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 328,
+    "intersectionObservers": 3,
+    "audioContexts": 2,
+    "webAnimationsApi": 0
+  },
+  "canvases": [
+    {
+      "css": "1000x520",
+      "buffer": "1000x520"
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "32px",
+      "line-height": "48px",
+      "font-weight": "700",
+      "letter-spacing": "normal",
+      "font-family": "Wotfard, Wotfard-fallback, sans-serif",
+      "color": "rgb(10, 12, 16)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    },
+    "h2": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "500",
+      "letter-spacing": "2px",
+      "font-family": "Wotfard, Wotfard-fallback, sans-serif",
+      "color": "rgb(230, 0, 103)",
+      "text-transform": "uppercase",
+      "ratio": 1.5,
+      "trackingEm": 0.125
+    },
+    "p": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Wotfard, Wotfard-fallback, sans-serif",
+      "color": "rgb(10, 12, 16)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Wotfard, Wotfard-fallback, sans-serif",
+      "color": "rgb(10, 12, 16)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(160, 212, 238)",
+        "area": 6666863
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 5920087
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.9)",
+        "area": 82880
+      },
+      {
+        "color": "rgb(177, 223, 246)",
+        "area": 16993
+      },
+      {
+        "color": "rgb(38, 45, 64)",
+        "area": 10500
+      },
+      {
+        "color": "rgb(221, 238, 248)",
+        "area": 6204
+      },
+      {
+        "color": "rgba(125, 196, 232, 0.4)",
+        "area": 1555
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 1296
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(10, 12, 16)",
+        "area": 864543
+      },
+      {
+        "color": "rgb(90, 96, 114)",
+        "area": 54308
+      },
+      {
+        "color": "rgb(230, 0, 103)",
+        "area": 30080
+      },
+      {
+        "color": "rgb(41, 78, 96)",
+        "area": 19208
+      },
+      {
+        "color": "rgb(66, 66, 250)",
+        "area": 9377
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 4992
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "linear(0,0.1407 4.43%,0.9383 16.72%,1.0774 20.43%,1.1493 24.31%,1.1629 26.95%,1.1536 29.93%,1.0168 43.09%,0.9766 51%,1.0033 76.88%,1)",
+    "cubic-bezier(0.56, 0.1, 0.85, 0.87)",
+    "cubic-bezier(0.07, 0.7, 0.35, 1.35)",
+    "cubic-bezier(0.06, 0.63, 0.43, 1)",
+    "cubic-bezier(0.27, 0.22, 0.44, 1.03)",
+    "cubic-bezier(0, 0.25, 0.23, 1.01)",
+    "cubic-bezier(0.17,0,0.21,1.01)",
+    "cubic-bezier(0.23, 0.62, 0.41, 1.01)",
+    "cubic-bezier(0.17, 0.67, 0.34, 1)",
+    "cubic-bezier(0, 0.67, 0.6, 1.24)",
+    "cubic-bezier(0.31, 0, 0.17, 1.01)",
+    "cubic-bezier(0.17, 0.67, 0.39, 1)",
+    "cubic-bezier(0.17, 0.67, 0.51, 1)",
+    "cubic-bezier(0.17, 0.67, 0.33, 1.05)",
+    "linear(0 0%,0.0049 1.09%,0.0199 2.27%,0.0814 4.99%,0.4635 16.59%,0.5584 19.86%,0.6394 23.07%,0.7095 26.35%,0.7696 29.74%,0.8208 33.3%,0.8637 37.08%,0.902 41.52%,0.9323 46.4%,0.9557 51.88%,0.973 58.14%,0.9847 65.2%,0.9924 73.79%,0.9992 100%)",
+    "cubic-bezier(0.31,0.15,0.11,0.99)",
+    "linear(0 0%,1 100%)",
+    "linear(0,0.011,0.045 1.7%,0.181 3.6%,0.896 9.8%,1.136 12.4%,1.283 14.7%,1.325,1.347 17.2%,1.351,1.347,1.334,1.313 20.6%,1.249 22.6%,1.052 27.4%,0.969 29.7%,0.907 32.3%,0.889,0.879 35%,0.878 36.7%,0.89,0.913 40.6%,0.981 45.3%,1.01 47.6%,1.032,1.042 52.7%,1.043 54.5%,1.039 56.5%,0.997 65.4%,0.989,0.986 70.2% 74.4%,1.001 83%,1.005 87.3% 92%,1)",
+    "linear(0,0.005,0.02 2%,0.08 4.4%,0.47 15%,0.568,0.651,0.723 24.2%,0.785,0.837 30.9%,0.879 34.6%,0.915 38.9%,0.943 43.6%,0.964 48.9%,0.98 55.1%,0.989 62.1%,0.995 70.9%,1)",
+    "cubic-bezier(.3,0,.15,1)",
+    "cubic-bezier(0.41, 0.1, 0.13, 1)",
+    "cubic-bezier(0.44,0.22,0.9,0.7)",
+    "cubic-bezier(0.66,0,0.31,1.01)",
+    "cubic-bezier(0.17, 0.67, 0.53, 0.97)"
+  ],
+  "keywordEasings": [
+    "ease",
+    "ease-in-out"
+  ],
+  "faceFamilies": {
+    "Wotfard-fallback": 1,
+    "Wotfard": 4,
+    "Cartograph CF": 3,
+    "Sriracha": 1
+  },
+  "loadedFamilies": [
+    "Wotfard-fallback",
+    "Wotfard",
+    "Cartograph CF",
+    "Sriracha"
+  ],
+  "cssFeature": {
+    "animationTimeline": 26,
+    "viewTimeline": 1,
+    "scrollTimeline": 1,
+    "timelineScope": 1,
+    "mixBlend": 2,
+    "clipPath": 5,
+    "maskImage": 1,
+    "backdropFilter": 2,
+    "filterBlur": 3,
+    "positionSticky": 3,
+    "containerQuery": 1,
+    "has": 10,
+    "startingStyle": 0,
+    "anchor": 1,
+    "oklch": 9,
+    "colorMix": 0,
+    "textWrapBalance": 1,
+    "subgrid": 0,
+    "willChange": 9,
+    "reducedMotion": 29,
+    "perspective": 1,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 13,
+    "clipPath": 1,
+    "transform3d": 0,
+    "willChange": 8,
+    "sticky": 3,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 415,
+    "text": 1
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 1000,
+          "h": 520
+        }
+      ],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 927,
+      "intersectionObservers": 3,
+      "audioContexts": 2,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 658,
+      "interactive": 83,
+      "svg": 51,
+      "svgPaths": 154,
+      "img": 6,
+      "picture": 6,
+      "video": 0,
+      "canvas": 1,
+      "sections": 3,
+      "headings": 7,
+      "cssRules": 890
+    },
+    "scrollHeight": 4143,
+    "screensDeep": 4.6,
+    "canvases": [
+      {
+        "css": "1000x520",
+        "buffer": "1000x520"
+      }
+    ],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(160, 212, 238)",
+          "area": 6666863
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 5920087
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.9)",
+          "area": 82880
+        },
+        {
+          "color": "rgb(177, 223, 246)",
+          "area": 16993
+        },
+        {
+          "color": "rgb(38, 45, 64)",
+          "area": 10500
+        },
+        {
+          "color": "rgb(221, 238, 248)",
+          "area": 6204
+        },
+        {
+          "color": "rgba(125, 196, 232, 0.4)",
+          "area": 1555
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 1296
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(10, 12, 16)",
+          "area": 864543
+        },
+        {
+          "color": "rgb(90, 96, 114)",
+          "area": 54308
+        },
+        {
+          "color": "rgb(230, 0, 103)",
+          "area": 30080
+        },
+        {
+          "color": "rgb(41, 78, 96)",
+          "area": 19208
+        },
+        {
+          "color": "rgb(66, 66, 250)",
+          "area": 9377
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 4992
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 117,
+    "totalKB": 486,
+    "jsKB": 1,
+    "videoKB": 0,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "www.joshwcomeau.com 486KB",
+      "cdn.usefathom.com 0KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

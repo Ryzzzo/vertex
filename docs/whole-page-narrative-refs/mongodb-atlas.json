@@ -1,0 +1,528 @@
+{
+  "url": "https://www.mongodb.com/products/platform/atlas-database",
+  "slug": "mongodb-atlas",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 2332,
+      "draws": 0
+    },
+    {
+      "y": 1600,
+      "pct": 17,
+      "canvas": 0,
+      "el": 2332,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 62
+    },
+    {
+      "y": 3200,
+      "pct": 34,
+      "canvas": 0,
+      "el": 2332,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 74
+    },
+    {
+      "y": 5600,
+      "pct": 59,
+      "canvas": 0,
+      "el": 2333,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 88
+    },
+    {
+      "y": 7600,
+      "pct": 80,
+      "canvas": 0,
+      "el": 2334,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 106
+    },
+    {
+      "y": 9525,
+      "pct": 100,
+      "canvas": 0,
+      "el": 2335,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 117
+    }
+  ],
+  "networkIdle": false,
+  "loadMs": 24741,
+  "title": "Atlas Database | MongoDB",
+  "viewport": "1440x900",
+  "scrollHeight": 9991,
+  "screensDeep": 11.1,
+  "counts": {
+    "elements": 2332,
+    "interactive": 218,
+    "svg": 31,
+    "svgPaths": 42,
+    "img": 80,
+    "picture": 0,
+    "video": 0,
+    "canvas": 0,
+    "sections": 8,
+    "headings": 24,
+    "cssRules": 3281
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 100,
+        "h": 100
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 43,
+    "intersectionObservers": 3,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "64px",
+      "line-height": "72px",
+      "font-weight": "700",
+      "letter-spacing": "0.64px",
+      "font-family": "\"Sohne Condensed\", \"Noto Sans KR\", \"Noto Sans SC\", \"Noto Sans JP\"",
+      "color": "rgb(253, 254, 236)",
+      "text-transform": "uppercase",
+      "ratio": 1.125,
+      "trackingEm": 0.01
+    },
+    "h2": {
+      "font-size": "32px",
+      "line-height": "48px",
+      "font-weight": "500",
+      "letter-spacing": "0.32px",
+      "font-family": "Sohne, \"Noto Sans KR\", \"Noto Sans SC\", \"Noto Sans JP\"",
+      "color": "rgb(6, 22, 33)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0.01
+    },
+    "h3": {
+      "font-size": "24px",
+      "line-height": "32px",
+      "font-weight": "500",
+      "letter-spacing": "0.24px",
+      "font-family": "Sohne",
+      "color": "rgb(253, 254, 236)",
+      "text-transform": "none",
+      "ratio": 1.333,
+      "trackingEm": 0.01
+    },
+    "p": {
+      "font-size": "20px",
+      "line-height": "32px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Sohne, \"Noto Sans KR\", \"Noto Sans SC\", \"Noto Sans JP\"",
+      "color": "rgb(243, 245, 230)",
+      "text-transform": "none",
+      "ratio": 1.6,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Times New Roman\"",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(253, 254, 236)",
+        "area": 18907772
+      },
+      {
+        "color": "rgb(0, 30, 43)",
+        "area": 3922720
+      },
+      {
+        "color": "rgb(33, 49, 58)",
+        "area": 1331570
+      },
+      {
+        "color": "rgb(2, 52, 48)",
+        "area": 1235520
+      },
+      {
+        "color": "rgb(6, 22, 33)",
+        "area": 898560
+      },
+      {
+        "color": "rgb(97, 108, 109)",
+        "area": 91827
+      },
+      {
+        "color": "rgb(0, 104, 74)",
+        "area": 59904
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 34236
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(64, 79, 84)",
+        "area": 848413
+      },
+      {
+        "color": "rgb(0, 30, 43)",
+        "area": 840633
+      },
+      {
+        "color": "rgb(6, 22, 33)",
+        "area": 752152
+      },
+      {
+        "color": "rgb(253, 254, 236)",
+        "area": 386461
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 326269
+      },
+      {
+        "color": "rgb(243, 245, 230)",
+        "area": 292453
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 1,
+  "customEasings": [
+    "cubic-bezier(0.39, 0.575, 0.565, 1)",
+    "cubic-bezier(0.4, 0, 0.2, 1)",
+    "cubic-bezier(0.4, 0, 1, 1)",
+    "cubic-bezier(0, 0, 0.2, 1)",
+    "cubic-bezier(0.33, 0, 0, 1)",
+    "cubic-bezier(0.45, 0, 0.2, 1)",
+    "cubic-bezier(0, 1, 1, 1)"
+  ],
+  "keywordEasings": [
+    "ease-in-out",
+    "ease-out",
+    "ease-in",
+    "linear"
+  ],
+  "faceFamilies": {
+    "Sohne": 6,
+    "Sohne Condensed": 3,
+    "Sohne Mono": 3,
+    "MongoDB Value Serif": 3,
+    "Noto Sans SC": 27,
+    "Noto Sans KR": 27,
+    "Noto Sans JP": 27
+  },
+  "loadedFamilies": [
+    "Sohne",
+    "Sohne Condensed",
+    "Sohne Mono",
+    "MongoDB Value Serif",
+    "Noto Sans SC",
+    "Noto Sans KR",
+    "Noto Sans JP"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 1,
+    "maskImage": 1,
+    "backdropFilter": 3,
+    "filterBlur": 0,
+    "positionSticky": 5,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 0,
+    "reducedMotion": 2,
+    "perspective": 0,
+    "transform3d": 1
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 4,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 1,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 869,
+    "text": 53
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 100,
+          "h": 100
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 117,
+      "intersectionObservers": 3,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 2335,
+      "interactive": 218,
+      "svg": 31,
+      "svgPaths": 42,
+      "img": 83,
+      "picture": 0,
+      "video": 0,
+      "canvas": 0,
+      "sections": 8,
+      "headings": 24,
+      "cssRules": 3281
+    },
+    "scrollHeight": 10425,
+    "screensDeep": 11.58,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(253, 254, 236)",
+          "area": 19533070
+        },
+        {
+          "color": "rgb(0, 30, 43)",
+          "area": 3924459
+        },
+        {
+          "color": "rgb(33, 49, 58)",
+          "area": 1331570
+        },
+        {
+          "color": "rgb(2, 52, 48)",
+          "area": 1235520
+        },
+        {
+          "color": "rgb(6, 22, 33)",
+          "area": 898560
+        },
+        {
+          "color": "rgb(97, 108, 109)",
+          "area": 91827
+        },
+        {
+          "color": "rgb(0, 104, 74)",
+          "area": 59904
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 34236
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(64, 79, 84)",
+          "area": 848413
+        },
+        {
+          "color": "rgb(0, 30, 43)",
+          "area": 840633
+        },
+        {
+          "color": "rgb(6, 22, 33)",
+          "area": 752152
+        },
+        {
+          "color": "rgb(253, 254, 236)",
+          "area": 386461
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 326269
+        },
+        {
+          "color": "rgb(243, 245, 230)",
+          "area": 292453
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 295,
+    "totalKB": 7825,
+    "jsKB": 1554,
+    "videoKB": 0,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "static.mongodb.com 6230KB",
+      "www.googletagmanager.com 513KB",
+      "js.intercomcdn.com 262KB",
+      "connect.facebook.net 171KB",
+      "cdn.cookielaw.org 144KB",
+      "pathway.mongodb.com 108KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": [
+    "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+  ]
+}

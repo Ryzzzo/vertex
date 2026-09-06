@@ -1,0 +1,439 @@
+{
+  "url": "https://activetheory.net/",
+  "slug": "active-theory",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 1,
+      "el": 94,
+      "draws": 1324
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 1,
+      "el": 94,
+      "draws": 12385,
+      "shaders": 131,
+      "raf": 363
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 1,
+      "el": 107,
+      "draws": 26873,
+      "shaders": 131,
+      "raf": 545
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 1,
+      "el": 91,
+      "draws": 42178,
+      "shaders": 131,
+      "raf": 745
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 1,
+      "el": 91,
+      "draws": 54587,
+      "shaders": 131,
+      "raf": 944
+    }
+  ],
+  "loadMs": 6029,
+  "title": "Active Theory · Creative Digital Experiences",
+  "viewport": "1440x900",
+  "scrollHeight": 900,
+  "screensDeep": 1,
+  "counts": {
+    "elements": 94,
+    "interactive": 15,
+    "svg": 0,
+    "svgPaths": 0,
+    "img": 0,
+    "picture": 0,
+    "video": 2,
+    "canvas": 1,
+    "sections": 0,
+    "headings": 0,
+    "cssRules": 93
+  },
+  "instrumented": {
+    "shaderPrograms": 124,
+    "shaderSources": 248,
+    "glslChars": 754339,
+    "glslHeads": [
+      "#version 300 es\n\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\nprecision highp usampler2D;\nprecision highp isampler2D;\nin vec2 uv;\nin ",
+      "#version 300 es\n\n\n\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\nprecision highp usampler2D;\nprecision highp isampler2D;\nuniform mat3 ",
+      "#version 300 es\n\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\nprecision highp usampler2D;\nprecision highp isampler2D;\nin vec2 uv;\nin "
+    ],
+    "canvasContexts": [
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 110,
+        "h": 110
+      },
+      {
+        "type": "2d",
+        "w": 110,
+        "h": 110
+      },
+      {
+        "type": "2d",
+        "w": 110,
+        "h": 110
+      }
+    ],
+    "drawCalls": 892,
+    "drawInstanced": 16,
+    "texUploads": 242,
+    "rafTicks": 168,
+    "intersectionObservers": 0,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [
+    {
+      "css": "1440x900",
+      "buffer": "2160x1350"
+    }
+  ],
+  "type": {
+    "p": {
+      "font-size": "14px",
+      "line-height": "21px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "nbarchitekt, monospace",
+      "color": "rgb(244, 244, 244)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Times New Roman\"",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 5184000
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.1)",
+        "area": 2304
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(129, 236, 254)",
+        "area": 48400
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 5709
+      },
+      {
+        "color": "rgb(172, 230, 232)",
+        "area": 3080
+      },
+      {
+        "color": "rgb(0, 0, 238)",
+        "area": 2991
+      }
+    ]
+  },
+  "tokens": {
+    "--baropacity": "0.0"
+  },
+  "tokenCount": 1,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(0.17, 0.4, 0.02, 0.99)"
+  ],
+  "keywordEasings": [
+    "ease-out",
+    "linear"
+  ],
+  "faceFamilies": {
+    "nbarchitekt": 3
+  },
+  "loadedFamilies": [
+    "nbarchitekt"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 6,
+    "clipPath": 0,
+    "maskImage": 1,
+    "backdropFilter": 1,
+    "filterBlur": 1,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 0,
+    "reducedMotion": 0,
+    "perspective": 0,
+    "transform3d": 3
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 5,
+    "maskImage": 2,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 1
+  },
+  "videos": [
+    {
+      "src": "https://activetheory.net/assets/video/reel.mp4",
+      "w": 960,
+      "h": 540,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://activetheory.net/assets/video/reel.mp4",
+      "w": 960,
+      "h": 540,
+      "loop": false,
+      "autoplay": false,
+      "muted": false
+    }
+  ],
+  "cursors": {
+    "pointer": 18,
+    "text": 1
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 131,
+      "shaderSources": 262,
+      "glslChars": 883621,
+      "glslHeads": [
+        "#version 300 es\n\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\nprecision highp usampler2D;\nprecision highp isampler2D;\nin vec2 uv;\nin ",
+        "#version 300 es\n\n\n\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\nprecision highp usampler2D;\nprecision highp isampler2D;\nuniform mat3 ",
+        "#version 300 es\n\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\nprecision highp usampler2D;\nprecision highp isampler2D;\nin vec2 uv;\nin "
+      ],
+      "canvasContexts": [
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 110,
+          "h": 110
+        },
+        {
+          "type": "2d",
+          "w": 110,
+          "h": 110
+        },
+        {
+          "type": "2d",
+          "w": 110,
+          "h": 110
+        }
+      ],
+      "drawCalls": 54587,
+      "drawInstanced": 1374,
+      "texUploads": 1960,
+      "rafTicks": 944,
+      "intersectionObservers": 0,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 91,
+      "interactive": 15,
+      "svg": 0,
+      "svgPaths": 0,
+      "img": 0,
+      "picture": 0,
+      "video": 2,
+      "canvas": 1,
+      "sections": 0,
+      "headings": 0,
+      "cssRules": 93
+    },
+    "scrollHeight": 900,
+    "screensDeep": 1,
+    "canvases": [
+      {
+        "css": "1440x900",
+        "buffer": "2160x1350"
+      }
+    ],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 1
+    },
+    "videos": [
+      {
+        "src": "https://activetheory.net/assets/video/reel.mp4",
+        "w": 960,
+        "h": 540,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://activetheory.net/assets/video/reel.mp4",
+        "w": 960,
+        "h": 540,
+        "loop": false,
+        "autoplay": false,
+        "muted": false
+      }
+    ],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 5184000
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.1)",
+          "area": 2304
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 5709
+        },
+        {
+          "color": "rgb(0, 0, 238)",
+          "area": 2991
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 151,
+    "totalKB": 205580,
+    "jsKB": 566,
+    "videoKB": 187139,
+    "threeDCount": 50,
+    "threeDKB": 12496,
+    "threeDSample": [
+      {
+        "u": "https://activetheory.net/assets/geometry/spine/spine.bin",
+        "len": 14944
+      },
+      {
+        "u": "https://activetheory.net/assets/geometry/tree_room/structure.bin",
+        "len": 140001
+      },
+      {
+        "u": "https://activetheory.net/assets/geometry/work/chainlink.bin",
+        "len": 5592
+      },
+      {
+        "u": "https://activetheory.net/assets/geometry/work/cube.bin",
+        "len": 1906
+      },
+      {
+        "u": "https://activetheory.net/assets/geometry/tree_room/rock_R.bin",
+        "len": 12143
+      },
+      {
+        "u": "https://activetheory.net/assets/geometry/tree_room/rock_L.bin",
+        "len": 4982
+      }
+    ],
+    "topHosts": [
+      "storage.googleapis.com 151079KB",
+      "activetheory.net 54334KB",
+      "www.googletagmanager.com 168KB",
+      "us-central1-at-services.cloudfunctions.net 0KB",
+      "www.google-analytics.com 0KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

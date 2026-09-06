@@ -1,0 +1,530 @@
+{
+  "url": "https://arc.net/",
+  "slug": "arc",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 448,
+      "draws": 0
+    },
+    {
+      "y": 800,
+      "pct": 15,
+      "canvas": 0,
+      "el": 457,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 388
+    },
+    {
+      "y": 2000,
+      "pct": 38,
+      "canvas": 0,
+      "el": 457,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 515
+    },
+    {
+      "y": 3200,
+      "pct": 61,
+      "canvas": 0,
+      "el": 457,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 632
+    },
+    {
+      "y": 4400,
+      "pct": 84,
+      "canvas": 0,
+      "el": 459,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 750
+    },
+    {
+      "y": 5231,
+      "pct": 100,
+      "canvas": 0,
+      "el": 471,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 866
+    }
+  ],
+  "loadMs": 4823,
+  "title": "Arc from The Browser Company",
+  "viewport": "1440x900",
+  "scrollHeight": 6131,
+  "screensDeep": 6.81,
+  "counts": {
+    "elements": 448,
+    "interactive": 56,
+    "svg": 35,
+    "svgPaths": 77,
+    "img": 6,
+    "picture": 0,
+    "video": 1,
+    "canvas": 0,
+    "sections": 5,
+    "headings": 2,
+    "cssRules": 463
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 269,
+    "intersectionObservers": 2,
+    "audioContexts": 0,
+    "webAnimationsApi": 3
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "32px",
+      "line-height": "31.2px",
+      "font-weight": "700",
+      "letter-spacing": "-1.6px",
+      "font-family": "\"Marlin Soft SQ\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(255, 252, 236)",
+      "text-transform": "none",
+      "ratio": 0.975,
+      "trackingEm": -0.05
+    },
+    "p": {
+      "font-size": "20px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"ABC Oracle\", Helvetica, sans-serif",
+      "color": "rgba(0, 0, 0, 0.65)",
+      "text-transform": "none",
+      "ratio": 1.2,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Marlin, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(255, 252, 236)",
+        "area": 10220828
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 7469698
+      },
+      {
+        "color": "rgb(49, 57, 251)",
+        "area": 2522295
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.85)",
+        "area": 16281
+      },
+      {
+        "color": "rgb(39, 2, 194)",
+        "area": 12285
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(49, 57, 251)",
+        "area": 203880
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 22005
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.65)",
+        "area": 19313
+      },
+      {
+        "color": "rgb(105, 105, 105)",
+        "area": 18915
+      },
+      {
+        "color": "rgb(255, 252, 236)",
+        "area": 17288
+      },
+      {
+        "color": "rgb(255, 250, 221)",
+        "area": 14960
+      }
+    ]
+  },
+  "tokens": {
+    "--colors-primary1": "rgb(255, 234, 231)",
+    "--colors-primary2": "rgb(255, 201, 195)",
+    "--colors-primary3": "rgb(252, 163, 159)",
+    "--colors-primary4": "rgb(252, 130, 121)",
+    "--colors-primary5": "rgb(253, 105, 88)",
+    "--colors-primary6": "rgb(250, 69, 49)",
+    "--colors-primary7": "rgb(207, 56, 40)",
+    "--colors-primary8": "rgb(162, 43, 31)",
+    "--colors-primary9": "rgb(116, 30, 21)",
+    "--colors-primary10": "rgb(71, 17, 12)",
+    "--colors-primary11": "rgb(26, 4, 2)",
+    "--colors-primary12": "rgb(9, 2, 1)",
+    "--colors-secondary1": "rgb(0, 234, 231)",
+    "--colors-secondary2": "rgb(0, 201, 195)",
+    "--colors-secondary3": "rgb(0, 163, 159)",
+    "--colors-secondary4": "rgb(0, 130, 121)",
+    "--colors-secondary5": "rgb(0, 105, 88)",
+    "--colors-secondary6": "rgb(0, 69, 49)",
+    "--colors-secondary7": "rgb(0, 56, 40)",
+    "--colors-secondary8": "rgb(0, 43, 31)",
+    "--colors-secondary9": "rgb(0, 30, 21)",
+    "--colors-secondary10": "rgb(0, 17, 12)",
+    "--colors-secondary11": "rgb(0, 4, 2)",
+    "--colors-secondary12": "rgb(0, 2, 1)",
+    "--colors-students-arc_blue": "rgb(12, 80, 255)",
+    "--colors-students-arc_blue_pale": "rgb(69, 138, 255)",
+    "--colors-students-deep_blue": "rgb(36, 4, 170)",
+    "--colors-students-arc_pinkish": "rgb(242, 94, 107)",
+    "--colors-students-off_white": "rgb(245, 244, 226)",
+    "--colors-students-dark_grey": "rgb(60, 59, 58)",
+    "--colors-students-light_grey": "rgb(225, 224, 206)",
+    "--colors-students-light_grey-hover": "rgb(215, 214, 196)",
+    "--colors-students-text_light": "rgb(151, 146, 143)",
+    "--colors-students-text_dark": "rgb(118, 110, 106)",
+    "--colors-students-dark_blue": "rgb(39, 2, 194)",
+    "--colors-students-light_blue": "rgb(205, 204, 223)",
+    "--colors-students-light_green": "rgb(211, 224, 129)",
+    "--colors-students-salmon": "rgb(242, 194, 172)",
+    "--colors-lowContrast": "#FFF",
+    "--colors-highContrast": "#000",
+    "--colors-brandDarkBlue": "#000354",
+    "--colors-brandDeepBlue": "#2404AA",
+    "--colors-brandBlue": "#3139FB",
+    "--colors-brandRed": "#FB3A4D",
+    "--colors-brandOffwhite": "#FFFCEC",
+    "--colors-focusOutline": "#96C4FF",
+    "--space-4": "4px",
+    "--space-8": "8px",
+    "--space-12": "12px",
+    "--space-16": "16px",
+    "--space-24": "24px",
+    "--space-32": "32px",
+    "--space-40": "40px",
+    "--space-48": "48px",
+    "--space-56": "56px",
+    "--space-64": "64px",
+    "--space-72": "72px",
+    "--sizes-4": "4px",
+    "--sizes-8": "8px",
+    "--sizes-12": "12px",
+    "--sizes-16": "16px",
+    "--sizes-24": "24px",
+    "--sizes-32": "32px",
+    "--sizes-40": "40px",
+    "--sizes-48": "48px",
+    "--sizes-56": "56px",
+    "--sizes-64": "64px",
+    "--sizes-72": "72px",
+    "--fontSizes-10": "10px",
+    "--fontSizes-12": "12px",
+    "--fontSizes-14": "14px",
+    "--fontSizes-16": "16px",
+    "--fontSizes-20": "20px",
+    "--fontSizes-24": "24px",
+    "--fontSizes-32": "32px",
+    "--fontSizes-36": "36px",
+    "--fontSizes-40": "40px",
+    "--fontSizes-48": "48px",
+    "--fonts-boostSans": "-apple-system, BlinkMacSystemFont, sans-serif",
+    "--fonts-boostsSoft": "Marlin Soft Basic, -apple-system, BlinkMacSystemFont, sans-serif",
+    "--fonts-referralSans": "-apple-system, BlinkMacSystemFont, sans-serif",
+    "--fonts-referralCode": "\"Inter\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\", \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+    "--fonts-sans": "Marlin, -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\", \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+    "--fonts-cta": "\"Inter\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\", \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+    "--fonts-body": "\"InterVariable\", \"Inter\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\", \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+    "--fonts-mono": "ABC Favorit Mono, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace",
+    "--fonts-softSans": "Marlin Soft SQ, -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\", \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+    "--fonts-oracle": "\"ABC Oracle\", \"Helvetica\", sans-serif",
+    "--fonts-exposure": "\"Exposure VAR\", \"Helvetica\", sans-serif",
+    "--fontWeights-400": "400",
+    "--fontWeights-500": "500",
+    "--fontWeights-600": "600",
+    "--fontWeights-700": "700",
+    "--fontWeights-800": "800",
+    "--lineHeights-12": "12px",
+    "--lineHeights-16": "16px",
+    "--lineHeights-20": "20px",
+    "--lineHeights-24": "24px",
+    "--lineHeights-32": "32px",
+    "--lineHeights-40": "40px",
+    "--lineHeights-48": "48px",
+    "--lineHeights-56": "56px",
+    "--radii-2": "2px",
+    "--radii-4": "4px",
+    "--radii-8": "8px",
+    "--radii-12": "12px",
+    "--radii-16": "16px",
+    "--radii-32": "32px",
+    "--radii-round": "9999px",
+    "--shadows-small": "0 5px 10px rgba(0, 0, 0, 0.12)",
+    "--shadows-medium": "0 8px 30px rgba(0, 0, 0, 0.12)",
+    "--shadows-large": "0 30px 60px rgba(0, 0, 0, 0.12)",
+    "--padding": "32px",
+    "--page-padding-left": "max(0px, 32px)",
+    "--page-padding-right": "max(0px, 32px)",
+    "--max-width": "1280px",
+    "--navbar-height": "64px",
+    "--mobile-cta-height": "56px",
+    "--announcement-banner-height": "0px",
+    "--announcement-banner-height-desktop": "0px"
+  },
+  "tokenCount": 120,
+  "unreadableSheets": 0,
+  "customEasings": [],
+  "keywordEasings": [
+    "ease-in-out",
+    "ease-out"
+  ],
+  "faceFamilies": {
+    "Marlin": 1,
+    "Marlin Soft Basic": 2,
+    "Inter": 4,
+    "InterVariable": 1,
+    "Sohne Breit": 2,
+    "Space Mono": 6,
+    "Sohne Breit Extrafett": 1,
+    "EB Garamond": 1,
+    "ABC Favorit Mono": 6,
+    "Marlin Soft SQ": 9,
+    "ABC Oracle": 2,
+    "Exposure VAR": 3
+  },
+  "loadedFamilies": [
+    "Marlin",
+    "Marlin Soft Basic",
+    "Inter",
+    "InterVariable",
+    "Sohne Breit",
+    "Space Mono",
+    "Sohne Breit Extrafett",
+    "EB Garamond",
+    "ABC Favorit Mono",
+    "Marlin Soft SQ",
+    "ABC Oracle",
+    "Exposure VAR"
+  ],
+  "cssFeature": {
+    "animationTimeline": 1,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 2,
+    "clipPath": 0,
+    "maskImage": 6,
+    "backdropFilter": 2,
+    "filterBlur": 2,
+    "positionSticky": 2,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 2,
+    "subgrid": 0,
+    "willChange": 3,
+    "reducedMotion": 0,
+    "perspective": 0,
+    "transform3d": 4
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 4,
+    "maskImage": 3,
+    "clipPath": 9,
+    "transform3d": 5,
+    "willChange": 11,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 1
+  },
+  "videos": [
+    {
+      "src": "https://arc.net/video/ArcDiaPLG_Video.webm",
+      "w": 3106,
+      "h": 2160,
+      "loop": false,
+      "autoplay": true,
+      "muted": true
+    }
+  ],
+  "cursors": {
+    "pointer": 208
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 866,
+      "intersectionObservers": 2,
+      "audioContexts": 0,
+      "webAnimationsApi": 6
+    },
+    "counts": {
+      "elements": 471,
+      "interactive": 57,
+      "svg": 35,
+      "svgPaths": 77,
+      "img": 7,
+      "picture": 0,
+      "video": 1,
+      "canvas": 0,
+      "sections": 5,
+      "headings": 2,
+      "cssRules": 496
+    },
+    "scrollHeight": 6131,
+    "screensDeep": 6.81,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 1
+    },
+    "videos": [
+      {
+        "src": "https://arc.net/video/ArcDiaPLG_Video.webm",
+        "w": 3106,
+        "h": 2160,
+        "loop": false,
+        "autoplay": true,
+        "muted": true
+      }
+    ],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(255, 252, 236)",
+          "area": 10220828
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 7469698
+        },
+        {
+          "color": "rgb(49, 57, 251)",
+          "area": 2522295
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.85)",
+          "area": 26672
+        },
+        {
+          "color": "rgb(39, 2, 194)",
+          "area": 12285
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(49, 57, 251)",
+          "area": 203880
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 42570
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.65)",
+          "area": 19313
+        },
+        {
+          "color": "rgb(105, 105, 105)",
+          "area": 18915
+        },
+        {
+          "color": "rgb(255, 252, 236)",
+          "area": 17288
+        },
+        {
+          "color": "rgb(255, 250, 221)",
+          "area": 14960
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 85,
+    "totalKB": 6166,
+    "jsKB": 72,
+    "videoKB": 1468,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "arc.net 6166KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

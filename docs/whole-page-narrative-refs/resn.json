@@ -1,0 +1,848 @@
+{
+  "url": "https://www.resn.co.nz/",
+  "slug": "resn",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 6,
+      "el": 171,
+      "draws": 5688,
+      "programs": 6,
+      "raf": 8693,
+      "texVideo": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 6,
+      "el": 171,
+      "draws": 7227,
+      "programs": 6,
+      "raf": 10232,
+      "texVideo": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 6,
+      "el": 171,
+      "draws": 8766,
+      "programs": 6,
+      "raf": 11836,
+      "texVideo": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 6,
+      "el": 171,
+      "draws": 10467,
+      "programs": 6,
+      "raf": 13591,
+      "texVideo": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 6,
+      "el": 171,
+      "draws": 11997,
+      "programs": 6,
+      "raf": 15121,
+      "texVideo": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 6,
+      "el": 171,
+      "draws": 13725,
+      "programs": 6,
+      "raf": 16849,
+      "texVideo": 0
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 6,
+      "el": 171,
+      "draws": 15264,
+      "programs": 6,
+      "raf": 18388,
+      "texVideo": 0
+    }
+  ],
+  "loadMs": 12851,
+  "title": "Resn - Creative Digital Agency | Ideation, Design, and Development",
+  "viewport": "1440x900",
+  "scrollHeight": 900,
+  "screensDeep": 1,
+  "counts": {
+    "elements": 171,
+    "interactive": 1,
+    "svg": 2,
+    "svgPaths": 14,
+    "img": 0,
+    "video": 0,
+    "canvas": 6,
+    "sections": 0,
+    "headings": 1,
+    "cssRules": 613
+  },
+  "instrumented": {
+    "shaderPrograms": 6,
+    "shaderSources": 12,
+    "glslChars": 58407,
+    "glslHeads": [
+      "precision highp float;\nprecision highp int;\n#define SHADER_NAME MeshBasicMaterial\n#define VERTEX_TEXTURES\n#define GAMMA_FACTOR 2\n#define MAX_BONES 1018\n#define USE_MAP\n#define NUM_CLIPPING_PLANES 0\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat3 normalMatrix;\nuniform vec3 cameraPosition;\nattribute vec3 position;\nattribute vec3 normal;\nattribute vec2 uv;\n#ifdef USE_COLOR\n\tattribute vec3 color;\n#endif\n#ifdef USE_MORPHTARGETS\n\tattribute vec3 morphTarget0;\n\tattribute vec3 morphTarget1;\n\tattribute vec3 morphTarget2;\n\tattribute vec3 morphTarget3;\n\t#ifdef USE_MORPHNORMALS\n\t\tattribute vec3 morphNormal0;\n\t\tattribute vec3 mor",
+      "precision highp float;\nprecision highp int;\n#define SHADER_NAME MeshBasicMaterial\n#define GAMMA_FACTOR 2\n#define USE_MAP\n#define NUM_CLIPPING_PLANES 0\n#define UNION_CLIPPING_PLANES 0\nuniform mat4 viewMatrix;\nuniform vec3 cameraPosition;\n#define TONE_MAPPING\n#define saturate(a) clamp( a, 0.0, 1.0 )\nuniform float toneMappingExposure;\nuniform float toneMappingWhitePoint;\nvec3 LinearToneMapping( vec3 color ) {\n\treturn toneMappingExposure * color;\n}\nvec3 ReinhardToneMapping( vec3 color ) {\n\tcolor *= toneMappingExposure;\n\treturn saturate( color / ( vec3( 1.0 ) + color ) );\n}\n#define Uncharted2Helper( x ) max( ( ( x * ( 0.15 * x + 0.10 * 0.50 ) + 0.20 * 0.02 ) / ( x * ( 0.15 * x + 0.50 ) + 0.20 * 0",
+      "precision highp float;\nprecision highp int;\n#define SHADER_NAME ShaderMaterial\n#define VERTEX_TEXTURES\n#define GAMMA_FACTOR 2\n#define MAX_BONES 1018\n#define DOUBLE_SIDED\n#define NUM_CLIPPING_PLANES 0\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat3 normalMatrix;\nuniform vec3 cameraPosition;\nattribute vec3 position;\nattribute vec3 normal;\nattribute vec2 uv;\n#ifdef USE_COLOR\n\tattribute vec3 color;\n#endif\n#ifdef USE_MORPHTARGETS\n\tattribute vec3 morphTarget0;\n\tattribute vec3 morphTarget1;\n\tattribute vec3 morphTarget2;\n\tattribute vec3 morphTarget3;\n\t#ifdef USE_MORPHNORMALS\n\t\tattribute vec3 morphNormal0;\n\t\tattribute vec3 m",
+      "precision highp float;\nprecision highp int;\n#define SHADER_NAME ShaderMaterial\n#define GAMMA_FACTOR 2\n#define DOUBLE_SIDED\n#define NUM_CLIPPING_PLANES 0\n#define UNION_CLIPPING_PLANES 0\nuniform mat4 viewMatrix;\nuniform vec3 cameraPosition;\n#define TONE_MAPPING\n#define saturate(a) clamp( a, 0.0, 1.0 )\nuniform float toneMappingExposure;\nuniform float toneMappingWhitePoint;\nvec3 LinearToneMapping( vec3 color ) {\n\treturn toneMappingExposure * color;\n}\nvec3 ReinhardToneMapping( vec3 color ) {\n\tcolor *= toneMappingExposure;\n\treturn saturate( color / ( vec3( 1.0 ) + color ) );\n}\n#define Uncharted2Helper( x ) max( ( ( x * ( 0.15 * x + 0.10 * 0.50 ) + 0.20 * 0.02 ) / ( x * ( 0.15 * x + 0.50 ) + 0.20 *",
+      "precision highp float;\nprecision highp int;\n#define SHADER_NAME ShaderMaterial\n#define VERTEX_TEXTURES\n#define GAMMA_FACTOR 2\n#define MAX_BONES 1018\n#define NUM_CLIPPING_PLANES 0\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat3 normalMatrix;\nuniform vec3 cameraPosition;\nattribute vec3 position;\nattribute vec3 normal;\nattribute vec2 uv;\n#ifdef USE_COLOR\n\tattribute vec3 color;\n#endif\n#ifdef USE_MORPHTARGETS\n\tattribute vec3 morphTarget0;\n\tattribute vec3 morphTarget1;\n\tattribute vec3 morphTarget2;\n\tattribute vec3 morphTarget3;\n\t#ifdef USE_MORPHNORMALS\n\t\tattribute vec3 morphNormal0;\n\t\tattribute vec3 morphNormal1;\n\t\tattrib",
+      "precision highp float;\nprecision highp int;\n#define SHADER_NAME ShaderMaterial\n#define GAMMA_FACTOR 2\n#define NUM_CLIPPING_PLANES 0\n#define UNION_CLIPPING_PLANES 0\nuniform mat4 viewMatrix;\nuniform vec3 cameraPosition;\n#define TONE_MAPPING\n#define saturate(a) clamp( a, 0.0, 1.0 )\nuniform float toneMappingExposure;\nuniform float toneMappingWhitePoint;\nvec3 LinearToneMapping( vec3 color ) {\n\treturn toneMappingExposure * color;\n}\nvec3 ReinhardToneMapping( vec3 color ) {\n\tcolor *= toneMappingExposure;\n\treturn saturate( color / ( vec3( 1.0 ) + color ) );\n}\n#define Uncharted2Helper( x ) max( ( ( x * ( 0.15 * x + 0.10 * 0.50 ) + 0.20 * 0.02 ) / ( x * ( 0.15 * x + 0.50 ) + 0.20 * 0.30 ) ) - 0.02 / 0."
+    ],
+    "wgslModules": 0,
+    "wgslChars": 0,
+    "wgslHeads": [],
+    "gpuAdapterRequested": 0,
+    "gpuDevices": 0,
+    "gpuPipelines": 0,
+    "gpuSubmits": 0,
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "experimental-webgl",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 80,
+        "h": 80,
+        "inDom": true
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150,
+        "inDom": false
+      }
+    ],
+    "drawCalls": 2538,
+    "drawInstanced": 0,
+    "texUploads": 13,
+    "videoTextureUploads": 0,
+    "glExtensions": [
+      "WEBGL_debug_renderer_info",
+      "ANGLE_instanced_arrays",
+      "EXT_blend_minmax",
+      "EXT_clip_control",
+      "EXT_color_buffer_half_float",
+      "EXT_depth_clamp",
+      "EXT_disjoint_timer_query",
+      "EXT_float_blend",
+      "EXT_frag_depth",
+      "EXT_polygon_offset_clamp",
+      "EXT_shader_texture_lod",
+      "EXT_texture_compression_bptc",
+      "EXT_texture_compression_rgtc",
+      "EXT_texture_filter_anisotropic",
+      "EXT_texture_mirror_clamp_to_edge",
+      "EXT_sRGB",
+      "KHR_parallel_shader_compile",
+      "OES_element_index_uint",
+      "OES_fbo_render_mipmap",
+      "OES_standard_derivatives",
+      "OES_texture_float",
+      "OES_texture_float_linear",
+      "OES_texture_half_float",
+      "OES_texture_half_float_linear",
+      "OES_vertex_array_object",
+      "WEBGL_blend_func_extended",
+      "WEBGL_color_buffer_float",
+      "WEBGL_compressed_texture_s3tc",
+      "WEBGL_compressed_texture_s3tc_srgb",
+      "WEBGL_debug_shaders",
+      "WEBGL_depth_texture",
+      "WEBGL_draw_buffers",
+      "WEBGL_lose_context",
+      "WEBGL_multi_draw"
+    ],
+    "rafTicks": 5377,
+    "intersectionObservers": 1,
+    "resizeObservers": 0,
+    "audioContexts": 3,
+    "webAnimationsApi": 0,
+    "workers": [
+      "blob:https://www.resn.co.nz/ac01d4b7-ee16-4fbc-921d-841eea104a42",
+      "blob:https://www.resn.co.nz/98f12a60-bbee-4bd1-8ce7-76730707f8f8",
+      "blob:https://www.resn.co.nz/3b068446-0d62-46e9-a3a0-18891d8c3a5c",
+      "blob:https://www.resn.co.nz/fcfcfa48-4832-4038-8435-70ca11335e97",
+      "blob:https://www.resn.co.nz/d9fa842b-0413-4863-9719-20187c4f62f8",
+      "blob:https://www.resn.co.nz/c6f632c7-f69c-4da8-9c70-c31b437d1d10",
+      "blob:https://www.resn.co.nz/f5d11439-2f1e-4e47-b51a-5b38cc0d8178",
+      "blob:https://www.resn.co.nz/510bf704-21ee-4424-80c7-815566321c21",
+      "blob:https://www.resn.co.nz/41bf39a4-e77a-4104-8c8f-d645fd90bab6"
+    ],
+    "offscreenTransfers": 0,
+    "wasmCompiles": 0,
+    "pointerListeners": 1,
+    "wheelListeners": 0
+  },
+  "canvases": [
+    {
+      "css": "0x0",
+      "buffer": "18x72",
+      "dpr": 18
+    },
+    {
+      "css": "72x16",
+      "buffer": "72x16",
+      "dpr": 1
+    },
+    {
+      "css": "0x0",
+      "buffer": "1440x900",
+      "dpr": 1440
+    },
+    {
+      "css": "80x80",
+      "buffer": "80x80",
+      "dpr": 1
+    },
+    {
+      "css": "1440x900",
+      "buffer": "1440x900",
+      "dpr": 1
+    },
+    {
+      "css": "0x0",
+      "buffer": "1440x900",
+      "dpr": 1440
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "43.2px",
+      "line-height": "43.2px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "Fort-Extralight, Arial, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "9px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "sans-serif",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgba(0, 0, 0, 0.7)",
+        "area": 1322041
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 1296000
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 170595
+      },
+      {
+        "color": "rgb(113, 113, 113)",
+        "area": 3250
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(0.46, 0.03, 0.52, 0.96)",
+    "cubic-bezier(0.165, 0.84, 0.44, 1)",
+    "linear(0 0%, 0.006 1.1%, 0.023 2.2%, 0.096 4.8%, 0.532 15.4%, 0.72 21%, 0.793 23.85%, 0.853 26.7%, 0.902 29.8667%, 0.941 33.0333%, 0.968 36.2%, 0.987 39.7%, 1 43.7%, 1.007 48.3%, 1.009 55.3%, 1.002 78.2%, 1 100%)",
+    "linear(0 0%, 0.006 1.15%, 0.022 2.3%, 0.091 5.1%, 0.18 7.6%, 0.508 16.3%, 0.607 19.325%, 0.691 22.35%, 0.762 25.375%, 0.822 28.4%, 0.872 31.75%, 0.912 35.1%, 0.944 38.9%, 0.968 43%, 0.985 47.6%, 0.996 53.1%, 1.001 58.4%, 1.003 65.1%, 1 100%)"
+  ],
+  "faceFamilies": {
+    "Fort-Extralight": 1,
+    "Fort-Light": 1,
+    "Fort-Book": 1,
+    "Fort-Medium": 1,
+    "Fort-Bold": 1,
+    "WorkSans-Thin": 1,
+    "WorkSans-ExtraLight": 1,
+    "WorkSans-Light": 1,
+    "WorkSans-Regular": 1
+  },
+  "loadedFamilies": [
+    "Fort-Extralight",
+    "Fort-Light",
+    "Fort-Book",
+    "Fort-Medium",
+    "Fort-Bold",
+    "WorkSans-Thin",
+    "WorkSans-ExtraLight",
+    "WorkSans-Light",
+    "WorkSans-Regular"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 0,
+    "maskImage": 0,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "willChange": 7,
+    "reducedMotion": 0,
+    "perspective": 10,
+    "transform3d": 8
+  },
+  "computedFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0,
+    "fixed": 17
+  },
+  "libs": {
+    "three": true,
+    "threeRevision": "84",
+    "ogl": false,
+    "babylon": false,
+    "playcanvas": false,
+    "pixi": false,
+    "curtains": false,
+    "r3f": false,
+    "gsap": true,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "locomotive": false,
+    "rive": false,
+    "lottie": false,
+    "spline": false,
+    "unicorn": false,
+    "theatre": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "vue": false,
+    "svelte": false,
+    "barba": false,
+    "splitting": false,
+    "swup": false,
+    "webflow": false,
+    "webgpuSupported": true
+  },
+  "cursors": {
+    "pointer": 30,
+    "grab": 4
+  },
+  "videos": [],
+  "afterPointer": {
+    "draws": 4293,
+    "raf": 7298
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 6,
+      "shaderSources": 12,
+      "glslChars": 58407,
+      "glslHeads": [
+        "precision highp float;\nprecision highp int;\n#define SHADER_NAME MeshBasicMaterial\n#define VERTEX_TEXTURES\n#define GAMMA_FACTOR 2\n#define MAX_BONES 1018\n#define USE_MAP\n#define NUM_CLIPPING_PLANES 0\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat3 normalMatrix;\nuniform vec3 cameraPosition;\nattribute vec3 position;\nattribute vec3 normal;\nattribute vec2 uv;\n#ifdef USE_COLOR\n\tattribute vec3 color;\n#endif\n#ifdef USE_MORPHTARGETS\n\tattribute vec3 morphTarget0;\n\tattribute vec3 morphTarget1;\n\tattribute vec3 morphTarget2;\n\tattribute vec3 morphTarget3;\n\t#ifdef USE_MORPHNORMALS\n\t\tattribute vec3 morphNormal0;\n\t\tattribute vec3 mor",
+        "precision highp float;\nprecision highp int;\n#define SHADER_NAME MeshBasicMaterial\n#define GAMMA_FACTOR 2\n#define USE_MAP\n#define NUM_CLIPPING_PLANES 0\n#define UNION_CLIPPING_PLANES 0\nuniform mat4 viewMatrix;\nuniform vec3 cameraPosition;\n#define TONE_MAPPING\n#define saturate(a) clamp( a, 0.0, 1.0 )\nuniform float toneMappingExposure;\nuniform float toneMappingWhitePoint;\nvec3 LinearToneMapping( vec3 color ) {\n\treturn toneMappingExposure * color;\n}\nvec3 ReinhardToneMapping( vec3 color ) {\n\tcolor *= toneMappingExposure;\n\treturn saturate( color / ( vec3( 1.0 ) + color ) );\n}\n#define Uncharted2Helper( x ) max( ( ( x * ( 0.15 * x + 0.10 * 0.50 ) + 0.20 * 0.02 ) / ( x * ( 0.15 * x + 0.50 ) + 0.20 * 0",
+        "precision highp float;\nprecision highp int;\n#define SHADER_NAME ShaderMaterial\n#define VERTEX_TEXTURES\n#define GAMMA_FACTOR 2\n#define MAX_BONES 1018\n#define DOUBLE_SIDED\n#define NUM_CLIPPING_PLANES 0\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat3 normalMatrix;\nuniform vec3 cameraPosition;\nattribute vec3 position;\nattribute vec3 normal;\nattribute vec2 uv;\n#ifdef USE_COLOR\n\tattribute vec3 color;\n#endif\n#ifdef USE_MORPHTARGETS\n\tattribute vec3 morphTarget0;\n\tattribute vec3 morphTarget1;\n\tattribute vec3 morphTarget2;\n\tattribute vec3 morphTarget3;\n\t#ifdef USE_MORPHNORMALS\n\t\tattribute vec3 morphNormal0;\n\t\tattribute vec3 m",
+        "precision highp float;\nprecision highp int;\n#define SHADER_NAME ShaderMaterial\n#define GAMMA_FACTOR 2\n#define DOUBLE_SIDED\n#define NUM_CLIPPING_PLANES 0\n#define UNION_CLIPPING_PLANES 0\nuniform mat4 viewMatrix;\nuniform vec3 cameraPosition;\n#define TONE_MAPPING\n#define saturate(a) clamp( a, 0.0, 1.0 )\nuniform float toneMappingExposure;\nuniform float toneMappingWhitePoint;\nvec3 LinearToneMapping( vec3 color ) {\n\treturn toneMappingExposure * color;\n}\nvec3 ReinhardToneMapping( vec3 color ) {\n\tcolor *= toneMappingExposure;\n\treturn saturate( color / ( vec3( 1.0 ) + color ) );\n}\n#define Uncharted2Helper( x ) max( ( ( x * ( 0.15 * x + 0.10 * 0.50 ) + 0.20 * 0.02 ) / ( x * ( 0.15 * x + 0.50 ) + 0.20 *",
+        "precision highp float;\nprecision highp int;\n#define SHADER_NAME ShaderMaterial\n#define VERTEX_TEXTURES\n#define GAMMA_FACTOR 2\n#define MAX_BONES 1018\n#define NUM_CLIPPING_PLANES 0\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat3 normalMatrix;\nuniform vec3 cameraPosition;\nattribute vec3 position;\nattribute vec3 normal;\nattribute vec2 uv;\n#ifdef USE_COLOR\n\tattribute vec3 color;\n#endif\n#ifdef USE_MORPHTARGETS\n\tattribute vec3 morphTarget0;\n\tattribute vec3 morphTarget1;\n\tattribute vec3 morphTarget2;\n\tattribute vec3 morphTarget3;\n\t#ifdef USE_MORPHNORMALS\n\t\tattribute vec3 morphNormal0;\n\t\tattribute vec3 morphNormal1;\n\t\tattrib",
+        "precision highp float;\nprecision highp int;\n#define SHADER_NAME ShaderMaterial\n#define GAMMA_FACTOR 2\n#define NUM_CLIPPING_PLANES 0\n#define UNION_CLIPPING_PLANES 0\nuniform mat4 viewMatrix;\nuniform vec3 cameraPosition;\n#define TONE_MAPPING\n#define saturate(a) clamp( a, 0.0, 1.0 )\nuniform float toneMappingExposure;\nuniform float toneMappingWhitePoint;\nvec3 LinearToneMapping( vec3 color ) {\n\treturn toneMappingExposure * color;\n}\nvec3 ReinhardToneMapping( vec3 color ) {\n\tcolor *= toneMappingExposure;\n\treturn saturate( color / ( vec3( 1.0 ) + color ) );\n}\n#define Uncharted2Helper( x ) max( ( ( x * ( 0.15 * x + 0.10 * 0.50 ) + 0.20 * 0.02 ) / ( x * ( 0.15 * x + 0.50 ) + 0.20 * 0.30 ) ) - 0.02 / 0."
+      ],
+      "wgslModules": 0,
+      "wgslChars": 0,
+      "wgslHeads": [],
+      "gpuAdapterRequested": 0,
+      "gpuDevices": 0,
+      "gpuPipelines": 0,
+      "gpuSubmits": 0,
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "experimental-webgl",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 80,
+          "h": 80,
+          "inDom": true
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150,
+          "inDom": false
+        }
+      ],
+      "drawCalls": 15948,
+      "drawInstanced": 0,
+      "texUploads": 13,
+      "videoTextureUploads": 0,
+      "glExtensions": [
+        "WEBGL_debug_renderer_info",
+        "ANGLE_instanced_arrays",
+        "EXT_blend_minmax",
+        "EXT_clip_control",
+        "EXT_color_buffer_half_float",
+        "EXT_depth_clamp",
+        "EXT_disjoint_timer_query",
+        "EXT_float_blend",
+        "EXT_frag_depth",
+        "EXT_polygon_offset_clamp",
+        "EXT_shader_texture_lod",
+        "EXT_texture_compression_bptc",
+        "EXT_texture_compression_rgtc",
+        "EXT_texture_filter_anisotropic",
+        "EXT_texture_mirror_clamp_to_edge",
+        "EXT_sRGB",
+        "KHR_parallel_shader_compile",
+        "OES_element_index_uint",
+        "OES_fbo_render_mipmap",
+        "OES_standard_derivatives",
+        "OES_texture_float",
+        "OES_texture_float_linear",
+        "OES_texture_half_float",
+        "OES_texture_half_float_linear",
+        "OES_vertex_array_object",
+        "WEBGL_blend_func_extended",
+        "WEBGL_color_buffer_float",
+        "WEBGL_compressed_texture_s3tc",
+        "WEBGL_compressed_texture_s3tc_srgb",
+        "WEBGL_debug_shaders",
+        "WEBGL_depth_texture",
+        "WEBGL_draw_buffers",
+        "WEBGL_lose_context",
+        "WEBGL_multi_draw"
+      ],
+      "rafTicks": 19072,
+      "intersectionObservers": 1,
+      "resizeObservers": 0,
+      "audioContexts": 3,
+      "webAnimationsApi": 0,
+      "workers": [
+        "blob:https://www.resn.co.nz/ac01d4b7-ee16-4fbc-921d-841eea104a42",
+        "blob:https://www.resn.co.nz/98f12a60-bbee-4bd1-8ce7-76730707f8f8",
+        "blob:https://www.resn.co.nz/3b068446-0d62-46e9-a3a0-18891d8c3a5c",
+        "blob:https://www.resn.co.nz/fcfcfa48-4832-4038-8435-70ca11335e97",
+        "blob:https://www.resn.co.nz/d9fa842b-0413-4863-9719-20187c4f62f8",
+        "blob:https://www.resn.co.nz/c6f632c7-f69c-4da8-9c70-c31b437d1d10",
+        "blob:https://www.resn.co.nz/f5d11439-2f1e-4e47-b51a-5b38cc0d8178",
+        "blob:https://www.resn.co.nz/510bf704-21ee-4424-80c7-815566321c21",
+        "blob:https://www.resn.co.nz/41bf39a4-e77a-4104-8c8f-d645fd90bab6"
+      ],
+      "offscreenTransfers": 0,
+      "wasmCompiles": 0,
+      "pointerListeners": 1,
+      "wheelListeners": 0
+    },
+    "counts": {
+      "elements": 171,
+      "interactive": 1,
+      "svg": 2,
+      "svgPaths": 14,
+      "img": 0,
+      "video": 0,
+      "canvas": 6,
+      "sections": 0,
+      "headings": 1,
+      "cssRules": 613
+    },
+    "canvases": [
+      {
+        "css": "0x0",
+        "buffer": "18x72",
+        "dpr": 18
+      },
+      {
+        "css": "72x16",
+        "buffer": "72x16",
+        "dpr": 1
+      },
+      {
+        "css": "0x0",
+        "buffer": "1440x900",
+        "dpr": 1440
+      },
+      {
+        "css": "80x80",
+        "buffer": "80x80",
+        "dpr": 1
+      },
+      {
+        "css": "1440x900",
+        "buffer": "1440x900",
+        "dpr": 1
+      },
+      {
+        "css": "0x0",
+        "buffer": "1440x900",
+        "dpr": 1440
+      }
+    ],
+    "scrollHeight": 900,
+    "screensDeep": 1,
+    "libs": {
+      "three": true,
+      "threeRevision": "84",
+      "ogl": false,
+      "babylon": false,
+      "playcanvas": false,
+      "pixi": false,
+      "curtains": false,
+      "r3f": false,
+      "gsap": true,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "locomotive": false,
+      "rive": false,
+      "lottie": false,
+      "spline": false,
+      "unicorn": false,
+      "theatre": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "vue": false,
+      "svelte": false,
+      "barba": false,
+      "splitting": false,
+      "swup": false,
+      "webflow": false,
+      "webgpuSupported": true
+    },
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgba(0, 0, 0, 0.7)",
+          "area": 1322041
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 1296000
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 170224
+        },
+        {
+          "color": "rgb(113, 113, 113)",
+          "area": 3250
+        }
+      ]
+    },
+    "videos": [],
+    "computedFeature": {
+      "mixBlend": 0,
+      "maskImage": 0,
+      "clipPath": 0,
+      "transform3d": 0,
+      "willChange": 0,
+      "sticky": 0,
+      "filterBlur": 0,
+      "fixed": 17
+    },
+    "cursors": {
+      "pointer": 30,
+      "grab": 4
+    }
+  },
+  "net": {
+    "requests": 144,
+    "totalKB": 27831,
+    "byExtKB": {
+      "png": 8137,
+      "mp3": 7619,
+      "jpg": 4646,
+      "js": 4364,
+      "json": 2147,
+      "javascript; charset=UTF-8": 257,
+      "webp": 217,
+      "obj": 188,
+      "woff": 156,
+      "css": 62,
+      "html": 23,
+      "javascript": 5
+    },
+    "topAssets": [
+      {
+        "u": "projects.json",
+        "kb": 850
+      },
+      {
+        "u": "projects.json",
+        "kb": 850
+      },
+      {
+        "u": "letters.json",
+        "kb": 413
+      },
+      {
+        "u": "drop_gem5.obj",
+        "kb": 188
+      },
+      {
+        "u": "interactives.json",
+        "kb": 29
+      },
+      {
+        "u": "sounds.json",
+        "kb": 6
+      }
+    ],
+    "topHosts": [
+      "www.resn.co.nz 27529KB",
+      "www.googletagmanager.com 257KB",
+      "snap.licdn.com 39KB",
+      " 5KB",
+      "js.hs-scripts.com 1KB",
+      "track.hubspot.com 0KB"
+    ],
+    "libHints": [
+      "ogl"
+    ]
+  },
+  "consoleErrors": []
+}

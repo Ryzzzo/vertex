@@ -1,0 +1,1486 @@
+{
+  "url": "https://rauno.me/craft",
+  "slug": "rauno-craft",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 726,
+      "draws": 0
+    },
+    {
+      "y": 1600,
+      "pct": 18,
+      "canvas": 0,
+      "el": 726,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4
+    },
+    {
+      "y": 3200,
+      "pct": 37,
+      "canvas": 0,
+      "el": 726,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4
+    },
+    {
+      "y": 4800,
+      "pct": 55,
+      "canvas": 0,
+      "el": 726,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4
+    },
+    {
+      "y": 6800,
+      "pct": 78,
+      "canvas": 0,
+      "el": 726,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4
+    },
+    {
+      "y": 8711,
+      "pct": 100,
+      "canvas": 0,
+      "el": 726,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4
+    }
+  ],
+  "loadMs": 8488,
+  "title": "Craft",
+  "viewport": "1440x900",
+  "scrollHeight": 9611,
+  "screensDeep": 10.68,
+  "counts": {
+    "elements": 726,
+    "interactive": 29,
+    "svg": 0,
+    "svgPaths": 0,
+    "img": 80,
+    "picture": 0,
+    "video": 68,
+    "canvas": 0,
+    "sections": 0,
+    "headings": 0,
+    "cssRules": 348
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 4,
+    "intersectionObservers": 81,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "p": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "X, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "X, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(252, 252, 252)",
+        "area": 27480690
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 12123369
+      },
+      {
+        "color": "rgb(243, 243, 243)",
+        "area": 477701
+      },
+      {
+        "color": "rgb(255, 255, 2)",
+        "area": 540
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(23, 23, 23)",
+        "area": 519493
+      },
+      {
+        "color": "rgb(237, 237, 237)",
+        "area": 155199
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.592)",
+        "area": 134416
+      },
+      {
+        "color": "rgba(0, 0, 0, 0.565)",
+        "area": 35284
+      }
+    ]
+  },
+  "tokens": {
+    "--fonts-body": "X, -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\", \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+    "--fonts-mono": "JetBrains Mono, Menlo, monospace",
+    "--fonts-serif": "Georgia, serif",
+    "--space-1": "8px",
+    "--space-2": "16px",
+    "--space-3": "24px",
+    "--space-4": "32px",
+    "--space-5": "40px",
+    "--space-6": "48px",
+    "--space-7": "56px",
+    "--space-8": "64px",
+    "--space-9": "72px",
+    "--space-10": "80px",
+    "--space-11": "88px",
+    "--fontWeights-400": "400",
+    "--fontWeights-500": "500",
+    "--fontWeights-600": "600",
+    "--fontWeights-700": "700",
+    "--fontWeights-800": "800",
+    "--lineHeights-12": "12px",
+    "--lineHeights-16": "16px",
+    "--lineHeights-20": "20px",
+    "--lineHeights-24": "24px",
+    "--lineHeights-32": "32px",
+    "--lineHeights-40": "40px",
+    "--lineHeights-48": "48px",
+    "--lineHeights-56": "56px",
+    "--fontSizes-10": "10px",
+    "--fontSizes-12": "12px",
+    "--fontSizes-14": "14px",
+    "--fontSizes-16": "16px",
+    "--fontSizes-20": "20px",
+    "--fontSizes-24": "24px",
+    "--fontSizes-32": "32px",
+    "--fontSizes-40": "40px",
+    "--fontSizes-48": "48px",
+    "--radii-1": "4px",
+    "--radii-2": "8px",
+    "--radii-3": "16px",
+    "--radii-round": "9999px",
+    "--shadows-small": "0 5px 10px rgba(0, 0, 0, 0.12)",
+    "--shadows-medium": "0 8px 30px rgba(0, 0, 0, 0.12)",
+    "--shadows-large": "0 30px 60px rgba(0, 0, 0, 0.12)",
+    "--shadows-tooltip": "0px 4px 8px 0px rgba(0, 0, 0, 0.04), 0px 1px 1px 0px rgba(0, 0, 0, 0.02)",
+    "--transitions-snappy": "cubic-bezier(.2, .8, .2, 1)",
+    "--red": "color(display-p3 0.94 0.19 0.04)",
+    "--green": "color(display-p3 0.083 0.75 0.283)",
+    "--blue": "color(display-p3 0.071 0.442 0.945)",
+    "--yellow": "#FFFF02",
+    "--yellow-high-contrast": "color(display-p3 1 0.94 0.01)",
+    "--orange": "color(display-p3 .99 .4 .02)",
+    "--orange2": "color(display-p3 1.000000 0.301961 0.000000/1.000000)",
+    "--pink1": "color(display-p3 1 0.64 0.703)",
+    "--neon1": "color(display-p3 0.856 1 0.205)",
+    "--neon2": "color(display-p3 0 1 0.984)",
+    "--focus-ring": "2px solid hsl(0 0% 56.1%)",
+    "--root-background": "hsl(0 0% 99.0%)"
+  },
+  "tokenCount": 57,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(.2, .8, .2, 1)"
+  ],
+  "keywordEasings": [
+    "ease"
+  ],
+  "faceFamilies": {
+    "X": 2,
+    "JetBrains Mono": 1
+  },
+  "loadedFamilies": [
+    "X",
+    "JetBrains Mono"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 1,
+    "maskImage": 2,
+    "backdropFilter": 3,
+    "filterBlur": 6,
+    "positionSticky": 0,
+    "containerQuery": 5,
+    "has": 8,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 1,
+    "reducedMotion": 0,
+    "perspective": 0,
+    "transform3d": 5
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 0,
+    "clipPath": 0,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 68
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 68
+  },
+  "videos": [
+    {
+      "src": "https://cdn.rauno.me/system.mp4#t=0.01",
+      "w": 1920,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/testimonials.mp4#t=0.01",
+      "w": 1792,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/sidebar.mp4#t=0.01",
+      "w": 2052,
+      "h": 1554,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/spatial-tooltip.mp4#t=0.01",
+      "w": 1452,
+      "h": 652,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/staggered-text.mp4#t=0.01",
+      "w": 1410,
+      "h": 740,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/logo-carousel.mp4#t=0.01",
+      "w": 1566,
+      "h": 640,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/wheel.mp4#t=0.01",
+      "w": 1932,
+      "h": 1440,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/seek.mp4#t=0.01",
+      "w": 2160,
+      "h": 1851,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/ios-radial-menu.mp4#t=0.01",
+      "w": 2078,
+      "h": 2206,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/graph-slider-2.mp4#t=0.01",
+      "w": 1340,
+      "h": 836,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/adaptive-precision-5.mp4#t=0.01",
+      "w": 1318,
+      "h": 812,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/radial-menu-3.mp4#t=0.01",
+      "w": 1920,
+      "h": 862,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/cmdk-breadcrumbs.mp4#t=0.01",
+      "w": 1454,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/cryptic-list.mp4#t=0.01",
+      "w": 1920,
+      "h": 1884,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/vercel-home.mp4#t=0.01",
+      "w": 2046,
+      "h": 1336,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/stripes.mp4#t=0.01",
+      "w": 480,
+      "h": 480,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/design.mp4#t=0.01",
+      "w": 1604,
+      "h": 960,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/focus-reading.mp4#t=0.01",
+      "w": 1166,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/buttons1.mp4#t=0.01",
+      "w": 926,
+      "h": 474,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/arc-promo.mp4#t=0.01",
+      "w": 900,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/theme-motion.mp4#t=0.01",
+      "w": 872,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/checkbox.mp4#t=0.01",
+      "w": 800,
+      "h": 800,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/countdown.mp4#t=0.01",
+      "w": 1280,
+      "h": 810,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/pix1.mp4#t=0.01",
+      "w": 1688,
+      "h": 1100,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/combobox.mp4#t=0.01",
+      "w": 2694,
+      "h": 1682,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/dd-cm.mp4#t=0.01",
+      "w": 1920,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/next-badge.mp4#t=0.01",
+      "w": 1066,
+      "h": 612,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/gooey-tooltip.mp4#t=0.01",
+      "w": 1076,
+      "h": 688,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/waveform.mp4#t=0.01",
+      "w": 1258,
+      "h": 644,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/run4.mp4#t=0.01",
+      "w": 1822,
+      "h": 1260,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/bezels2.mp4#t=0.01",
+      "w": 2288,
+      "h": 864,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/screenshot.mp4#t=0.01",
+      "w": 1101,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/fractional-slider.mp4#t=0.01",
+      "w": 1344,
+      "h": 460,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/precision-slider.mp4#t=0.01",
+      "w": 1920,
+      "h": 846,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/flashlight.mp4#t=0.01",
+      "w": 1368,
+      "h": 730,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/copy-paste.mp4#t=0.01",
+      "w": 1152,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/flume.mp4#t=0.01",
+      "w": 480,
+      "h": 480,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/yt.mp4#t=0.01",
+      "w": 1214,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/visual-writing.mp4#t=0.01",
+      "w": 1280,
+      "h": 702,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/buttons2.mp4#t=0.01",
+      "w": 740,
+      "h": 514,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/website-presentation.mp4#t=0.01",
+      "w": 926,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/liquid-swipe.mp4#t=0.01",
+      "w": 886,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/cmdk-ultra.mp4#t=0.01",
+      "w": 1056,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/browser-history.mp4#t=0.01",
+      "w": 1280,
+      "h": 780,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/history.mp4#t=0.01",
+      "w": 3840,
+      "h": 2160,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/dd-illustrations.mp4#t=0.01",
+      "w": 1920,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/dd-compressed.mp4#t=0.01",
+      "w": 1920,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/inline-conversion.mp4#t=0.01",
+      "w": 1334,
+      "h": 460,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/toolbar-cmdk.mp4#t=0.01",
+      "w": 1548,
+      "h": 1304,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/security.mp4#t=0.01",
+      "w": 992,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/blur-reveal.mp4#t=0.01",
+      "w": 1448,
+      "h": 672,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/word-lookup.mp4#t=0.01",
+      "w": 1176,
+      "h": 800,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/dock-drag.mp4#t=0.01",
+      "w": 1920,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/mercury.mp4#t=0.01",
+      "w": 2094,
+      "h": 1742,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/exclusion-tabs-dark.mp4#t=0.01",
+      "w": 1344,
+      "h": 840,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/vanish-input.mp4#t=0.01",
+      "w": 954,
+      "h": 574,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/wheel-input-3.mp4#t=0.01",
+      "w": 1302,
+      "h": 922,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/preview-comments.mp4#t=0.01",
+      "w": 1388,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/vercel-footer-2.mp4#t=0.01",
+      "w": 1280,
+      "h": 432,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/browser-history-3.mp4#t=0.01",
+      "w": 1646,
+      "h": 1080,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/gooey.mp4#t=0.01",
+      "w": 480,
+      "h": 480,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/peach.mp4#t=0.01",
+      "w": 480,
+      "h": 480,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/signatures.mp4#t=0.01",
+      "w": 1300,
+      "h": 418,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/animated-typing.mp4#t=0.01",
+      "w": 1658,
+      "h": 556,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/blur-icons.mp4#t=0.01",
+      "w": 812,
+      "h": 562,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/uig.mp4#t=0.01",
+      "w": 1018,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/input.mp4#t=0.01",
+      "w": 794,
+      "h": 272,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://cdn.rauno.me/enter-to-confirm.mp4#t=0.01",
+      "w": 1084,
+      "h": 720,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    }
+  ],
+  "cursors": {
+    "pointer": 223
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 4,
+      "intersectionObservers": 81,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 726,
+      "interactive": 29,
+      "svg": 0,
+      "svgPaths": 0,
+      "img": 80,
+      "picture": 0,
+      "video": 68,
+      "canvas": 0,
+      "sections": 0,
+      "headings": 0,
+      "cssRules": 348
+    },
+    "scrollHeight": 9611,
+    "screensDeep": 10.68,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 68
+    },
+    "videos": [
+      {
+        "src": "https://cdn.rauno.me/system.mp4#t=0.01",
+        "w": 1920,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/testimonials.mp4#t=0.01",
+        "w": 1792,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/sidebar.mp4#t=0.01",
+        "w": 2052,
+        "h": 1554,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/spatial-tooltip.mp4#t=0.01",
+        "w": 1452,
+        "h": 652,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/staggered-text.mp4#t=0.01",
+        "w": 1410,
+        "h": 740,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/logo-carousel.mp4#t=0.01",
+        "w": 1566,
+        "h": 640,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/wheel.mp4#t=0.01",
+        "w": 1932,
+        "h": 1440,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/seek.mp4#t=0.01",
+        "w": 2160,
+        "h": 1851,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/ios-radial-menu.mp4#t=0.01",
+        "w": 2078,
+        "h": 2206,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/graph-slider-2.mp4#t=0.01",
+        "w": 1340,
+        "h": 836,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/adaptive-precision-5.mp4#t=0.01",
+        "w": 1318,
+        "h": 812,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/radial-menu-3.mp4#t=0.01",
+        "w": 1920,
+        "h": 862,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/cmdk-breadcrumbs.mp4#t=0.01",
+        "w": 1454,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/cryptic-list.mp4#t=0.01",
+        "w": 1920,
+        "h": 1884,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/vercel-home.mp4#t=0.01",
+        "w": 2046,
+        "h": 1336,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/stripes.mp4#t=0.01",
+        "w": 480,
+        "h": 480,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/design.mp4#t=0.01",
+        "w": 1604,
+        "h": 960,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/focus-reading.mp4#t=0.01",
+        "w": 1166,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/buttons1.mp4#t=0.01",
+        "w": 926,
+        "h": 474,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/arc-promo.mp4#t=0.01",
+        "w": 900,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/theme-motion.mp4#t=0.01",
+        "w": 872,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/checkbox.mp4#t=0.01",
+        "w": 800,
+        "h": 800,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/countdown.mp4#t=0.01",
+        "w": 1280,
+        "h": 810,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/pix1.mp4#t=0.01",
+        "w": 1688,
+        "h": 1100,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/combobox.mp4#t=0.01",
+        "w": 2694,
+        "h": 1682,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/dd-cm.mp4#t=0.01",
+        "w": 1920,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/next-badge.mp4#t=0.01",
+        "w": 1066,
+        "h": 612,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/gooey-tooltip.mp4#t=0.01",
+        "w": 1076,
+        "h": 688,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/waveform.mp4#t=0.01",
+        "w": 1258,
+        "h": 644,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/run4.mp4#t=0.01",
+        "w": 1822,
+        "h": 1260,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/bezels2.mp4#t=0.01",
+        "w": 2288,
+        "h": 864,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/screenshot.mp4#t=0.01",
+        "w": 1101,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/fractional-slider.mp4#t=0.01",
+        "w": 1344,
+        "h": 460,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/precision-slider.mp4#t=0.01",
+        "w": 1920,
+        "h": 846,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/flashlight.mp4#t=0.01",
+        "w": 1368,
+        "h": 730,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/copy-paste.mp4#t=0.01",
+        "w": 1152,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/flume.mp4#t=0.01",
+        "w": 480,
+        "h": 480,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/yt.mp4#t=0.01",
+        "w": 1214,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/visual-writing.mp4#t=0.01",
+        "w": 1280,
+        "h": 702,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/buttons2.mp4#t=0.01",
+        "w": 740,
+        "h": 514,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/website-presentation.mp4#t=0.01",
+        "w": 926,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/liquid-swipe.mp4#t=0.01",
+        "w": 886,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/cmdk-ultra.mp4#t=0.01",
+        "w": 1056,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/browser-history.mp4#t=0.01",
+        "w": 1280,
+        "h": 780,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/history.mp4#t=0.01",
+        "w": 3840,
+        "h": 2160,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/dd-illustrations.mp4#t=0.01",
+        "w": 1920,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/dd-compressed.mp4#t=0.01",
+        "w": 1920,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/inline-conversion.mp4#t=0.01",
+        "w": 1334,
+        "h": 460,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/toolbar-cmdk.mp4#t=0.01",
+        "w": 1548,
+        "h": 1304,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/security.mp4#t=0.01",
+        "w": 992,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/blur-reveal.mp4#t=0.01",
+        "w": 1448,
+        "h": 672,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/word-lookup.mp4#t=0.01",
+        "w": 1176,
+        "h": 800,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/dock-drag.mp4#t=0.01",
+        "w": 1920,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/mercury.mp4#t=0.01",
+        "w": 2094,
+        "h": 1742,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/exclusion-tabs-dark.mp4#t=0.01",
+        "w": 1344,
+        "h": 840,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/vanish-input.mp4#t=0.01",
+        "w": 954,
+        "h": 574,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/wheel-input-3.mp4#t=0.01",
+        "w": 1302,
+        "h": 922,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/preview-comments.mp4#t=0.01",
+        "w": 1388,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/vercel-footer-2.mp4#t=0.01",
+        "w": 1280,
+        "h": 432,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/browser-history-3.mp4#t=0.01",
+        "w": 1646,
+        "h": 1080,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/gooey.mp4#t=0.01",
+        "w": 480,
+        "h": 480,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/peach.mp4#t=0.01",
+        "w": 480,
+        "h": 480,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/signatures.mp4#t=0.01",
+        "w": 1300,
+        "h": 418,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/animated-typing.mp4#t=0.01",
+        "w": 1658,
+        "h": 556,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/blur-icons.mp4#t=0.01",
+        "w": 812,
+        "h": 562,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/uig.mp4#t=0.01",
+        "w": 1018,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/input.mp4#t=0.01",
+        "w": 794,
+        "h": 272,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://cdn.rauno.me/enter-to-confirm.mp4#t=0.01",
+        "w": 1084,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      }
+    ],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(252, 252, 252)",
+          "area": 27481410
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 12123618
+        },
+        {
+          "color": "rgb(243, 243, 243)",
+          "area": 477701
+        },
+        {
+          "color": "rgb(255, 255, 2)",
+          "area": 540
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(23, 23, 23)",
+          "area": 519493
+        },
+        {
+          "color": "rgb(237, 237, 237)",
+          "area": 155199
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.592)",
+          "area": 134416
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.565)",
+          "area": 35284
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 222,
+    "totalKB": 233911,
+    "jsKB": 1,
+    "videoKB": 233630,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "cdn.rauno.me 233630KB",
+      "rauno.me 281KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

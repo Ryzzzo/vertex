@@ -1,0 +1,621 @@
+{
+  "url": "https://www.getdbt.com/",
+  "slug": "dbt",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 1096,
+      "draws": 0
+    },
+    {
+      "y": 1200,
+      "pct": 16,
+      "canvas": 0,
+      "el": 1097,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 9
+    },
+    {
+      "y": 2800,
+      "pct": 37,
+      "canvas": 0,
+      "el": 1097,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 12
+    },
+    {
+      "y": 4400,
+      "pct": 58,
+      "canvas": 0,
+      "el": 1097,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 12
+    },
+    {
+      "y": 6000,
+      "pct": 79,
+      "canvas": 0,
+      "el": 1097,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 12
+    },
+    {
+      "y": 7585,
+      "pct": 100,
+      "canvas": 0,
+      "el": 1097,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 12
+    }
+  ],
+  "loadMs": 9326,
+  "title": "Deliver trusted data with dbt | dbt Labs",
+  "viewport": "1440x900",
+  "scrollHeight": 8484,
+  "screensDeep": 9.43,
+  "counts": {
+    "elements": 1091,
+    "interactive": 138,
+    "svg": 50,
+    "svgPaths": 55,
+    "img": 54,
+    "picture": 0,
+    "video": 0,
+    "canvas": 0,
+    "sections": 16,
+    "headings": 28,
+    "cssRules": 3760
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 100,
+        "h": 100
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 3,
+    "intersectionObservers": 4,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "64px",
+      "line-height": "76.8px",
+      "font-weight": "600",
+      "letter-spacing": "normal",
+      "font-family": "polymath, -apple-system, BlinkMacSystemFont, \"Helvetica Neue\", \"segoe ui\", Ubuntu, roboto, noto, Arial, sans-serif",
+      "color": "rgb(3, 7, 17)",
+      "text-transform": "none",
+      "ratio": 1.2,
+      "trackingEm": 0
+    },
+    "h2": {
+      "font-size": "32px",
+      "line-height": "38.4px",
+      "font-weight": "600",
+      "letter-spacing": "normal",
+      "font-family": "polymath, -apple-system, BlinkMacSystemFont, \"Helvetica Neue\", \"segoe ui\", Ubuntu, roboto, noto, Arial, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.2,
+      "trackingEm": 0
+    },
+    "h3": {
+      "font-size": "32px",
+      "line-height": "38.4px",
+      "font-weight": "600",
+      "letter-spacing": "normal",
+      "font-family": "polymath, -apple-system, BlinkMacSystemFont, \"Helvetica Neue\", \"segoe ui\", Ubuntu, roboto, noto, Arial, sans-serif",
+      "color": "rgb(3, 7, 17)",
+      "text-transform": "none",
+      "ratio": 1.2,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "18px",
+      "line-height": "28px",
+      "font-weight": "700",
+      "letter-spacing": "normal",
+      "font-family": "polymath-text, -apple-system, BlinkMacSystemFont, \"Helvetica Neue\", \"segoe ui\", Ubuntu, roboto, noto, Arial, sans-serif",
+      "color": "rgb(3, 7, 17)",
+      "text-transform": "none",
+      "ratio": 1.556,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "polymath-text, -apple-system, BlinkMacSystemFont, \"Helvetica Neue\", \"segoe ui\", Ubuntu, roboto, noto, Arial, sans-serif",
+      "color": "rgb(3, 7, 17)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 10248484
+      },
+      {
+        "color": "rgb(3, 7, 17)",
+        "area": 1510907
+      },
+      {
+        "color": "rgb(6, 42, 224)",
+        "area": 1310501
+      },
+      {
+        "color": "rgb(255, 140, 0)",
+        "area": 1267910
+      },
+      {
+        "color": "rgb(255, 174, 0)",
+        "area": 711977
+      },
+      {
+        "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+        "area": 469913
+      },
+      {
+        "color": "rgb(99, 47, 245)",
+        "area": 78212
+      },
+      {
+        "color": "rgb(254, 103, 3)",
+        "area": 43544
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(3, 7, 17)",
+        "area": 1050746
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 714078
+      },
+      {
+        "color": "rgb(30, 41, 57)",
+        "area": 143280
+      },
+      {
+        "color": "rgb(99, 47, 245)",
+        "area": 95600
+      },
+      {
+        "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.5)",
+        "area": 82924
+      },
+      {
+        "color": "rgb(249, 250, 251)",
+        "area": 59977
+      }
+    ]
+  },
+  "tokens": {
+    "--font-sans": "\"polymath-text\",-apple-system,BlinkMacSystemFont,\"Helvetica Neue\",\"segoe ui\",\"Ubuntu\",\"roboto\",\"noto\",Arial,sans-serif",
+    "--font-serif": "ui-serif,Georgia,Cambria,\"Times New Roman\",Times,serif",
+    "--font-mono": "\"ibm-plex-mono\",ui-monospace,\"Cascadia Code\",\"Source Code Pro\",Menlo,Consolas,monospace",
+    "--spacing": ".25rem",
+    "--container-xs": "20rem",
+    "--container-lg": "32rem",
+    "--container-xl": "36rem",
+    "--container-2xl": "42rem",
+    "--container-3xl": "48rem",
+    "--container-4xl": "56rem",
+    "--text-xs": ".75rem",
+    "--text-xs--line-height": "calc(1 / .75)",
+    "--text-sm": ".875rem",
+    "--text-sm--line-height": "calc(1.25 / .875)",
+    "--text-base": "1rem",
+    "--text-base--line-height": "calc(1.5 / 1)",
+    "--text-lg": "1.125rem",
+    "--text-lg--line-height": "calc(1.75 / 1.125)",
+    "--text-xl": "1.25rem",
+    "--text-xl--line-height": "calc(1.75 / 1.25)",
+    "--text-2xl": "1.5rem",
+    "--text-2xl--line-height": "calc(2 / 1.5)",
+    "--text-3xl": "2rem",
+    "--text-3xl--line-height": "calc(2.25 / 1.875)",
+    "--text-4xl": "2.25rem",
+    "--text-4xl--line-height": "calc(2.5 / 2.25)",
+    "--text-5xl": "3rem",
+    "--text-5xl--line-height": "1",
+    "--text-6xl": "4rem",
+    "--text-6xl--line-height": "1",
+    "--text-7xl": "4.5rem",
+    "--text-7xl--line-height": "1",
+    "--text-8xl": "5.5rem",
+    "--text-8xl--line-height": "1",
+    "--font-weight-normal": "400",
+    "--font-weight-medium": "500",
+    "--font-weight-semibold": "600",
+    "--font-weight-bold": "700",
+    "--font-weight-extrabold": "800",
+    "--font-weight-black": "900",
+    "--tracking-tight": "-.025em",
+    "--tracking-wider": ".05em",
+    "--tracking-widest": ".1em",
+    "--leading-tight": "1.25",
+    "--leading-snug": "1.375",
+    "--leading-normal": "1.5",
+    "--leading-relaxed": "1.625",
+    "--radius-sm": ".25rem",
+    "--radius-md": ".375rem",
+    "--radius-lg": ".5rem",
+    "--radius-xl": ".75rem",
+    "--radius-2xl": "1rem",
+    "--radius-3xl": "1.5rem",
+    "--radius-4xl": "2rem",
+    "--ease-in": "cubic-bezier(.4,0,1,1)",
+    "--ease-out": "cubic-bezier(0,0,.2,1)",
+    "--ease-in-out": "cubic-bezier(.4,0,.2,1)",
+    "--animate-pulse": "pulse 2s cubic-bezier(.4,0,.6,1) infinite",
+    "--blur-xs": "4px",
+    "--blur-sm": "8px",
+    "--blur-md": "12px",
+    "--blur-lg": "16px",
+    "--blur-3xl": "64px",
+    "--aspect-video": "16/9",
+    "--default-transition-duration": ".15s",
+    "--default-transition-timing-function": "cubic-bezier(.4,0,.2,1)",
+    "--default-font-family": "\"polymath-text\",-apple-system,BlinkMacSystemFont,\"Helvetica Neue\",\"segoe ui\",\"Ubuntu\",\"roboto\",\"noto\",Arial,sans-serif",
+    "--default-mono-font-family": "\"ibm-plex-mono\",ui-monospace,\"Cascadia Code\",\"Source Code Pro\",Menlo,Consolas,monospace",
+    "--color-white": "#fff",
+    "--color-transform-orange-50": "#fff9f5",
+    "--color-transform-orange-400": "#ff9e5f",
+    "--color-transform-orange-500": "#fe8331",
+    "--color-transform-orange-600": "#fe6703",
+    "--color-transform-orange-700": "#dd5604",
+    "--color-coalesce-purple-50": "#f6f5ff",
+    "--color-coalesce-purple-100": "#ecebff",
+    "--color-coalesce-purple-400": "#9786ff",
+    "--color-coalesce-purple-600": "#632ff5",
+    "--color-coalesce-purple-700": "#5720e1",
+    "--color-coalesce-purple-900": "#3d189a",
+    "--color-terminal-black-50": "#f9fafb",
+    "--color-terminal-black-100": "#f3f4f6",
+    "--color-terminal-black-200": "#e5e7eb",
+    "--color-terminal-black-300": "#d1d5dc",
+    "--color-terminal-black-400": "#99a1af",
+    "--color-terminal-black-500": "#6a7282",
+    "--color-terminal-black-600": "#4a5565",
+    "--color-terminal-black-700": "#364153",
+    "--color-terminal-black-800": "#1e2939",
+    "--color-terminal-black-900": "#101828",
+    "--color-terminal-black-950": "#030711",
+    "--color-yellow-400": "#ffcc25",
+    "--color-yellow-700": "#987600",
+    "--color-green-400": "#92c430",
+    "--color-green-600": "#677f36",
+    "--color-blue-600": "#0467b7",
+    "--color-pink-700": "#c20059",
+    "--font-display": "\"polymath\",-apple-system,BlinkMacSystemFont,\"Helvetica Neue\",\"segoe ui\",\"Ubuntu\",\"roboto\",\"noto\",Arial,sans-serif",
+    "--font-summit-area": "\"area-normal\",-apple-system,BlinkMacSystemFont,\"Helvetica Neue\",\"segoe ui\",\"Ubuntu\",\"roboto\",\"noto\",Arial,sans-serif",
+    "--font-summit-inter": "\"inter-variable\",-apple-system,BlinkMacSystemFont,\"Helvetica Neue\",\"segoe ui\",\"Ubuntu\",\"roboto\",\"noto\",Arial,sans-serif",
+    "--font-summit-bugrino": "\"bugrino\",-apple-system,BlinkMacSystemFont,\"Helvetica Neue\",\"segoe ui\",\"Ubuntu\",\"roboto\",\"noto\",Arial,sans-serif",
+    "--grain-size-hd": "250px",
+    "--grain-size-retina": "300px"
+  },
+  "tokenCount": 103,
+  "unreadableSheets": 1,
+  "customEasings": [
+    "cubic-bezier(.4,0,1,1)",
+    "cubic-bezier(0,0,.2,1)",
+    "cubic-bezier(.4,0,.2,1)",
+    "cubic-bezier(.4,0,.6,1)",
+    "cubic-bezier(0, 0, 0, 1)",
+    "cubic-bezier(1, 0, 0, 1)",
+    "cubic-bezier(0.455, 0.03, 0.515, 0.955)",
+    "cubic-bezier(0.3, 0.885, 0.32, 1.5)",
+    "cubic-bezier(0.645, 0.045, 0.355, 1)"
+  ],
+  "keywordEasings": [
+    "linear",
+    "ease-in-out",
+    "ease",
+    "ease-in",
+    "ease-out"
+  ],
+  "faceFamilies": {},
+  "loadedFamilies": [
+    "ibm-plex-mono",
+    "polymath",
+    "polymath-text"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 2,
+    "scrollTimeline": 2,
+    "timelineScope": 2,
+    "mixBlend": 11,
+    "clipPath": 4,
+    "maskImage": 0,
+    "backdropFilter": 18,
+    "filterBlur": 0,
+    "positionSticky": 6,
+    "containerQuery": 1,
+    "has": 14,
+    "startingStyle": 0,
+    "anchor": 2,
+    "oklch": 0,
+    "colorMix": 144,
+    "textWrapBalance": 0,
+    "subgrid": 3,
+    "willChange": 4,
+    "reducedMotion": 2,
+    "perspective": 2,
+    "transform3d": 2
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 1,
+    "clipPath": 11,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 1,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 279,
+    "text": 1
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 100,
+          "h": 100
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 240,
+          "h": 60
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 12,
+      "intersectionObservers": 4,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 1097,
+      "interactive": 143,
+      "svg": 50,
+      "svgPaths": 55,
+      "img": 54,
+      "picture": 0,
+      "video": 0,
+      "canvas": 0,
+      "sections": 16,
+      "headings": 28,
+      "cssRules": 3781
+    },
+    "scrollHeight": 8485,
+    "screensDeep": 9.43,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 10248484
+        },
+        {
+          "color": "rgb(3, 7, 17)",
+          "area": 1513539
+        },
+        {
+          "color": "rgb(6, 42, 224)",
+          "area": 1310501
+        },
+        {
+          "color": "rgb(255, 140, 0)",
+          "area": 1267910
+        },
+        {
+          "color": "rgb(255, 174, 0)",
+          "area": 711978
+        },
+        {
+          "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+          "area": 469913
+        },
+        {
+          "color": "rgb(99, 47, 245)",
+          "area": 78212
+        },
+        {
+          "color": "rgb(254, 103, 3)",
+          "area": 43544
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(3, 7, 17)",
+          "area": 1050746
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 714078
+        },
+        {
+          "color": "rgb(30, 41, 57)",
+          "area": 143280
+        },
+        {
+          "color": "rgb(99, 47, 245)",
+          "area": 95600
+        },
+        {
+          "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.5)",
+          "area": 82924
+        },
+        {
+          "color": "rgb(249, 250, 251)",
+          "area": 59977
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 306,
+    "totalKB": 6594,
+    "jsKB": 1286,
+    "videoKB": 411,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "www.getdbt.com 4166KB",
+      "assets.qualified.com 611KB",
+      "www.googletagmanager.com 515KB",
+      "use.typekit.net 342KB",
+      "cdn.cookielaw.org 222KB",
+      "cdn.amplitude.com 197KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": [
+    "Loading the image 'https://www.googleadservices.com/pagead/conversion/328058248/?label=e5mUCNfS1c8ZEIiLt5wB&guid=ON&script=0' violates the following Content Security Policy directive: \"img-src 'self' ",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Access to fetch at 'https://www.fivetran.com/legal/privacy?_rsc=uvT6wSG89U8J1lDv' (redirected from 'https://www.getdbt.com/cloud/privacy-policy?_rsc=uvT6wSG89U8J1lDv') from origin 'https://www.getdbt.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to fetch RSC payload for https://www.getdbt.com/cloud/privacy-policy. Falling back to browser navigation. TypeError: Failed to fetch\n    at e.<anonymous> (https://cdn.amplitude.com/libs/analyti"
+  ]
+}

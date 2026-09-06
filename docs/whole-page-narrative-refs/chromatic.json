@@ -1,0 +1,489 @@
+{
+  "url": "https://www.chromatic.com/",
+  "slug": "chromatic",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 1152,
+      "draws": 0
+    },
+    {
+      "y": 1600,
+      "pct": 17,
+      "canvas": 0,
+      "el": 1149,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 213
+    },
+    {
+      "y": 3600,
+      "pct": 35,
+      "canvas": 0,
+      "el": 1149,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 218
+    },
+    {
+      "y": 6400,
+      "pct": 58,
+      "canvas": 0,
+      "el": 1149,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 225
+    },
+    {
+      "y": 8800,
+      "pct": 80,
+      "canvas": 0,
+      "el": 1149,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 231
+    },
+    {
+      "y": 10964,
+      "pct": 100,
+      "canvas": 0,
+      "el": 1267,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 237
+    }
+  ],
+  "loadMs": 9966,
+  "title": "Frontend UI Testing & Review Platform for Teams • Chromatic",
+  "viewport": "1440x900",
+  "scrollHeight": 10424,
+  "screensDeep": 11.58,
+  "counts": {
+    "elements": 1152,
+    "interactive": 98,
+    "svg": 40,
+    "svgPaths": 115,
+    "img": 121,
+    "picture": 0,
+    "video": 2,
+    "canvas": 0,
+    "sections": 0,
+    "headings": 8,
+    "cssRules": 686
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 184,
+    "intersectionObservers": 4,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "48px",
+      "line-height": "64px",
+      "font-weight": "600",
+      "letter-spacing": "normal",
+      "font-family": "__Nunito_Sans_c022c9, \"Nunito Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.333,
+      "trackingEm": 0
+    },
+    "h2": {
+      "font-size": "48px",
+      "line-height": "64px",
+      "font-weight": "600",
+      "letter-spacing": "normal",
+      "font-family": "__Nunito_Sans_c022c9, \"Nunito Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.333,
+      "trackingEm": 0
+    },
+    "h3": {
+      "font-size": "30px",
+      "line-height": "38px",
+      "font-weight": "600",
+      "letter-spacing": "normal",
+      "font-family": "__Nunito_Sans_c022c9, \"Nunito Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.267,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "16px",
+      "line-height": "28px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "__Nunito_Sans_c022c9, \"Nunito Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.75,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "__Nunito_Sans_c022c9, \"Nunito Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "color": "rgb(20, 28, 36)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(20, 28, 36)",
+        "area": 16216706
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.8)",
+        "area": 1559616
+      },
+      {
+        "color": "rgb(247, 250, 253)",
+        "area": 1296000
+      },
+      {
+        "color": "rgba(130, 172, 255, 0.05)",
+        "area": 244800
+      },
+      {
+        "color": "color(srgb 0.0803 0.10802 0.1397 / 0.8)",
+        "area": 105120
+      },
+      {
+        "color": "rgb(37, 134, 68)",
+        "area": 80697
+      },
+      {
+        "color": "rgb(32, 61, 211)",
+        "area": 80697
+      },
+      {
+        "color": "rgb(33, 33, 84)",
+        "area": 80688
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 1489003
+      },
+      {
+        "color": "rgb(238, 242, 246)",
+        "area": 319883
+      },
+      {
+        "color": "rgb(178, 190, 205)",
+        "area": 64462
+      },
+      {
+        "color": "rgb(55, 213, 211)",
+        "area": 7774
+      },
+      {
+        "color": "rgb(255, 174, 0)",
+        "area": 6549
+      },
+      {
+        "color": "rgb(0, 109, 235)",
+        "area": 4736
+      }
+    ]
+  },
+  "tokens": {
+    "--nunito-sans": "'__Nunito_Sans_c022c9'"
+  },
+  "tokenCount": 1,
+  "unreadableSheets": 1,
+  "customEasings": [
+    "cubic-bezier(0.65, 0, 0.35, 1)",
+    "cubic-bezier(0.33, 0, 0, 1)",
+    "cubic-bezier(0.45, 0, 0.2, 1)",
+    "cubic-bezier(0, 1, 1, 1)"
+  ],
+  "keywordEasings": [
+    "ease-in",
+    "ease-in-out",
+    "ease-out",
+    "linear"
+  ],
+  "faceFamilies": {},
+  "loadedFamilies": [
+    "__Nunito_Sans_c022c9",
+    "PlainInter"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 3,
+    "scrollTimeline": 3,
+    "timelineScope": 3,
+    "mixBlend": 3,
+    "clipPath": 5,
+    "maskImage": 0,
+    "backdropFilter": 4,
+    "filterBlur": 1,
+    "positionSticky": 1,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 3,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 5,
+    "subgrid": 0,
+    "willChange": 5,
+    "reducedMotion": 0,
+    "perspective": 3,
+    "transform3d": 9
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 1,
+    "clipPath": 2,
+    "transform3d": 0,
+    "willChange": 2,
+    "sticky": 1,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 2
+  },
+  "videos": [
+    {
+      "src": "https://www.chromatic.com/marketing/videos/visual-test-hero.mp4",
+      "w": 2396,
+      "h": 1534,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    }
+  ],
+  "cursors": {
+    "pointer": 224
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 237,
+      "intersectionObservers": 4,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 1267,
+      "interactive": 98,
+      "svg": 39,
+      "svgPaths": 113,
+      "img": 121,
+      "picture": 0,
+      "video": 2,
+      "canvas": 0,
+      "sections": 0,
+      "headings": 8,
+      "cssRules": 688
+    },
+    "scrollHeight": 11864,
+    "screensDeep": 13.18,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 2
+    },
+    "videos": [
+      {
+        "src": "https://www.chromatic.com/marketing/videos/visual-test-hero.mp4",
+        "w": 2396,
+        "h": 1534,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://www.chromatic.com/marketing/videos/ui-review-hero.mp4",
+        "w": 2396,
+        "h": 1534,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      }
+    ],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(20, 28, 36)",
+          "area": 18290351
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.8)",
+          "area": 1559396
+        },
+        {
+          "color": "rgb(247, 250, 253)",
+          "area": 1296000
+        },
+        {
+          "color": "rgba(130, 172, 255, 0.05)",
+          "area": 244800
+        },
+        {
+          "color": "color(srgb 0.0803 0.10802 0.1397 / 0.8)",
+          "area": 105120
+        },
+        {
+          "color": "rgb(37, 134, 68)",
+          "area": 80697
+        },
+        {
+          "color": "rgb(32, 61, 211)",
+          "area": 80697
+        },
+        {
+          "color": "rgb(33, 33, 84)",
+          "area": 80688
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 1489003
+        },
+        {
+          "color": "rgb(238, 242, 246)",
+          "area": 319883
+        },
+        {
+          "color": "rgb(178, 190, 205)",
+          "area": 64462
+        },
+        {
+          "color": "rgb(55, 213, 211)",
+          "area": 7774
+        },
+        {
+          "color": "rgb(255, 174, 0)",
+          "area": 6549
+        },
+        {
+          "color": "rgb(0, 109, 235)",
+          "area": 4736
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 284,
+    "totalKB": 4161,
+    "jsKB": 2429,
+    "videoKB": 1091,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "www.chromatic.com 1651KB",
+      "www2.chromatic.com 1455KB",
+      "www.googletagmanager.com 653KB",
+      "js.intercomcdn.com 262KB",
+      "web.cmp.usercentrics.eu 82KB",
+      "snap.licdn.com 39KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "Framing 'https://api.vector.co/' violates the following report-only Content Security Policy directive: \"frame-src 'self' https://www.chromatic.com https://index.chromatic.com snapshots.chromatic.com j",
+    "Failed to load resource: the server responded with a status of 403 ()",
+    "Framing 'https://api.vector.co/' violates the following report-only Content Security Policy directive: \"frame-src 'self' https://www.chromatic.com https://index.chromatic.com snapshots.chromatic.com j"
+  ]
+}

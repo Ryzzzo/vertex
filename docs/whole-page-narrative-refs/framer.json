@@ -1,0 +1,726 @@
+{
+  "url": "https://www.framer.com/",
+  "slug": "framer",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 3268,
+      "draws": 0
+    },
+    {
+      "y": 1600,
+      "pct": 16,
+      "canvas": 0,
+      "el": 3296,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 2888
+    },
+    {
+      "y": 3600,
+      "pct": 36,
+      "canvas": 0,
+      "el": 3316,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 3479
+    },
+    {
+      "y": 5600,
+      "pct": 56,
+      "canvas": 0,
+      "el": 3306,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4029
+    },
+    {
+      "y": 8000,
+      "pct": 80,
+      "canvas": 0,
+      "el": 3486,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 4705
+    },
+    {
+      "y": 9978,
+      "pct": 100,
+      "canvas": 0,
+      "el": 3487,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 5508
+    }
+  ],
+  "loadMs": 8800,
+  "title": "Framer: AI design agent",
+  "viewport": "1440x900",
+  "scrollHeight": 10878,
+  "screensDeep": 12.09,
+  "counts": {
+    "elements": 3259,
+    "interactive": 181,
+    "svg": 150,
+    "svgPaths": 130,
+    "img": 90,
+    "picture": 0,
+    "video": 5,
+    "canvas": 0,
+    "sections": 6,
+    "headings": 20,
+    "cssRules": 2258
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 2208,
+    "intersectionObservers": 41,
+    "audioContexts": 0,
+    "webAnimationsApi": 7
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "54px",
+      "line-height": "54px",
+      "font-weight": "500",
+      "letter-spacing": "-2.16px",
+      "font-family": "\"GT Walsheim Medium\", \"GT Walsheim Medium Placeholder\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": -0.04
+    },
+    "h2": {
+      "font-size": "44px",
+      "line-height": "48.4px",
+      "font-weight": "500",
+      "letter-spacing": "-1.76px",
+      "font-family": "\"GT Walsheim Medium\", \"GT Walsheim Medium Placeholder\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.1,
+      "trackingEm": -0.04
+    },
+    "h3": {
+      "font-size": "18px",
+      "line-height": "24.3px",
+      "font-weight": "400",
+      "letter-spacing": "-0.2px",
+      "font-family": "\"Inter Variable\", \"Inter Variable Placeholder\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1.35,
+      "trackingEm": -0.0111
+    },
+    "p": {
+      "font-size": "14px",
+      "line-height": "14px",
+      "font-weight": "400",
+      "letter-spacing": "-0.01px",
+      "font-family": "\"Inter Variable\", \"Inter Variable Placeholder\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": -0.0007
+    },
+    "body": {
+      "font-size": "12px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "sans-serif",
+      "color": "rgb(0, 0, 0)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 45028955
+      },
+      {
+        "color": "rgb(17, 17, 17)",
+        "area": 4642705
+      },
+      {
+        "color": "rgb(23, 23, 23)",
+        "area": 953394
+      },
+      {
+        "color": "rgba(0, 153, 255, 0.22)",
+        "area": 583572
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.15)",
+        "area": 411172
+      },
+      {
+        "color": "rgb(36, 36, 36)",
+        "area": 131982
+      },
+      {
+        "color": "rgb(0, 153, 255)",
+        "area": 116797
+      },
+      {
+        "color": "rgb(26, 26, 26)",
+        "area": 109152
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 589234
+      },
+      {
+        "color": "rgba(255, 255, 255, 0.6)",
+        "area": 195122
+      },
+      {
+        "color": "rgb(153, 153, 153)",
+        "area": 163120
+      },
+      {
+        "color": "rgb(102, 102, 102)",
+        "area": 32840
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 29994
+      },
+      {
+        "color": "rgb(214, 122, 92)",
+        "area": 25600
+      }
+    ]
+  },
+  "tokens": {
+    "--overflow-clip-fallback": "",
+    "--one-if-corner-shape-supported": "1"
+  },
+  "tokenCount": 2,
+  "unreadableSheets": 1,
+  "customEasings": [
+    "cubic-bezier(0.44, 0, 0.56, 1)",
+    "cubic-bezier(0, 0, 1, 1)"
+  ],
+  "keywordEasings": [
+    "linear",
+    "ease-out",
+    "ease-in-out"
+  ],
+  "faceFamilies": {
+    "EB Garamond": 7,
+    "Geist": 7,
+    "Inter Tight": 7,
+    "Mona Sans": 3,
+    "Space Grotesk": 6,
+    "JetBrains Mono": 7,
+    "VT323": 3,
+    "Geist Variable": 1,
+    "Luxurious Script": 1,
+    "Inter Medium": 1,
+    "GT Walsheim Medium": 1,
+    "GT Walsheim Bold": 1,
+    "GT Walsheim Bold Oblique": 1,
+    "GT Walsheim Medium Oblique": 1,
+    "GT Walsheim Framer Medium": 2,
+    "Inter Framer SemiBold": 1,
+    "GT Walsheim Regular": 1,
+    "Inter SemiBold": 1,
+    "Lazzer Variable": 1,
+    "Mono Spec Variable": 1,
+    "GT Walsheim Black": 1,
+    "Universal Sans Text 400": 1,
+    "Inter Framer SemiBold Italic": 1,
+    "Inter Framer Regular": 1,
+    "Inter Framer Italic": 1,
+    "Input Mono Regular": 1,
+    "Input Mono Bold": 1,
+    "Input Mono Black": 1,
+    "Inter": 134,
+    "Inter Variable": 15,
+    "Inter Display": 126,
+    "Azeret Mono": 1,
+    "Satoshi": 6,
+    "Switzer": 3,
+    "Chillax": 2,
+    "Panchang": 2,
+    "Manrope": 1,
+    "Azeret Mono Variable": 1,
+    "Libre Caslon Condensed": 1,
+    "Open Runde": 1,
+    "Inter Tight Placeholder": 1,
+    "Space Grotesk Placeholder": 1,
+    "EB Garamond Placeholder": 1,
+    "Geist Placeholder": 1,
+    "Mona Sans Placeholder": 1,
+    "Geist Variable Placeholder": 1,
+    "Inter Medium Placeholder": 1,
+    "GT Walsheim Medium Placeholder": 1,
+    "GT Walsheim Bold Placeholder": 1,
+    "GT Walsheim Bold Oblique Placeholder": 1,
+    "GT Walsheim Medium Oblique Placeholder": 1,
+    "GT Walsheim Framer Medium Placeholder": 1,
+    "Inter Framer SemiBold Placeholder": 1,
+    "GT Walsheim Regular Placeholder": 1,
+    "Inter SemiBold Placeholder": 1,
+    "Lazzer Variable Placeholder": 1,
+    "Mono Spec Variable Placeholder": 1,
+    "GT Walsheim Black Placeholder": 1,
+    "Universal Sans Text 400 Placeholder": 1,
+    "Inter Framer SemiBold Italic Placeholder": 1,
+    "Inter Framer Regular Placeholder": 1,
+    "Inter Framer Italic Placeholder": 1,
+    "Input Mono Regular Placeholder": 1,
+    "Input Mono Bold Placeholder": 1,
+    "Input Mono Black Placeholder": 1,
+    "Inter Placeholder": 1,
+    "Inter Variable Placeholder": 1,
+    "Inter Display Placeholder": 1,
+    "Azeret Mono Placeholder": 1,
+    "JetBrains Mono Placeholder": 1,
+    "Satoshi Placeholder": 1,
+    "Switzer Placeholder": 1,
+    "Chillax Placeholder": 1,
+    "Panchang Placeholder": 1,
+    "Manrope Placeholder": 1,
+    "Azeret Mono Variable Placeholder": 1
+  },
+  "loadedFamilies": [
+    "EB Garamond",
+    "Geist",
+    "Inter Tight",
+    "Mona Sans",
+    "Space Grotesk",
+    "JetBrains Mono",
+    "VT323",
+    "Geist Variable",
+    "Luxurious Script",
+    "Inter Medium",
+    "GT Walsheim Medium",
+    "GT Walsheim Bold",
+    "GT Walsheim Bold Oblique",
+    "GT Walsheim Medium Oblique",
+    "GT Walsheim Framer Medium",
+    "Inter Framer SemiBold",
+    "GT Walsheim Regular",
+    "Inter SemiBold",
+    "Lazzer Variable",
+    "Mono Spec Variable",
+    "GT Walsheim Black",
+    "Universal Sans Text 400",
+    "Inter Framer SemiBold Italic",
+    "Inter Framer Regular",
+    "Inter Framer Italic",
+    "Input Mono Regular",
+    "Input Mono Bold",
+    "Input Mono Black",
+    "Inter",
+    "Inter Variable",
+    "Inter Display",
+    "Azeret Mono",
+    "Satoshi",
+    "Switzer",
+    "Chillax",
+    "Panchang",
+    "Manrope",
+    "Azeret Mono Variable",
+    "Libre Caslon Condensed",
+    "Open Runde",
+    "Inter Tight Placeholder",
+    "Space Grotesk Placeholder",
+    "EB Garamond Placeholder",
+    "Geist Placeholder",
+    "Mona Sans Placeholder",
+    "Geist Variable Placeholder",
+    "Inter Medium Placeholder",
+    "GT Walsheim Medium Placeholder",
+    "GT Walsheim Bold Placeholder",
+    "GT Walsheim Bold Oblique Placeholder",
+    "GT Walsheim Medium Oblique Placeholder",
+    "GT Walsheim Framer Medium Placeholder",
+    "Inter Framer SemiBold Placeholder",
+    "GT Walsheim Regular Placeholder",
+    "Inter SemiBold Placeholder",
+    "Lazzer Variable Placeholder",
+    "Mono Spec Variable Placeholder",
+    "GT Walsheim Black Placeholder",
+    "Universal Sans Text 400 Placeholder",
+    "Inter Framer SemiBold Italic Placeholder",
+    "Inter Framer Regular Placeholder",
+    "Inter Framer Italic Placeholder",
+    "Input Mono Regular Placeholder",
+    "Input Mono Bold Placeholder",
+    "Input Mono Black Placeholder",
+    "Inter Placeholder",
+    "Inter Variable Placeholder",
+    "Inter Display Placeholder",
+    "Azeret Mono Placeholder",
+    "JetBrains Mono Placeholder",
+    "Satoshi Placeholder",
+    "Switzer Placeholder",
+    "Chillax Placeholder",
+    "Panchang Placeholder",
+    "Manrope Placeholder",
+    "Azeret Mono Variable Placeholder"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 1,
+    "scrollTimeline": 1,
+    "timelineScope": 1,
+    "mixBlend": 3,
+    "clipPath": 3,
+    "maskImage": 3,
+    "backdropFilter": 3,
+    "filterBlur": 2,
+    "positionSticky": 3,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 1,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 12,
+    "subgrid": 2,
+    "willChange": 110,
+    "reducedMotion": 0,
+    "perspective": 1,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 5,
+    "maskImage": 42,
+    "clipPath": 1,
+    "transform3d": 8,
+    "willChange": 34,
+    "sticky": 1,
+    "filterBlur": 16
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 1
+  },
+  "videos": [
+    {
+      "src": "https://framerusercontent.com/assets/4RV4Erj59YHt6T06Ry7ab5tVI.mp4",
+      "w": 2320,
+      "h": 1300,
+      "loop": true,
+      "autoplay": true,
+      "muted": true
+    },
+    {
+      "src": "https://framerusercontent.com/assets/IxrpbsCJLku5W91FcYn0gQuQY.mp4",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false,
+      "muted": true
+    },
+    {
+      "src": "https://framerusercontent.com/assets/d5okMiktMgbhCcGtgbr8gGqqHU.mp4",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false,
+      "muted": true
+    },
+    {
+      "src": "https://framerusercontent.com/assets/CgG06QT8BUlSAEO3d4bWJgF0YgI.mp4",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false,
+      "muted": true
+    },
+    {
+      "src": "https://framerusercontent.com/assets/EGqLxawrgBiyYfcyRAdEFPRAMWo.mp4",
+      "w": 0,
+      "h": 0,
+      "loop": true,
+      "autoplay": false,
+      "muted": true
+    }
+  ],
+  "cursors": {
+    "pointer": 973,
+    "grab": 25,
+    "text": 13
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 5508,
+      "intersectionObservers": 72,
+      "audioContexts": 0,
+      "webAnimationsApi": 73
+    },
+    "counts": {
+      "elements": 3487,
+      "interactive": 184,
+      "svg": 161,
+      "svgPaths": 128,
+      "img": 99,
+      "picture": 0,
+      "video": 9,
+      "canvas": 0,
+      "sections": 6,
+      "headings": 20,
+      "cssRules": 2285
+    },
+    "scrollHeight": 10878,
+    "screensDeep": 12.09,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 2
+    },
+    "videos": [
+      {
+        "src": "https://framerusercontent.com/assets/4RV4Erj59YHt6T06Ry7ab5tVI.mp4",
+        "w": 2320,
+        "h": 1300,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://framerusercontent.com/assets/IxrpbsCJLku5W91FcYn0gQuQY.mp4",
+        "w": 1280,
+        "h": 720,
+        "loop": true,
+        "autoplay": true,
+        "muted": true
+      },
+      {
+        "src": "https://framerusercontent.com/assets/d5okMiktMgbhCcGtgbr8gGqqHU.mp4",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      },
+      {
+        "src": "https://framerusercontent.com/assets/CgG06QT8BUlSAEO3d4bWJgF0YgI.mp4",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      },
+      {
+        "src": "https://framerusercontent.com/assets/EGqLxawrgBiyYfcyRAdEFPRAMWo.mp4",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      },
+      {
+        "src": "https://framerusercontent.com/assets/IxrpbsCJLku5W91FcYn0gQuQY.mp4",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      },
+      {
+        "src": "https://framerusercontent.com/assets/d5okMiktMgbhCcGtgbr8gGqqHU.mp4",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      },
+      {
+        "src": "https://framerusercontent.com/assets/CgG06QT8BUlSAEO3d4bWJgF0YgI.mp4",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      },
+      {
+        "src": "https://framerusercontent.com/assets/EGqLxawrgBiyYfcyRAdEFPRAMWo.mp4",
+        "w": 0,
+        "h": 0,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      }
+    ],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 45028955
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "area": 4688065
+        },
+        {
+          "color": "rgb(23, 23, 23)",
+          "area": 953394
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.15)",
+          "area": 411172
+        },
+        {
+          "color": "rgba(0, 153, 255, 0.094)",
+          "area": 389391
+        },
+        {
+          "color": "rgba(0, 153, 255, 0.08)",
+          "area": 159781
+        },
+        {
+          "color": "rgb(36, 36, 36)",
+          "area": 124013
+        },
+        {
+          "color": "rgb(0, 153, 255)",
+          "area": 116311
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 601763
+        },
+        {
+          "color": "rgba(255, 255, 255, 0.6)",
+          "area": 195122
+        },
+        {
+          "color": "rgb(153, 153, 153)",
+          "area": 168293
+        },
+        {
+          "color": "rgb(102, 102, 102)",
+          "area": 53311
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 29994
+        },
+        {
+          "color": "rgb(214, 122, 92)",
+          "area": 25600
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 664,
+    "totalKB": 10814,
+    "jsKB": 411,
+    "videoKB": 9702,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "framerusercontent.com 10210KB",
+      "www.googletagmanager.com 356KB",
+      "www.framer.com 180KB",
+      "app.framerstatic.com 39KB",
+      "static.ads-twitter.com 13KB",
+      "events.framer.com 8KB"
+    ],
+    "libHints": [
+      "motion"
+    ]
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "Provider's accounts list is empty.",
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "[GSI_LOGGER]: FedCM get() rejects with NetworkError: Error retrieving a token."
+  ]
+}

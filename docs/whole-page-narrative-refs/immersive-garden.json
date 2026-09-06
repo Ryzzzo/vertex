@@ -1,0 +1,544 @@
+{
+  "url": "https://immersive-g.com/",
+  "slug": "immersive-garden",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 8,
+      "el": 784,
+      "draws": 657
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 8,
+      "el": 784,
+      "draws": 3097,
+      "shaders": 46,
+      "raf": 3921
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 8,
+      "el": 760,
+      "draws": 6693,
+      "shaders": 46,
+      "raf": 5793
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 8,
+      "el": 771,
+      "draws": 11327,
+      "shaders": 47,
+      "raf": 7651
+    },
+    {
+      "y": 0,
+      "pct": 0,
+      "canvas": 8,
+      "el": 760,
+      "draws": 15996,
+      "shaders": 47,
+      "raf": 9564
+    }
+  ],
+  "loadMs": 7585,
+  "title": "Immersive Garden",
+  "viewport": "1440x900",
+  "scrollHeight": 900,
+  "screensDeep": 1,
+  "counts": {
+    "elements": 784,
+    "interactive": 26,
+    "svg": 4,
+    "svgPaths": 50,
+    "img": 39,
+    "picture": 0,
+    "video": 0,
+    "canvas": 8,
+    "sections": 18,
+    "headings": 1,
+    "cssRules": 7328
+  },
+  "instrumented": {
+    "shaderPrograms": 46,
+    "shaderSources": 92,
+    "glslChars": 553385,
+    "glslHeads": [
+      "#define MAIN_VIEW true\n#define OVERLAY_VIEW true\n#define ABOUT_MASK true\n#define UI_DISTORTION true\n#define GLSLIFY 1\nattribute vec2 uv;attribute vec3 position;",
+      "#define MAIN_VIEW true\n#define OVERLAY_VIEW true\n#define ABOUT_MASK true\n#define UI_DISTORTION true\nprecision highp float;\n#define GLSLIFY 1\nvec2 rotateUV(vec2 ",
+      "#define PREV_VIEW true\n#define MAIN_VIEW true\n#define UI_DISTORTION true\n#define GLSLIFY 1\nattribute vec2 uv;attribute vec3 position;varying vec2 vUv;void main("
+    ],
+    "canvasContexts": [
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "webgl2",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 60,
+        "h": 60
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      },
+      {
+        "type": "2d",
+        "w": 300,
+        "h": 150
+      }
+    ],
+    "drawCalls": 605,
+    "drawInstanced": 18,
+    "texUploads": 21,
+    "rafTicks": 2085,
+    "intersectionObservers": 1,
+    "audioContexts": 2,
+    "webAnimationsApi": 0
+  },
+  "canvases": [
+    {
+      "css": "1440x900",
+      "buffer": "1440x900"
+    },
+    {
+      "css": "30x30",
+      "buffer": "30x30"
+    },
+    {
+      "css": "30x30",
+      "buffer": "30x30"
+    },
+    {
+      "css": "30x30",
+      "buffer": "30x30"
+    },
+    {
+      "css": "30x30",
+      "buffer": "30x30"
+    },
+    {
+      "css": "30x30",
+      "buffer": "30x30"
+    },
+    {
+      "css": "30x30",
+      "buffer": "30x30"
+    },
+    {
+      "css": "30x30",
+      "buffer": "60x60"
+    }
+  ],
+  "type": {
+    "h1": {
+      "font-size": "44px",
+      "line-height": "48.4px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "PSTimes, serif",
+      "color": "rgb(3, 3, 3)",
+      "text-transform": "none",
+      "ratio": 1.1,
+      "trackingEm": 0
+    },
+    "p": {
+      "font-size": "22px",
+      "line-height": "30.8px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "PSTimes, serif",
+      "color": "rgb(3, 3, 3)",
+      "text-transform": "none",
+      "ratio": 1.4,
+      "trackingEm": 0
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "normal",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "sans-serif",
+      "color": "rgb(3, 3, 3)",
+      "text-transform": "none",
+      "ratio": null,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(232, 232, 232)",
+        "area": 3888000
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(3, 3, 3)",
+        "area": 955833
+      },
+      {
+        "color": "rgb(232, 232, 232)",
+        "area": 30148
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 0,
+  "customEasings": [
+    "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
+    "cubic-bezier(0.2, 0, 0, 1)",
+    "cubic-bezier(0.39, 0.575, 0.565, 1)",
+    "cubic-bezier(0.4, 0, 0, 1)",
+    "cubic-bezier(0.77, 0, 0.175, 1)",
+    "cubic-bezier(0.165, 0.84, 0.44, 1)"
+  ],
+  "keywordEasings": [
+    "linear",
+    "ease-in-out",
+    "ease-out"
+  ],
+  "faceFamilies": {
+    "PSTimes": 60,
+    "HelveticaNeueRegular": 60,
+    "HelveticaNeueLight": 60
+  },
+  "loadedFamilies": [
+    "PSTimes",
+    "HelveticaNeueRegular",
+    "HelveticaNeueLight"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 0,
+    "clipPath": 0,
+    "maskImage": 0,
+    "backdropFilter": 0,
+    "filterBlur": 0,
+    "positionSticky": 0,
+    "containerQuery": 0,
+    "has": 0,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 0,
+    "textWrapBalance": 0,
+    "subgrid": 0,
+    "willChange": 55,
+    "reducedMotion": 0,
+    "perspective": 0,
+    "transform3d": 0
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 2,
+    "clipPath": 2,
+    "transform3d": 0,
+    "willChange": 199,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": true,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": false,
+    "nuxt": true,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [],
+  "cursors": {
+    "pointer": 147
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 47,
+      "shaderSources": 94,
+      "glslChars": 633481,
+      "glslHeads": [
+        "#define MAIN_VIEW true\n#define OVERLAY_VIEW true\n#define ABOUT_MASK true\n#define UI_DISTORTION true\n#define GLSLIFY 1\nattribute vec2 uv;attribute vec3 position;",
+        "#define MAIN_VIEW true\n#define OVERLAY_VIEW true\n#define ABOUT_MASK true\n#define UI_DISTORTION true\nprecision highp float;\n#define GLSLIFY 1\nvec2 rotateUV(vec2 ",
+        "#define PREV_VIEW true\n#define MAIN_VIEW true\n#define UI_DISTORTION true\n#define GLSLIFY 1\nattribute vec2 uv;attribute vec3 position;varying vec2 vUv;void main("
+      ],
+      "canvasContexts": [
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 1,
+          "h": 1
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "webgl2",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 60,
+          "h": 60
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        },
+        {
+          "type": "2d",
+          "w": 300,
+          "h": 150
+        }
+      ],
+      "drawCalls": 15996,
+      "drawInstanced": 18,
+      "texUploads": 311,
+      "rafTicks": 9564,
+      "intersectionObservers": 1,
+      "audioContexts": 2,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 760,
+      "interactive": 26,
+      "svg": 4,
+      "svgPaths": 50,
+      "img": 39,
+      "picture": 0,
+      "video": 0,
+      "canvas": 8,
+      "sections": 18,
+      "headings": 1,
+      "cssRules": 7328
+    },
+    "scrollHeight": 900,
+    "screensDeep": 1,
+    "canvases": [
+      {
+        "css": "1440x900",
+        "buffer": "1440x900"
+      },
+      {
+        "css": "30x30",
+        "buffer": "30x30"
+      },
+      {
+        "css": "30x30",
+        "buffer": "30x30"
+      },
+      {
+        "css": "30x30",
+        "buffer": "30x30"
+      },
+      {
+        "css": "30x30",
+        "buffer": "30x30"
+      },
+      {
+        "css": "30x30",
+        "buffer": "30x30"
+      },
+      {
+        "css": "30x30",
+        "buffer": "30x30"
+      },
+      {
+        "css": "30x30",
+        "buffer": "60x60"
+      }
+    ],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": true,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": false,
+      "nuxt": true,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(232, 232, 232)",
+          "area": 3888000
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(3, 3, 3)",
+          "area": 955833
+        },
+        {
+          "color": "rgb(232, 232, 232)",
+          "area": 30148
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 206,
+    "totalKB": 60577,
+    "jsKB": 163,
+    "videoKB": 37980,
+    "threeDCount": 46,
+    "threeDKB": 9926,
+    "threeDSample": [
+      {
+        "u": "https://immersive-g.com/webgl/projects/fish.glb",
+        "len": 0
+      },
+      {
+        "u": "https://immersive-g.com/webgl/about/model/textures/ktx2/ultralow/normal_05.ktx2",
+        "len": 2301978
+      },
+      {
+        "u": "https://immersive-g.com/webgl/about/model/bg_ultralow_draco.glb",
+        "len": 0
+      },
+      {
+        "u": "https://immersive-g.com/webgl/about/rocks_normal.ktx2",
+        "len": 251411
+      },
+      {
+        "u": "https://immersive-g.com/webgl/home/reliefs_low_compressed.glb",
+        "len": 0
+      },
+      {
+        "u": "https://immersive-g.com/webgl/footer/footer_compressed.glb",
+        "len": 0
+      }
+    ],
+    "topHosts": [
+      "ig-medias-prod.ams3.digitaloceanspaces.com 43297KB",
+      "immersive-g.com 10229KB",
+      " 6891KB",
+      "www.googletagmanager.com 161KB",
+      "unpkg.com 0KB",
+      "www.google-analytics.com 0KB"
+    ],
+    "libHints": []
+  },
+  "consoleErrors": []
+}

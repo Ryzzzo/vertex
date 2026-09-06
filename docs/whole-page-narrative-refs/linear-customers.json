@@ -1,0 +1,500 @@
+{
+  "url": "https://linear.app/customers",
+  "slug": "linear-customers",
+  "ok": true,
+  "error": null,
+  "depths": [
+    {
+      "y": 0,
+      "canvas": 0,
+      "el": 2710,
+      "draws": 0
+    },
+    {
+      "y": 1200,
+      "pct": 19,
+      "canvas": 0,
+      "el": 2717,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 2400,
+      "pct": 39,
+      "canvas": 0,
+      "el": 2717,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 3600,
+      "pct": 58,
+      "canvas": 0,
+      "el": 2717,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 5200,
+      "pct": 84,
+      "canvas": 0,
+      "el": 2728,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    },
+    {
+      "y": 6178,
+      "pct": 100,
+      "canvas": 0,
+      "el": 2894,
+      "draws": 0,
+      "shaders": 0,
+      "raf": 0
+    }
+  ],
+  "loadMs": 6744,
+  "title": "Linear Customers",
+  "viewport": "1440x900",
+  "scrollHeight": 7078,
+  "screensDeep": 7.86,
+  "counts": {
+    "elements": 2710,
+    "interactive": 142,
+    "svg": 9,
+    "svgPaths": 452,
+    "img": 61,
+    "picture": 0,
+    "video": 4,
+    "canvas": 0,
+    "sections": 2,
+    "headings": 8,
+    "cssRules": 2111
+  },
+  "instrumented": {
+    "shaderPrograms": 0,
+    "shaderSources": 0,
+    "glslChars": 0,
+    "glslHeads": [],
+    "canvasContexts": [],
+    "drawCalls": 0,
+    "drawInstanced": 0,
+    "texUploads": 0,
+    "rafTicks": 0,
+    "intersectionObservers": 1,
+    "audioContexts": 0,
+    "webAnimationsApi": 0
+  },
+  "canvases": [],
+  "type": {
+    "h1": {
+      "font-size": "48px",
+      "line-height": "48px",
+      "font-weight": "510",
+      "letter-spacing": "-1.056px",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(247, 248, 248)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": -0.022
+    },
+    "h2": {
+      "font-size": "72px",
+      "line-height": "72px",
+      "font-weight": "510",
+      "letter-spacing": "-1.584px",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(247, 248, 248)",
+      "text-transform": "none",
+      "ratio": 1,
+      "trackingEm": -0.022
+    },
+    "h3": {
+      "font-size": "13px",
+      "line-height": "19.5px",
+      "font-weight": "510",
+      "letter-spacing": "-0.13px",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(247, 248, 248)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": -0.01
+    },
+    "p": {
+      "font-size": "20px",
+      "line-height": "26.6px",
+      "font-weight": "510",
+      "letter-spacing": "-0.24px",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(247, 248, 248)",
+      "text-transform": "none",
+      "ratio": 1.33,
+      "trackingEm": -0.012
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "24px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "color": "rgb(247, 248, 248)",
+      "text-transform": "none",
+      "ratio": 1.5,
+      "trackingEm": 0
+    }
+  },
+  "palette": {
+    "backgrounds": [
+      {
+        "color": "rgb(8, 9, 10)",
+        "area": 31287240
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 315159
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "area": 129387
+      },
+      {
+        "color": "rgb(0, 78, 255)",
+        "area": 82944
+      },
+      {
+        "color": "rgb(78, 80, 245)",
+        "area": 82944
+      },
+      {
+        "color": "rgb(71, 71, 71)",
+        "area": 82944
+      },
+      {
+        "color": "rgb(228, 242, 34)",
+        "area": 82944
+      },
+      {
+        "color": "rgb(50, 153, 205)",
+        "area": 82944
+      }
+    ],
+    "text": [
+      {
+        "color": "rgb(138, 143, 152)",
+        "area": 494411
+      },
+      {
+        "color": "rgb(247, 248, 248)",
+        "area": 394654
+      },
+      {
+        "color": "rgb(208, 214, 224)",
+        "area": 66068
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "area": 46080
+      },
+      {
+        "color": "rgb(8, 9, 10)",
+        "area": 7916
+      },
+      {
+        "color": "rgb(98, 102, 109)",
+        "area": 4594
+      }
+    ]
+  },
+  "tokens": {},
+  "tokenCount": 0,
+  "unreadableSheets": 29,
+  "customEasings": [
+    "cubic-bezier(0.16, 1, 0.3, 1)",
+    "cubic-bezier(0.32, 0.72, 0, 1)",
+    "steps(12)",
+    "steps(14)",
+    "steps(8)",
+    "steps(9)",
+    "steps(5)",
+    "steps(7)",
+    "steps(11)",
+    "steps(16)"
+  ],
+  "keywordEasings": [
+    "ease-out",
+    "ease",
+    "ease-in-out"
+  ],
+  "faceFamilies": {},
+  "loadedFamilies": [
+    "Inter Variable",
+    "Berkeley Mono"
+  ],
+  "cssFeature": {
+    "animationTimeline": 0,
+    "viewTimeline": 0,
+    "scrollTimeline": 0,
+    "timelineScope": 0,
+    "mixBlend": 8,
+    "clipPath": 7,
+    "maskImage": 32,
+    "backdropFilter": 8,
+    "filterBlur": 9,
+    "positionSticky": 1,
+    "containerQuery": 5,
+    "has": 41,
+    "startingStyle": 0,
+    "anchor": 0,
+    "oklch": 0,
+    "colorMix": 8,
+    "textWrapBalance": 4,
+    "subgrid": 0,
+    "willChange": 3,
+    "reducedMotion": 8,
+    "perspective": 1,
+    "transform3d": 35
+  },
+  "inlineStyleFeature": {
+    "mixBlend": 0,
+    "maskImage": 15,
+    "clipPath": 2,
+    "transform3d": 0,
+    "willChange": 0,
+    "sticky": 0,
+    "filterBlur": 0
+  },
+  "libs": {
+    "gsap": false,
+    "gsapVersion": null,
+    "scrollTrigger": false,
+    "lenis": false,
+    "three": false,
+    "threeVersion": null,
+    "reactThreeFiber": false,
+    "react": false,
+    "next": true,
+    "nuxt": false,
+    "svelte": false,
+    "framerMotion": false,
+    "locomotive": false,
+    "barba": false,
+    "splitting": false,
+    "matterOrPhysics": false,
+    "webflow": false,
+    "pixi": false,
+    "lottie": false,
+    "videoAutoplay": 0
+  },
+  "videos": [
+    {
+      "src": "https://webassets.linear.app/files/ornj730p/production/c836564b2a174f99c609429e05751e41718bb1f6.mp4#t=0.001",
+      "w": 1280,
+      "h": 720,
+      "loop": true,
+      "autoplay": false,
+      "muted": true
+    },
+    {
+      "src": "https://webassets.linear.app/files/ornj730p/production/e7800c833c05c533f9c2e87d379148ef64e05002.mp4#t=0.001",
+      "w": 1280,
+      "h": 720,
+      "loop": true,
+      "autoplay": false,
+      "muted": true
+    },
+    {
+      "src": "https://webassets.linear.app/files/ornj730p/production/36ceca0e6d3cce8e709484b134e170b44a7bd43c.mp4#t=0.001",
+      "w": 1280,
+      "h": 720,
+      "loop": true,
+      "autoplay": false,
+      "muted": true
+    },
+    {
+      "src": "https://webassets.linear.app/files/ornj730p/production/9344ec9fa397c5c003465b7d6b7174560c21507d.mp4#t=0.001",
+      "w": 1280,
+      "h": 720,
+      "loop": true,
+      "autoplay": false,
+      "muted": true
+    }
+  ],
+  "cursors": {
+    "pointer": 1054
+  },
+  "afterScroll": {
+    "instrumented": {
+      "shaderPrograms": 0,
+      "shaderSources": 0,
+      "glslChars": 0,
+      "glslHeads": [],
+      "canvasContexts": [],
+      "drawCalls": 0,
+      "drawInstanced": 0,
+      "texUploads": 0,
+      "rafTicks": 0,
+      "intersectionObservers": 1,
+      "audioContexts": 0,
+      "webAnimationsApi": 0
+    },
+    "counts": {
+      "elements": 2894,
+      "interactive": 142,
+      "svg": 9,
+      "svgPaths": 452,
+      "img": 61,
+      "picture": 0,
+      "video": 4,
+      "canvas": 0,
+      "sections": 2,
+      "headings": 8,
+      "cssRules": 4117
+    },
+    "scrollHeight": 7078,
+    "screensDeep": 7.86,
+    "canvases": [],
+    "libs": {
+      "gsap": false,
+      "gsapVersion": null,
+      "scrollTrigger": false,
+      "lenis": false,
+      "three": false,
+      "threeVersion": null,
+      "reactThreeFiber": false,
+      "react": false,
+      "next": true,
+      "nuxt": false,
+      "svelte": false,
+      "framerMotion": false,
+      "locomotive": false,
+      "barba": false,
+      "splitting": false,
+      "matterOrPhysics": false,
+      "webflow": false,
+      "pixi": false,
+      "lottie": false,
+      "videoAutoplay": 0
+    },
+    "videos": [
+      {
+        "src": "https://webassets.linear.app/files/ornj730p/production/c836564b2a174f99c609429e05751e41718bb1f6.mp4#t=0.001",
+        "w": 1280,
+        "h": 720,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      },
+      {
+        "src": "https://webassets.linear.app/files/ornj730p/production/e7800c833c05c533f9c2e87d379148ef64e05002.mp4#t=0.001",
+        "w": 1280,
+        "h": 720,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      },
+      {
+        "src": "https://webassets.linear.app/files/ornj730p/production/36ceca0e6d3cce8e709484b134e170b44a7bd43c.mp4#t=0.001",
+        "w": 1280,
+        "h": 720,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      },
+      {
+        "src": "https://webassets.linear.app/files/ornj730p/production/9344ec9fa397c5c003465b7d6b7174560c21507d.mp4#t=0.001",
+        "w": 1280,
+        "h": 720,
+        "loop": true,
+        "autoplay": false,
+        "muted": true
+      }
+    ],
+    "palette": {
+      "backgrounds": [
+        {
+          "color": "rgb(8, 9, 10)",
+          "area": 31287240
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 315159
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "area": 129387
+        },
+        {
+          "color": "rgb(0, 78, 255)",
+          "area": 82944
+        },
+        {
+          "color": "rgb(78, 80, 245)",
+          "area": 82944
+        },
+        {
+          "color": "rgb(71, 71, 71)",
+          "area": 82944
+        },
+        {
+          "color": "rgb(228, 242, 34)",
+          "area": 82944
+        },
+        {
+          "color": "rgb(50, 153, 205)",
+          "area": 82944
+        }
+      ],
+      "text": [
+        {
+          "color": "rgb(138, 143, 152)",
+          "area": 494411
+        },
+        {
+          "color": "rgb(247, 248, 248)",
+          "area": 394654
+        },
+        {
+          "color": "rgb(208, 214, 224)",
+          "area": 66068
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "area": 46080
+        },
+        {
+          "color": "rgb(8, 9, 10)",
+          "area": 7916
+        },
+        {
+          "color": "rgb(98, 102, 109)",
+          "area": 4594
+        }
+      ]
+    }
+  },
+  "net": {
+    "requests": 782,
+    "totalKB": 39606,
+    "jsKB": 0,
+    "videoKB": 37871,
+    "threeDCount": 0,
+    "threeDKB": 0,
+    "threeDSample": [],
+    "topHosts": [
+      "webassets.linear.app 37888KB",
+      "linear.app 1221KB",
+      "static.linear.app 497KB",
+      "e.linear.app 0KB",
+      "api.linear.app 0KB",
+      "constellation.linear.app 0KB"
+    ],
+    "libHints": [
+      "motion",
+      "motion"
+    ]
+  },
+  "consoleErrors": []
+}
