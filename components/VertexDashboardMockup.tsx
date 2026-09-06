@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import CountUp from "./CountUp";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -33,7 +34,8 @@ import {
  * the account chip is initials rather than an invented face.
  */
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+/* The site's one curve — see --easing-linear in globals.css. */
+const EASE = [0.32, 0.72, 0, 1] as const;
 
 const NAV_WORKSPACE = [
   { label: "Overview", icon: LayoutDashboard, active: true },
@@ -72,14 +74,22 @@ const TAGS = ["supabase", "stripe", "pg_cron", "resend", "vercel"];
 
 /** Panels arrive on the stagger the outer stage sets, sliding in from up-right. */
 const panel = {
-  hidden: { opacity: 0, x: 100, y: -80 },
+  hidden: { opacity: 0, x: 60, y: -40 },
   shown: {
     opacity: 1,
     x: 0,
     y: 0,
-    transition: { duration: 1.2, ease: EASE },
+    transition: { duration: 0.9, ease: EASE },
   },
 };
+
+/**
+ * Boot order. The panels land, then the instruments come alive in the order a
+ * real console would: figures count up, bars rise, the feed fills. Delays are
+ * in ms from mount and read by the CSS `--boot` custom property, so the whole
+ * sequence is one timeline authored in one place.
+ */
+const BOOT = { kpi: 900, bars: 1100, spark: 1300, feed: 1250, nav: 700 };
 
 function Spark() {
   const w = 148;
@@ -88,12 +98,30 @@ function Spark() {
   const pts = SPARK.map((v, i) => `${(i / (SPARK.length - 1)) * w},${h - (v / max) * h}`).join(" ");
   return (
     <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true" className="shrink-0">
-      <polyline points={pts} fill="none" stroke="#5E6AD2" strokeWidth="1.5" strokeLinecap="round" />
       <polyline
         points={`0,${h} ${pts} ${w},${h}`}
-        fill="rgba(94,106,210,0.10)"
+        fill="url(#vx-spark-fill)"
         stroke="none"
+        className="vx-spark-area"
+        style={{ ["--boot" as string]: `${BOOT.spark}ms` }}
       />
+      <polyline
+        points={pts}
+        fill="none"
+        stroke="#8B96FF"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        pathLength={1}
+        className="vx-spark-line"
+        style={{ ["--boot" as string]: `${BOOT.spark}ms` }}
+      />
+      <defs>
+        <linearGradient id="vx-spark-fill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#8B96FF" stopOpacity="0.35" />
+          <stop offset="1" stopColor="#8B96FF" stopOpacity="0" />
+        </linearGradient>
+      </defs>
     </svg>
   );
 }
@@ -119,8 +147,12 @@ export default function VertexDashboardMockup() {
 
         <p className="vx-side-label">Workspace</p>
         <ul className="vx-nav">
-          {NAV_WORKSPACE.map((n) => (
-            <li key={n.label} className={n.active ? "vx-nav-item vx-nav-on" : "vx-nav-item"}>
+          {NAV_WORKSPACE.map((n, i) => (
+            <li
+              key={n.label}
+              className={n.active ? "vx-nav-item vx-nav-on vx-boot" : "vx-nav-item vx-boot"}
+              style={{ ["--boot" as string]: `${BOOT.nav + i * 60}ms` }}
+            >
               <n.icon size={13} />
               <span>{n.label}</span>
               {n.count && <span className="vx-nav-count">{n.count}</span>}
@@ -180,13 +212,19 @@ export default function VertexDashboardMockup() {
 
         <div className="vx-body">
           <div className="vx-kpis">
-            {KPIS.map((k) => (
-              <div key={k.label} className="vx-kpi">
+            {KPIS.map((k, i) => (
+              <div
+                key={k.label}
+                className="vx-kpi vx-boot"
+                style={{ ["--boot" as string]: `${BOOT.kpi + i * 120}ms` }}
+              >
                 <div className="vx-kpi-top">
                   <span className="vx-kpi-label">{k.label}</span>
                   <MoreHorizontal size={12} className="vx-dim" />
                 </div>
-                <div className="vx-kpi-value">{k.value}</div>
+                <div className="vx-kpi-value">
+                  <CountUp value={k.value} delay={BOOT.kpi + i * 120} />
+                </div>
                 <div className="vx-kpi-foot">
                   <span className={k.up ? "vx-delta vx-up" : "vx-delta vx-down"}>
                     {k.up ? <ArrowUpRight size={11} /> : <ArrowDownRight size={11} />}
@@ -216,7 +254,7 @@ export default function VertexDashboardMockup() {
                   <span
                     key={i}
                     className={i === BARS.length - 1 ? "vx-bar vx-bar-on" : "vx-bar"}
-                    style={{ height: `${b}%` }}
+                    style={{ height: `${b}%`, ["--boot" as string]: `${BOOT.bars + i * 45}ms` }}
                   />
                 ))}
               </div>
@@ -249,8 +287,12 @@ export default function VertexDashboardMockup() {
                 </span>
               </div>
               <ul className="vx-feed">
-                {ACTIVITY.map((a) => (
-                  <li key={a.text} className="vx-feed-row">
+                {ACTIVITY.map((a, i) => (
+                  <li
+                    key={a.text}
+                    className="vx-feed-row vx-boot"
+                    style={{ ["--boot" as string]: `${BOOT.feed + i * 90}ms` }}
+                  >
                     <span className="vx-feed-dot" style={{ background: a.dot }} />
                     <div className="vx-feed-txt">
                       <span className="vx-feed-main">{a.text}</span>

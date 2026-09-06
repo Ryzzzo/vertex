@@ -440,7 +440,25 @@ a {
    ───────────────────────────────────────────────────────────── */
 
 .hero {
+  position: relative;
   padding-block-start: clamp(3rem, 1.5rem + 4.2vw, 5rem);
+}
+
+/* The copy sits over the stage, in the first screen, with the console behind
+   and to the right of it. */
+@media (min-width: 901px) {
+  .hero {
+    min-height: min(92svh, 860px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero > .shell {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
 }
 
 .hero-grid {
@@ -2196,33 +2214,84 @@ a {
    ───────────────────────────────────────────────────────────── */
 
 /*
- * Full-bleed without the 100vw trick. The hero is already a full-width section,
- * so the band only needs 100%; 100vw would include the scrollbar gutter and put
- * a horizontal scroll back on the page, which is a WCAG 1.4.10 failure the site
- * only just finished clearing.
+ * The stage is the hero's backdrop, not a band beneath it. The section is the
+ * positioning context; the stage fills it and the copy column sits over the
+ * left third, so the console is in the first screen instead of 700px below it.
+ *
+ * 100%, never 100vw: 100vw includes the scrollbar gutter and puts a horizontal
+ * scroll back on the page, which is a WCAG 1.4.10 failure the site only just
+ * finished clearing.
  */
 .hero-stage {
-  position: relative;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 700px;
-  margin-top: -60px;
   overflow: hidden;
+  pointer-events: none;
+  --px: 0;
+  --py: 0;
 }
 
-.hero-stage-glow {
+/*
+ * Atmosphere. Two colour fields — the accent indigo and a cooler cyan — set
+ * behind the console and masked so they dissolve rather than end. They breathe
+ * on a slow cycle, opacity and scale only, so the whole thing stays on the
+ * compositor. This is where the "overly dark" reading gets answered: light in
+ * the room, not a brighter room.
+ */
+.hero-aurora {
   position: absolute;
-  left: 50%;
-  top: 0;
-  width: 1200px;
-  height: 800px;
-  max-width: 100%;
-  transform: translate(-50%, -30%);
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+  mask-image: radial-gradient(closest-side, #000 20%, transparent 100%);
+}
+
+.hero-aurora-a {
+  left: 38%;
+  top: -22%;
+  width: 1100px;
+  height: 820px;
   background: radial-gradient(
     ellipse at center,
-    rgba(94, 106, 210, 0.08) 0%,
-    transparent 70%
+    rgba(110, 124, 255, 0.34) 0%,
+    rgba(94, 106, 210, 0.16) 38%,
+    transparent 72%
   );
-  pointer-events: none;
+}
+
+.hero-aurora-b {
+  left: 58%;
+  top: 8%;
+  width: 900px;
+  height: 700px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(72, 196, 226, 0.22) 0%,
+    rgba(72, 196, 226, 0.08) 40%,
+    transparent 72%
+  );
+}
+
+@keyframes aurora-breathe {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(-2%, 3%, 0) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-aurora-a {
+    animation: aurora-breathe 14s var(--easing-linear) infinite;
+  }
+  .hero-aurora-b {
+    animation: aurora-breathe 18s var(--easing-linear) infinite reverse;
+  }
 }
 
 .hero-stage-perspective {
@@ -2235,20 +2304,63 @@ a {
   transition: transform 100ms var(--easing-linear);
 }
 
+/*
+ * The plane's resting pose is the "sideways" console. `--px`/`--py` add up to
+ * ±2.5° of lean toward the pointer on top of it, transitioned on the site's
+ * curve so the lean settles rather than tracks.
+ */
 .hero-stage-plane {
   position: absolute;
   inset: 0;
   width: 1600px;
   height: 900px;
-  margin: 280px auto auto;
-  background-color: #08090a;
-  border: 1px solid #1e1e1e;
+  margin: 150px auto auto 44%;
+  background-color: #0b0d12;
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 10px;
-  transform: translate(2%) scale(1.2) rotateX(47deg) rotateY(31deg) rotate(324deg);
+  transform: translate(2%) scale(1.12)
+    rotateX(calc(47deg + var(--py) * -2.5deg))
+    rotateY(calc(31deg + var(--px) * 2.5deg)) rotate(324deg);
   transform-style: preserve-3d;
   transform-origin: 0 0;
   backface-visibility: hidden;
   overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 60px 140px -40px rgba(94, 106, 210, 0.45),
+    0 20px 60px -30px rgba(0, 0, 0, 0.8);
+  transition: transform 700ms var(--easing-linear);
+}
+
+/* The glass: a soft specular highlight that sits where the pointer is. */
+.hero-stage-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(
+    640px circle at calc(50% + var(--px) * 42%) calc(50% + var(--py) * 42%),
+    rgba(255, 255, 255, 0.11) 0%,
+    rgba(255, 255, 255, 0.04) 28%,
+    transparent 62%
+  );
+  transition: background-position 700ms var(--easing-linear);
+}
+
+/* Light the console throws onto the page beneath it. */
+.hero-stage-spill {
+  position: absolute;
+  left: 40%;
+  top: 30%;
+  width: 1200px;
+  height: 700px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(94, 106, 210, 0.18) 0%,
+    transparent 60%
+  );
+  mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+  pointer-events: none;
 }
 
 /* The stage dissolves into the page instead of ending on a hard edge. */
@@ -2256,14 +2368,32 @@ a {
   position: absolute;
   inset-inline: 0;
   bottom: 0;
-  height: 18rem;
+  height: 14rem;
   z-index: 10;
   pointer-events: none;
-  background: linear-gradient(to top, #08090a 20%, transparent 100%);
+  background: linear-gradient(to top, var(--bg) 15%, transparent 100%);
+}
+
+/* Keeps the copy column legible where the plane runs under it. */
+.hero-stage-scrim {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 58%;
+  z-index: 9;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    var(--bg) 0%,
+    color-mix(in oklab, var(--bg) 92%, transparent) 40%,
+    transparent 100%
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-stage-perspective {
+  .hero-stage-perspective,
+  .hero-stage-plane,
+  .hero-stage-sheen {
     transition: none;
   }
 }
@@ -2276,6 +2406,61 @@ a {
 @media (max-width: 900px) {
   .hero-stage {
     display: none;
+  }
+}
+
+/* ── Boot sequence ──
+   Every instrument arrives on its own `--boot` delay, authored in the console
+   component as one timeline. Declared only under no-preference: a reduced-
+   motion visitor gets the finished console with no rule to undo. */
+
+@keyframes boot-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes bar-up {
+  from {
+    transform: scaleY(0.04);
+  }
+}
+
+@keyframes spark-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes spark-fill {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vx-boot {
+    animation: boot-in 520ms var(--easing-linear) both;
+    animation-delay: var(--boot, 0ms);
+  }
+
+  .vx-bar {
+    transform-origin: bottom;
+    animation: bar-up 760ms var(--easing-linear) both;
+    animation-delay: var(--boot, 0ms);
+  }
+
+  .vx-spark-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: spark-draw 1100ms var(--easing-linear) both;
+    animation-delay: var(--boot, 0ms);
+  }
+
+  .vx-spark-area {
+    animation: spark-fill 800ms var(--easing-linear) both;
+    animation-delay: calc(var(--boot, 0ms) + 500ms);
   }
 }
 
@@ -2307,8 +2492,8 @@ a {
   flex-direction: column;
   gap: 14px;
   padding: 14px 12px;
-  border-right: 1px solid #1a1c1f;
-  background: #0a0b0d;
+  border-right: 1px solid #22262d;
+  background: #0d1015;
 }
 
 .vx-side-head {
@@ -2552,9 +2737,10 @@ a {
   flex-direction: column;
   gap: 8px;
   padding: 12px;
-  border: 1px solid #1a1c1f;
+  border: 1px solid #23272f;
   border-radius: 8px;
-  background: #0c0e10;
+  background: linear-gradient(180deg, #14181f 0%, #0f1217 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .vx-kpi-top {
@@ -2614,9 +2800,10 @@ a {
 .vx-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid #1a1c1f;
+  border: 1px solid #23272f;
   border-radius: 8px;
-  background: #0c0e10;
+  background: linear-gradient(180deg, #14181f 0%, #0f1217 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   overflow: hidden;
 }
 
@@ -2657,11 +2844,12 @@ a {
 .vx-bar {
   flex: 1;
   border-radius: 2px 2px 0 0;
-  background: #232830;
+  background: linear-gradient(180deg, #3a4150 0%, #262b35 100%);
 }
 
 .vx-bar-on {
-  background: var(--accent);
+  background: linear-gradient(180deg, #9aa4ff 0%, var(--accent) 100%);
+  box-shadow: 0 0 18px rgba(138, 150, 255, 0.45);
 }
 
 .vx-axis {
