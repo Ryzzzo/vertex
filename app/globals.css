@@ -447,8 +447,9 @@ a {
 }
 
 /* The copy sits over the stage, in the first screen, with the console behind
-   and to the right of it. */
-@media (min-width: 901px) {
+   and to the right of it. From 721px — an open foldable or a tablet is wide
+   enough to carry the console at a smaller scale. */
+@media (min-width: 721px) {
   .hero {
     min-height: min(92svh, 860px);
     display: flex;
@@ -499,7 +500,7 @@ a {
  * scale (up to 5rem, sized off the viewport) breaks the headline into one word
  * per line. Size it off the column instead so it always sets in three lines.
  */
-@media (min-width: 901px) {
+@media (min-width: 721px) {
   .hero .h1 {
     font-size: clamp(2.625rem, 1.75rem + 6.4cqi, 3.5rem);
   }
@@ -2624,9 +2625,33 @@ a {
  * at 375px the visible slice is a corner of a sidebar. It is decorative, so it
  * is removed rather than shrunk, and the hero becomes copy-only.
  */
-@media (max-width: 900px) {
+@media (max-width: 720px) {
   .hero-stage {
     display: none;
+  }
+}
+
+/* Tablet and open-foldable band: the console at ~60% scale, further right,
+   so the copy column still owns the left half. */
+@media (min-width: 721px) and (max-width: 900px) {
+  .hero {
+    min-height: min(80svh, 720px);
+  }
+
+  .hero-stage-plane {
+    margin: 200px auto auto 34%;
+    transform: translate(0) scale(0.62)
+      rotateX(calc(47deg + var(--py) * -2.5deg))
+      rotateY(calc(31deg + var(--px) * 2.5deg)) rotate(324deg);
+  }
+
+  .hero-stage-scrim {
+    width: 72%;
+  }
+
+  .hero-aurora-a {
+    left: 25%;
+    width: 800px;
   }
 }
 
