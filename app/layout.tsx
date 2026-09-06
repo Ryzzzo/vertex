@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import Assistant from "@/components/Assistant";
+import Spotlight from "@/components/Spotlight";
 
 /**
  * Inter stays on body copy, where it is a genuinely good text face. Display
@@ -95,6 +96,10 @@ export default function RootLayout({
       <body>
         {children}
         <Assistant />
+        <Spotlight />
+        {/* Film grain: a static noise field at 3.5%, so large dark surfaces
+            stop banding and read as material rather than flat colour. */}
+        <div className="grain" aria-hidden="true" />
       </body>
     </html>
   );

@@ -1,8 +1,10 @@
 import type { CSSProperties } from "react";
-
-const SHA = "4f9c2ae10b7d3856e1c04a9fb2d75e83c6a1d0b4";
+import { getBuildSha } from "@/lib/shiplog";
 
 export default function DeployPanels() {
+  /* This build's own commit, not a specimen hash — the panel claims the check
+     is run on every deploy, so it shows the deploy it is part of. */
+  const SHA = getBuildSha();
   return (
     <div
       className="deploy"

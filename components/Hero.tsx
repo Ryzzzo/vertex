@@ -15,13 +15,7 @@ const HEADLINE = "One developer. Software that reads as a firm.";
  * and produces the same effect — and under prefers-reduced-motion the rule is
  * simply never declared, so the text is just there.
  */
-export default function Hero({
-  visual,
-  pill,
-}: {
-  visual: ReactNode;
-  pill: ReactNode;
-}) {
+export default function Hero({ visual }: { visual: ReactNode }) {
   const words = HEADLINE.split(" ");
   /* Where the headline finishes, so the rest of the cluster follows it in. */
   const tail = words.length;
@@ -75,7 +69,6 @@ export default function Hero({
                 />
               </svg>
             </a>
-            {pill}
           </div>
         </div>
 

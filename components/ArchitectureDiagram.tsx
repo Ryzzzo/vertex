@@ -83,6 +83,14 @@ export default function ArchitectureDiagram() {
         <path d="M452 166 l-3.5 6 h7 z" />
       </g>
 
+      {/* A request in flight: Client → Edge → Postgres, then pg_cron ticks. Runs
+          on a loop so the drawing reads as a system doing work, not a diagram. */}
+      <g className="packet-track" aria-hidden="true">
+        <circle r="3.2" className="packet packet-a" />
+        <circle r="3.2" className="packet packet-b" />
+        <circle cx="452" cy="181" r="3" className="packet-tick" />
+      </g>
+
       <Node x={10} y={92} w={110} h={48} label="Client" />
       <Node x={190} y={92} w={134} h={48} label="Vercel Edge" />
       <Node

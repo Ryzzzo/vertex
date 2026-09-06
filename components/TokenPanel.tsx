@@ -21,7 +21,7 @@ export default function TokenPanel() {
 
         <div className="tokens-swatches">
           {swatches.map((s) => (
-            <div key={s.name} className="tokens-swatch">
+            <div key={s.name} className="tokens-swatch" data-token={s.name}>
               <span
                 className="tokens-chipcolor"
                 style={{ background: s.hex }}
@@ -58,6 +58,8 @@ export default function TokenPanel() {
 
       <div className="tokens-applied">
         <p className="tokens-label">applied</p>
+        {/* Hover a token on the left and the part of the card it lands on lights
+            up — the mapping is the point of the panel. */}
         <div className="tokens-card">
           <p className="tokens-card-title">Retainer renewed</p>
           <p className="tokens-card-body">
@@ -65,6 +67,7 @@ export default function TokenPanel() {
           </p>
           <span className="tokens-card-cta">View agreement</span>
         </div>
+        <p className="tokens-hint" aria-hidden="true">hover a token</p>
       </div>
     </div>
   );

@@ -17,7 +17,9 @@
      would have left the same defect wherever it is reached next. */
   --text-tertiary: #7c7f88;
   --accent: #5e6ad2;
-  --hairline: #1f2023;
+  /* Lifted from #1f2023: the borders were reading as absent on most panels,
+     which is most of why the page felt darker than its colours are. */
+  --hairline: #26292f;
 
   /* Display and body are deliberately different families; see app/layout.tsx */
   --font-display: var(--font-instrument-sans, "Instrument Sans", ui-sans-serif, system-ui);
@@ -440,7 +442,39 @@ a {
    ───────────────────────────────────────────────────────────── */
 
 .hero {
+  position: relative;
   padding-block-start: clamp(3rem, 1.5rem + 4.2vw, 5rem);
+}
+
+/* The copy sits over the stage, in the first screen, with the console behind
+   and to the right of it. From 721px — an open foldable or a tablet is wide
+   enough to carry the console at a smaller scale. */
+@media (min-width: 721px) {
+  .hero {
+    min-height: min(92svh, 860px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero > .shell {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  /*
+   * Separation from the console, without a glow. A halo the colour of the
+   * ground knocks the console back behind each letter, so the type reads as
+   * in front of the object rather than lit by it.
+   */
+  .hero-title,
+  .hero-sub {
+    text-shadow:
+      0 0 28px var(--bg),
+      0 0 12px var(--bg),
+      0 1px 2px rgba(0, 0, 0, 0.6);
+  }
 }
 
 .hero-grid {
@@ -466,7 +500,7 @@ a {
  * scale (up to 5rem, sized off the viewport) breaks the headline into one word
  * per line. Size it off the column instead so it always sets in three lines.
  */
-@media (min-width: 901px) {
+@media (min-width: 721px) {
   .hero .h1 {
     font-size: clamp(2.625rem, 1.75rem + 6.4cqi, 3.5rem);
   }
@@ -717,8 +751,131 @@ a {
   height: auto;
   border: 1px solid var(--hairline);
   border-radius: 12px;
-  background: color-mix(in oklab, var(--surface) 55%, var(--bg));
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--surface) 78%, var(--bg)) 0%,
+    color-mix(in oklab, var(--surface) 45%, var(--bg)) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   padding: 0.5rem;
+  overflow: visible;
+}
+
+/*
+ * Light behind every chapter visual. Two masked radial fields — the accent
+ * and its cooler neighbour — so the panels sit in a lit room rather than on
+ * black. Static, GPU-composited, no filters.
+ */
+.chapter-visual {
+  position: relative;
+}
+
+.chapter-visual::before {
+  content: "";
+  position: absolute;
+  inset: -18% -12%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 62% 40%, rgba(94, 106, 210, 0.22), transparent 70%),
+    radial-gradient(45% 45% at 25% 75%, rgba(72, 196, 226, 0.10), transparent 70%);
+  mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+}
+
+/* ── Packets: requests in flight on the drawings ──
+   A dot travelling a motion path. Compositor-only; declared under
+   no-preference so a reduced-motion visitor sees the still drawing. */
+/* Halo is a wide translucent stroke, not a filter — nothing in these loops
+   should force a repaint beyond the dot itself. */
+.packet {
+  fill: #9aa4ff;
+  stroke: rgba(138, 150, 255, 0.35);
+  stroke-width: 6;
+  paint-order: stroke;
+  opacity: 0;
+}
+
+.packet-tick {
+  fill: var(--accent);
+  opacity: 0.25;
+}
+
+@keyframes packet-a {
+  0% { offset-distance: 0%; opacity: 0; }
+  6% { opacity: 1; }
+  44% { opacity: 1; }
+  50% { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes packet-b {
+  0%, 50% { offset-distance: 0%; opacity: 0; }
+  56% { opacity: 1; }
+  92% { opacity: 1; }
+  98% { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes packet-tick {
+  0%, 60% { opacity: 0.25; r: 3; }
+  66% { opacity: 1; r: 5; }
+  80%, 100% { opacity: 0.25; r: 3; }
+}
+
+@keyframes packet-down {
+  0% { offset-distance: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  42% { opacity: 1; }
+  48% { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes packet-up {
+  0%, 52% { offset-distance: 0%; opacity: 0; }
+  58% { opacity: 1; }
+  92% { opacity: 1; }
+  98% { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .packet-a {
+    offset-path: path("M120 116 H186 M190 116 H324 H386");
+    animation: packet-a 4.8s var(--easing-linear) infinite;
+  }
+  .packet-b {
+    offset-path: path("M386 116 H452 V166");
+    animation: packet-b 4.8s var(--easing-linear) infinite;
+  }
+  .packet-tick {
+    animation: packet-tick 4.8s var(--easing-linear) infinite;
+  }
+  .iso-packet-down {
+    offset-path: path("M336 30 V252");
+    animation: packet-down 4s var(--easing-linear) infinite;
+  }
+  .iso-packet-up {
+    fill: #c9cdd6;
+    stroke: rgba(255, 255, 255, 0.22);
+    offset-path: path("M352 264 V44");
+    animation: packet-up 4s var(--easing-linear) infinite;
+  }
+}
+
+/*
+ * The stack comes apart under the pointer. `translate` is its own property,
+ * so it composes with the scroll-driven `transform` on the same plate instead
+ * of being overwritten by it.
+ */
+.iso-plate {
+  translate: 0 0;
+  transition: translate 500ms var(--easing-linear);
+}
+
+@media (hover: hover) {
+  .iso:hover .iso-plate {
+    translate: 0 calc((var(--i) - 1) * 12px);
+  }
 }
 
 @keyframes flow-dash {
@@ -857,6 +1014,61 @@ a {
   font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--text-secondary);
+}
+
+.tokens-hint {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  opacity: 0.7;
+}
+
+/* Hover a token on the left; where it lands on the card lights up. */
+.tokens-swatch {
+  cursor: default;
+  border-radius: 6px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  transition: background-color var(--duration-hover) var(--easing-linear);
+}
+
+.tokens-card,
+.tokens-card-title,
+.tokens-card-body,
+.tokens-card-cta {
+  transition:
+    box-shadow 220ms var(--easing-linear),
+    color 220ms var(--easing-linear),
+    border-color 220ms var(--easing-linear),
+    background-color 220ms var(--easing-linear);
+}
+
+@media (hover: hover) {
+  .tokens-swatch:hover {
+    background: color-mix(in oklab, var(--text-primary) 7%, transparent);
+  }
+  .tokens:has(.tokens-swatch[data-token="surface"]:hover) .tokens-card {
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .tokens:has(.tokens-swatch[data-token="bg"]:hover) .tokens-applied {
+    box-shadow: inset 0 0 0 2px var(--accent);
+    border-radius: 10px;
+  }
+  .tokens:has(.tokens-swatch[data-token="hairline"]:hover) .tokens-card {
+    border-color: var(--accent);
+  }
+  .tokens:has(.tokens-swatch[data-token="text"]:hover) .tokens-card-title {
+    color: var(--accent);
+  }
+  .tokens:has(.tokens-swatch[data-token="muted"]:hover) .tokens-card-body {
+    color: var(--accent);
+  }
+  .tokens:has(.tokens-swatch[data-token="accent"]:hover) .tokens-card-cta {
+    box-shadow: 0 0 0 2px var(--text-primary), 0 0 18px rgba(94, 106, 210, 0.7);
+  }
 }
 
 .tokens-card-cta {
@@ -2196,33 +2408,92 @@ a {
    ───────────────────────────────────────────────────────────── */
 
 /*
- * Full-bleed without the 100vw trick. The hero is already a full-width section,
- * so the band only needs 100%; 100vw would include the scrollbar gutter and put
- * a horizontal scroll back on the page, which is a WCAG 1.4.10 failure the site
- * only just finished clearing.
+ * The stage is the hero's backdrop, not a band beneath it. The section is the
+ * positioning context; the stage fills it and the copy column sits over the
+ * left third, so the console is in the first screen instead of 700px below it.
+ *
+ * 100%, never 100vw: 100vw includes the scrollbar gutter and puts a horizontal
+ * scroll back on the page, which is a WCAG 1.4.10 failure the site only just
+ * finished clearing.
  */
 .hero-stage {
-  position: relative;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 700px;
-  margin-top: -60px;
   overflow: hidden;
+  pointer-events: none;
+  /*
+   * Own stacking context. Without it the scrim's and fade's z-indexes escape
+   * into the section's context and paint over the copy column — the headline
+   * read grey on the left, white on the right, which is the scrim's gradient.
+   */
+  isolation: isolate;
+  --px: 0;
+  --py: 0;
+  --mx: 50%;
+  --my: 50%;
 }
 
-.hero-stage-glow {
+/*
+ * Atmosphere. Two colour fields — the accent indigo and a cooler cyan — set
+ * behind the console and masked so they dissolve rather than end. They breathe
+ * on a slow cycle, opacity and scale only, so the whole thing stays on the
+ * compositor. This is where the "overly dark" reading gets answered: light in
+ * the room, not a brighter room.
+ */
+.hero-aurora {
   position: absolute;
-  left: 50%;
-  top: 0;
-  width: 1200px;
-  height: 800px;
-  max-width: 100%;
-  transform: translate(-50%, -30%);
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+  mask-image: radial-gradient(closest-side, #000 20%, transparent 100%);
+}
+
+.hero-aurora-a {
+  left: 38%;
+  top: -22%;
+  width: 1100px;
+  height: 820px;
   background: radial-gradient(
     ellipse at center,
-    rgba(94, 106, 210, 0.08) 0%,
-    transparent 70%
+    rgba(110, 124, 255, 0.34) 0%,
+    rgba(94, 106, 210, 0.16) 38%,
+    transparent 72%
   );
-  pointer-events: none;
+}
+
+.hero-aurora-b {
+  left: 58%;
+  top: 8%;
+  width: 900px;
+  height: 700px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(72, 196, 226, 0.22) 0%,
+    rgba(72, 196, 226, 0.08) 40%,
+    transparent 72%
+  );
+}
+
+@keyframes aurora-breathe {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(-2%, 3%, 0) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-aurora-a {
+    animation: aurora-breathe 14s var(--easing-linear) infinite;
+  }
+  .hero-aurora-b {
+    animation: aurora-breathe 18s var(--easing-linear) infinite reverse;
+  }
 }
 
 .hero-stage-perspective {
@@ -2235,20 +2506,74 @@ a {
   transition: transform 100ms var(--easing-linear);
 }
 
+/*
+ * The plane's resting pose is the "sideways" console. `--px`/`--py` add up to
+ * ±2.5° of lean toward the pointer on top of it, transitioned on the site's
+ * curve so the lean settles rather than tracks.
+ */
 .hero-stage-plane {
   position: absolute;
   inset: 0;
   width: 1600px;
   height: 900px;
-  margin: 280px auto auto;
-  background-color: #08090a;
-  border: 1px solid #1e1e1e;
+  margin: 190px auto auto 38%;
+  background-color: #0b0d12;
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 10px;
-  transform: translate(2%) scale(1.2) rotateX(47deg) rotateY(31deg) rotate(324deg);
+  transform: translate(0) scale(0.92)
+    rotateX(calc(47deg + var(--py) * -2.5deg))
+    rotateY(calc(31deg + var(--px) * 2.5deg)) rotate(324deg);
   transform-style: preserve-3d;
   transform-origin: 0 0;
   backface-visibility: hidden;
   overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 60px 140px -40px rgba(94, 106, 210, 0.45),
+    0 20px 60px -30px rgba(0, 0, 0, 0.8);
+  transition: transform 700ms var(--easing-linear);
+}
+
+/*
+ * The light. Drawn in screen space over the whole stage — not inside the
+ * rotated plane, whose tilted coordinates put the highlight a few hundred
+ * pixels from the pointer — so it sits exactly under the cursor. `--mx`/`--my`
+ * are the pointer's position within the stage, in px.
+ */
+.hero-stage-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    520px circle at var(--mx) var(--my),
+    rgba(160, 172, 255, 0.16) 0%,
+    rgba(160, 172, 255, 0.06) 30%,
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity 400ms var(--easing-linear);
+}
+
+.hero-stage[data-lit] .hero-stage-sheen {
+  opacity: 1;
+}
+
+/* Light the console throws onto the page beneath it. */
+.hero-stage-spill {
+  position: absolute;
+  left: 40%;
+  top: 30%;
+  width: 1200px;
+  height: 700px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(94, 106, 210, 0.18) 0%,
+    transparent 60%
+  );
+  mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+  pointer-events: none;
 }
 
 /* The stage dissolves into the page instead of ending on a hard edge. */
@@ -2256,14 +2581,41 @@ a {
   position: absolute;
   inset-inline: 0;
   bottom: 0;
-  height: 18rem;
+  height: 14rem;
   z-index: 10;
   pointer-events: none;
-  background: linear-gradient(to top, #08090a 20%, transparent 100%);
+  background: linear-gradient(to top, var(--bg) 15%, transparent 100%);
+}
+
+/* Keeps the copy column legible where the plane runs under it. */
+.hero-stage-scrim {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 64%;
+  z-index: 9;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    var(--bg) 0%,
+    color-mix(in oklab, var(--bg) 94%, transparent) 42%,
+    color-mix(in oklab, var(--bg) 55%, transparent) 70%,
+    transparent 100%
+  );
+}
+
+/* Between the two-column breakpoint and 1600 the copy column is wider in
+   proportion, so the plane starts further right to stay clear of the H1. */
+@media (min-width: 901px) and (max-width: 1600px) {
+  .hero-stage-plane {
+    margin-left: 44%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-stage-perspective {
+  .hero-stage-perspective,
+  .hero-stage-plane,
+  .hero-stage-sheen {
     transition: none;
   }
 }
@@ -2273,9 +2625,88 @@ a {
  * at 375px the visible slice is a corner of a sidebar. It is decorative, so it
  * is removed rather than shrunk, and the hero becomes copy-only.
  */
-@media (max-width: 900px) {
+@media (max-width: 720px) {
   .hero-stage {
     display: none;
+  }
+}
+
+/* Tablet and open-foldable band: the console at ~60% scale, further right,
+   so the copy column still owns the left half. */
+@media (min-width: 721px) and (max-width: 900px) {
+  .hero {
+    min-height: min(80svh, 720px);
+  }
+
+  .hero-stage-plane {
+    margin: 200px auto auto 34%;
+    transform: translate(0) scale(0.62)
+      rotateX(calc(47deg + var(--py) * -2.5deg))
+      rotateY(calc(31deg + var(--px) * 2.5deg)) rotate(324deg);
+  }
+
+  .hero-stage-scrim {
+    width: 72%;
+  }
+
+  .hero-aurora-a {
+    left: 25%;
+    width: 800px;
+  }
+}
+
+/* ── Boot sequence ──
+   Every instrument arrives on its own `--boot` delay, authored in the console
+   component as one timeline. Declared only under no-preference: a reduced-
+   motion visitor gets the finished console with no rule to undo. */
+
+@keyframes boot-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes bar-up {
+  from {
+    transform: scaleY(0.04);
+  }
+}
+
+@keyframes spark-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes spark-fill {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vx-boot {
+    animation: boot-in 520ms var(--easing-linear) both;
+    animation-delay: var(--boot, 0ms);
+  }
+
+  .vx-bar {
+    transform-origin: bottom;
+    animation: bar-up 760ms var(--easing-linear) both;
+    animation-delay: var(--boot, 0ms);
+  }
+
+  .vx-spark-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: spark-draw 1100ms var(--easing-linear) both;
+    animation-delay: var(--boot, 0ms);
+  }
+
+  .vx-spark-area {
+    animation: spark-fill 800ms var(--easing-linear) both;
+    animation-delay: calc(var(--boot, 0ms) + 500ms);
   }
 }
 
@@ -2307,8 +2738,8 @@ a {
   flex-direction: column;
   gap: 14px;
   padding: 14px 12px;
-  border-right: 1px solid #1a1c1f;
-  background: #0a0b0d;
+  border-right: 1px solid #22262d;
+  background: #0d1015;
 }
 
 .vx-side-head {
@@ -2552,9 +2983,10 @@ a {
   flex-direction: column;
   gap: 8px;
   padding: 12px;
-  border: 1px solid #1a1c1f;
+  border: 1px solid #23272f;
   border-radius: 8px;
-  background: #0c0e10;
+  background: linear-gradient(180deg, #14181f 0%, #0f1217 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .vx-kpi-top {
@@ -2614,9 +3046,10 @@ a {
 .vx-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid #1a1c1f;
+  border: 1px solid #23272f;
   border-radius: 8px;
-  background: #0c0e10;
+  background: linear-gradient(180deg, #14181f 0%, #0f1217 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   overflow: hidden;
 }
 
@@ -2657,11 +3090,12 @@ a {
 .vx-bar {
   flex: 1;
   border-radius: 2px 2px 0 0;
-  background: #232830;
+  background: linear-gradient(180deg, #3a4150 0%, #262b35 100%);
 }
 
 .vx-bar-on {
-  background: var(--accent);
+  background: linear-gradient(180deg, #9aa4ff 0%, var(--accent) 100%);
+  box-shadow: 0 0 18px rgba(138, 150, 255, 0.45);
 }
 
 .vx-axis {
@@ -2748,4 +3182,317 @@ a {
   color: var(--text-tertiary);
   font-family: var(--font-mono);
   font-size: 9.5px;
+}
+
+.vx-feed-sha {
+  flex: none;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+}
+
+.vx-kpi-unit {
+  margin-left: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-secondary);
+}
+
+.vx-kpi-sub-mono {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-tertiary);
+}
+
+.vx-chip-ok {
+  color: #3fb68b;
+  border-color: rgba(63, 182, 139, 0.4);
+}
+
+/* The deploy check, in the console's own type. */
+.vx-verify {
+  padding: 10px 14px 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.vx-verify-line {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  min-width: 0;
+}
+
+.vx-verify-line > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-verify-prompt {
+  color: var(--text-tertiary);
+}
+
+.vx-verify-cmd {
+  color: var(--text-primary);
+}
+
+.vx-verify-out {
+  padding-left: 14px;
+  color: #aab0bc;
+}
+
+.vx-verify-ok {
+  justify-content: space-between;
+  margin-top: 2px;
+  color: #3fb68b;
+}
+
+.vx-verify-when {
+  color: var(--text-tertiary);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Chapter 3 — schema: an insert ripples through the foreign keys.
+   plans first, then reviews and clauses, then the protected-text gate.
+   ───────────────────────────────────────────────────────────── */
+
+.schema-rect {
+  transition: stroke 300ms var(--easing-linear);
+}
+
+@keyframes schema-ripple {
+  0%, 100% {
+    stroke: var(--hairline);
+    stroke-width: 1;
+  }
+  8% {
+    stroke: #8b96ff;
+    stroke-width: 1.5;
+  }
+  30% {
+    stroke: var(--hairline);
+    stroke-width: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .schema-rect {
+    animation: schema-ripple 7s var(--easing-linear) infinite;
+    animation-delay: calc(var(--i) * 0.55s);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Selected work — desktop / phone flip
+   The plate turns over; the back carries the phone capture in a frame.
+   ───────────────────────────────────────────────────────────── */
+
+.card-flip {
+  perspective: 1600px;
+  overflow: visible;
+  border: 0;
+  background: none;
+}
+
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 720ms var(--easing-linear);
+}
+
+.card-flip[data-view="phone"] .card-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: var(--surface);
+  backface-visibility: hidden;
+}
+
+.card-face-back {
+  transform: rotateY(180deg);
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(60% 80% at 50% 30%, rgba(94, 106, 210, 0.22), transparent 70%),
+    linear-gradient(180deg, #14171d 0%, #0c0e12 100%);
+}
+
+/* The phone: an 18:39 frame that fills the plate's height, showing the top
+   of the capture. Hovering pans to the foot and back. */
+.card-phone {
+  height: 92%;
+  aspect-ratio: 9 / 19.5;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  background: #000;
+  box-shadow:
+    inset 0 0 0 3px #0a0b0d,
+    0 30px 60px -20px rgba(0, 0, 0, 0.8),
+    0 0 40px -10px rgba(94, 106, 210, 0.5);
+}
+
+.card-phone-shot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: object-position 7s linear;
+}
+
+@media (hover: hover) {
+  .card-flip[data-view="phone"]:hover .card-phone-shot {
+    object-position: bottom center;
+  }
+}
+
+/* Controls row under a card: device switch beside the detail toggle. */
+.card-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.card-devices {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface) 70%, var(--bg));
+}
+
+.card-device {
+  padding: 0.25rem 0.625rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color var(--duration-hover) var(--easing-linear),
+    background-color var(--duration-hover) var(--easing-linear);
+}
+
+.card-device[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--text-primary) 10%, transparent);
+  color: var(--text-primary);
+}
+
+.card-featured .card-devices {
+  align-self: flex-start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-flip-inner,
+  .card-phone-shot {
+    transition: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Chrome — spotlight borders, footer build line, grain
+   ───────────────────────────────────────────────────────────── */
+
+/*
+ * A panel's hairline brightens where the pointer is. The highlight is a
+ * radial gradient masked to a 1px ring on ::before, so it costs one
+ * compositor layer per lit panel and nothing when the pointer is elsewhere.
+ * `--mx`/`--my` are written by components/Spotlight.tsx.
+ */
+/* Zero specificity, so a panel that is already positioned keeps its own. */
+:where(.spot) {
+  position: relative;
+}
+
+.spot::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 3;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    260px circle at var(--mx, -999px) var(--my, -999px),
+    rgba(170, 180, 255, 0.75) 0%,
+    rgba(170, 180, 255, 0.25) 40%,
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms var(--easing-linear);
+}
+
+.spot[data-spot]::before {
+  opacity: 1;
+}
+
+.footer-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.footer-build {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.footer-build-sha {
+  color: var(--text-secondary);
+  text-transform: none;
+}
+
+.footer-build-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3fb68b;
+  box-shadow: 0 0 8px rgba(63, 182, 139, 0.8);
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
 }
