@@ -2314,11 +2314,11 @@ a {
   inset: 0;
   width: 1600px;
   height: 900px;
-  margin: 150px auto auto 44%;
+  margin: 190px auto auto 38%;
   background-color: #0b0d12;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 10px;
-  transform: translate(2%) scale(1.12)
+  transform: translate(0) scale(0.92)
     rotateX(calc(47deg + var(--py) * -2.5deg))
     rotateY(calc(31deg + var(--px) * 2.5deg)) rotate(324deg);
   transform-style: preserve-3d;
