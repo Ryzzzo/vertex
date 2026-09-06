@@ -1776,7 +1776,171 @@ a {
   color: var(--text-tertiary);
 }
 
-.lab-card:hover .card-shot {
+/* ── Lab plates as instruments ── */
+
+/* Map: zoom and pan under the pointer. `--lx`/`--ly` are the pointer as a
+   percentage of the plate, written by components/LabPlate.tsx. */
+.lab-media-map {
+  --lx: 50%;
+  --ly: 50%;
+  cursor: crosshair;
+}
+
+.lab-media-map .card-shot {
+  transform-origin: var(--lx) var(--ly);
+  transition:
+    transform 700ms var(--easing-linear),
+    transform-origin 300ms var(--easing-linear);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lab-card:hover .lab-media-map .card-shot {
+    transform: scale(1.6);
+  }
+
+  .lab-card:hover .lab-media-map .lab-media-veil {
+    opacity: 0.35;
+  }
+}
+
+.lab-media-veil {
+  transition: opacity 400ms var(--easing-linear);
+}
+
+.lab-reticle {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms var(--easing-linear);
+}
+
+.lab-card:hover .lab-media-map .lab-reticle {
+  opacity: 1;
+}
+
+.lab-reticle-h,
+.lab-reticle-v {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.lab-reticle-h {
+  left: 0;
+  right: 0;
+  top: var(--ly);
+  height: 1px;
+}
+
+.lab-reticle-v {
+  top: 0;
+  bottom: 0;
+  left: var(--lx);
+  width: 1px;
+}
+
+.lab-reticle-tag {
+  position: absolute;
+  left: calc(var(--lx) + 10px);
+  top: calc(var(--ly) + 8px);
+  padding: 2px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  background: color-mix(in oklab, var(--bg) 70%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* SQL: the level-one query types itself, then Run lights. */
+.lab-query {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: color-mix(in oklab, #0b0d12 82%, transparent);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.lab-query-prompt {
+  color: var(--text-tertiary);
+  flex: none;
+}
+
+.lab-query-text {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 1px solid var(--accent);
+}
+
+.lab-query-run {
+  margin-left: auto;
+  flex: none;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: #23272f;
+  color: var(--text-tertiary);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  transition:
+    background-color 300ms var(--easing-linear),
+    color 300ms var(--easing-linear),
+    box-shadow 300ms var(--easing-linear);
+}
+
+@keyframes query-type {
+  to {
+    max-width: calc(var(--chars) * 1ch);
+  }
+}
+
+@keyframes query-caret {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lab-media-sql[data-armed] .lab-query-text {
+    animation:
+      query-type calc(var(--chars) * 42ms) steps(var(--chars)) 300ms forwards,
+      query-caret 900ms step-end infinite;
+  }
+
+  .lab-media-sql[data-armed] .lab-query-run {
+    transition-delay: calc(var(--chars) * 42ms + 500ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-query-text {
+    max-width: none;
+    border-right: 0;
+  }
+}
+
+.lab-media-sql[data-armed] .lab-query-run {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(94, 106, 210, 0.55);
+}
+
+.lab-card:hover .lab-media-sql .card-shot {
   transform: scale(1.015);
 }
 

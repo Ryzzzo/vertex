@@ -1,4 +1,5 @@
 import Shot from "./Shot";
+import LabPlate from "./LabPlate";
 import { featuredLabs, lab, type FeaturedLab } from "@/lib/content";
 
 /**
@@ -43,14 +44,14 @@ function Chevron() {
 function LabCard({ item }: { item: FeaturedLab }) {
   return (
     <article className="lab-card reveal">
-      <div className="lab-media">
+      <LabPlate kind={item.slug === lab.slug ? "map" : "sql"}>
         <Shot
           src={item.shot}
           alt={item.shotAlt}
           sizes="(max-width: 900px) 100vw, 1200px"
         />
         <div className="lab-media-veil" aria-hidden="true" />
-      </div>
+      </LabPlate>
 
       <div className="lab-body">
         <div className="lab-lede">
