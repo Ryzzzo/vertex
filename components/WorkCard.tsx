@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Shot from "./Shot";
 import type { WorkItem } from "@/lib/content";
 
 function Chevron() {
@@ -57,13 +57,10 @@ function Media({ item }: { item: WorkItem }) {
 
   return (
     <div className="card-media">
-      <Image
+      <Shot
         src={item.shot}
         alt={item.shotAlt ?? ""}
-        width={1920}
-        height={1080}
         sizes={item.featured ? "(max-width: 900px) 100vw, 60vw" : "(max-width: 720px) 100vw, 50vw"}
-        className="card-shot"
         priority={item.featured}
       />
     </div>

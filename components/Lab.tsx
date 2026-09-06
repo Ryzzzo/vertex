@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Shot from "./Shot";
 import { featuredLabs, lab, type FeaturedLab } from "@/lib/content";
 
 /**
@@ -44,13 +44,10 @@ function LabCard({ item }: { item: FeaturedLab }) {
   return (
     <article className="lab-card reveal">
       <div className="lab-media">
-        <Image
+        <Shot
           src={item.shot}
           alt={item.shotAlt}
-          width={1920}
-          height={1080}
           sizes="(max-width: 900px) 100vw, 1200px"
-          className="card-shot"
         />
         <div className="lab-media-veil" aria-hidden="true" />
       </div>
