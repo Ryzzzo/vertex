@@ -2889,7 +2889,15 @@ a {
   background-color: #0b0d12;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 10px;
-  transform: translate(0) scale(0.92)
+  /*
+   * The console is a fixed 1600x900 so its interface stays at its designed
+   * size; the stage it sits in is now viewport-height, so the scale grows with
+   * the screen instead of leaving the lower third of a tall hero empty.
+   * transform-origin is the top-left, so scaling fills downward and right —
+   * away from the copy, into the space that was empty.
+   */
+  --plane-scale: 0.92;
+  transform: translate(0) scale(var(--plane-scale))
     rotateX(calc(47deg + var(--py) * -2.5deg))
     rotateY(calc(31deg + var(--px) * 2.5deg)) rotate(324deg);
   transform-style: preserve-3d;
@@ -4008,5 +4016,24 @@ a {
   .rail-dot,
   .rail-cursor {
     transition: none;
+  }
+}
+
+/* The console scales with the height of the stage it stands in. */
+@media (min-width: 721px) and (min-height: 900px) {
+  .hero-stage-plane {
+    --plane-scale: 1.02;
+  }
+}
+
+@media (min-width: 721px) and (min-height: 1100px) {
+  .hero-stage-plane {
+    --plane-scale: 1.12;
+  }
+}
+
+@media (min-width: 721px) and (min-height: 1300px) {
+  .hero-stage-plane {
+    --plane-scale: 1.22;
   }
 }
