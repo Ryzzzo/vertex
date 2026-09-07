@@ -4020,32 +4020,17 @@ a {
   }
 }
 
-/* The console scales with the height of the stage it stands in. */
-@media (min-width: 721px) and (min-height: 900px) {
-  .hero-stage-plane {
-    --plane-scale: 1.02;
-  }
-}
-
-@media (min-width: 721px) and (min-height: 1100px) {
-  .hero-stage-plane {
-    --plane-scale: 1.12;
-  }
-}
-
-@media (min-width: 721px) and (min-height: 1300px) {
-  .hero-stage-plane {
-    --plane-scale: 1.22;
-  }
-}
-
 /*
+ * On a laptop the console keeps its original scale and bleeds off the right
+ * edge, which is the composition this hero was drawn for: a large object the
+ * frame cannot hold. Growing it with the viewport height was tried and pushed
+ * its lower corner through the fold on any screen under about 1200px tall.
+ *
  * Wide enough to show the whole console. The plane starts at 38% of the
  * viewport, so the room to its right is 62vw; past ~2100px that is enough for
  * the rotated shape to land inside the frame, and a console you can see all of
  * reads as a finished object rather than a crop. Below that the bleed stays —
- * shrinking it to fit a laptop would leave it too small to read. These come
- * after the height rules on purpose: on a wide screen, fitting wins.
+ * shrinking it to fit a laptop would leave it too small to read.
  */
 @media (min-width: 2100px) {
   .hero-stage-plane {
