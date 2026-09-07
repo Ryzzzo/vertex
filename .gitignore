@@ -16,21 +16,10 @@ next-env.d.ts
 /scripts/.cache
 /.claude
 
-# Capture output from scripts/capture-ship.mjs
-/shots
-
 # Commit message scratch. Narrative commit bodies are written here and passed
 # with `git commit -F`, so the command string stays short — a heredoc puts
 # newlines in the command itself, which no permission pattern matches.
 /.cmsg.txt
-
-# Render masters. The 4K PNG and the EXR are ~70 MB of sources, not deliverables —
-# what ships is the web-sized AVIF/WebP in public/images/bridge, encoded from them.
-# Binaries that large are painful to remove from history once committed, and the
-# .blend scenes they came from live outside the repo in vertex-assets/ anyway.
-# The render log beside them is text and stays tracked.
-/renders/*
-!/renders/*.md
 
 # Reference captures behind docs/*.md research. ~135 MB of PNG screenshots of
 # other people's sites — evidence, not source. The JSON instrumentation dumps

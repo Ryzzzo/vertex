@@ -18,15 +18,13 @@
     "lucide-react": "^1.29.0",
     "next": "16.2.10",
     "react": "19.2.7",
-    "react-dom": "19.2.7",
-    "three": "^0.185.1"
+    "react-dom": "19.2.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "^22.10.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
-    "@types/three": "^0.185.4",
     "eslint": "^9.18.0",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "4.3.3",

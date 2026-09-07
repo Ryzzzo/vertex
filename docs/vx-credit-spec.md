@@ -22,9 +22,16 @@ Where it earns business: the visitor who is a business owner, likes the site, sc
 6. Light backgrounds: the mark's badge fill becomes the page background and the border a hairline in the client's border colour. The SVG already does this through the `--vx-*` variables — set them, don't restyle the paths.
 7. Never place a separate VX logo image, colour logo, or "VX" lockup anywhere on a client site. The credit is the only appearance.
 
-## Consent
+## When it is appropriate — and when it is not
 
-Only add the credit when the client's agreement includes the portfolio/credit clause, or the client has said yes in writing. If neither, build the site with the credit **omitted** and leave a `TODO(vx-credit)` comment where it would go. Do not ask the client mid-build; Ryan handles that conversation.
+Two gates, both must pass. If either fails, build with the credit **omitted** and leave a `TODO(vx-credit)` comment where it would go. Do not ask the client mid-build; Ryan handles that conversation.
+
+1. **Consent.** The client's agreement includes the portfolio/credit clause, or the client has said yes in writing.
+2. **Fit.** The credit is right for a public marketing/brochure site, a booking site, a product site, a nonprofit. It is **wrong** for: anything behind a login (portals, dashboards, admin tools — the visitor is a customer, not a prospect); regulated or sensitive contexts (legal, medical, government, anything where a third-party name in the footer raises questions); white-label work where the client resells the build as their own; sites in a language VX does not serve; and any client who has asked that the site read as fully in-house. When unsure, omit and flag to Ryan.
+
+## The mark
+
+Use the VX. app-icon mark — the rounded square with the soft top-down gradient, white "VX" and the indigo period (`public/icon-512.png` in the vertex repo; a 3D/gradient PNG, not the flat SVG). Because it is a raster, ship it as `vx-mark-64.png` + `vx-mark-128.png` (2×) exported from the 512 with the corner radius intact, and place it with `<img>` at 1.05em height. On light footers the gradient tile still reads correctly — it is self-contained, so nothing needs to invert. The flat inline SVG in the snippet below is the fallback for sites that forbid raster assets in the footer (rare); prefer the PNG.
 
 ## The snippet (copy verbatim, edit only `CLIENT_SLUG`)
 
@@ -34,6 +41,14 @@ Only add the credit when the client's agreement includes the portfolio/credit cl
    href="https://vertexapps.dev/?utm_source=CLIENT_SLUG&utm_medium=site-credit&utm_campaign=client-sites"
    aria-label="Built by Vertex Business Solutions — custom web applications"
    rel="noopener">
+  <img class="vx-credit-mark" src="/vx-mark-64.png" srcset="/vx-mark-128.png 2x" width="64" height="64" alt="" decoding="async">
+  <span>Built by Vertex</span>
+</a>
+```
+
+Fallback mark (only where raster assets are not allowed in the footer):
+
+```html
   <svg class="vx-credit-mark" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
     <rect x="1.5" y="1.5" width="509" height="509" rx="123"
           fill="var(--vx-surface, transparent)" stroke="var(--vx-border, currentColor)" stroke-width="12"/>
@@ -47,8 +62,6 @@ Only add the credit when the client's agreement includes the portfolio/credit cl
       <path fill="var(--vx-accent, #5E6AD2)" d="M326 -17C416 -17 487 53 487 143C487 232 416 302 326 302C236 302 166 232 166 143C166 53 236 -17 326 -17Z"/>
     </g>
   </svg>
-  <span>Built by Vertex</span>
-</a>
 ```
 
 ```css
@@ -65,7 +78,7 @@ Only add the credit when the client's agreement includes the portfolio/credit cl
   --vx-surface: transparent;
   --vx-border: currentColor;
 }
-.vx-credit-mark { width: 1.05em; height: 1.05em; flex: none; }
+.vx-credit-mark { width: 1.05em; height: 1.05em; flex: none; border-radius: 22%; }
 .vx-credit:hover,
 .vx-credit:focus-visible { color: var(--client-text-primary, inherit); }
 @media (prefers-reduced-motion: reduce) { .vx-credit { transition: none; } }
