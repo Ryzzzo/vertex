@@ -2885,7 +2885,7 @@ a {
   /* Proportional to the screen now that the hero is viewport-height: the
      console keeps the same relationship to the copy on a laptop and on a
      tall monitor instead of hugging the top of a taller stage. */
-  margin: clamp(140px, 18svh, 280px) auto auto 38%;
+  margin: var(--plane-top) auto auto 38%;
   background-color: #0b0d12;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 10px;
@@ -2897,6 +2897,7 @@ a {
    * away from the copy, into the space that was empty.
    */
   --plane-scale: 0.92;
+  --plane-top: clamp(140px, 18svh, 280px);
   transform: translate(0) scale(var(--plane-scale))
     rotateX(calc(47deg + var(--py) * -2.5deg))
     rotateY(calc(31deg + var(--px) * 2.5deg)) rotate(324deg);
@@ -4035,5 +4036,34 @@ a {
 @media (min-width: 721px) and (min-height: 1300px) {
   .hero-stage-plane {
     --plane-scale: 1.22;
+  }
+}
+
+/*
+ * Wide enough to show the whole console. The plane starts at 38% of the
+ * viewport, so the room to its right is 62vw; past ~2100px that is enough for
+ * the rotated shape to land inside the frame, and a console you can see all of
+ * reads as a finished object rather than a crop. Below that the bleed stays —
+ * shrinking it to fit a laptop would leave it too small to read. These come
+ * after the height rules on purpose: on a wide screen, fitting wins.
+ */
+@media (min-width: 2100px) {
+  .hero-stage-plane {
+    --plane-scale: 0.85;
+    --plane-top: 320px;
+  }
+}
+
+@media (min-width: 2300px) {
+  .hero-stage-plane {
+    --plane-scale: 0.94;
+    --plane-top: 355px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .hero-stage-plane {
+    --plane-scale: 1.04;
+    --plane-top: 380px;
   }
 }
