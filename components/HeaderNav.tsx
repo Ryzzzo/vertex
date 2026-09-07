@@ -35,7 +35,11 @@ export default function HeaderNav() {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
         header?.style.setProperty("--progress", p.toFixed(4));
-        setScrolled(window.scrollY > 24);
+        /* Hysteresis: on above 24px, off below 8px. The header's height no
+           longer changes, so nothing can feed back into scroll position, but a
+           bare threshold would still flicker the glass for anyone resting
+           exactly on it. */
+        setScrolled((was) => (was ? window.scrollY > 8 : window.scrollY > 24));
       });
     };
     onScroll();
