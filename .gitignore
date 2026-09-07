@@ -27,3 +27,6 @@ next-env.d.ts
 /docs/hero-refs/
 /docs/whole-page-narrative-refs/**/*.png
 /docs/whole-page-narrative-refs/*.png
+
+# Upwork portfolio captures and composites for this site. Build output, not source.
+/portfolio/
