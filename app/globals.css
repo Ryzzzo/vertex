@@ -21,6 +21,17 @@
      which is most of why the page felt darker than its colours are. */
   --hairline: #26292f;
 
+  /*
+   * The header's height, fixed and never animated. A sticky header that
+   * changes its own height reflows everything under it, and Chrome's scroll
+   * anchoring then corrects the scroll position to compensate — which crosses
+   * the scrolled threshold again and oscillates. The page visibly bounced.
+   * The scrolled state is carried by the glass and the progress hairline
+   * instead, neither of which touches layout. The hero measures against this
+   * so header + hero is exactly one screen.
+   */
+  --header-h: 5.25rem;
+
   /* Display and body are deliberately different families; see app/layout.tsx */
   --font-display: var(--font-instrument-sans, "Instrument Sans", ui-sans-serif, system-ui);
   --font-body: var(--font-inter, "Inter", ui-sans-serif, system-ui);
@@ -437,18 +448,23 @@ a {
   position: sticky;
   top: 0;
   z-index: 40;
-  padding-block: 1.75rem;
+  /* Constant — see --header-h. Never animate this. */
+  block-size: var(--header-h);
+  display: flex;
+  align-items: center;
   --progress: 0;
   transition:
-    padding 300ms var(--easing-linear),
     background-color 300ms var(--easing-linear),
     border-color 300ms var(--easing-linear);
   border-bottom: 1px solid transparent;
 }
 
-/* Once the page moves, the header becomes glass and tightens. */
+.site-header > .shell {
+  width: 100%;
+}
+
+/* Once the page moves, the header becomes glass. Colour only, no geometry. */
 .site-header[data-scrolled] {
-  padding-block: 0.875rem;
   background: color-mix(in oklab, var(--bg) 74%, transparent);
   backdrop-filter: blur(14px) saturate(1.2);
   border-bottom-color: color-mix(in oklab, var(--hairline) 70%, transparent);
@@ -595,7 +611,9 @@ a {
    enough to carry the console at a smaller scale. */
 @media (min-width: 721px) {
   .hero {
-    min-height: min(92svh, 860px);
+    /* Header plus hero is exactly one screen, so the seam into the next
+       section lands on the fold rather than above it. */
+    min-height: calc(100svh - var(--header-h));
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -2864,11 +2882,22 @@ a {
   inset: 0;
   width: 1600px;
   height: 900px;
-  margin: 190px auto auto 38%;
+  /* Proportional to the screen now that the hero is viewport-height: the
+     console keeps the same relationship to the copy on a laptop and on a
+     tall monitor instead of hugging the top of a taller stage. */
+  margin: clamp(140px, 18svh, 280px) auto auto 38%;
   background-color: #0b0d12;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 10px;
-  transform: translate(0) scale(0.92)
+  /*
+   * The console is a fixed 1600x900 so its interface stays at its designed
+   * size; the stage it sits in is now viewport-height, so the scale grows with
+   * the screen instead of leaving the lower third of a tall hero empty.
+   * transform-origin is the top-left, so scaling fills downward and right —
+   * away from the copy, into the space that was empty.
+   */
+  --plane-scale: 0.92;
+  transform: translate(0) scale(var(--plane-scale))
     rotateX(calc(47deg + var(--py) * -2.5deg))
     rotateY(calc(31deg + var(--px) * 2.5deg)) rotate(324deg);
   transform-style: preserve-3d;
@@ -3987,5 +4016,24 @@ a {
   .rail-dot,
   .rail-cursor {
     transition: none;
+  }
+}
+
+/* The console scales with the height of the stage it stands in. */
+@media (min-width: 721px) and (min-height: 900px) {
+  .hero-stage-plane {
+    --plane-scale: 1.02;
+  }
+}
+
+@media (min-width: 721px) and (min-height: 1100px) {
+  .hero-stage-plane {
+    --plane-scale: 1.12;
+  }
+}
+
+@media (min-width: 721px) and (min-height: 1300px) {
+  .hero-stage-plane {
+    --plane-scale: 1.22;
   }
 }
