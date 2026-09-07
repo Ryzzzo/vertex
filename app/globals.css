@@ -2885,7 +2885,7 @@ a {
   /* Proportional to the screen now that the hero is viewport-height: the
      console keeps the same relationship to the copy on a laptop and on a
      tall monitor instead of hugging the top of a taller stage. */
-  margin: clamp(120px, 14svh, 220px) auto auto 38%;
+  margin: clamp(140px, 18svh, 280px) auto auto 38%;
   background-color: #0b0d12;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 10px;
