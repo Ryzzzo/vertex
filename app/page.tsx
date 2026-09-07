@@ -6,6 +6,7 @@ import SelectedWork from "@/components/SelectedWork";
 import Lab from "@/components/Lab";
 import Contact from "@/components/Contact";
 import SiteFooter from "@/components/SiteFooter";
+import SectionRail from "@/components/SectionRail";
 import { getBuildSha, getShipLog } from "@/lib/shiplog";
 
 export default function Page() {
@@ -26,6 +27,7 @@ export default function Page() {
         <Contact />
       </main>
       <SiteFooter />
+      <SectionRail />
     </>
   );
 }
