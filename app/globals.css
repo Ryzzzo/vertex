@@ -4049,21 +4049,21 @@ a {
  */
 @media (min-width: 2100px) {
   .hero-stage-plane {
-    --plane-scale: 0.85;
-    --plane-top: 320px;
+    --plane-scale: 0.8;
+    --plane-top: clamp(190px, 19svh, 290px);
   }
 }
 
 @media (min-width: 2300px) {
   .hero-stage-plane {
-    --plane-scale: 0.94;
-    --plane-top: 355px;
+    --plane-scale: 0.89;
+    --plane-top: clamp(200px, 20svh, 300px);
   }
 }
 
 @media (min-width: 2560px) {
   .hero-stage-plane {
-    --plane-scale: 1.04;
-    --plane-top: 380px;
+    --plane-scale: 0.98;
+    --plane-top: clamp(210px, 21svh, 320px);
   }
 }
