@@ -210,7 +210,7 @@ export const labs: LabItem[] = [
 
 export const affordances = [
   { label: "Email", href: "mailto:contact@vertexapps.dev" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/rystacy/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/vertexapps/" },
   { label: "Upwork", href: "https://www.upwork.com/freelancers/ryans108" },
   { label: "GitHub", href: "https://github.com/Ryzzzo" },
 ];
