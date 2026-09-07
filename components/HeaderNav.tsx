@@ -69,10 +69,23 @@ export default function HeaderNav() {
 
   useEffect(() => {
     const header = document.querySelector<HTMLElement>(".site-header");
-    if (!header) return;
-    if (scrolled) header.dataset.scrolled = "";
-    else delete header.dataset.scrolled;
+    const root = document.documentElement;
+    if (scrolled) {
+      if (header) header.dataset.scrolled = "";
+      root.dataset.scrolled = "";
+    } else {
+      if (header) delete header.dataset.scrolled;
+      delete root.dataset.scrolled;
+    }
   }, [scrolled]);
+
+  // The section rail (SectionRail.tsx) is CSS-only; it reads the active
+  // section from the root so the two indicators can never disagree.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (active) root.dataset.section = active;
+    else delete root.dataset.section;
+  }, [active]);
 
   return (
     <>

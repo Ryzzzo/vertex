@@ -3844,3 +3844,148 @@ a {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   background-size: 160px 160px;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Section rail — right edge, desktop only. State comes from <html>
+   (data-scrolled, data-section), written by HeaderNav.
+   ───────────────────────────────────────────────────────────── */
+
+.rail {
+  --rail-step: 1.75rem;
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  z-index: 35;
+  translate: 0 -50%;
+  display: flex;
+  align-items: stretch;
+  gap: 0.75rem;
+  opacity: 0;
+  transition: opacity 400ms var(--easing-linear);
+  pointer-events: none;
+}
+
+:root[data-scrolled] .rail {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.rail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-auto-rows: var(--rail-step);
+}
+
+.rail-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  height: 100%;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.rail-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  opacity: 0;
+  translate: 6px 0;
+  transition:
+    opacity 220ms var(--easing-linear),
+    translate 220ms var(--easing-linear),
+    color 220ms var(--easing-linear);
+}
+
+.rail-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--text-secondary) 55%, transparent);
+  box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 45%, transparent);
+  transition:
+    background-color 220ms var(--easing-linear),
+    box-shadow 320ms var(--easing-linear),
+    scale 220ms var(--easing-linear);
+}
+
+.rail:hover .rail-label,
+.rail-link:focus-visible .rail-label {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.rail-link:hover .rail-dot,
+.rail-link:focus-visible .rail-dot {
+  background: var(--text-primary);
+}
+
+/* The lit dot: the CSS reads the active id straight off <html>. */
+:root[data-section="how-i-build"] .rail-link[data-section="how-i-build"] .rail-dot,
+:root[data-section="selected-work"] .rail-link[data-section="selected-work"] .rail-dot,
+:root[data-section="lab"] .rail-link[data-section="lab"] .rail-dot,
+:root[data-section="contact"] .rail-link[data-section="contact"] .rail-dot {
+  background: var(--accent);
+  scale: 1.35;
+  box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 22%, transparent);
+}
+
+:root[data-section="how-i-build"] .rail-link[data-section="how-i-build"] .rail-label,
+:root[data-section="selected-work"] .rail-link[data-section="selected-work"] .rail-label,
+:root[data-section="lab"] .rail-link[data-section="lab"] .rail-label,
+:root[data-section="contact"] .rail-link[data-section="contact"] .rail-label {
+  color: var(--text-primary);
+}
+
+/* A hairline track behind the dots with an accent segment that slides to the current one. */
+.rail-track {
+  position: absolute;
+  right: 2.5px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in oklab, var(--hairline) 80%, transparent);
+  pointer-events: none;
+}
+
+.rail-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: var(--rail-step);
+  background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  translate: 0 calc(var(--rail-i, 0) * var(--rail-step));
+  opacity: 0;
+  transition:
+    translate 420ms var(--easing-linear),
+    opacity 220ms var(--easing-linear);
+}
+
+:root[data-section] .rail-cursor {
+  opacity: 1;
+}
+
+:root[data-section="how-i-build"] .rail { --rail-i: 0; }
+:root[data-section="selected-work"] .rail { --rail-i: 1; }
+:root[data-section="lab"] .rail { --rail-i: 2; }
+:root[data-section="contact"] .rail { --rail-i: 3; }
+
+@media (max-width: 1100px) {
+  .rail {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail,
+  .rail-label,
+  .rail-dot,
+  .rail-cursor {
+    transition: none;
+  }
+}
