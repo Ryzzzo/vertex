@@ -131,12 +131,87 @@ a {
 }
 
 .section {
+  position: relative;
+  isolation: isolate;
   padding-block: var(--section-rhythm);
-  border-top: 1px solid var(--hairline);
 }
 
-.section:first-of-type {
-  border-top: none;
+/*
+ * Section seams. A flat hairline across the full width read as a ruled page;
+ * the seam is now a hairline that brightens toward the centre and a soft
+ * indigo ground beneath it, as if light were falling across the edge from the
+ * section above. Same hue as the hero spill so the page reads as one room.
+ */
+.section::before,
+.section::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.section::before {
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--hairline) 18%,
+    color-mix(in oklab, var(--accent) 85%, white) 50%,
+    var(--hairline) 82%,
+    transparent 100%
+  );
+}
+
+.section::after {
+  left: 50%;
+  top: 0;
+  width: min(1100px, 100vw);
+  height: 260px;
+  translate: -50% 0;
+  z-index: -1;
+  background:
+    /* the hot core of the seam, blooming just below the line */
+    radial-gradient(
+      ellipse 22% 10px at 50% 0%,
+      rgba(150, 160, 255, 0.55) 0%,
+      transparent 100%
+    ),
+    /* the ground the seam lights */
+    radial-gradient(
+      ellipse 60% 100% at 50% 0%,
+      rgba(94, 106, 210, 0.24) 0%,
+      rgba(94, 106, 210, 0.08) 40%,
+      transparent 72%
+    );
+  opacity: 1;
+}
+
+.section:first-of-type::before,
+.section:first-of-type::after {
+  content: none;
+}
+
+/* The ground lights as the seam scrolls into view, then settles. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section::after {
+      animation: seam-light linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+@keyframes seam-light {
+  from {
+    opacity: 0;
+    scale: 0.7 1;
+  }
+  to {
+    opacity: 1;
+    scale: 1 1;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -2373,8 +2448,26 @@ a {
 }
 
 .footer {
-  border-top: 1px solid var(--hairline);
+  position: relative;
   padding-block: 2.5rem;
+}
+
+/* Same faded seam as the sections, without the ground — the footer is the floor. */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--hairline) 18%,
+    color-mix(in oklab, var(--accent) 55%, var(--hairline)) 50%,
+    var(--hairline) 82%,
+    transparent 100%
+  );
 }
 
 .footer-inner {
