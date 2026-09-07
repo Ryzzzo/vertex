@@ -86,7 +86,7 @@ export const work: WorkItem[] = [
     slug: "fm24",
     name: "FM24",
     line: "Multilingual public site for a German security and facility-management software platform, shipped as a static build into the client’s existing server environment.",
-    url: "https://fm24.i-safety.eu/webseite/en/",
+    url: "https://fm24.info",
     stack: "Next.js · static export · dropped onto legacy Apache",
     approach:
       "Static export shipped into infrastructure with no Node runtime — the client hosts on a legacy Apache stack, so the entire built site is prerendered files. Backend-free. Four languages — German, English, Spanish, French — with build-time i18n and browser-language detection. GDPR-conformant cookie consent gate, so reCAPTCHA and embedded video load only after opt-in.",
