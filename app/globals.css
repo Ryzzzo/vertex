@@ -2885,7 +2885,7 @@ a {
   /* Proportional to the screen now that the hero is viewport-height: the
      console keeps the same relationship to the copy on a laptop and on a
      tall monitor instead of hugging the top of a taller stage. */
-  margin: clamp(140px, 18svh, 280px) auto auto 38%;
+  margin: var(--plane-top) auto auto 38%;
   background-color: #0b0d12;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 10px;
@@ -2897,6 +2897,7 @@ a {
    * away from the copy, into the space that was empty.
    */
   --plane-scale: 0.92;
+  --plane-top: clamp(140px, 18svh, 280px);
   transform: translate(0) scale(var(--plane-scale))
     rotateX(calc(47deg + var(--py) * -2.5deg))
     rotateY(calc(31deg + var(--px) * 2.5deg)) rotate(324deg);
@@ -4019,21 +4020,35 @@ a {
   }
 }
 
-/* The console scales with the height of the stage it stands in. */
-@media (min-width: 721px) and (min-height: 900px) {
+/*
+ * On a laptop the console keeps its original scale and bleeds off the right
+ * edge, which is the composition this hero was drawn for: a large object the
+ * frame cannot hold. Growing it with the viewport height was tried and pushed
+ * its lower corner through the fold on any screen under about 1200px tall.
+ *
+ * Wide enough to show the whole console. The plane starts at 38% of the
+ * viewport, so the room to its right is 62vw; past ~2100px that is enough for
+ * the rotated shape to land inside the frame, and a console you can see all of
+ * reads as a finished object rather than a crop. Below that the bleed stays —
+ * shrinking it to fit a laptop would leave it too small to read.
+ */
+@media (min-width: 2100px) {
   .hero-stage-plane {
-    --plane-scale: 1.02;
+    --plane-scale: 0.8;
+    --plane-top: clamp(190px, 19svh, 290px);
   }
 }
 
-@media (min-width: 721px) and (min-height: 1100px) {
+@media (min-width: 2300px) {
   .hero-stage-plane {
-    --plane-scale: 1.12;
+    --plane-scale: 0.89;
+    --plane-top: clamp(200px, 20svh, 300px);
   }
 }
 
-@media (min-width: 721px) and (min-height: 1300px) {
+@media (min-width: 2560px) {
   .hero-stage-plane {
-    --plane-scale: 1.22;
+    --plane-scale: 0.98;
+    --plane-top: clamp(210px, 21svh, 320px);
   }
 }
