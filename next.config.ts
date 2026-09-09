@@ -24,16 +24,22 @@ const nextConfig: NextConfig = {
    * canonicals point back here, so the vercel.app URL never competes.
    *
    * Both entries are required: ":path*" does not match the bare "/sql".
+   *
+   * The origin is the zone's public production alias, NOT
+   * sql-game-vertexapps.vercel.app: the team-scoped alias sits behind Vercel
+   * Authentication and answers 302 to vercel.com/sso-api, which would have
+   * made /sql bounce every visitor to a login page. Verified by requesting
+   * both hosts directly -- the team alias 302s, this one returns 200.
    */
   async rewrites() {
     return [
       {
         source: "/sql",
-        destination: "https://sql-game-vertexapps.vercel.app/sql",
+        destination: "https://sql-game-zeta.vercel.app/sql",
       },
       {
         source: "/sql/:path*",
-        destination: "https://sql-game-vertexapps.vercel.app/sql/:path*",
+        destination: "https://sql-game-zeta.vercel.app/sql/:path*",
       },
     ];
   },
