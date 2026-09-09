@@ -33,6 +33,20 @@ const nextConfig: NextConfig = {
    */
   async rewrites() {
     return [
+      /*
+       * Analytics beacons first, and prefix-stripping: Vercel serves
+       * /_vercel/insights/* at the ROOT of a deployment regardless of its
+       * basePath, so these cannot go through the general /sql/:path* rule --
+       * the zone would 404 them. The zone is configured to request them under
+       * /sql/_vercel/*, and this rule takes that prefix back off. Without it
+       * both scripts 404 against vertexapps.dev and the SQL pages record no
+       * traffic, which for a subfolder that exists to earn search traffic is
+       * the failure that matters most.
+       */
+      {
+        source: "/sql/_vercel/:path*",
+        destination: "https://sql-game-zeta.vercel.app/_vercel/:path*",
+      },
       {
         source: "/sql",
         destination: "https://sql-game-zeta.vercel.app/sql",
