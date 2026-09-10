@@ -8,7 +8,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
  * `map`  — the NC Housing Terminal capture. Hovering zooms the plate and the
  *          map pans under the pointer, with a reticle where you are, so the
  *          visitor looks around the state the way they would in the real map.
- * `sql`  — the Query Grid capture. As the plate scrolls into view a query bar
+ * `sql`  — the Accession capture. As the plate scrolls into view a query bar
  *          types the level-one solution, then the Run chip lights. The query
  *          is the real answer to the real puzzle on the board.
  *

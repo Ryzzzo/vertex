@@ -50,7 +50,7 @@ const NAV_WORKSPACE = [
 
 const NAV_LABS = [
   { label: "NC Housing Terminal", icon: Map, note: "live" },
-  { label: "Query Grid", icon: Table2, note: "in dev" },
+  { label: "Accession", icon: Table2, note: "live" },
 ];
 
 /**
@@ -78,10 +78,10 @@ const FACTS = [
     sub: "4 locales · no cookies · no analytics · prerendered",
   },
   {
-    label: "Query Grid",
+    label: "Accession",
     value: "0",
     unit: "servers",
-    sub: "DuckDB in the browser · 5 levels live · 60 planned",
+    sub: "DuckDB in the browser · 6 levels live · 60 planned",
   },
 ];
 
