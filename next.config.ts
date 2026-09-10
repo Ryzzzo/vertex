@@ -32,7 +32,22 @@ const nextConfig: NextConfig = {
    * both hosts directly -- the team alias 302s, this one returns 200.
    */
   async rewrites() {
-    return [
+    /*
+     * `beforeFiles`, not a bare array.
+     *
+     * A bare array lands in `afterFiles`, which runs only once this app has
+     * failed to resolve the path itself — and for a React Server Component
+     * request to the bare "/sql" it does not cleanly fail: it answered 404
+     * while the zone served the same URL 200, so every client-side navigation
+     * from a reference page back into the game fell out of the router and did
+     * a full page load. "/sql/learn" was unaffected, which is what made it
+     * look like a fluke rather than a rule ordering problem.
+     *
+     * `beforeFiles` is also the honest semantics for a zone boundary: nothing
+     * under /sql belongs to this app, so this app should never get a say.
+     */
+    return {
+      beforeFiles: [
       /*
        * Analytics beacons first, and prefix-stripping: Vercel serves
        * /_vercel/insights/* at the ROOT of a deployment regardless of its
@@ -43,19 +58,22 @@ const nextConfig: NextConfig = {
        * traffic, which for a subfolder that exists to earn search traffic is
        * the failure that matters most.
        */
-      {
-        source: "/sql/_vercel/:path*",
-        destination: "https://sql-game-zeta.vercel.app/_vercel/:path*",
-      },
-      {
-        source: "/sql",
-        destination: "https://sql-game-zeta.vercel.app/sql",
-      },
-      {
-        source: "/sql/:path*",
-        destination: "https://sql-game-zeta.vercel.app/sql/:path*",
-      },
-    ];
+        {
+          source: "/sql/_vercel/:path*",
+          destination: "https://sql-game-zeta.vercel.app/_vercel/:path*",
+        },
+        {
+          source: "/sql",
+          destination: "https://sql-game-zeta.vercel.app/sql",
+        },
+        {
+          source: "/sql/:path*",
+          destination: "https://sql-game-zeta.vercel.app/sql/:path*",
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
   },
   // The ship concept moved out of this repo (C:\DEVELOPMENT\Concepts\vertex-ship).
   // Anyone holding an old /ship link lands on the site rather than a 404.
