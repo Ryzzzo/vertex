@@ -36,6 +36,18 @@ export const work: WorkItem[] = [
     featured: true,
   },
   {
+    slug: "accession",
+    name: "Accession",
+    line: "A museum records puzzle that teaches SQL. Work the collection, one case at a time.",
+    url: "https://vertexapps.dev/sql",
+    stack: "Next.js Multi-Zone · DuckDB-Wasm · Monaco Editor · Vercel",
+    approach:
+      "DuckDB runs entirely in the browser, so there is no backend to keep alive and no data to leave the visitor's machine — schema, queries and answer checking all execute locally. Levels come in two kinds: drills check the result set, so the query is the lesson; investigations take a typed answer instead, which frees a hint to explain syntax without giving the finding away and makes a level that needs four queries possible at all. It is served as a Next.js Multi-Zone at vertexapps.dev/sql, so the pages inherit the domain rather than starting a new one, while the WebAssembly stays out of this site's bundle. A companion SQL reference publishes one indexable page per concept with the same live editor embedded.",
+    shot: "/work/accession/hero-desktop.avif",
+    shotAlt:
+      "The Accession board on the Ashcombe Bequest investigation: the case brief, a two-table schema, the Toolkit keyword panel, the query editor and the answer box.",
+  },
+  {
     slug: "parenting-plan-pro",
     name: "Parenting Plan Pro",
     line: "Legal document generation where the text is the product, and protected accordingly.",
@@ -129,22 +141,9 @@ export const lab: FeaturedLab = {
   meta: "Designed, built, and deployed in one evening.",
 };
 
-export const accession: FeaturedLab = {
-  slug: "accession",
-  name: "Accession",
-  line: "A museum records puzzle that teaches SQL. Work the collection, one case at a time.",
-  stack: "Next.js Multi-Zone · DuckDB-Wasm · Monaco Editor · Vercel",
-  approach:
-    "DuckDB runs entirely in the browser, so there is no backend to keep alive and no data to leave the visitor's machine — schema, queries and answer checking all execute locally. Levels come in two kinds: drills check the result set, so the query is the lesson; investigations take a typed answer instead, which frees a hint to explain syntax without giving the finding away and makes a level that needs four queries possible at all. It is served as a Next.js Multi-Zone at vertexapps.dev/sql, so the pages inherit the domain rather than starting a new one, while the WebAssembly stays out of this site's bundle. A companion SQL reference publishes one indexable page per concept with the same live editor embedded.",
-  url: "https://vertexapps.dev/sql",
-  shot: "/work/accession/hero-desktop.avif",
-  shotAlt:
-    "The Accession board on the Ashcombe Bequest investigation: the case brief, a two-table schema, the Toolkit keyword panel, the query editor and the answer box.",
-  status: "Live",
-};
 
 /** The Labs shown at hero scale on the homepage, in order. */
-export const featuredLabs: FeaturedLab[] = [lab, accession];
+export const featuredLabs: FeaturedLab[] = [lab];
 
 export type LabItem = {
   slug: string;
@@ -194,17 +193,6 @@ export const labs: LabItem[] = [
     kind: "live",
     shot: lab.shot,
     shotAlt: lab.shotAlt,
-  },
-  {
-    slug: accession.slug,
-    name: accession.name,
-    line: accession.line,
-    href: accession.url,
-    external: true,
-    kind: "live",
-    status: accession.status,
-    shot: accession.shot,
-    shotAlt: accession.shotAlt,
   },
 ];
 
