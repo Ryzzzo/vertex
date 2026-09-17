@@ -418,28 +418,34 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.addEventListener('DOMContentLoaded', add);
   new MutationObserver(add).observe(document, { childList: true, subtree: true });
 
-  /* #argument -- start the view at the rule sets rather than at the demo own
-     masthead, which repeats the host page pitch verbatim. Resolved by finding
-     the row rather than by an id, because the markup is generated at runtime
-     and an id would have to survive a re-render to be useful. */
-  if (location.hash === '#argument') {
-    var jump = function () {
+  /* When embedded, collapse the demo own masthead. The host page states the
+     same pitch directly above the frame, so a visitor read it twice before
+     reaching anything interactive. Cropping it from the host instead needed a
+     fixed pixel offset, and the correct offset measured 346px at 1118 wide,
+     339 at 1020, 351 at 860 and 467 at 620 -- not monotonic with width, so no
+     single number and no clamp() is right. The demo knows its own layout. */
+  if (window.self !== window.top) {
+    document.documentElement.setAttribute('data-fe-embed', '');
+    var hideMasthead = function () {
+      var lead = null, anchor = null;
       var all = document.querySelectorAll('body *');
       for (var i = 0; i < all.length; i++) {
-        var el = all[i];
-        if (el.children.length === 0 && /^LOAD RULE SET$/i.test(el.textContent.trim())) {
-          var box = el.getBoundingClientRect();
-          if (box.height === 0) return false;
-          window.scrollTo(0, box.top + window.scrollY - 26);
-          return true;
-        }
+        var t = all[i].children.length === 0 ? all[i].textContent.trim() : '';
+        if (!lead && /^CAPABILITY DEMONSTRATION$/i.test(t)) lead = all[i];
+        if (!anchor && /^LOAD RULE SET$/i.test(t)) anchor = all[i];
       }
-      return false;
+      if (!lead || !anchor) return false;
+      /* Walk up from the masthead label until the parent also contains the
+         rule-set row: that child IS the masthead block, whatever it is called
+         in markup generated at runtime. */
+      var node = lead;
+      while (node.parentElement && !node.parentElement.contains(anchor)) node = node.parentElement;
+      if (node === lead || node.contains(anchor)) return false;
+      node.style.display = 'none';
+      return true;
     };
-    var tries = 0;
-    var tick = setInterval(function () {
-      if (jump() || ++tries > 40) clearInterval(tick);
-    }, 120);
+    var n = 0;
+    var t = setInterval(function () { if (hideMasthead() || ++n > 50) clearInterval(t); }, 110);
   }
 })();
 </script>
