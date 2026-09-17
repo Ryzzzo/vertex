@@ -81,7 +81,7 @@ export default function FeeEnginePage() {
                 </div>
                 <iframe
                   className="labs-iframe"
-                  src="/labs/fee-engine.html"
+                  src="/labs/fee-engine.html#argument"
                   title="Fee Engine — an interactive interface concept"
                 />
               </div>

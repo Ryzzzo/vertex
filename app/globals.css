@@ -4052,3 +4052,47 @@ a {
     --plane-top: clamp(210px, 21svh, 320px);
   }
 }
+
+/* --- Labs demo frame ---
+   The Fee Engine demo is light-themed now, which separates it from this
+   near-black page on its own. Three earlier attempts lit the PAGE behind a
+   dark frame instead; measured against linear.app (ground rgb(8,9,10),
+   frame rgb(16,17,18) -- this page exactly), that buys 8 luma points of
+   separation, where a light screen buys about 200. So the frame is
+   deliberately minimal: a thin rim and a shadow that can finally be seen,
+   because there is at last something bright above it to cast one.
+
+   The embed also starts below the demo own masthead. The page states the
+   pitch immediately above this frame and the demo repeated it verbatim in
+   its first 280px, so a visitor read the same pitch twice before reaching
+   anything interactive. The iframe src carries the #argument anchor. */
+.labs-frame {
+  border: 1px solid rgb(255 255 255 / 0.10);
+  border-radius: 14px;
+  background: transparent;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.5),
+    0 30px 70px -34px rgb(0 0 0 / 0.9);
+}
+
+/* The chrome bar caps a light screen, so it is a light cap. It was luma
+   13.9 over a 16.9 face -- a cap darker than the thing it capped, the same
+   inverted bevel as the Accession schema header. */
+.labs-frame .mockup-chrome {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgb(0 0 0 / 0.10);
+  background: #e9ecef;
+}
+.labs-frame .mockup-url,
+.labs-frame .labs-fullscreen { color: #5c636b; }
+.labs-frame .labs-fullscreen:hover { color: #14171a; }
+.labs-frame .mockup-dot { background: #b9bfc5; }
+
+/* Cropped to the argument: four rule sets, one fee, the composition that
+   produced it. The cut is faded rather than sliced, because the content
+   genuinely continues -- 4,700px of it, behind the full-screen link. */
+.labs-iframe {
+  height: clamp(520px, 16rem + 34vh, 700px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 56px), rgb(0 0 0 / 0.35) 100%);
+          mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 56px), rgb(0 0 0 / 0.35) 100%);
+}
