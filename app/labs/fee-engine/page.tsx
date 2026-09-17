@@ -79,11 +79,20 @@ export default function FeeEnginePage() {
                     Open full screen ↗
                   </a>
                 </div>
-                <iframe
-                  className="labs-iframe"
-                  src="/labs/fee-engine.html#argument"
-                  title="Fee Engine — an interactive interface concept"
-                />
+                {/* The demo repeats this page's own pitch verbatim in its
+                    first 300px, so a visitor read it twice before reaching
+                    anything interactive. Cropped with a clip box and a
+                    negative offset rather than by scrolling the frame: a
+                    scroll depends on the runtime markup having rendered and
+                    on a hash surviving the loader, and neither held. This is
+                    deterministic and needs no script. */}
+                <div className="labs-iframe-clip">
+                  <iframe
+                    className="labs-iframe labs-iframe-cropped"
+                    src="/labs/fee-engine.html"
+                    title="Fee Engine — an interactive interface concept"
+                  />
+                </div>
               </div>
               <figcaption className="labs-frame-caption marker">
                 Live, interactive concept. Drag the inputs and the fee resolves

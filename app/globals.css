@@ -4091,8 +4091,17 @@ a {
 /* Cropped to the argument: four rule sets, one fee, the composition that
    produced it. The cut is faded rather than sliced, because the content
    genuinely continues -- 4,700px of it, behind the full-screen link. */
-.labs-iframe {
+.labs-iframe-clip {
+  overflow: hidden;
   height: clamp(520px, 16rem + 34vh, 700px);
   -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 56px), rgb(0 0 0 / 0.35) 100%);
           mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 56px), rgb(0 0 0 / 0.35) 100%);
+}
+
+/* 300px is the height of the demo masthead this crops away. The iframe is
+   that much taller than its clip box and offset up by the same amount, so
+   the viewport it renders into is unchanged and nothing reflows. */
+.labs-iframe-cropped {
+  height: calc(100% + 300px);
+  margin-top: -300px;
 }
