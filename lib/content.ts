@@ -197,6 +197,9 @@ export const labs: LabItem[] = [
     line: "One pricing calculator, four industry rule sets, no vertical logic in the code — interface concept.",
     href: "/labs/fee-engine",
     kind: "concept",
+    shot: "/labs-shots/fee-engine/hero-desktop.avif",
+    shotAlt:
+      "The Fee Engine board: four industry rule sets across the top, a package column, and a computed monthly fee of $4,242 broken into the five components that produced it.",
   },
   {
     slug: "nc-housing-terminal",
