@@ -48,6 +48,20 @@ export const work: WorkItem[] = [
       "The Accession board on the Ashcombe Bequest investigation: the case brief, a two-table schema, the Toolkit keyword panel, the query editor and the answer box.",
   },
   {
+    slug: "true-colors",
+    name: "True Colors",
+    line: "Nineteen years of word of mouth and no website. A whole salon presence, built from one owner interview.",
+    url: "https://truecolorsbristol.com",
+    stack:
+      "One self-contained HTML file \u00b7 hand-written WebGL shader \u00b7 JSON-LD \u00b7 no dependencies \u00b7 Vercel",
+    approach:
+      "The hero is a fragment shader written by hand rather than a stock video loop \u2014 no library, nothing to download but the page itself, and no licence to renew. The whole site is one self-contained HTML file with the photography inlined as data URIs, so it has no build step and no dependency that can break it a year from now. Open and closed are computed from the salon\u2019s own timezone rather than the visitor\u2019s, so a browser in Seattle is told the Bristol answer, and the hours live in one map that the week grid reads from so the two cannot drift apart. A second page recruits stylists for the open stations, which is the other half of a nine-chair business a brochure site would have missed.",
+    shot: "/work/true-colors/hero-desktop.avif",
+    shotAlt:
+      "The True Colors salon home page on desktop: the wordmark over a deep red WebGL satin hero, the salon\u2019s hours and phone number, and a stat band reading nineteen years, seventy-one Google reviews and a 4.5 average.",
+    shotMobile: "/work/true-colors/hero-mobile.avif",
+  },
+  {
     slug: "parenting-plan-pro",
     name: "Parenting Plan Pro",
     line: "Legal document generation where the text is the product, and protected accordingly.",
