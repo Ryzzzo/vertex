@@ -4092,15 +4092,19 @@ a {
    produced it. The cut is faded rather than sliced, because the content
    genuinely continues -- 4,700px of it, behind the full-screen link. */
 /* The demo hides its own masthead when it detects it is embedded, so this
-   box no longer carries a pixel offset -- the correct one measured 346px at
-   1118 wide but 467px at 620, so no fixed value or clamp() was ever right.
-   What is left is the fade at the cut, because the content genuinely
-   continues for another 4,700px behind the full-screen link. */
+   box carries no pixel offset -- the correct one measured 346px at 1118 wide
+   but 467px at 620, so no fixed value or clamp() was ever right.
+
+   It carried a fade at the cut too, on the reasoning that the content
+   continues for another 4,700px. That was right for a DARK demo and wrong
+   for this one: fading a light screen toward transparency reveals the
+   near-black page behind it, so the bottom 96px read as a grey smudge --
+   a shadow nobody asked for rather than a hint that there is more. The
+   frame already solves it. A hard cut inside a bordered, rounded box reads
+   as a window; it only reads as broken without one. */
 .labs-iframe-clip {
   overflow: hidden;
   height: clamp(520px, 16rem + 34vh, 700px);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 96px), rgb(0 0 0 / 0.15) 100%);
-          mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 96px), rgb(0 0 0 / 0.15) 100%);
 }
 
 .labs-iframe-cropped {

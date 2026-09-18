@@ -181,10 +181,10 @@ SCROLL = ('*{scrollbar-width:thin;scrollbar-color:var(--fe-bar) transparent}'
 
 TOGGLE_CSS = ('#fe-toggle{position:fixed;right:14px;bottom:14px;z-index:9999;'
               'font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;'
-              'text-transform:uppercase;padding:8px 12px;border-radius:99px;cursor:pointer;'
+              'text-transform:uppercase;padding:9px 14px;border-radius:99px;cursor:pointer;'
               'color:var(--fe-toggle-ink);background:var(--fe-toggle-bg);'
-              'border:1px solid var(--fe-toggle-bd);transition:opacity .15s linear;opacity:.55}'
-              '#fe-toggle:hover{opacity:1}'
+              'border:1px solid var(--fe-toggle-bd);box-shadow:0 2px 10px -2px rgba(0,0,0,.45);}'
+              '#fe-toggle:hover{filter:brightness(1.12)}'
               '@media print{#fe-toggle{display:none}}')
 
 TOGGLE_JS = ("<script>(function(){var K='fe-theme',r=document.documentElement,"
@@ -200,9 +200,9 @@ TOGGLE_JS = ("<script>(function(){var K='fe-theme',r=document.documentElement,"
              "add();document.addEventListener('DOMContentLoaded',add);setTimeout(add,1200)})()</script>")
 
 BAR_D = {'--fe-bar':'#2a3037','--fe-bar-hi':'#3a424a',
-         '--fe-toggle-bg':'#14171a','--fe-toggle-ink':'#c9cfd5','--fe-toggle-bd':'#2a3037'}
+         '--fe-toggle-bg':'#f3f4f5','--fe-toggle-ink':'#14171a','--fe-toggle-bd':'#c9cfd5'}
 BAR_L = {'--fe-bar':'#c4cad0','--fe-bar-hi':'#a8b0b8',
-         '--fe-toggle-bg':'#ffffff','--fe-toggle-ink':'#3c4349','--fe-toggle-bd':'#cfd5db'}
+         '--fe-toggle-bg':'#14171a','--fe-toggle-ink':'#f3f4f5','--fe-toggle-bd':'#3c4349'}
 
 blk = lambda sel, d: sel + '{' + ''.join('%s:%s;' % kv for kv in d.items()) + '}'
 STYLE = ('<style>' + blk(':root', {**dark, **BAR_D})
