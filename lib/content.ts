@@ -190,6 +190,9 @@ export const labs: LabItem[] = [
     line: "A 420-row exception table with keyboard-first ergonomics, URL-shareable filter state, and a CSV export that survives Excel — interface concept.",
     href: "/labs/ops-table",
     kind: "concept",
+    shot: "/labs-shots/ops-table/hero-desktop.avif",
+    shotAlt:
+      "The Ops Queue Triage board: 27 of 420 shipment exceptions in compact density, each with a status pill, a colour-coded priority, a right-aligned value and an age, above an Export 420 to CSV control.",
   },
   {
     slug: "fee-engine",
