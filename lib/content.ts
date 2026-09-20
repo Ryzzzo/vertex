@@ -43,7 +43,7 @@ export const work: WorkItem[] = [
     stack:
       "One self-contained HTML file \u00b7 hand-written WebGL shader \u00b7 JSON-LD \u00b7 no dependencies \u00b7 Vercel",
     approach:
-      "The hero is a fragment shader written by hand rather than a stock video loop \u2014 no library, nothing to download but the page itself, and no licence to renew. The whole site is one self-contained HTML file with the photography inlined as data URIs, so it has no build step and no dependency that can break it a year from now. Open and closed are computed from the salon\u2019s own timezone rather than the visitor\u2019s, so a browser in Seattle is told the Bristol answer, and the hours live in one map that the week grid reads from so the two cannot drift apart. A second page recruits stylists for the open stations, which is the other half of a nine-chair business a brochure site would have missed.",
+      "The hero is a fragment shader written by hand rather than a stock video loop \u2014 no library, nothing to download but the page itself, and no license to renew. The whole site is one self-contained HTML file with the photography inlined as data URIs, so it has no build step and no dependency that can break it a year from now. Open and closed are computed from the salon\u2019s own timezone rather than the visitor\u2019s, so a browser in Seattle is told the Bristol answer, and the hours live in one map that the week grid reads from so the two cannot drift apart. A second page recruits stylists for the open stations, which is the other half of a nine-chair business a brochure site would have missed.",
     shot: "/work/true-colors/hero-desktop.avif",
     shotAlt:
       "The True Colors salon home page on desktop: the wordmark over a deep red WebGL satin hero, the salon\u2019s hours and phone number, and a stat band reading nineteen years, seventy-one Google reviews and a 4.5 average.",
@@ -141,7 +141,7 @@ export const lab: FeaturedLab = {
   line: "A Bloomberg-style housing map of North Carolina: every ZIP code rendered as a live choropleth of Zillow home-value change.",
   stack: "Mapbox GL · Next.js · static data pipeline · Vercel",
   approach:
-    "The colour scale is clamped and diverging, so a given red means the same thing in Asheville as it does in Charlotte — unclamped, a single outlier county flattens the rest of the state into noise. Zillow’s raw series is reshaped into ZIP-indexed data by a build-time pipeline, so the map ships static and the browser never waits on an API. Labels are zoom-gated and detail resolves on hover, which keeps several hundred polygons legible rather than crowded.",
+    "The color scale is clamped and diverging, so a given red means the same thing in Asheville as it does in Charlotte — unclamped, a single outlier county flattens the rest of the state into noise. Zillow’s raw series is reshaped into ZIP-indexed data by a build-time pipeline, so the map ships static and the browser never waits on an API. Labels are zoom-gated and detail resolves on hover, which keeps several hundred polygons legible rather than crowded.",
   url: "https://housing.vertexapps.dev",
   shot: "/work/nc-housing-terminal/hero-desktop.avif",
   shotAlt:
@@ -221,7 +221,7 @@ export const labs: LabItem[] = [
     kind: "concept",
     shot: "/labs-shots/ops-table/hero-desktop.avif",
     shotAlt:
-      "The Ops Queue Triage board: 27 of 420 shipment exceptions in compact density, each with a status pill, a colour-coded priority, a right-aligned value and an age, above an Export 420 to CSV control.",
+      "The Ops Queue Triage board: 27 of 420 shipment exceptions in compact density, each with a status pill, a color-coded priority, a right-aligned value and an age, above an Export 420 to CSV control.",
   },
   {
     slug: "fee-engine",

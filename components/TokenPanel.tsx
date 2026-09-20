@@ -14,7 +14,7 @@ export default function TokenPanel() {
     <div
       className="tokens"
       role="img"
-      aria-label="A split panel: raw design tokens on the left — colour swatches, a type scale and a spacing scale — composed into a finished card on the right."
+      aria-label="A split panel: raw design tokens on the left — color swatches, a type scale and a spacing scale — composed into a finished card on the right."
     >
       <div className="tokens-raw">
         <p className="tokens-label">tokens</p>
