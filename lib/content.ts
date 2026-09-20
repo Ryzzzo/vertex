@@ -36,18 +36,6 @@ export const work: WorkItem[] = [
     featured: true,
   },
   {
-    slug: "accession",
-    name: "Accession",
-    line: "A museum records puzzle that teaches SQL. Work the collection, one case at a time.",
-    url: "https://vertexapps.dev/sql",
-    stack: "Next.js Multi-Zone · DuckDB-Wasm · Monaco Editor · Vercel",
-    approach:
-      "DuckDB runs entirely in the browser, so there is no backend to keep alive and no data to leave the visitor's machine — schema, queries and answer checking all execute locally. Levels come in two kinds: drills check the result set, so the query is the lesson; investigations take a typed answer instead, which frees a hint to explain syntax without giving the finding away and makes a level that needs four queries possible at all. It is served as a Next.js Multi-Zone at vertexapps.dev/sql, so the pages inherit the domain rather than starting a new one, while the WebAssembly stays out of this site's bundle. A companion SQL reference publishes one indexable page per concept with the same live editor embedded.",
-    shot: "/work/accession/hero-desktop.avif",
-    shotAlt:
-      "The Accession board on the Ashcombe Bequest investigation: the case brief, a two-table schema, the Toolkit keyword panel, the query editor and the answer box.",
-  },
-  {
     slug: "true-colors",
     name: "True Colors",
     line: "Nineteen years of word of mouth and no website. A whole salon presence, built from one owner interview.",
@@ -139,6 +127,12 @@ export type FeaturedLab = {
   shotAlt: string;
   status?: string;
   meta?: string;
+  /**
+   * Which LabPlate treatment the capture gets. Declared per item rather than
+   * inferred from the slug: the previous `slug === lab.slug ? map : sql` test
+   * silently gave the sql plate to every future entry that was not the map.
+   */
+  plate: "map" | "sql";
 };
 
 export const lab: FeaturedLab = {
@@ -153,11 +147,34 @@ export const lab: FeaturedLab = {
   shotAlt:
     "The NC Housing Terminal choropleth map zoomed into North Carolina with a ZIP-code tooltip visible.",
   meta: "Designed, built, and deployed in one evening.",
+  plate: "map",
+};
+
+
+/**
+ * Accession is the one item here nobody commissioned, which is why it sits in
+ * Lab rather than Selected work: that section promises "production software
+ * someone relies on", and this is a demonstration. It leads `featuredLabs`
+ * because it is the only thing on the site a visitor can actually use.
+ */
+export const accession: FeaturedLab = {
+  slug: "accession",
+  name: "Accession",
+  line: "A museum records puzzle that teaches SQL: thirty levels across six cases, each one a real query against a real database running in the visitor’s own browser.",
+  stack: "Next.js Multi-Zone · DuckDB-Wasm · Monaco Editor · Vercel",
+  approach:
+    "DuckDB runs entirely in the browser, so there is no backend to keep alive and no data to leave the visitor's machine — schema, queries and answer checking all execute locally. Levels come in two kinds: drills check the result set, so the query is the lesson; investigations take a typed answer instead, which frees a hint to explain syntax without giving the finding away and makes a level that needs four queries possible at all. It is served as a Next.js Multi-Zone at vertexapps.dev/sql, so the pages inherit the domain rather than starting a new one, while the WebAssembly stays out of this site's bundle. A companion SQL reference publishes one indexable page per concept with the same live editor embedded.",
+  url: "https://vertexapps.dev/sql",
+  shot: "/work/accession/hero-desktop.avif",
+  shotAlt:
+    "The Accession board on the Ashcombe Bequest investigation: the case brief, a two-table schema, the Toolkit keyword panel, the query editor and the answer box.",
+  meta: "Thirty levels, six cases, and a companion SQL reference. No backend, and no client.",
+  plate: "sql",
 };
 
 
 /** The Labs shown at hero scale on the homepage, in order. */
-export const featuredLabs: FeaturedLab[] = [lab];
+export const featuredLabs: FeaturedLab[] = [accession, lab];
 
 export type LabItem = {
   slug: string;
@@ -184,6 +201,18 @@ export type LabItem = {
  * site itself rather than at its own domain.
  */
 export const labs: LabItem[] = [
+  {
+    slug: "accession",
+    name: accession.name,
+    line: accession.line,
+    href: accession.url,
+    // Same domain, different app. A next/link here would attempt an RSC
+    // request across the zone boundary; a plain anchor is the honest hop.
+    external: true,
+    kind: "live",
+    shot: accession.shot,
+    shotAlt: accession.shotAlt,
+  },
   {
     slug: "ops-table",
     name: "Ops Queue Triage",

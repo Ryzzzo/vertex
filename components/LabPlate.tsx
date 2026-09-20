@@ -15,7 +15,10 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
  * Both are pointer/scroll driven, CSS-transitioned, and inert under reduced
  * motion — the still capture is the correct fallback.
  */
-const LEVEL_ONE = "SELECT product, amount FROM refunds WHERE amount > 500 ORDER BY amount DESC;";
+// Case 001, the insurance schedule -- a real level, verbatim. The plate used
+// to type a query against a `refunds` table, which belongs to no part of this
+// game and predates the museum theme entirely.
+const LEVEL_ONE = "SELECT title, valuation FROM objects WHERE valuation > 50000 ORDER BY valuation DESC;";
 
 export default function LabPlate({
   kind,

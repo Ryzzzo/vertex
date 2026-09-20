@@ -1,6 +1,6 @@
 import Shot from "./Shot";
 import LabPlate from "./LabPlate";
-import { featuredLabs, lab, type FeaturedLab } from "@/lib/content";
+import { featuredLabs, type FeaturedLab } from "@/lib/content";
 
 /**
  * The clamped diverging ramp the map itself uses. Rendering it on the card
@@ -44,7 +44,7 @@ function Chevron() {
 function LabCard({ item }: { item: FeaturedLab }) {
   return (
     <article className="lab-card reveal">
-      <LabPlate kind={item.slug === lab.slug ? "map" : "sql"}>
+      <LabPlate kind={item.plate}>
         <Shot
           src={item.shot}
           alt={item.shotAlt}
@@ -73,7 +73,7 @@ function LabCard({ item }: { item: FeaturedLab }) {
           </h3>
           <p className="body lab-line">{item.line}</p>
           {/* The legend is the map's own ramp, so it belongs to that item only. */}
-          {item.slug === lab.slug ? <Scale /> : null}
+          {item.plate === "map" ? <Scale /> : null}
         </div>
 
         <div className="lab-detail">
