@@ -14,6 +14,9 @@
 //     rather than collapsing to a chip row
 //   - the schema panel is open on both tables
 //   - the answer box is present, which only investigations have
+//   - and since 49b45d2 the case docket sits under the schema, so the left
+//     column now carries the whole six-level case rather than ending in dead
+//     rail. The composition is denser than the master it replaces.
 //
 // A level-2 capture was tried and rejected: a solved drill puts a share grid
 // in the left column and leaves a third of the frame empty, and at the 536px
@@ -124,7 +127,13 @@ const QUERY = [
       badge: texts.find((t) => /^#\d{3}$/.test(t)),
       toolkitKeywords: texts.filter((t) =>
         /^(SELECT|FROM|WHERE|ORDER BY|DESC|LIKE|AND)$/.test(t)).length,
-      schemaOpen: /SCHEMA . 2 TABLES/i.test(blob),
+      // The blob joins LEAF nodes with ' | ', and the panel renders SCHEMA,
+      // the middot and 2 TABLES as three separate leaves -- so the old
+      // /SCHEMA . 2 TABLES/ matched a single character where there were five,
+      // and reported MISSING on a frame with the schema plainly open. A gate
+      // that cries wolf is a gate you learn to ignore, which is how the red
+      // panel shipped. Test the two anchors, not the punctuation between them.
+      schemaOpen: /SCHEMA/i.test(blob) && /2\s*TABLES/i.test(blob),
       answerBox: !!document.querySelector('input[placeholder*="title" i]'),
       resultRows: document.querySelectorAll('table tbody tr').length,
       // Not a guessed word list this time -- the previous pass shipped a red
