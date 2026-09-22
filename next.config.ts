@@ -70,31 +70,6 @@ const nextConfig: NextConfig = {
           source: "/sql/:path*",
           destination: "https://sql-game-zeta.vercel.app/sql/:path*",
         },
-        /*
-         * The Ops Queue Triage demo is a Next static export embedded from
-         * /labs/ops-table. Its app router asks for the RSC payload of whatever
-         * URL it was loaded from, and it is loaded from `index.html` -- because
-         * `/labs/ops-table` is a route in THIS app, so the directory URL serves
-         * the wrapper page and the demo has to be addressed by filename. The
-         * router therefore requests `index.html.txt`, and the export only ships
-         * `index.txt`.
-         *
-         * That 404 is not cosmetic. Measured both ways by intercepting the
-         * request: with the 404, selecting rows and then changing a filter
-         * WIPES the selection -- including rows still on screen. Served the
-         * payload that exists, the selection survives. The router treats the
-         * failed fetch as a hard navigation and discards client state.
-         *
-         * The payload is identical for every query string, because the export
-         * is one prerendered page and the filters are client state, so serving
-         * `index.txt` for any query is not an approximation -- it is the same
-         * bytes the router would have got had the page been reachable at a
-         * directory URL.
-         */
-        {
-          source: "/labs/ops-table/index.html.txt",
-          destination: "/labs/ops-table/index.txt",
-        },
       ],
       afterFiles: [],
       fallback: [],
