@@ -88,7 +88,7 @@ function LabCard({ item }: { item: FeaturedLab }) {
           {item.references?.length ? (
             <div className="card-detail-row">
               <p className="card-detail-label">Reference</p>
-              <p className="card-detail-stack">
+              <p className="card-detail-stack card-detail-refs">
                 {item.references.map((r, i) => (
                   <span key={r.href}>
                     {i > 0 ? " \u00b7 " : null}

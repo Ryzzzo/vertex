@@ -1696,6 +1696,24 @@ a {
   color: var(--text-tertiary);
 }
 
+/* The reference row is the only place on a Lab card where the mono detail
+   text is clickable, so it has to look clickable at rest. `.link` changes
+   colour on hover and nothing else, which is invisible to anyone who has not
+   already guessed there is a link there. A hairline underline says it without
+   raising its voice; the hover then does the colour. */
+.card-detail-refs a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+  text-decoration-color: rgb(255 255 255 / 0.3);
+  transition: text-decoration-color var(--duration-hover) var(--easing-linear);
+}
+
+.card-detail-refs a:hover {
+  text-decoration-color: currentColor;
+}
+
 .card-detail-stack {
   margin: 0;
   font-family: var(--font-mono);
