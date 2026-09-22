@@ -168,7 +168,7 @@ export const lab: FeaturedLab = {
 export const accession: FeaturedLab = {
   slug: "accession",
   name: "Accession",
-  line: "A museum records puzzle that teaches SQL: thirty levels across six cases, each one a real query against a real database running in the visitor’s own browser.",
+  line: "A museum records puzzle that teaches SQL: thirty-six levels across six cases, each one a real query against a real database running in the visitor’s own browser.",
   stack: "Next.js Multi-Zone · DuckDB-Wasm · Monaco Editor · Vercel",
   approach:
     "DuckDB runs entirely in the browser, so there is no backend to keep alive and no data to leave the visitor's machine — schema, queries and answer checking all execute locally. Levels come in two kinds: drills check the result set, so the query is the lesson; investigations take a typed answer instead, which frees a hint to explain syntax without giving the finding away and makes a level that needs four queries possible at all. It is served as a Next.js Multi-Zone at vertexapps.dev/sql, so the pages inherit the domain rather than starting a new one, while the WebAssembly stays out of this site's bundle. A companion SQL reference publishes one indexable page per concept with the same live editor embedded.",
@@ -176,7 +176,7 @@ export const accession: FeaturedLab = {
   shot: "/work/accession/hero-desktop.avif",
   shotAlt:
     "The Accession board on the Ashcombe Bequest investigation: the case brief, a two-table schema, the Toolkit keyword panel, the query editor and the answer box.",
-  meta: "Thirty levels, six cases, and a companion SQL reference. No backend, and no client.",
+  meta: "Thirty-six levels, six cases, and a companion SQL reference. No backend, and no client.",
   plate: "sql",
   references: [
     { label: "Joins", href: "https://vertexapps.dev/sql/learn/joins" },
