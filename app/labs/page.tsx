@@ -101,7 +101,7 @@ function FeeEngineThumb() {
  * Ops Queue Triage draws its own density rather than borrowing the Fee Engine's
  * plate: the argument of that demo is rows-on-screen, so the thumbnail is a
  * tight run of them under a pinned header, with the status and priority columns
- * carrying the only colour.
+ * carrying the only color.
  */
 function OpsTableThumb() {
   const rows = Array.from({ length: 14 }, (_, i) => i);

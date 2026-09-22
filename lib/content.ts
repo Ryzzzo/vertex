@@ -133,6 +133,14 @@ export type FeaturedLab = {
    * silently gave the sql plate to every future entry that was not the map.
    */
   plate: "map" | "sql";
+  /**
+   * Deep links into the item's own reference pages, where it has any. These
+   * exist for Accession: four indexable concept pages under /sql/learn that
+   * nothing on this site linked to, so they were reachable by sitemap alone.
+   * The homepage is the highest-authority page on the domain; linking them
+   * from here is the cheapest thing that can be done for them.
+   */
+  references?: ReadonlyArray<{ label: string; href: string }>;
 };
 
 export const lab: FeaturedLab = {
@@ -170,6 +178,12 @@ export const accession: FeaturedLab = {
     "The Accession board on the Ashcombe Bequest investigation: the case brief, a two-table schema, the Toolkit keyword panel, the query editor and the answer box.",
   meta: "Thirty levels, six cases, and a companion SQL reference. No backend, and no client.",
   plate: "sql",
+  references: [
+    { label: "Joins", href: "https://vertexapps.dev/sql/learn/joins" },
+    { label: "COALESCE", href: "https://vertexapps.dev/sql/learn/coalesce" },
+    { label: "Window functions", href: "https://vertexapps.dev/sql/learn/window-functions" },
+    { label: "CASE", href: "https://vertexapps.dev/sql/learn/case" },
+  ],
 };
 
 

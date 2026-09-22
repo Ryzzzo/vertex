@@ -111,7 +111,7 @@ export default function HeroStage({
 
   return (
     <div className="hero-stage" ref={stageRef}>
-      {/* Atmosphere: two slow-breathing colour fields, masked so they dissolve
+      {/* Atmosphere: two slow-breathing color fields, masked so they dissolve
           into the page instead of ending. Layers, not filters. */}
       <div className="hero-aurora hero-aurora-a" />
       <div className="hero-aurora hero-aurora-b" />

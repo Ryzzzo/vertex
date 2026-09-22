@@ -85,6 +85,21 @@ function LabCard({ item }: { item: FeaturedLab }) {
             <p className="card-detail-label">Approach</p>
             <p className="card-detail-approach">{item.approach}</p>
           </div>
+          {item.references?.length ? (
+            <div className="card-detail-row">
+              <p className="card-detail-label">Reference</p>
+              <p className="card-detail-stack">
+                {item.references.map((r, i) => (
+                  <span key={r.href}>
+                    {i > 0 ? " \u00b7 " : null}
+                    <a className="link" href={r.href} target="_blank" rel="noreferrer noopener">
+                      {r.label}
+                    </a>
+                  </span>
+                ))}
+              </p>
+            </div>
+          ) : null}
           {item.meta ? <p className="marker lab-meta">{item.meta}</p> : null}
         </div>
       </div>

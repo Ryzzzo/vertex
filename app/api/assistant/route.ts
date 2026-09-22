@@ -118,7 +118,7 @@ export async function POST(request: Request) {
         try {
           controller.close();
         } catch {
-          // Already torn down by a cancelled consumer.
+          // Already torn down by a canceled consumer.
         }
       };
 
