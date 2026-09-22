@@ -1,7 +1,8 @@
-import { work } from "@/lib/content";
+import { getWork } from "@/lib/sanity/content";
 import WorkCard from "./WorkCard";
 
-export default function SelectedWork() {
+export default async function SelectedWork() {
+  const work = await getWork();
   const featured = work.filter((item) => item.featured);
   const rest = work.filter((item) => !item.featured);
 

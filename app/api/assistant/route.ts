@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { SYSTEM_PROMPT } from "@/lib/assistant/prompt";
+import { buildSystemPrompt } from "@/lib/assistant/prompt";
 import { consume, fingerprintFrom } from "@/lib/assistant/rate-limit";
 
 export const runtime = "nodejs";
@@ -95,6 +95,11 @@ export async function POST(request: Request) {
   const client = new Anthropic({ apiKey });
   const encoder = new TextEncoder();
 
+  // Built before the stream opens, not inside it: the Sanity reads are
+  // Next-cached, but a rejected fetch inside `start()` would surface as a
+  // truncated SSE body rather than a 500 the client can report.
+  const systemPrompt = await buildSystemPrompt();
+
   // Held so the ReadableStream's `cancel` hook can tear down the upstream
   // request when the browser disconnects mid-answer.
   let upstreamRef: { abort: () => void } | null = null;
@@ -129,7 +134,7 @@ export async function POST(request: Request) {
           system: [
             {
               type: "text",
-              text: SYSTEM_PROMPT,
+              text: systemPrompt,
               cache_control: { type: "ephemeral" },
             },
           ],

@@ -10,15 +10,21 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "shiplog": "node scripts/shiplog-snapshot.mjs"
+    "shiplog": "node scripts/shiplog-snapshot.mjs",
+    "typegen": "npm --prefix studio run typegen",
+    "studio": "npm --prefix studio run dev",
+    "studio:deploy": "npm --prefix studio run deploy"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.112.3",
     "framer-motion": "^13.0.0",
     "lucide-react": "^1.29.0",
     "next": "16.2.10",
+    "next-sanity": "^13.3.4",
     "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "react-dom": "19.2.7",
+    "sanity": "^6.16.0",
+    "styled-components": "^6.5.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.3",

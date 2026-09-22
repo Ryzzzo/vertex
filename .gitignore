@@ -1,4 +1,9 @@
 /node_modules
+# The standalone Studio has its own tree. The root rule above is anchored
+# with a leading slash, so it does not reach this one.
+studio/node_modules/
+studio/dist/
+studio/.sanity/
 /.next/
 /out/
 /build

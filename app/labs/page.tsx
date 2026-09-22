@@ -3,7 +3,8 @@ import Link from "next/link";
 import Shot from "@/components/Shot";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { labs, type LabItem } from "@/lib/content";
+import type { LabItem } from "@/lib/content";
+import { getLabs } from "@/lib/sanity/content";
 
 const title = "Labs — Vertex Business Solutions";
 const description =
@@ -207,7 +208,9 @@ function LabsCard({ item }: { item: LabItem }) {
   );
 }
 
-export default function LabsPage() {
+export default async function LabsPage() {
+  const labs = await getLabs();
+
   return (
     <>
       <SiteHeader />

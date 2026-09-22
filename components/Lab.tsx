@@ -1,6 +1,7 @@
 import Shot from "./Shot";
 import LabPlate from "./LabPlate";
-import { featuredLabs, type FeaturedLab } from "@/lib/content";
+import type { FeaturedLab } from "@/lib/content";
+import { getFeaturedLabs } from "@/lib/sanity/content";
 
 /**
  * The clamped diverging ramp the map itself uses. Rendering it on the card
@@ -107,7 +108,8 @@ function LabCard({ item }: { item: FeaturedLab }) {
   );
 }
 
-export default function Lab() {
+export default async function Lab() {
+  const featuredLabs = await getFeaturedLabs();
   return (
     <section className="section" aria-labelledby="lab">
       <div className="shell">
