@@ -23,7 +23,7 @@ export type Lab = {
   _rev: string;
   name?: string;
   slug?: Slug;
-  order?: number;
+  orderRank?: string;
   line?: string;
   href?: string;
   kind?: "live" | "concept";
@@ -57,7 +57,7 @@ export type Project = {
   _rev: string;
   name?: string;
   slug?: Slug;
-  order?: number;
+  orderRank?: string;
   featured?: boolean;
   line?: string;
   url?: string;
@@ -199,7 +199,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../lib/sanity/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project"] | order(order asc) {    "slug": slug.current,    name,    line,    url,    note,    stack,    approach,    shot,    shotAlt,    shotMobile,    featured  }
+// Query: *[_type == "project"] | order(orderRank asc) {    "slug": slug.current,    name,    line,    url,    note,    stack,    approach,    shot,    shotAlt,    shotMobile,    featured  }
 export type PROJECTS_QUERY_RESULT = Array<{
   slug: string | null;
   name: string | null;
@@ -216,7 +216,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: ../lib/sanity/queries.ts
 // Variable: LABS_INDEX_QUERY
-// Query: *[_type == "lab"] | order(order asc) {    "slug": slug.current,    name,    line,    href,    kind,    status,    shot,    shotAlt  }
+// Query: *[_type == "lab"] | order(orderRank asc) {    "slug": slug.current,    name,    line,    href,    kind,    status,    shot,    shotAlt  }
 export type LABS_INDEX_QUERY_RESULT = Array<{
   slug: string | null;
   name: string | null;
@@ -230,7 +230,7 @@ export type LABS_INDEX_QUERY_RESULT = Array<{
 
 // Source: ../lib/sanity/queries.ts
 // Variable: LABS_FEATURED_QUERY
-// Query: *[_type == "lab" && featured == true] | order(order asc) {    "slug": slug.current,    name,    line,    stack,    approach,    "url": href,    shot,    shotAlt,    status,    meta,    plate,    references[]{ label, href }  }
+// Query: *[_type == "lab" && featured == true] | order(orderRank asc) {    "slug": slug.current,    name,    line,    stack,    approach,    "url": href,    shot,    shotAlt,    status,    meta,    plate,    references[]{ label, href }  }
 export type LABS_FEATURED_QUERY_RESULT = Array<{
   slug: string | null;
   name: string | null;
@@ -252,9 +252,9 @@ export type LABS_FEATURED_QUERY_RESULT = Array<{
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    '\n  *[_type == "project"] | order(order asc) {\n    "slug": slug.current,\n    name,\n    line,\n    url,\n    note,\n    stack,\n    approach,\n    shot,\n    shotAlt,\n    shotMobile,\n    featured\n  }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "lab"] | order(order asc) {\n    "slug": slug.current,\n    name,\n    line,\n    href,\n    kind,\n    status,\n    shot,\n    shotAlt\n  }\n': LABS_INDEX_QUERY_RESULT;
-    '\n  *[_type == "lab" && featured == true] | order(order asc) {\n    "slug": slug.current,\n    name,\n    line,\n    stack,\n    approach,\n    "url": href,\n    shot,\n    shotAlt,\n    status,\n    meta,\n    plate,\n    references[]{ label, href }\n  }\n': LABS_FEATURED_QUERY_RESULT;
+    '\n  *[_type == "project"] | order(orderRank asc) {\n    "slug": slug.current,\n    name,\n    line,\n    url,\n    note,\n    stack,\n    approach,\n    shot,\n    shotAlt,\n    shotMobile,\n    featured\n  }\n': PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "lab"] | order(orderRank asc) {\n    "slug": slug.current,\n    name,\n    line,\n    href,\n    kind,\n    status,\n    shot,\n    shotAlt\n  }\n': LABS_INDEX_QUERY_RESULT;
+    '\n  *[_type == "lab" && featured == true] | order(orderRank asc) {\n    "slug": slug.current,\n    name,\n    line,\n    stack,\n    approach,\n    "url": href,\n    shot,\n    shotAlt,\n    status,\n    meta,\n    plate,\n    references[]{ label, href }\n  }\n': LABS_FEATURED_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

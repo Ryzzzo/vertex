@@ -15,6 +15,14 @@ export default defineCliConfig({
     appId: 'ps1u7fkn7nrszt229hmsq1ya',
     autoUpdates: true,
   },
+  // Schema extraction (and so typegen) evaluates the Studio config in Node via
+  // Vite's SSR module runner with every dependency bundled. lexorank, pulled in
+  // by the drag-to-reorder plugin, is CommonJS, which that runner cannot
+  // evaluate ("exports is not defined"). Vite lets ssr.external override
+  // noExternal: true, so lexorank loads natively. No effect on the browser build.
+  vite: {
+    ssr: {external: ['lexorank']},
+  },
   typegen: {
     enabled: true,
     path: '../{app,components,lib}/**/*.{ts,tsx}',

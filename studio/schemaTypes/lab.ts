@@ -1,5 +1,6 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {RocketIcon} from '@sanity/icons/Rocket'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
 /**
  * Labs: demonstrations nobody commissioned.
@@ -42,14 +43,9 @@ export const lab = defineType({
             : 'Lowercase letters, numbers and hyphens only'
         }),
     }),
-    defineField({
-      name: 'order',
-      type: 'number',
-      group: 'card',
-      description:
-        'Ascending. Also decides the homepage announcement pill, which reads the first item.',
-      validation: (rule) => rule.required().integer().min(0),
-    }),
+    // Position on /labs and among the homepage heroes. Set by dragging in the
+    // Studio list, never typed.
+    orderRankField({type: 'lab'}),
     defineField({
       name: 'line',
       title: 'One-line description',
@@ -208,13 +204,11 @@ export const lab = defineType({
         ),
     }),
   ],
-  orderings: [
-    {title: 'Display order', name: 'displayOrder', by: [{field: 'order', direction: 'asc'}]},
-  ],
+  orderings: [orderRankOrdering],
   preview: {
-    select: {title: 'name', subtitle: 'line', featured: 'featured', order: 'order', kind: 'kind'},
-    prepare: ({title, subtitle, featured, order, kind}) => ({
-      title: `${order ?? '?'}. ${title}${featured ? '  ** hero' : ''}`,
+    select: {title: 'name', subtitle: 'line', featured: 'featured', kind: 'kind'},
+    prepare: ({title, subtitle, featured, kind}) => ({
+      title: `${title}${featured ? ' (homepage hero)' : ''}`,
       subtitle: `${kind === 'live' ? 'Live' : 'Concept'} — ${subtitle ?? ''}`,
     }),
   },

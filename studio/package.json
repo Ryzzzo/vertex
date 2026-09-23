@@ -9,6 +9,7 @@
     "typegen": "sanity schemas extract --force && sanity typegen generate"
   },
   "dependencies": {
+    "@sanity/orderable-document-list": "^2.0.24",
     "@sanity/vision": "^6.16.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",

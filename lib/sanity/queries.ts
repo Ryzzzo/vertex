@@ -11,7 +11,7 @@ import {defineQuery} from 'next-sanity'
  */
 
 export const PROJECTS_QUERY = defineQuery(`
-  *[_type == "project"] | order(order asc) {
+  *[_type == "project"] | order(orderRank asc) {
     "slug": slug.current,
     name,
     line,
@@ -27,7 +27,7 @@ export const PROJECTS_QUERY = defineQuery(`
 `)
 
 export const LABS_INDEX_QUERY = defineQuery(`
-  *[_type == "lab"] | order(order asc) {
+  *[_type == "lab"] | order(orderRank asc) {
     "slug": slug.current,
     name,
     line,
@@ -40,7 +40,7 @@ export const LABS_INDEX_QUERY = defineQuery(`
 `)
 
 export const LABS_FEATURED_QUERY = defineQuery(`
-  *[_type == "lab" && featured == true] | order(order asc) {
+  *[_type == "lab" && featured == true] | order(orderRank asc) {
     "slug": slug.current,
     name,
     line,

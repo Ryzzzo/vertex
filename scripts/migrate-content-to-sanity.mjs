@@ -1,4 +1,9 @@
 /**
+ * HISTORICAL. Ran once on 2026-09-22. Do not re-run as-is: on 2026-09-23 display
+ * order moved from the numeric `order` field to the drag-to-reorder `orderRank`
+ * (studio/scripts/order-to-rank.mjs), and this script would write the retired
+ * field back.
+ *
  * One-shot migration of lib/content.ts into the Sanity `production` dataset.
  *
  *   node --env-file=.env.local scripts/migrate-content-to-sanity.mjs

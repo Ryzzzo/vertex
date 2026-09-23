@@ -1,5 +1,6 @@
 import {defineType, defineField} from 'sanity'
 import {CaseIcon} from '@sanity/icons/Case'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
 /**
  * Selected work: production software someone commissioned and relies on.
@@ -33,12 +34,10 @@ export const project = defineType({
             : 'Lowercase letters, numbers and hyphens only'
         }),
     }),
-    defineField({
-      name: 'order',
-      type: 'number',
-      description: 'Ascending. Controls position in the grid.',
-      validation: (rule) => rule.required().integer().min(0),
-    }),
+    // Position in the grid. Set by dragging in the Studio list, never typed:
+    // a typed number does not move its neighbors, which is how two projects
+    // ended up sharing position 6 on the first day.
+    orderRankField({type: 'project'}),
     defineField({
       name: 'featured',
       type: 'boolean',
@@ -119,13 +118,11 @@ export const project = defineType({
         ),
     }),
   ],
-  orderings: [
-    {title: 'Display order', name: 'displayOrder', by: [{field: 'order', direction: 'asc'}]},
-  ],
+  orderings: [orderRankOrdering],
   preview: {
-    select: {title: 'name', subtitle: 'line', featured: 'featured', order: 'order'},
-    prepare: ({title, subtitle, featured, order}) => ({
-      title: `${order ?? '?'}. ${title}${featured ? '  ** featured' : ''}`,
+    select: {title: 'name', subtitle: 'line', featured: 'featured'},
+    prepare: ({title, subtitle, featured}) => ({
+      title: `${title}${featured ? ' (featured)' : ''}`,
       subtitle,
     }),
   },
