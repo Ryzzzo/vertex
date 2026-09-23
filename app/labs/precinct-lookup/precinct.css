@@ -1,0 +1,840 @@
+/* ─────────────────────────────────────────────────────────────
+   NC Precinct Lookup — page-scoped styles, every class prefixed pl-.
+   Built on the site's tokens (globals.css); the only new colours are the
+   two precinct roles, and both come from values the site already uses:
+   the indigo accent for "your precinct" and the amber of the Labs
+   work-in-progress chip for "the one across the line".
+   ───────────────────────────────────────────────────────────── */
+
+.pl {
+  --pl-match: var(--accent);
+  --pl-match-line: #a5acf2;
+  --pl-across: #e3a33c;
+  --pl-across-line: #eab45e;
+  --pl-line: #f7f8f8;
+  --pl-error: #f2707a;
+  --pl-clear: #4a8f6a;
+  --pl-plate-bg: #0a0b0d;
+  --pl-radius: 12px;
+
+  position: relative;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: color-mix(in oklab, var(--surface) 55%, var(--bg));
+  box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.8);
+  overflow: hidden;
+}
+
+/* ── Header strip: the instrument's nameplate ── */
+
+.pl-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.25rem;
+  padding: 0.625rem clamp(1rem, 0.75rem + 1vw, 1.5rem);
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  background: color-mix(in oklab, var(--surface) 62%, var(--bg));
+}
+
+.pl-strip-live {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 560px) {
+  .pl-strip-wide,
+  .pl-strip-counties {
+    display: none;
+  }
+
+  .pl-state-compact {
+    width: 6.75rem;
+    padding: 0.3125rem;
+  }
+}
+
+/* ── Layout ── */
+
+.pl-grid-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pl-side {
+  padding: clamp(1.25rem, 0.75rem + 2vw, 2rem);
+}
+
+.pl-stage {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+  border-top: 1px solid var(--hairline);
+  background: color-mix(in oklab, var(--bg) 70%, var(--surface));
+  transition: opacity var(--duration-hover) var(--easing-linear);
+}
+
+/* The indigo ground the site uses at its section seams, pooled under the plate. */
+.pl-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 60% 55% at 55% 45%,
+    rgb(94 106 210 / 0.13) 0%,
+    rgb(94 106 210 / 0.04) 45%,
+    transparent 75%
+  );
+}
+
+@media (min-width: 960px) {
+  .pl-grid-layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  /* The plate takes whatever height the answer column gives it, so the two
+     columns end together instead of leaving a well of empty ground. */
+  .pl-stage {
+    display: flex;
+    flex-direction: column;
+    border-top: 0;
+    border-left: 1px solid var(--hairline);
+  }
+
+  .pl-plates {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pl-stage .pl-plate-main {
+    flex: 1 1 auto;
+    min-height: 24rem;
+    aspect-ratio: auto;
+  }
+
+  .pl-closeup {
+    flex: none;
+  }
+}
+
+/* ── Form ── */
+
+.pl-label-text {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.pl-field {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pl-input {
+  flex: 1;
+  min-width: 0;
+  height: 3rem;
+  padding: 0 0.9375rem;
+  border: 1px solid #33373f;
+  border-radius: 8px;
+  background: var(--pl-plate-bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  /* 16px, so iOS Safari does not zoom the page when the field takes focus. */
+  font-size: 1rem;
+  transition: border-color var(--duration-hover) var(--easing-linear);
+}
+
+.pl-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.pl-input:hover {
+  border-color: #454a54;
+}
+
+.pl-input:focus-visible {
+  border-color: var(--accent);
+  outline: 2px solid color-mix(in oklab, var(--accent) 55%, transparent);
+  outline-offset: 2px;
+}
+
+.pl-input[aria-invalid="true"] {
+  border-color: color-mix(in oklab, var(--pl-error) 70%, transparent);
+  background: color-mix(in oklab, var(--pl-error) 6%, var(--pl-plate-bg));
+}
+
+/* White on the accent measures 4.71:1. */
+.pl-submit {
+  flex: none;
+  height: 3rem;
+  padding: 0 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--duration-hover) var(--easing-linear);
+}
+
+.pl-submit:hover {
+  background: color-mix(in oklab, var(--accent) 88%, white);
+}
+
+.pl-submit[aria-busy="true"] {
+  cursor: progress;
+}
+
+.pl-hint {
+  margin: 0.625rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.pl-error {
+  display: flex;
+  gap: 0.625rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid color-mix(in oklab, var(--pl-error) 40%, transparent);
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--pl-error) 8%, transparent);
+}
+
+.pl-error-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.125rem;
+  border-radius: 999px;
+  background: var(--pl-error);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.pl-error-text {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.pl-error-matched {
+  margin: 0.375rem 0 0;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.pl-error .pl-official {
+  margin-top: 0.5rem;
+}
+
+.pl-samples {
+  display: grid;
+  gap: 0.4375rem;
+  margin-top: 1.375rem;
+}
+
+.pl-samples-label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+}
+
+.pl-samples-label + .pl-samples-row {
+  margin-bottom: 0.375rem;
+}
+
+.pl-samples-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.pl-sample {
+  min-height: 2rem;
+  padding: 0.3125rem 0.75rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition:
+    color var(--duration-hover) var(--easing-linear),
+    border-color var(--duration-hover) var(--easing-linear);
+}
+
+.pl-sample:hover {
+  border-color: #454a54;
+  color: var(--text-primary);
+}
+
+.pl-status {
+  min-height: 1.25rem;
+  margin-top: 0.875rem;
+  font-size: 0.75rem;
+}
+
+.pl-result,
+.pl-stage {
+  transition: opacity var(--duration-hover) var(--easing-linear);
+}
+
+/* A refetch dims what is there instead of blanking it. */
+.pl-result.is-stale,
+.pl-stage.is-stale {
+  opacity: 0.45;
+}
+
+/* ── The answer ── */
+
+.pl-answer {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.pl-answer-kicker {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+}
+
+.pl-answer-id {
+  margin: 0.375rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 2.25rem + 3vw, 4.5rem);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+
+.pl-answer-name {
+  margin-top: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.pl-districts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+}
+
+.pl-district {
+  padding: 0.625rem 0.75rem 0.6875rem;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.02);
+}
+
+.pl-district dt {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.pl-district dd {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.625rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.pl-matched {
+  margin: 1rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.pl-matched-address {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.pl-verdict {
+  margin-top: 1.125rem;
+  padding: 0.875rem 1rem 0.9375rem;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+}
+
+.pl-verdict-line {
+  border-color: color-mix(in oklab, var(--pl-match) 48%, transparent);
+  background: color-mix(in oklab, var(--pl-match) 8%, transparent);
+}
+
+.pl-verdict-split {
+  border-color: color-mix(in oklab, var(--pl-across) 50%, transparent);
+  background: color-mix(in oklab, var(--pl-across) 7%, transparent);
+}
+
+.pl-verdict-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.pl-verdict-body {
+  margin: 0.375rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.pl-dot {
+  flex: none;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+}
+
+.pl-dot-clear {
+  background: var(--pl-clear);
+}
+
+.pl-dot-line {
+  background: var(--pl-match-line);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--pl-match) 30%, transparent);
+}
+
+.pl-dot-split {
+  background: var(--pl-across);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--pl-across) 25%, transparent);
+}
+
+/* Inline, so on a phone the arrow wraps with the words instead of being
+   pushed to the far edge of a two-line flex box. */
+.pl-official {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-decoration-color: #3a3f47;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  transition:
+    color var(--duration-hover) var(--easing-linear),
+    text-decoration-color var(--duration-hover) var(--easing-linear);
+}
+
+.pl-official:hover {
+  color: var(--pl-match-line);
+  text-decoration-color: var(--pl-match-line);
+}
+
+/* ── Empty state: the whole state ── */
+
+.pl-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  height: 100%;
+  min-height: clamp(14rem, 8rem + 20vw, 30rem);
+  padding: clamp(0.5rem, 0.25rem + 1.5vw, 1.75rem);
+}
+
+.pl-empty-caption {
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.pl-state {
+  position: relative;
+}
+
+.pl-state-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pl-state-pin {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow:
+    0 0 0 3px rgb(94 106 210 / 0.5),
+    0 0 14px 3px rgb(165 172 242 / 0.75);
+}
+
+.pl-state-compact {
+  position: absolute;
+  right: 0.625rem;
+  bottom: 0.625rem;
+  z-index: 3;
+  width: clamp(7.5rem, 5.5rem + 7vw, 11.5rem);
+  padding: 0.4375rem;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: rgb(8 9 10 / 0.78);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* ── Plates ── */
+
+.pl-plates {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.pl-plate {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--hairline);
+  border-radius: var(--pl-radius);
+  background: var(--pl-plate-bg);
+}
+
+.pl-plate-closeup {
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 640px) {
+  .pl-plate-main {
+    aspect-ratio: 4 / 3;
+  }
+
+  .pl-plate-closeup {
+    aspect-ratio: 16 / 7;
+  }
+}
+
+.pl-plate-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Edges dissolve into the plate rather than ending at it. */
+  -webkit-mask-image: radial-gradient(ellipse 78% 78% at 50% 50%, #000 58%, transparent 100%);
+  mask-image: radial-gradient(ellipse 78% 78% at 50% 50%, #000 58%, transparent 100%);
+}
+
+.pl-grid {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.045);
+  stroke-width: 1;
+}
+
+.pl-shape-neighbor {
+  fill: rgb(255 255 255 / 0.018);
+  stroke: #363a43;
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+.pl-shape-across {
+  fill: color-mix(in oklab, var(--pl-across) 13%, transparent);
+  stroke: color-mix(in oklab, var(--pl-across) 65%, transparent);
+  stroke-width: 1.25;
+  stroke-linejoin: round;
+}
+
+.pl-shape-match {
+  stroke: none;
+}
+
+.pl-outline {
+  fill: none;
+  stroke: var(--pl-match-line);
+  stroke-width: 1.75;
+  stroke-linejoin: round;
+}
+
+.pl-shared {
+  fill: none;
+  stroke: var(--pl-line);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pl-dimension {
+  fill: none;
+  stroke: var(--pl-line);
+  stroke-width: 1.25;
+  stroke-dasharray: 3 3;
+}
+
+.pl-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pl-label {
+  position: absolute;
+  translate: -50% -50%;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  color: var(--text-tertiary);
+}
+
+.pl-label-match,
+.pl-label-across {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 0.85rem + 0.5vw, 1.375rem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+  text-shadow: 0 1px 14px rgb(0 0 0 / 0.8);
+}
+
+.pl-label-match {
+  color: var(--text-primary);
+}
+
+.pl-plate-closeup .pl-label-match,
+.pl-plate-closeup .pl-label-across {
+  font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+}
+
+.pl-label-across {
+  color: var(--pl-across-line);
+}
+
+.pl-pin {
+  position: absolute;
+  z-index: 2;
+  width: 0;
+  height: 0;
+}
+
+.pl-pin-dot,
+.pl-pin-ring {
+  position: absolute;
+  border-radius: 999px;
+}
+
+.pl-pin-dot {
+  left: -5px;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 18px 3px rgb(165 172 242 / 0.7);
+}
+
+.pl-pin-ring {
+  left: -17px;
+  top: -17px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--pl-match-line);
+  opacity: 0.75;
+}
+
+/* The far end of the dimension line: a tick on the boundary. */
+.pl-dim-end {
+  position: absolute;
+  z-index: 2;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border: 1.5px solid var(--pl-line);
+  border-radius: 999px;
+  background: var(--pl-plate-bg);
+}
+
+/* Beside the dimension line, not on it: the line is only a few percent of the
+   plate long, so a label centred on it would sit on the boundary itself. */
+.pl-dim-label {
+  position: absolute;
+  z-index: 3;
+  translate: calc(-100% - 16px) -50%;
+  padding: 0.1875rem 0.4375rem;
+  border: 1px solid #3a3f47;
+  border-radius: 6px;
+  background: rgb(8 9 10 / 0.85);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pl-scale {
+  position: absolute;
+  left: 0.875rem;
+  bottom: 0.75rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pl-scale-bar {
+  height: 5px;
+  border: 1px solid var(--text-secondary);
+  border-top: 0;
+}
+
+.pl-scale-text,
+.pl-north {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.pl-north {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.875rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1875rem;
+}
+
+.pl-north::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-inline: 4px solid transparent;
+  border-bottom: 7px solid var(--text-secondary);
+}
+
+.pl-closeup {
+  margin: 0;
+}
+
+.pl-closeup-caption {
+  margin-top: 0.625rem;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+/* ── Fine print ── */
+
+.pl-vintage {
+  padding: 0.875rem clamp(1rem, 0.75rem + 1vw, 1.5rem);
+  border-top: 1px solid var(--hairline);
+  font-size: 0.6875rem;
+  line-height: 1.65;
+}
+
+.pl-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── Motion: one curve, the site's; skipped entirely under reduced motion ── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .pl-result {
+    animation: pl-rise var(--duration-reveal) var(--easing-linear) both;
+  }
+
+  .pl-plate-main .pl-plate-svg {
+    animation: pl-settle 520ms var(--easing-linear) both;
+  }
+
+  .pl-plate-main .pl-outline {
+    stroke-dasharray: 1;
+    animation: pl-draw 1100ms var(--easing-linear) 120ms both;
+  }
+
+  .pl-pin-ring {
+    animation: pl-ring 900ms var(--easing-linear) 250ms both;
+  }
+
+  .pl-closeup {
+    animation: pl-rise var(--duration-reveal) var(--easing-linear) 380ms both;
+  }
+
+  .pl-dim-label {
+    animation: pl-fade var(--duration-reveal) var(--easing-linear) 700ms both;
+  }
+}
+
+@keyframes pl-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes pl-settle {
+  from {
+    opacity: 0;
+    transform: scale(1.035);
+  }
+}
+
+@keyframes pl-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pl-ring {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+@keyframes pl-fade {
+  from {
+    opacity: 0;
+  }
+}
