@@ -1,8 +1,16 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import overview from "@/data/precincts/overview.json";
-import type { LookupError, LookupResponse, LookupResult } from "@/lib/precinct/types";
+import type {
+  DistrictShare,
+  GeoFeature,
+  LookupError,
+  LookupResponse,
+  LookupResult,
+  PrecinctInfo,
+} from "@/lib/precinct/types";
+import PrecinctMap from "./PrecinctMap";
 import PrecinctPlate from "./PrecinctPlate";
 
 const NCSBE_LOOKUP = "https://vt.ncsbe.gov/RegLkup/";
@@ -25,6 +33,8 @@ type Status =
   | { kind: "idle" }
   | { kind: "loading"; slow: boolean }
   | { kind: "error"; error: LookupError };
+
+type Inspected = { info: PrecinctInfo; feature: GeoFeature };
 
 function formatDate(iso: string): string {
   return new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", {
@@ -51,7 +61,13 @@ function precinctTitle(id: string, name: string) {
   return name && name !== id ? name : null;
 }
 
-/* ── Statewide drawing ─────────────────────────────────────────────────── */
+const PLAN = {
+  congress: "US House",
+  senate: "NC Senate",
+  house: "NC House",
+} as const;
+
+/* ── Statewide drawing (the no-WebGL fallback) ────────────────────────── */
 
 function StateDrawing({
   lon,
@@ -86,9 +102,67 @@ function StateDrawing({
   );
 }
 
-/* ── The answer ─────────────────────────────────────────────────────────── */
+function FallbackPlates({ result, precinctCount }: { result: LookupResult | null; precinctCount: number }) {
+  if (!result) {
+    return (
+      <div className="pl-empty">
+        <StateDrawing precinctCount={precinctCount} />
+        <p className="pl-empty-caption marker">
+          Every line here is a precinct boundary — {precinctCount.toLocaleString("en-US")} of
+          them. This browser can’t draw the interactive map, so this is the still version.
+        </p>
+      </div>
+    );
+  }
+  return (
+    <div className="pl-plates">
+      <PrecinctPlate
+        layer={result.map}
+        kind="main"
+        label={`Map of precinct ${result.precinct.id} in ${result.county} County with its neighbouring precincts and the address marked.`}
+      >
+        <StateDrawing compact lon={result.location.lon} lat={result.location.lat} precinctCount={precinctCount} />
+      </PrecinctPlate>
+      {result.closeup && result.boundary.across ? (
+        <figure className="pl-closeup">
+          <PrecinctPlate
+            layer={result.closeup}
+            kind="closeup"
+            nearest={result.closeup.nearest}
+            distanceM={result.boundary.distanceM}
+            label={`Close-up of the boundary between precinct ${result.precinct.id} and precinct ${result.boundary.across.id}; the address is ${fmtM(result.boundary.distanceM)} from the line.`}
+          />
+          <figcaption className="pl-closeup-caption marker">
+            At the line. The dot is where the Census geocoder put the address; the dark line is the
+            State Board’s boundary.
+          </figcaption>
+        </figure>
+      ) : null}
+    </div>
+  );
+}
 
-function Verdict({ r }: { r: LookupResult }) {
+/* ── Districts ─────────────────────────────────────────────────────────── */
+
+/** One district chip. A split precinct shows every district it touches. */
+function DistrictChip({ label, value, shares }: { label: string; value: string | null; shares?: DistrictShare[] }) {
+  const others = (shares ?? []).filter(([d]) => d !== value);
+  return (
+    <div className="pl-district">
+      <dt>{label}</dt>
+      <dd>{value ?? "—"}</dd>
+      {others.length ? (
+        <p className="pl-district-split">
+          split · {others.map(([d, pct]) => `${d} ${pct}%`).join(", ")}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/* ── The answer for an address ─────────────────────────────────────────── */
+
+function Verdict({ r, onShowLine }: { r: LookupResult; onShowLine?: () => void }) {
   const { boundary: b, precinct: p } = r;
   const across = b.across;
 
@@ -108,8 +182,13 @@ function Verdict({ r }: { r: LookupResult }) {
   }
 
   const blockAgrees = b.block !== null && b.block.id === p.id && b.block.county === p.county;
-  const blockAcross =
-    b.block !== null && b.block.id === across.id && b.block.county === across.county;
+  const blockAcross = b.block !== null && b.block.id === across.id && b.block.county === across.county;
+  const button = onShowLine ? (
+    <button type="button" className="pl-show-line" onClick={onShowLine}>
+      Show me the line
+      <span aria-hidden="true">→</span>
+    </button>
+  ) : null;
 
   if (blockAgrees) {
     return (
@@ -119,14 +198,12 @@ function Verdict({ r }: { r: LookupResult }) {
           On the line — both reads agree
         </p>
         <p className="pl-verdict-body">
-          This address sits {fmtM(b.distanceM)} from the boundary with precinct{" "}
-          {across.id}
-          {across.county !== p.county ? ` (${across.county} County)` : ""}. The
-          Census geocoder places it on {p.id}’s side, and the Census block
-          for that side of the street is in {p.id} too. Two independent reads,
-          one answer — but at this distance, the State Board’s record is the
-          one that counts.
+          {fmtM(b.distanceM)} from precinct {across.id}
+          {across.county !== p.county ? ` (${across.county} County)` : ""}. The geocoded point
+          and the Census block for this side of the street both fall in {p.id} — but this
+          close, the State Board’s record is the one that counts.
         </p>
+        {button}
       </div>
     );
   }
@@ -141,16 +218,19 @@ function Verdict({ r }: { r: LookupResult }) {
         The point lands in {p.id}, {fmtM(b.distanceM)} from {across.id}
         {blockAcross
           ? `, but the Census block for this side of the street is in ${across.id}. The two reads disagree`
-          : ", and the Census block check couldn't confirm the side"}
+          : ", and the Census block check couldn’t confirm the side"}
         . It could be either precinct — check the State Board’s lookup.
       </p>
+      {button}
     </div>
   );
 }
 
-function Answer({ r }: { r: LookupResult }) {
+function Answer({ r, onShowLine }: { r: LookupResult; onShowLine?: () => void }) {
   const name = precinctTitle(r.precinct.id, r.precinct.name);
   const d = r.districts;
+  const split = r.info.districts;
+  const splitPlans = (Object.keys(PLAN) as Array<keyof typeof PLAN>).filter((k) => split[k].length > 1);
   return (
     <div className="pl-answer">
       <p className="marker pl-answer-kicker">Precinct · {r.county} County</p>
@@ -158,19 +238,17 @@ function Answer({ r }: { r: LookupResult }) {
       {name ? <p className="marker pl-answer-name">{name}</p> : null}
 
       <dl className="pl-districts">
-        <div className="pl-district">
-          <dt>US House</dt>
-          <dd>{d.congress ?? "—"}</dd>
-        </div>
-        <div className="pl-district">
-          <dt>NC Senate</dt>
-          <dd>{d.senate ?? "—"}</dd>
-        </div>
-        <div className="pl-district">
-          <dt>NC House</dt>
-          <dd>{d.house ?? "—"}</dd>
-        </div>
+        <DistrictChip label="US House" value={d.congress} />
+        <DistrictChip label="NC Senate" value={d.senate} />
+        <DistrictChip label="NC House" value={d.house} />
       </dl>
+      {splitPlans.length ? (
+        <p className="pl-note">
+          Precinct {r.precinct.id} is split for the {splitPlans.map((k) => PLAN[k]).join(" and ")}
+          {" "}({splitPlans.map((k) => split[k].map(([x]) => x).join(" / ")).join("; ")}). The
+          districts above are for this address.
+        </p>
+      ) : null}
 
       <p className="pl-matched">
         <span className="pl-matched-label">Matched as</span>{" "}
@@ -178,17 +256,57 @@ function Answer({ r }: { r: LookupResult }) {
         {r.otherMatches > 0 ? (
           <span className="pl-matched-more">
             {" "}
-            · {r.otherMatches} other candidate{r.otherMatches === 1 ? "" : "s"} — add a
-            ZIP if this isn’t yours
+            · {r.otherMatches} other candidate{r.otherMatches === 1 ? "" : "s"} — add a ZIP if
+            this isn’t yours
           </span>
         ) : null}
       </p>
 
-      <Verdict r={r} />
+      <Verdict r={r} onShowLine={onShowLine} />
 
       <a className="pl-official" href={NCSBE_LOOKUP} target="_blank" rel="noreferrer noopener">
         Confirm with the State Board’s voter lookup <span aria-hidden="true">↗</span>
       </a>
+    </div>
+  );
+}
+
+/* ── A precinct clicked on the map ─────────────────────────────────────── */
+
+function Inspector({
+  inspected,
+  result,
+  onBack,
+}: {
+  inspected: Inspected;
+  result: LookupResult | null;
+  onBack: () => void;
+}) {
+  const { info } = inspected;
+  const name = precinctTitle(info.id, info.name);
+  const top = (s: DistrictShare[]) => s[0]?.[0] ?? null;
+  return (
+    <div className="pl-answer pl-inspect">
+      <p className="marker pl-answer-kicker">Inspecting · {info.county} County</p>
+      <p className="pl-answer-id">{info.id}</p>
+      {name ? <p className="marker pl-answer-name">{name}</p> : null}
+      <dl className="pl-districts">
+        <DistrictChip label="US House" value={top(info.districts.congress)} shares={info.districts.congress} />
+        <DistrictChip label="NC Senate" value={top(info.districts.senate)} shares={info.districts.senate} />
+        <DistrictChip label="NC House" value={top(info.districts.house)} shares={info.districts.house} />
+      </dl>
+      <p className="pl-note">
+        {info.areaKm2.toLocaleString("en-US")} km². Districts from the State Board’s plan
+        files, sampled across the whole precinct — a split shows every district it touches,
+        with its rough share.
+      </p>
+      {result ? (
+        <button type="button" className="pl-back" onClick={onBack}>
+          <span aria-hidden="true">←</span> Back to {result.precinct.id}, your address
+        </button>
+      ) : (
+        <p className="pl-note">Type an address above to find the precinct for a specific home.</p>
+      )}
     </div>
   );
 }
@@ -200,24 +318,47 @@ export default function PrecinctLookup({
   countyCount,
   precinctsAsOf,
   toleranceMeters,
+  dataVersion,
 }: {
   precinctCount: number;
   countyCount: number;
   precinctsAsOf: string;
   toleranceMeters: number;
+  dataVersion: string;
 }) {
   const [address, setAddress] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [result, setResult] = useState<LookupResult | null>(null);
+  const [inspected, setInspected] = useState<Inspected | null>(null);
+  const [lineRequest, setLineRequest] = useState(0);
+  const [mapLive, setMapLive] = useState(true);
+  const [wake, setWake] = useState(0);
   const [announce, setAnnounce] = useState("");
   const inFlight = useRef<AbortController | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const inputId = useId();
   const errorId = useId();
   const hintId = useId();
 
   useEffect(() => () => inFlight.current?.abort(), []);
 
+  const onInspect = useCallback(
+    (info: PrecinctInfo, feature: GeoFeature) => {
+      if (result && info.index === result.info.index) {
+        setInspected(null);
+        return;
+      }
+      setInspected({ info, feature });
+      const d = info.districts;
+      setAnnounce(
+        `Inspecting precinct ${info.id}, ${info.county} County. US House ${d.congress.map(([x]) => x).join(" and ")}, NC Senate ${d.senate.map(([x]) => x).join(" and ")}, NC House ${d.house.map(([x]) => x).join(" and ")}.`,
+      );
+    },
+    [result],
+  );
+
   async function run(value: string) {
+    setWake((w) => w + 1);
     const query = value.trim();
     inFlight.current?.abort();
     if (!query) {
@@ -243,14 +384,13 @@ export default function PrecinctLookup({
         signal: controller.signal,
       });
       body = (await res.json()) as LookupResponse;
-    } catch (err) {
+    } catch {
       window.clearTimeout(slowTimer);
       if (controller.signal.aborted) return;
-      void err;
       body = {
         ok: false,
         code: "geocoder_unavailable",
-        message: "Couldn't reach the lookup. Check your connection and try again.",
+        message: "Couldn’t reach the lookup. Check your connection and try again.",
       };
     }
     window.clearTimeout(slowTimer);
@@ -258,10 +398,10 @@ export default function PrecinctLookup({
 
     if (body.ok) {
       setResult(body);
+      setInspected(null);
       setStatus({ kind: "idle" });
-      const where = body.boundary.near && body.boundary.across
-        ? ` On the line with precinct ${body.boundary.across.id}.`
-        : "";
+      const where =
+        body.boundary.near && body.boundary.across ? ` On the line with precinct ${body.boundary.across.id}.` : "";
       setAnnounce(
         `Precinct ${body.precinct.id}, ${body.county} County. US House ${body.districts.congress ?? "unknown"}, NC Senate ${body.districts.senate ?? "unknown"}, NC House ${body.districts.house ?? "unknown"}.${where}`,
       );
@@ -269,6 +409,7 @@ export default function PrecinctLookup({
       // The previous answer would sit under an error about a different
       // address and read as the answer to this one. Clear it.
       setResult(null);
+      setInspected(null);
       setStatus({ kind: "error", error: body });
       setAnnounce("");
     }
@@ -276,6 +417,72 @@ export default function PrecinctLookup({
 
   const loading = status.kind === "loading";
   const error = status.kind === "error" ? status.error : null;
+  const selected = inspected?.feature ?? result?.geo.match ?? null;
+
+  /**
+   * On a phone the map sits below the answer, so "Show me the line" would fly
+   * a map nobody can see. Bring it into view first and start the flight once
+   * the scroll settles; on desktop the panel floats over the map and nothing
+   * moves.
+   */
+  const showLine = () => {
+    const fly = () => setLineRequest((n) => n + 1);
+    const stage = stageRef.current;
+    if (!stage) return fly();
+    const box = stage.getBoundingClientRect();
+    if (box.top <= window.innerHeight * 0.6 && box.bottom >= window.innerHeight * 0.3) return fly();
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      stage.scrollIntoView({ block: "center", behavior: "instant" });
+      return fly();
+    }
+    let started = false;
+    const go = () => {
+      if (started) return;
+      started = true;
+      window.removeEventListener("scrollend", go);
+      fly();
+    };
+    window.addEventListener("scrollend", go);
+    window.setTimeout(go, 900);
+    stage.scrollIntoView({ block: "center", behavior: "smooth" });
+  };
+
+  const samples = (
+    <div className="pl-samples">
+      <span className="pl-samples-label marker">Same street, opposite sides</span>
+      <div className="pl-samples-row">
+        {SAMPLES.slice(0, 2).map((s) => (
+          <button
+            key={s.address}
+            type="button"
+            className="pl-sample"
+            onClick={() => {
+              setAddress(s.address);
+              void run(s.address);
+            }}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+      <span className="pl-samples-label marker">Or try</span>
+      <div className="pl-samples-row">
+        {SAMPLES.slice(2).map((s) => (
+          <button
+            key={s.address}
+            type="button"
+            className="pl-sample"
+            onClick={() => {
+              setAddress(s.address);
+              void run(s.address);
+            }}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div className="pl" data-state={result ? "result" : "empty"}>
@@ -288,8 +495,8 @@ export default function PrecinctLookup({
         </span>
       </div>
 
-      <div className="pl-grid-layout">
-        <div className="pl-side">
+      <div className="pl-body">
+        <div className="pl-panel">
           <form
             className="pl-form"
             onSubmit={(e) => {
@@ -313,6 +520,7 @@ export default function PrecinctLookup({
                 placeholder="e.g. 600 E 4th St, Charlotte"
                 value={address}
                 maxLength={200}
+                onFocus={() => setWake((w) => w || 1)}
                 onChange={(e) => {
                   setAddress(e.target.value);
                   if (status.kind === "error") setStatus({ kind: "idle" });
@@ -342,108 +550,83 @@ export default function PrecinctLookup({
               </div>
             ) : (
               <p className="pl-hint" id={hintId}>
-                Sent only to the US Census Bureau’s geocoder. Not logged, not
-                stored; no cookies, no analytics.
+                The address goes only to the US Census Bureau’s geocoder — not logged, not
+                stored. The street map comes from OpenFreeMap, which sees the area on screen,
+                never what you typed.
               </p>
             )}
-
-            <div className="pl-samples">
-              <span className="pl-samples-label marker">Same street, opposite sides</span>
-              <div className="pl-samples-row">
-                {SAMPLES.slice(0, 2).map((s) => (
-                  <button
-                    key={s.address}
-                    type="button"
-                    className="pl-sample"
-                    onClick={() => {
-                      setAddress(s.address);
-                      void run(s.address);
-                    }}
-                  >
-                    {s.label}
-                  </button>
-                ))}
-              </div>
-              <span className="pl-samples-label marker">Or try</span>
-              <div className="pl-samples-row">
-                {SAMPLES.slice(2).map((s) => (
-                  <button
-                    key={s.address}
-                    type="button"
-                    className="pl-sample"
-                    onClick={() => {
-                      setAddress(s.address);
-                      void run(s.address);
-                    }}
-                  >
-                    {s.label}
-                  </button>
-                ))}
-              </div>
-            </div>
           </form>
 
           <p className="pl-status marker" aria-live="polite">
             {status.kind === "loading" && status.slow ? "Asking the Census geocoder…" : ""}
           </p>
 
-          {result ? (
-            <div className={loading ? "pl-result is-stale" : "pl-result"} key={result.matchedAddress}>
-              <Answer r={result} />
+          {inspected ? (
+            <div className="pl-result" key={`i-${inspected.info.index}`}>
+              <Inspector inspected={inspected} result={result} onBack={() => setInspected(null)} />
             </div>
-          ) : null}
-        </div>
-
-        <div className={loading && result ? "pl-stage is-stale" : "pl-stage"}>
-          {result ? (
-            <div className="pl-plates" key={`p-${result.matchedAddress}`}>
-              <PrecinctPlate
-                layer={result.map}
-                kind="main"
-                label={`Map of precinct ${result.precinct.id} in ${result.county} County with its neighbouring precincts and the address marked.`}
-              >
-                <StateDrawing
-                  compact
-                  lon={result.location.lon}
-                  lat={result.location.lat}
-                  precinctCount={precinctCount}
-                />
-              </PrecinctPlate>
-              {result.closeup && result.boundary.across ? (
-                <figure className="pl-closeup">
-                  <PrecinctPlate
-                    layer={result.closeup}
-                    kind="closeup"
-                    nearest={result.closeup.nearest}
-                    distanceM={result.boundary.distanceM}
-                    label={`Close-up of the boundary between precinct ${result.precinct.id} and precinct ${result.boundary.across.id}; the address is ${fmtM(result.boundary.distanceM)} from the line.`}
-                  />
-                  <figcaption className="pl-closeup-caption marker">
-                    At the line, {fmtM(Math.round(result.closeup.view[2] - result.closeup.view[0]))} across.
-                    The dot is where the Census geocoder put the address; the
-                    bright line is the State Board’s boundary.
-                  </figcaption>
-                </figure>
-              ) : null}
+          ) : result ? (
+            <div className={loading ? "pl-result is-stale" : "pl-result"} key={result.matchedAddress}>
+              <Answer r={result} onShowLine={mapLive ? showLine : undefined} />
             </div>
           ) : (
-            <div className="pl-empty">
-              <StateDrawing precinctCount={precinctCount} />
-              <p className="pl-empty-caption marker">
-                Every line here is a precinct boundary —{" "}
-                {precinctCount.toLocaleString("en-US")} of them, drawn from the
-                State Board’s file.
+            <>
+              {samples}
+              <p className="pl-explore">
+                Or explore: hover any precinct on the map, click one to inspect it, and switch
+                on the district plans under <b>Layers</b>.
               </p>
-            </div>
+            </>
           )}
+          {result || inspected ? <details className="pl-more">
+            <summary className="marker">Try another sample</summary>
+            {samples}
+          </details> : null}
+        </div>
+
+        <div className={loading && result ? "pl-stage is-stale" : "pl-stage"} ref={stageRef}>
+          <PrecinctMap
+            result={result}
+            selected={selected}
+            onInspect={onInspect}
+            lineRequest={lineRequest}
+            dataVersion={dataVersion}
+            onUnsupported={() => setMapLive(false)}
+            wake={wake}
+            poster={<StateDrawing precinctCount={precinctCount} />}
+            fallback={<FallbackPlates result={result} precinctCount={precinctCount} />}
+          />
+          {inspected ? (
+            // Phones only: the panel's inspector is a screen above the map, so
+            // the precinct just tapped is named where the tap happened.
+            <div className="pl-stage-card" key={inspected.info.index}>
+              <p className="marker">Inspecting · {inspected.info.county} County</p>
+              <p className="pl-stage-card-id">Precinct {inspected.info.id}</p>
+              <p className="pl-stage-card-d">
+                US House {inspected.info.districts.congress.map(([d]) => d).join(" & ")} · Senate{" "}
+                {inspected.info.districts.senate.map(([d]) => d).join(" & ")} · House{" "}
+                {inspected.info.districts.house.map(([d]) => d).join(" & ")}
+              </p>
+              <button type="button" className="pl-stage-card-back" onClick={() => setInspected(null)}>
+                {result ? (
+                  <>
+                    <span aria-hidden="true">←</span> Back to {result.precinct.id}
+                  </>
+                ) : (
+                  "Close"
+                )}
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
 
       <p className="pl-vintage marker">
         Unofficial. Precincts: NC State Board of Elections, as of {formatDate(precinctsAsOf)},
-        simplified to ~{Math.round(toleranceMeters)} m. Districts: US Census Bureau geocoder — US
-        House S.L. 2025-95, NC Senate S.L. 2023-146, NC House S.L. 2023-149, the maps in force for
-        the Nov 3, 2026 general election (checked Sep 23, 2026).
+        simplified to ~{Math.round(toleranceMeters)} m. Districts for an address: US Census Bureau
+        geocoder; districts on the map: the State Board’s plan files — US House S.L. 2025-95, NC
+        Senate S.L. 2023-146, NC House S.L. 2023-149, the maps in force for the Nov 3, 2026
+        general election (checked Sep 23, 2026).
       </p>
 
       <p className="pl-sr" aria-live="polite">

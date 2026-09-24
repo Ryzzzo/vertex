@@ -16,5 +16,31 @@
   "quantization": 1000000,
   "tool": "mapshaper@0.7.66",
   "bytes": 3894527,
-  "built": "2026-09-23"
+  "built": "2026-09-23",
+  "districts": [
+    {
+      "key": "cd",
+      "label": "US House",
+      "law": "S.L. 2025-95",
+      "source": "https://s3.amazonaws.com/dl.ncsbe.gov/ShapeFiles/USCongress/SL 2025-95 - Shapefile.zip",
+      "bytes": 2644654,
+      "sha256": "c21e18d29a0f6dd52636c866ca3b05295a0757c6d6d98ee42ffa0b2eee795897"
+    },
+    {
+      "key": "sen",
+      "label": "NC Senate",
+      "law": "S.L. 2023-146",
+      "source": "https://s3.amazonaws.com/dl.ncsbe.gov/ShapeFiles/LegislativeDistricts/Shapefiles/Senate/SL 2023-146 Senate - Shapefile.zip",
+      "bytes": 4433470,
+      "sha256": "0e1bd6d97e3ce1dcb42e0b9b47cae6b5e82086ebafcded54e6b96bb7287b16f8"
+    },
+    {
+      "key": "house",
+      "label": "NC House",
+      "law": "S.L. 2023-149",
+      "source": "https://s3.amazonaws.com/dl.ncsbe.gov/ShapeFiles/LegislativeDistricts/Shapefiles/House/SL 2023-149 House - Shapefile.zip",
+      "bytes": 6107158,
+      "sha256": "3b2e69226c528f18a21cb75dcb9de7f196bf105898efff55e73ef8faa365e75e"
+    }
+  ]
 }

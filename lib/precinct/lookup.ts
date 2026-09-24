@@ -7,6 +7,7 @@
 
 import { geocode } from "./geocode";
 import { locate, mapPayload, precinctAt, precinctRef } from "./engine";
+import { precinctFeature, precinctInfo, sharedFeature } from "./geo";
 import type { LookupError, LookupResponse } from "./types";
 
 export const MAX_ADDRESS_LENGTH = 200;
@@ -71,6 +72,16 @@ export async function lookup(raw: string): Promise<LookupResponse> {
 
   const block = match.blockPoint ? precinctAt(match.blockPoint.lon, match.blockPoint.lat) : null;
   const { map, closeup } = mapPayload(located);
+  const { frame, nearest, precinct, acrossPrecinct } = located;
+  const geo = {
+    match: precinctFeature(precinct),
+    across: acrossPrecinct ? precinctFeature(acrossPrecinct) : null,
+    shared: acrossPrecinct ? sharedFeature(precinct, acrossPrecinct) : null,
+    nearest: [
+      Math.round((frame.lon0 + nearest[0] / frame.kx) * 1e6) / 1e6,
+      Math.round((frame.lat0 - nearest[1] / frame.ky) * 1e6) / 1e6,
+    ] as [number, number],
+  };
   const lookupMs = Math.round((performance.now() - started) * 100) / 100;
 
   return {
@@ -87,6 +98,8 @@ export async function lookup(raw: string): Promise<LookupResponse> {
     boundary: { ...located.boundary, block: block ? precinctRef(block) : null },
     map,
     closeup,
+    info: precinctInfo(precinct),
+    geo,
     lookupMs,
   };
 }

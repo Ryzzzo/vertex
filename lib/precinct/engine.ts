@@ -66,7 +66,11 @@ type Topology = {
   };
 };
 
-type Precinct = PrecinctRef & {
+export type Precinct = PrecinctRef & {
+  /** Position in the State Board file; the map's feature id. */
+  index: number;
+  /** Polygons, each an outer ring then its holes, packed [lon, lat, ...]. */
+  polys: Float64Array[][];
   /** Every ring, packed [lon, lat, ...], closed. */
   rings: Float64Array[];
   /** Ring arc references, to find the boundary two precincts share. */
@@ -120,8 +124,9 @@ function load(): Index {
   if (index) return index;
   const topo = JSON.parse(readFileSync(DATA_FILE, "utf8")) as Topology;
   const arcs = decodeArcs(topo);
-  const precincts: Precinct[] = topo.objects.precincts.geometries.map((g) => {
+  const precincts: Precinct[] = topo.objects.precincts.geometries.map((g, index) => {
     const polygons = (g.type === "Polygon" ? [g.arcs] : g.arcs) as number[][][];
+    const polys: Float64Array[][] = [];
     const rings: Float64Array[] = [];
     const arcSet = new Set<number>();
     let x0 = Infinity;
@@ -129,8 +134,11 @@ function load(): Index {
     let x1 = -Infinity;
     let y1 = -Infinity;
     for (const polygon of polygons) {
+      const poly: Float64Array[] = [];
+      polys.push(poly);
       for (const refs of polygon) {
         const ring = stitch(refs, arcs);
+        poly.push(ring);
         rings.push(ring);
         for (const ref of refs) arcSet.add(ref < 0 ? ~ref : ref);
         for (let i = 0; i < ring.length; i += 2) {
@@ -142,9 +150,11 @@ function load(): Index {
       }
     }
     return {
+      index,
       id: g.properties.p,
       name: g.properties.n,
       county: g.properties.c,
+      polys,
       rings,
       arcs: arcSet,
       box: [x0, y0, x1, y1],
@@ -155,6 +165,25 @@ function load(): Index {
 }
 
 const ref = (p: Precinct): PrecinctRef => ({ id: p.id, name: p.name, county: p.county });
+
+/** Every precinct, decoded. Loads the file on first use. */
+export function allPrecincts(): readonly Precinct[] {
+  return load().precincts;
+}
+
+/** The boundary two precincts share, as lon/lat polylines: literally their common arcs. */
+export function sharedBoundary(a: Precinct, b: Precinct): Array<Array<[number, number]>> {
+  const { arcs } = load();
+  const out: Array<Array<[number, number]>> = [];
+  for (const i of a.arcs) {
+    if (!b.arcs.has(i)) continue;
+    const arc = arcs[i];
+    const line: Array<[number, number]> = [];
+    for (let k = 0; k < arc.length; k += 2) line.push([arc[k], arc[k + 1]]);
+    out.push(line);
+  }
+  return out;
+}
 
 function boxHits(p: Precinct, lon: number, lat: number, padLon = 0, padLat = 0) {
   return (

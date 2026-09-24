@@ -1,31 +1,94 @@
 /* ─────────────────────────────────────────────────────────────
    NC Precinct Lookup — page-scoped styles, every class prefixed pl-.
-   Built on the site's tokens (globals.css); the only new colours are the
-   two precinct roles, and both come from values the site already uses:
-   the indigo accent for "your precinct" and the amber of the Labs
-   work-in-progress chip for "the one across the line".
+
+   Open Sky: the one light page on a dark site. Portfolio work should not all
+   wear the studio's own colours, and a civic tool read on a phone outdoors
+   wants a light ground anyway.
+
+   Two colours carry meaning, and neither is red or blue: on an American
+   election map those read as parties, and "your precinct in blue, the one
+   across the street in red" would look like a result. Teal is your precinct,
+   coral the one across the line.
    ───────────────────────────────────────────────────────────── */
 
+/*
+ * The theme switches the site's own tokens, so the header, footer, type and
+ * every shared class follow without a line changed outside this file. Scoped
+ * with :has() rather than set on :root outright: App Router keeps a route's
+ * stylesheet loaded after a client-side navigation away, and an unscoped
+ * override would follow the visitor back to the dark pages.
+ */
+:root:has(.pl-page) {
+  --bg: #f2f6f9;
+  --surface: #ffffff;
+  --text-primary: #0e1a28;
+  --text-secondary: #475667; /* 6.91:1 on --bg */
+  --text-tertiary: #5b6b7e; /* 5.02:1 on --bg */
+  --hairline: #dce5ec;
+  --accent: #0b7b77; /* 4.70:1 on --bg; white on it 5.10:1 */
+  color-scheme: light;
+}
+
+/* Film grain is for a dark ground; on a light one it reads as dirt. */
+:root:has(.pl-page) .grain {
+  display: none;
+}
+
+:root:has(.pl-page) ::selection {
+  background: rgb(18 165 160 / 0.22);
+}
+
+/* The section seam, relit: a teal-tinted hairline over a faint sky pool. */
+:root:has(.pl-page) .section::before {
+  background: linear-gradient(90deg, transparent, var(--hairline) 18%, #9fd6d3 50%, var(--hairline) 82%, transparent);
+}
+
+:root:has(.pl-page) .section::after {
+  background: radial-gradient(ellipse 60% 100% at 50% 0%, rgb(18 165 160 / 0.1) 0%, rgb(18 165 160 / 0.03) 42%, transparent 72%);
+}
+
+:root:has(.pl-page) .site-progress {
+  background: linear-gradient(90deg, #0b7b77, #12a5a0);
+}
+
+/* The mark is the one constant across themes: the studio's own dark tile. */
+:root:has(.pl-page) .wordmark svg {
+  --vx-surface: #101112 !important;
+  --vx-border: #2a2c30 !important;
+  --vx-fg: #f7f8f8 !important;
+  --vx-accent: #5e6ad2 !important;
+}
+
+:root:has(.pl-page) .labs-tag-inline {
+  background: var(--surface);
+}
+
+/* ── The instrument ── */
+
 .pl {
-  --pl-match: var(--accent);
-  --pl-match-line: #a5acf2;
-  --pl-across: #e3a33c;
-  --pl-across-line: #eab45e;
-  --pl-line: #f7f8f8;
-  --pl-error: #f2707a;
-  --pl-clear: #4a8f6a;
-  --pl-plate-bg: #0a0b0d;
+  --pl-teal: #12a5a0;
+  --pl-teal-dark: #0b7b77;
+  --pl-teal-ink: #08514e;
+  --pl-coral: #ff6b4a;
+  --pl-coral-dark: #e4502f;
+  --pl-coral-ink: #b8391b;
+  --pl-ink: #0e1a28;
+  --pl-clear: #1f9d55;
+  --pl-error: #d92d20;
+  --pl-field: #c8d5e0;
+  --pl-plate-bg: #ffffff;
+  --pl-match: #12a5a0;
   --pl-radius: 12px;
 
   position: relative;
   border: 1px solid var(--hairline);
-  border-radius: 16px;
-  background: color-mix(in oklab, var(--surface) 55%, var(--bg));
-  box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.8);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow:
+    0 1px 2px rgb(15 27 42 / 0.05),
+    0 30px 70px -34px rgb(15 27 42 / 0.3);
   overflow: hidden;
 }
-
-/* ── Header strip: the instrument's nameplate ── */
 
 .pl-strip {
   display: flex;
@@ -34,9 +97,9 @@
   gap: 0.25rem 1.25rem;
   padding: 0.625rem clamp(1rem, 0.75rem + 1vw, 1.5rem);
   border-bottom: 1px solid var(--hairline);
+  background: #f7fafc;
   font-size: 0.6875rem;
   text-transform: uppercase;
-  background: color-mix(in oklab, var(--surface) 62%, var(--bg));
 }
 
 .pl-strip-live {
@@ -52,76 +115,59 @@
   .pl-strip-counties {
     display: none;
   }
-
-  .pl-state-compact {
-    width: 6.75rem;
-    padding: 0.3125rem;
-  }
 }
 
-/* ── Layout ── */
+/* ── Layout: the map is the stage; the panel floats over it on wide screens ── */
 
-.pl-grid-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+.pl-body {
+  display: flex;
+  flex-direction: column;
 }
 
-.pl-side {
-  padding: clamp(1.25rem, 0.75rem + 2vw, 2rem);
+.pl-panel {
+  padding: clamp(1.125rem, 0.75rem + 1.5vw, 1.5rem);
 }
 
 .pl-stage {
   position: relative;
-  isolation: isolate;
-  padding: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+  height: clamp(26rem, 12rem + 50vh, 40rem);
   border-top: 1px solid var(--hairline);
-  background: color-mix(in oklab, var(--bg) 70%, var(--surface));
+  background: #eef3f6;
   transition: opacity var(--duration-hover) var(--easing-linear);
 }
 
-/* The indigo ground the site uses at its section seams, pooled under the plate. */
-.pl-stage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse 60% 55% at 55% 45%,
-    rgb(94 106 210 / 0.13) 0%,
-    rgb(94 106 210 / 0.04) 45%,
-    transparent 75%
-  );
-}
-
-@media (min-width: 960px) {
-  .pl-grid-layout {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+@media (min-width: 900px) {
+  .pl-body {
+    position: relative;
+    display: block;
+    height: clamp(40rem, 26rem + 34vh, 50rem);
   }
 
-  /* The plate takes whatever height the answer column gives it, so the two
-     columns end together instead of leaving a well of empty ground. */
   .pl-stage {
-    display: flex;
-    flex-direction: column;
+    position: absolute;
+    inset: 0;
+    height: auto;
     border-top: 0;
-    border-left: 1px solid var(--hairline);
   }
 
-  .pl-plates {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .pl-stage .pl-plate-main {
-    flex: 1 1 auto;
-    min-height: 24rem;
-    aspect-ratio: auto;
-  }
-
-  .pl-closeup {
-    flex: none;
+  .pl-panel {
+    position: absolute;
+    z-index: 5;
+    top: 1rem;
+    left: 1rem;
+    width: 24rem;
+    max-height: calc(100% - 2rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: 1px solid rgb(14 26 40 / 0.07);
+    border-radius: 14px;
+    background: rgb(255 255 255 / 0.94);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    backdrop-filter: blur(14px) saturate(1.3);
+    box-shadow:
+      0 2px 6px rgb(15 27 42 / 0.06),
+      0 18px 44px -18px rgb(15 27 42 / 0.36);
+    scrollbar-width: thin;
   }
 }
 
@@ -142,11 +188,11 @@
 .pl-input {
   flex: 1;
   min-width: 0;
-  height: 3rem;
-  padding: 0 0.9375rem;
-  border: 1px solid #33373f;
-  border-radius: 8px;
-  background: var(--pl-plate-bg);
+  height: 2.875rem;
+  padding: 0 0.875rem;
+  border: 1px solid var(--pl-field);
+  border-radius: 10px;
+  background: #fff;
   color: var(--text-primary);
   font-family: var(--font-body);
   /* 16px, so iOS Safari does not zoom the page when the field takes focus. */
@@ -155,42 +201,47 @@
 }
 
 .pl-input::placeholder {
-  color: var(--text-tertiary);
+  color: #7a889a;
 }
 
 .pl-input:hover {
-  border-color: #454a54;
+  border-color: #9fb1c1;
 }
 
 .pl-input:focus-visible {
-  border-color: var(--accent);
-  outline: 2px solid color-mix(in oklab, var(--accent) 55%, transparent);
-  outline-offset: 2px;
+  border-color: var(--pl-teal-dark);
+  outline: 3px solid rgb(18 165 160 / 0.28);
+  outline-offset: 1px;
 }
 
 .pl-input[aria-invalid="true"] {
-  border-color: color-mix(in oklab, var(--pl-error) 70%, transparent);
-  background: color-mix(in oklab, var(--pl-error) 6%, var(--pl-plate-bg));
+  border-color: var(--pl-error);
+  background: #fff8f7;
 }
 
-/* White on the accent measures 4.71:1. */
 .pl-submit {
   flex: none;
-  height: 3rem;
-  padding: 0 1.25rem;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background: var(--accent);
+  height: 2.875rem;
+  padding: 0 1.125rem;
+  border: 0;
+  border-radius: 10px;
+  background: var(--pl-teal-dark);
   color: #fff;
   font-family: var(--font-body);
   font-size: 0.9375rem;
   font-weight: 500;
   cursor: pointer;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.25) inset, 0 6px 14px -8px rgb(11 123 119 / 0.8);
   transition: background-color var(--duration-hover) var(--easing-linear);
 }
 
 .pl-submit:hover {
-  background: color-mix(in oklab, var(--accent) 88%, white);
+  background: #08655f;
+}
+
+.pl-submit:focus-visible {
+  outline: 3px solid rgb(18 165 160 / 0.35);
+  outline-offset: 2px;
 }
 
 .pl-submit[aria-busy="true"] {
@@ -200,7 +251,7 @@
 .pl-hint {
   margin: 0.625rem 0 0;
   color: var(--text-secondary);
-  font-size: 0.8125rem;
+  font-size: 0.78125rem;
   line-height: 1.5;
 }
 
@@ -209,9 +260,9 @@
   gap: 0.625rem;
   margin-top: 0.75rem;
   padding: 0.75rem 0.875rem;
-  border: 1px solid color-mix(in oklab, var(--pl-error) 40%, transparent);
-  border-radius: 8px;
-  background: color-mix(in oklab, var(--pl-error) 8%, transparent);
+  border: 1px solid rgb(217 45 32 / 0.3);
+  border-radius: 10px;
+  background: #fff5f4;
 }
 
 .pl-error-icon {
@@ -223,7 +274,7 @@
   margin-top: 0.125rem;
   border-radius: 999px;
   background: var(--pl-error);
-  color: var(--bg);
+  color: #fff;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 700;
@@ -250,7 +301,7 @@
 .pl-samples {
   display: grid;
   gap: 0.4375rem;
-  margin-top: 1.375rem;
+  margin-top: 1.125rem;
 }
 
 .pl-samples-label {
@@ -273,24 +324,54 @@
   padding: 0.3125rem 0.75rem;
   border: 1px solid var(--hairline);
   border-radius: 999px;
-  background: transparent;
+  background: #fff;
   color: var(--text-secondary);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   cursor: pointer;
   transition:
     color var(--duration-hover) var(--easing-linear),
-    border-color var(--duration-hover) var(--easing-linear);
+    border-color var(--duration-hover) var(--easing-linear),
+    background-color var(--duration-hover) var(--easing-linear);
 }
 
 .pl-sample:hover {
-  border-color: #454a54;
+  border-color: #9fd6d3;
+  background: #f1faf9;
+  color: var(--pl-teal-ink);
+}
+
+.pl-explore {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hairline);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.pl-explore b {
   color: var(--text-primary);
+  font-weight: 500;
+}
+
+.pl-more {
+  margin-top: 1rem;
+}
+
+.pl-more summary {
+  cursor: pointer;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+}
+
+.pl-more .pl-samples {
+  margin-top: 0.625rem;
 }
 
 .pl-status {
-  min-height: 1.25rem;
-  margin-top: 0.875rem;
+  min-height: 0.75rem;
+  margin-top: 0.5rem;
   font-size: 0.75rem;
 }
 
@@ -299,16 +380,78 @@
   transition: opacity var(--duration-hover) var(--easing-linear);
 }
 
+/* Phones: the tapped precinct, named on the map itself. */
+.pl-stage-card {
+  position: absolute;
+  z-index: 4;
+  top: 0.75rem;
+  left: 0.75rem;
+  right: 4rem;
+  display: grid;
+  gap: 0.125rem;
+  padding: 0.625rem 0.75rem 0.75rem;
+  border-radius: 10px;
+  background: rgb(14 26 40 / 0.94);
+  color: #fff;
+  box-shadow: 0 12px 30px -14px rgb(15 27 42 / 0.6);
+}
+
+.pl-stage-card p {
+  margin: 0;
+}
+
+.pl-stage-card .marker {
+  color: rgb(255 255 255 / 0.62);
+  font-size: 0.625rem;
+}
+
+.pl-stage-card-id {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+}
+
+.pl-stage-card-d {
+  color: rgb(255 255 255 / 0.84);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+}
+
+.pl-stage-card-back {
+  justify-self: start;
+  margin-top: 0.375rem;
+  padding: 0.3125rem 0.75rem;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  border-radius: 999px;
+  background: transparent;
+  color: #8ee3de;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.pl-stage-card-back:focus-visible {
+  outline: 2px solid #8ee3de;
+  outline-offset: 2px;
+}
+
+@media (min-width: 900px) {
+  .pl-stage-card {
+    display: none;
+  }
+}
+
 /* A refetch dims what is there instead of blanking it. */
 .pl-result.is-stale,
 .pl-stage.is-stale {
-  opacity: 0.45;
+  opacity: 0.5;
 }
 
 /* ── The answer ── */
 
 .pl-answer {
-  padding-top: 1.25rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--hairline);
 }
 
@@ -318,15 +461,19 @@
 }
 
 .pl-answer-id {
-  margin: 0.375rem 0 0;
+  margin: 0.25rem 0 0;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 2.25rem + 3vw, 4.5rem);
+  font-size: clamp(3rem, 2.4rem + 2.2vw, 4rem);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: -0.035em;
   line-height: 1;
   color: var(--text-primary);
   overflow-wrap: anywhere;
+}
+
+.pl-inspect .pl-answer-id {
+  color: var(--pl-teal-ink);
 }
 
 .pl-answer-name {
@@ -338,15 +485,15 @@
 .pl-districts {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
-  margin: 1.25rem 0 0;
+  gap: 0.4375rem;
+  margin: 1rem 0 0;
 }
 
 .pl-district {
-  padding: 0.625rem 0.75rem 0.6875rem;
+  padding: 0.5625rem 0.6875rem 0.625rem;
   border: 1px solid var(--hairline);
-  border-radius: 8px;
-  background: rgb(255 255 255 / 0.02);
+  border-radius: 10px;
+  background: #f7fafc;
 }
 
 .pl-district dt {
@@ -359,18 +506,33 @@
 }
 
 .pl-district dd {
-  margin: 0.25rem 0 0;
+  margin: 0.1875rem 0 0;
   font-family: var(--font-display);
-  font-size: 1.625rem;
+  font-size: 1.5rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: -0.02em;
   line-height: 1.1;
   color: var(--text-primary);
 }
 
+.pl-district-split {
+  margin: 0.25rem 0 0;
+  color: var(--pl-coral-ink);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.35;
+}
+
+.pl-note {
+  margin: 0.75rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
 .pl-matched {
-  margin: 1rem 0 0;
+  margin: 0.875rem 0 0;
   color: var(--text-secondary);
   font-size: 0.8125rem;
   line-height: 1.55;
@@ -383,20 +545,21 @@
 }
 
 .pl-verdict {
-  margin-top: 1.125rem;
-  padding: 0.875rem 1rem 0.9375rem;
+  margin-top: 1rem;
+  padding: 0.8125rem 0.9375rem 0.875rem;
   border: 1px solid var(--hairline);
-  border-radius: 10px;
+  border-radius: 12px;
+  background: #fff;
 }
 
 .pl-verdict-line {
-  border-color: color-mix(in oklab, var(--pl-match) 48%, transparent);
-  background: color-mix(in oklab, var(--pl-match) 8%, transparent);
+  border-color: rgb(18 165 160 / 0.42);
+  background: #f0faf9;
 }
 
 .pl-verdict-split {
-  border-color: color-mix(in oklab, var(--pl-across) 50%, transparent);
-  background: color-mix(in oklab, var(--pl-across) 7%, transparent);
+  border-color: rgb(255 107 74 / 0.45);
+  background: #fff5f2;
 }
 
 .pl-verdict-head {
@@ -411,11 +574,37 @@
 }
 
 .pl-verdict-body {
-  margin: 0.375rem 0 0;
+  margin: 0.3125rem 0 0;
   color: var(--text-secondary);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   line-height: 1.55;
   text-wrap: pretty;
+}
+
+.pl-show-line,
+.pl-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  margin-top: 0.75rem;
+  padding: 0.4375rem 0.75rem;
+  border: 1px solid rgb(11 123 119 / 0.35);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--pl-teal-ink);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-hover) var(--easing-linear),
+    border-color var(--duration-hover) var(--easing-linear);
+}
+
+.pl-show-line:hover,
+.pl-back:hover {
+  border-color: var(--pl-teal-dark);
+  background: #e6f6f5;
 }
 
 .pl-dot {
@@ -431,24 +620,23 @@
 }
 
 .pl-dot-line {
-  background: var(--pl-match-line);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--pl-match) 30%, transparent);
+  background: var(--pl-teal-dark);
+  box-shadow: 0 0 0 3px rgb(18 165 160 / 0.25);
 }
 
 .pl-dot-split {
-  background: var(--pl-across);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--pl-across) 25%, transparent);
+  background: var(--pl-coral);
+  box-shadow: 0 0 0 3px rgb(255 107 74 / 0.25);
 }
 
-/* Inline, so on a phone the arrow wraps with the words instead of being
-   pushed to the far edge of a two-line flex box. */
+/* Inline, so on a phone the arrow wraps with the words. */
 .pl-official {
   display: inline-block;
-  margin-top: 1rem;
+  margin-top: 0.875rem;
   color: var(--text-primary);
   font-size: 0.875rem;
   text-decoration: underline;
-  text-decoration-color: #3a3f47;
+  text-decoration-color: var(--pl-field);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.3em;
   transition:
@@ -457,11 +645,353 @@
 }
 
 .pl-official:hover {
-  color: var(--pl-match-line);
-  text-decoration-color: var(--pl-match-line);
+  color: var(--pl-teal-dark);
+  text-decoration-color: var(--pl-teal-dark);
 }
 
-/* ── Empty state: the whole state ── */
+/* ── The map ── */
+
+.pl-map,
+.pl-map-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.pl-map-canvas {
+  background: #eef3f6;
+}
+
+.pl-map-canvas .maplibregl-canvas:focus-visible {
+  outline: 3px solid rgb(18 165 160 / 0.45);
+  outline-offset: -3px;
+}
+
+/* The first frame: the statewide drawing, until the live map has painted. */
+.pl-map-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: #eef3f6;
+}
+
+.pl-map-poster .pl-state {
+  width: min(100%, 56rem);
+}
+
+@media (min-width: 900px) {
+  .pl-map-poster {
+    padding: 2rem 4.5rem 2rem 27rem;
+  }
+}
+
+.pl-map-wake {
+  padding: 0.5rem 0.9375rem;
+  border: 1px solid rgb(11 123 119 / 0.35);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--pl-teal-ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 16px -10px rgb(15 27 42 / 0.4);
+}
+
+.pl-map-wake:hover {
+  border-color: var(--pl-teal-dark);
+}
+
+.pl-map-canvas {
+  opacity: 0;
+  transition: opacity 420ms var(--easing-linear);
+}
+
+.pl-map[data-shown] .pl-map-canvas {
+  opacity: 1;
+}
+
+/* The address, and the ring the camera settles on. */
+.pl-map-pin {
+  width: 16px;
+  height: 16px;
+  border: 3px solid #fff;
+  border-radius: 999px;
+  background: var(--pl-ink);
+  box-shadow:
+    0 0 0 6px rgb(18 165 160 / 0.28),
+    0 6px 14px rgb(15 27 42 / 0.35);
+}
+
+.pl-map-dim {
+  padding: 0.1875rem 0.4375rem;
+  border: 1px solid var(--hairline);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--pl-ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px -8px rgb(15 27 42 / 0.45);
+}
+
+.pl-map-tip {
+  position: absolute;
+  z-index: 6;
+  display: grid;
+  gap: 0.125rem;
+  translate: -50% calc(-100% - 16px);
+  width: max-content;
+  max-width: 20rem;
+  padding: 0.5625rem 0.75rem;
+  border-radius: 10px;
+  background: var(--pl-ink);
+  color: #fff;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  pointer-events: none;
+  box-shadow: 0 12px 26px -12px rgb(0 0 0 / 0.55);
+}
+
+.pl-map-tip b {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+.pl-map-tip-name,
+.pl-map-tip-d,
+.pl-map-tip em {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-style: normal;
+  color: #b9c7d4;
+}
+
+.pl-map-tip em {
+  color: #7fd6d2;
+}
+
+/* Controls: the Mapbox vocabulary, drawn in the page's own type. */
+.pl-map-controls {
+  position: absolute;
+  z-index: 4;
+  top: 0.875rem;
+  right: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.pl-map-group {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgb(14 26 40 / 0.07),
+    0 6px 18px -8px rgb(15 27 42 / 0.4);
+}
+
+.pl-map-group > button {
+  display: grid;
+  place-items: center;
+  min-width: 2.375rem;
+  height: 2.375rem;
+  padding: 0 0.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--pl-ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  cursor: pointer;
+}
+
+.pl-map-group > button + button {
+  border-top: 1px solid var(--hairline);
+}
+
+.pl-map-group > button:first-child {
+  border-radius: 10px 10px 0 0;
+}
+
+.pl-map-group > button:last-child {
+  border-radius: 0 0 10px 10px;
+}
+
+.pl-map-group > button:only-child {
+  border-radius: 10px;
+}
+
+.pl-map-group > button:hover {
+  background: #f1f6f9;
+}
+
+.pl-map-group > button:focus-visible {
+  outline: 3px solid rgb(18 165 160 / 0.45);
+  outline-offset: 1px;
+}
+
+.pl-map-text {
+  font-family: var(--font-mono) !important;
+  font-size: 0.6875rem !important;
+  font-weight: 500;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.pl-map-layers {
+  position: relative;
+}
+
+.pl-map-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 13.5rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgb(14 26 40 / 0.07),
+    0 18px 40px -16px rgb(15 27 42 / 0.45);
+}
+
+.pl-map-menu-head {
+  margin: 0 0 0.5rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.pl-map-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.25rem;
+  border-radius: 8px;
+  color: var(--pl-ink);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.pl-map-check:hover {
+  background: #f4f8fa;
+}
+
+.pl-map-check input {
+  accent-color: var(--pl-teal-dark);
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+}
+
+.pl-map-check small {
+  display: block;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+}
+
+.pl-map-swatch,
+.pl-key {
+  flex: none;
+  display: inline-block;
+  width: 1.125rem;
+  height: 0;
+  border-top: 2.5px solid;
+}
+
+.pl-map-swatch-cd,
+.pl-key-cd {
+  border-top-color: #1e293b;
+}
+
+.pl-map-swatch-sen,
+.pl-key-sen {
+  border-top: 2.5px dashed #b7791f;
+}
+
+.pl-map-swatch-house,
+.pl-key-house {
+  border-top: 2.5px dotted #8e4585;
+}
+
+.pl-key-sel,
+.pl-key-across {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 0;
+  border-radius: 3px;
+}
+
+.pl-key-sel {
+  background: var(--pl-teal);
+}
+
+.pl-key-across {
+  background: var(--pl-coral);
+}
+
+.pl-map-legend {
+  position: absolute;
+  z-index: 3;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  /* Clear of the map attribution, which stays expanded above 640px. */
+  right: 23rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.375rem;
+  pointer-events: none;
+}
+
+.pl-map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.94);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  box-shadow: 0 4px 14px -8px rgb(15 27 42 / 0.4);
+}
+
+@media (min-width: 900px) {
+  .pl-map-legend {
+    left: 26.25rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .pl-map-legend {
+    right: 3.25rem;
+  }
+}
+
+.pl-map .maplibregl-ctrl-attrib {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+}
+
+.pl-map .maplibregl-cooperative-gesture-screen {
+  font-family: var(--font-body);
+  background: rgb(14 26 40 / 0.55);
+}
+
+/* ── Fallback (no WebGL): the drawn plates and the statewide still ── */
 
 .pl-empty {
   display: flex;
@@ -469,8 +999,13 @@
   justify-content: center;
   gap: 1rem;
   height: 100%;
-  min-height: clamp(14rem, 8rem + 20vw, 30rem);
-  padding: clamp(0.5rem, 0.25rem + 1.5vw, 1.75rem);
+  padding: clamp(0.75rem, 0.5rem + 2vw, 2rem);
+}
+
+@media (min-width: 900px) {
+  .pl-empty {
+    padding-left: 26rem;
+  }
 }
 
 .pl-empty-caption {
@@ -490,14 +1025,12 @@
 
 .pl-state-pin {
   position: absolute;
-  width: 7px;
-  height: 7px;
-  margin: -3.5px 0 0 -3.5px;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
   border-radius: 999px;
-  background: #fff;
-  box-shadow:
-    0 0 0 3px rgb(94 106 210 / 0.5),
-    0 0 14px 3px rgb(165 172 242 / 0.75);
+  background: var(--pl-ink);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--pl-teal);
 }
 
 .pl-state-compact {
@@ -505,43 +1038,52 @@
   right: 0.625rem;
   bottom: 0.625rem;
   z-index: 3;
-  width: clamp(7.5rem, 5.5rem + 7vw, 11.5rem);
+  width: clamp(7rem, 5.5rem + 6vw, 11rem);
   padding: 0.4375rem;
   border: 1px solid var(--hairline);
   border-radius: 8px;
-  background: rgb(8 9 10 / 0.78);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  background: rgb(255 255 255 / 0.92);
 }
 
-/* ── Plates ── */
+.pl-stage > .pl-plates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+  padding: 0.75rem;
+  overflow: auto;
+}
 
-.pl-plates {
-  display: grid;
-  gap: 0.875rem;
+/* Beside the floating panel, the plates share the stage's height instead of
+   scrolling: the main plate takes what the close-up leaves. */
+@media (min-width: 900px) {
+  .pl-stage > .pl-plates {
+    padding: 1rem 1rem 1rem 26.25rem;
+    overflow: hidden;
+  }
+
+  .pl-stage > .pl-plates > .pl-plate-main {
+    flex: 1 1 0;
+    min-height: 0;
+    aspect-ratio: auto;
+  }
+
+  .pl-stage > .pl-plates > .pl-closeup .pl-plate {
+    aspect-ratio: 16 / 6;
+  }
 }
 
 .pl-plate {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   border: 1px solid var(--hairline);
   border-radius: var(--pl-radius);
   background: var(--pl-plate-bg);
 }
 
 .pl-plate-closeup {
-  aspect-ratio: 4 / 3;
-}
-
-@media (min-width: 640px) {
-  .pl-plate-main {
-    aspect-ratio: 4 / 3;
-  }
-
-  .pl-plate-closeup {
-    aspect-ratio: 16 / 7;
-  }
+  aspect-ratio: 16 / 7;
 }
 
 .pl-plate-svg {
@@ -549,27 +1091,24 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  /* Edges dissolve into the plate rather than ending at it. */
-  -webkit-mask-image: radial-gradient(ellipse 78% 78% at 50% 50%, #000 58%, transparent 100%);
-  mask-image: radial-gradient(ellipse 78% 78% at 50% 50%, #000 58%, transparent 100%);
 }
 
 .pl-grid {
   fill: none;
-  stroke: rgb(255 255 255 / 0.045);
+  stroke: rgb(14 26 40 / 0.05);
   stroke-width: 1;
 }
 
 .pl-shape-neighbor {
-  fill: rgb(255 255 255 / 0.018);
-  stroke: #363a43;
+  fill: rgb(14 26 40 / 0.012);
+  stroke: #c9d6e1;
   stroke-width: 1;
   stroke-linejoin: round;
 }
 
 .pl-shape-across {
-  fill: color-mix(in oklab, var(--pl-across) 13%, transparent);
-  stroke: color-mix(in oklab, var(--pl-across) 65%, transparent);
+  fill: rgb(255 107 74 / 0.18);
+  stroke: var(--pl-coral-dark);
   stroke-width: 1.25;
   stroke-linejoin: round;
 }
@@ -580,22 +1119,22 @@
 
 .pl-outline {
   fill: none;
-  stroke: var(--pl-match-line);
-  stroke-width: 1.75;
+  stroke: var(--pl-teal-dark);
+  stroke-width: 2;
   stroke-linejoin: round;
 }
 
 .pl-shared {
   fill: none;
-  stroke: var(--pl-line);
-  stroke-width: 2.25;
+  stroke: var(--pl-ink);
+  stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .pl-dimension {
   fill: none;
-  stroke: var(--pl-line);
+  stroke: var(--pl-ink);
   stroke-width: 1.25;
   stroke-dasharray: 3 3;
 }
@@ -622,20 +1161,15 @@
   font-size: clamp(1rem, 0.85rem + 0.5vw, 1.375rem);
   font-weight: 500;
   letter-spacing: var(--tracking-tight);
-  text-shadow: 0 1px 14px rgb(0 0 0 / 0.8);
+  text-shadow: 0 0 2px #fff, 0 1px 10px #fff;
 }
 
 .pl-label-match {
-  color: var(--text-primary);
-}
-
-.pl-plate-closeup .pl-label-match,
-.pl-plate-closeup .pl-label-across {
-  font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+  color: var(--pl-teal-ink);
 }
 
 .pl-label-across {
-  color: var(--pl-across-line);
+  color: var(--pl-coral-ink);
 }
 
 .pl-pin {
@@ -652,14 +1186,12 @@
 }
 
 .pl-pin-dot {
-  left: -5px;
-  top: -5px;
-  width: 10px;
-  height: 10px;
-  background: #fff;
-  box-shadow:
-    0 0 0 2px var(--bg),
-    0 0 18px 3px rgb(165 172 242 / 0.7);
+  left: -6px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  background: var(--pl-ink);
+  box-shadow: 0 0 0 3px #fff, 0 2px 10px rgb(15 27 42 / 0.35);
 }
 
 .pl-pin-ring {
@@ -667,32 +1199,29 @@
   top: -17px;
   width: 34px;
   height: 34px;
-  border: 1px solid var(--pl-match-line);
+  border: 1px solid var(--pl-teal-dark);
   opacity: 0.75;
 }
 
-/* The far end of the dimension line: a tick on the boundary. */
 .pl-dim-end {
   position: absolute;
   z-index: 2;
   width: 7px;
   height: 7px;
   margin: -3.5px 0 0 -3.5px;
-  border: 1.5px solid var(--pl-line);
+  border: 1.5px solid var(--pl-ink);
   border-radius: 999px;
-  background: var(--pl-plate-bg);
+  background: #fff;
 }
 
-/* Beside the dimension line, not on it: the line is only a few percent of the
-   plate long, so a label centred on it would sit on the boundary itself. */
 .pl-dim-label {
   position: absolute;
   z-index: 3;
   translate: calc(-100% - 16px) -50%;
   padding: 0.1875rem 0.4375rem;
-  border: 1px solid #3a3f47;
+  border: 1px solid var(--hairline);
   border-radius: 6px;
-  background: rgb(8 9 10 / 0.85);
+  background: #fff;
   color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -749,7 +1278,7 @@
 }
 
 .pl-closeup-caption {
-  margin-top: 0.625rem;
+  margin-top: 0.5rem;
   color: var(--text-secondary);
   font-size: 0.75rem;
   line-height: 1.55;
@@ -758,8 +1287,10 @@
 /* ── Fine print ── */
 
 .pl-vintage {
+  margin: 0;
   padding: 0.875rem clamp(1rem, 0.75rem + 1vw, 1.5rem);
   border-top: 1px solid var(--hairline);
+  background: #f7fafc;
   font-size: 0.6875rem;
   line-height: 1.65;
 }
@@ -781,25 +1312,13 @@
     animation: pl-rise var(--duration-reveal) var(--easing-linear) both;
   }
 
-  .pl-plate-main .pl-plate-svg {
-    animation: pl-settle 520ms var(--easing-linear) both;
+  .pl-map-menu {
+    animation: pl-rise 180ms var(--easing-linear) both;
   }
 
   .pl-plate-main .pl-outline {
     stroke-dasharray: 1;
     animation: pl-draw 1100ms var(--easing-linear) 120ms both;
-  }
-
-  .pl-pin-ring {
-    animation: pl-ring 900ms var(--easing-linear) 250ms both;
-  }
-
-  .pl-closeup {
-    animation: pl-rise var(--duration-reveal) var(--easing-linear) 380ms both;
-  }
-
-  .pl-dim-label {
-    animation: pl-fade var(--duration-reveal) var(--easing-linear) 700ms both;
   }
 }
 
@@ -810,31 +1329,11 @@
   }
 }
 
-@keyframes pl-settle {
-  from {
-    opacity: 0;
-    transform: scale(1.035);
-  }
-}
-
 @keyframes pl-draw {
   from {
     stroke-dashoffset: 1;
   }
   to {
     stroke-dashoffset: 0;
-  }
-}
-
-@keyframes pl-ring {
-  from {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-}
-
-@keyframes pl-fade {
-  from {
-    opacity: 0;
   }
 }

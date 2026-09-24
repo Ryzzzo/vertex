@@ -233,6 +233,14 @@ function overview(precinctCount) {
   const outline = mapshaperLines(["-dissolve", ...simplify], join(CACHE_DIR, "ov-state.json"))
     .flatMap((g) => (g.type === "Polygon" ? [g.coordinates[0]] : g.type === "MultiPolygon" ? g.coordinates.map((p) => p[0]) : []))
     .filter((ring) => ring.length > 8);
+  // The same outline feeds the live map's low zooms — a white sheet with an ink
+  // edge, so the state reads as the subject before any precinct is legible.
+  // 400 ft is under a pixel until about zoom 10, where the map fades it out.
+  const r5 = (v) => Math.round(v * 1e5) / 1e5;
+  writeFileSync(
+    join(OUT_DIR, "state-outline.json"),
+    JSON.stringify(outline.map((ring) => ring.map(([lon, lat]) => [r5(lon), r5(lat)]))) + "\n",
+  );
 
   let lonMin = Infinity;
   let lonMax = -Infinity;
@@ -282,14 +290,15 @@ function overview(precinctCount) {
       .replace(/ -/g, "-");
 
   // Colours are baked in because the drawing ships as an <img>: it cannot read
-  // the page's custom properties. They are the site's tokens, written out.
+  // the page's custom properties. They are the page's Open Sky tokens, written
+  // out — this drawing is the map's first frame, so it wears the map's colours.
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${OVERVIEW_WIDTH} ${height}" width="${OVERVIEW_WIDTH}" height="${height}">` +
     `<title>North Carolina's ${precinctCount.toLocaleString("en-US")} voting precincts</title>` +
-    `<path d="${path(outline, true)}" fill="#0d0e12" stroke="none"/>` +
-    `<path d="${path(precinctLines, false)}" fill="none" stroke="#9aa0ab" stroke-opacity=".5" stroke-width=".6" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>` +
-    `<path d="${path(countyLines, false)}" fill="none" stroke="#c8ccd5" stroke-opacity=".62" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>` +
-    `<path d="${path(outline, true)}" fill="none" stroke="#e4e6eb" stroke-opacity=".85" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>` +
+    `<path d="${path(outline, true)}" fill="#ffffff" stroke="none"/>` +
+    `<path d="${path(precinctLines, false)}" fill="none" stroke="#8fa4b6" stroke-opacity=".75" stroke-width=".6" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>` +
+    `<path d="${path(countyLines, false)}" fill="none" stroke="#5f768a" stroke-opacity=".8" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>` +
+    `<path d="${path(outline, true)}" fill="none" stroke="#0e1a28" stroke-opacity=".75" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>` +
     `</svg>`;
 
   mkdirSync(dirname(OVERVIEW_SVG), { recursive: true });
@@ -310,6 +319,228 @@ function overview(precinctCount) {
   console.log(`wrote ${OVERVIEW_SVG}: ${Buffer.byteLength(svg)} bytes, ${frame.vertices} precinct-line vertices`);
 }
 
+/* ── Districts ──────────────────────────────────────────────────────────────
+ *
+ * The State Board's shapefiles for the three plans in force for the Nov 3,
+ * 2026 general election. They feed the map's district layers, and they let a
+ * clicked precinct report its districts without an address: each precinct is
+ * sampled on a grid and every sample tested against every plan, so a precinct
+ * the legislature split between two districts says so, with the rough share.
+ *
+ * The three plans are combined into one topology so a line two plans share is
+ * stored once. Their CRS is NC State Plane in metres, so the 1 m interval here
+ * matches the precincts' 3 ft.
+ */
+
+const DISTRICT_SOURCES = [
+  {
+    key: "cd",
+    label: "US House",
+    law: "S.L. 2025-95",
+    url: "https://s3.amazonaws.com/dl.ncsbe.gov/ShapeFiles/USCongress/SL%202025-95%20-%20Shapefile.zip",
+  },
+  {
+    key: "sen",
+    label: "NC Senate",
+    law: "S.L. 2023-146",
+    url: "https://s3.amazonaws.com/dl.ncsbe.gov/ShapeFiles/LegislativeDistricts/Shapefiles/Senate/SL%202023-146%20Senate%20-%20Shapefile.zip",
+  },
+  {
+    key: "house",
+    label: "NC House",
+    law: "S.L. 2023-149",
+    url: "https://s3.amazonaws.com/dl.ncsbe.gov/ShapeFiles/LegislativeDistricts/Shapefiles/House/SL%202023-149%20House%20-%20Shapefile.zip",
+  },
+];
+
+async function downloadTo(url, path) {
+  if (existsSync(path)) return readFileSync(path);
+  console.log(`source: downloading ${decodeURIComponent(url)}`);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`download failed: HTTP ${res.status} for ${url}`);
+  const buf = Buffer.from(await res.arrayBuffer());
+  writeFileSync(path, buf);
+  return buf;
+}
+
+/** TopoJSON geometry → polygons of packed [lon, lat, ...] rings (outer ring first). */
+function topoPolygons(topo) {
+  const [sx, sy] = topo.transform.scale;
+  const [tx, ty] = topo.transform.translate;
+  const arcs = topo.arcs.map((arc) => {
+    let x = 0;
+    let y = 0;
+    return arc.map(([dx, dy]) => {
+      x += dx;
+      y += dy;
+      return [x * sx + tx, y * sy + ty];
+    });
+  });
+  const ring = (refs) => {
+    const out = [];
+    refs.forEach((ref, k) => {
+      const arc = ref < 0 ? arcs[~ref].slice().reverse() : arcs[ref];
+      out.push(...(k === 0 ? arc : arc.slice(1)));
+    });
+    return out;
+  };
+  return (g) => (g.type === "Polygon" ? [g.arcs] : g.arcs).map((poly) => poly.map(ring));
+}
+
+function inRings(x, y, rings) {
+  let inside = false;
+  for (const r of rings) {
+    for (let i = 0, j = r.length - 1; i < r.length; j = i++) {
+      const [xi, yi] = r[i];
+      const [xj, yj] = r[j];
+      if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+    }
+  }
+  return inside;
+}
+
+function boxOf(polys) {
+  let b = [Infinity, Infinity, -Infinity, -Infinity];
+  for (const poly of polys)
+    for (const r of poly)
+      for (const [x, y] of r) b = [Math.min(b[0], x), Math.min(b[1], y), Math.max(b[2], x), Math.max(b[3], y)];
+  return b;
+}
+
+/** A label point well inside the largest part: widest horizontal run near the middle. */
+function labelOf(polys) {
+  const area = (r) => Math.abs(r.reduce((s, [x, y], i) => { const [x2, y2] = r[(i + 1) % r.length]; return s + x * y2 - x2 * y; }, 0) / 2);
+  const poly = polys.slice().sort((a, b) => area(b[0]) - area(a[0]))[0];
+  const [x0, y0, x1, y1] = boxOf([poly]);
+  const k = Math.cos((((y0 + y1) / 2) * Math.PI) / 180);
+  let best = [(x0 + x1) / 2, (y0 + y1) / 2];
+  let bestScore = -1;
+  for (let s = 1; s < 32; s++) {
+    const y = y0 + ((y1 - y0) * s) / 32;
+    const xs = [];
+    for (const r of poly)
+      for (let i = 0, j = r.length - 1; i < r.length; j = i++) {
+        const [xi, yi] = r[i];
+        const [xj, yj] = r[j];
+        if (yi > y !== yj > y) xs.push(((xj - xi) * (y - yi)) / (yj - yi) + xi);
+      }
+    xs.sort((a, b) => a - b);
+    for (let i = 0; i + 1 < xs.length; i += 2) {
+      const width = (xs[i + 1] - xs[i]) * k;
+      const score = Math.min(width, Math.min(y - y0, y1 - y) * 2);
+      if (score > bestScore) {
+        bestScore = score;
+        best = [(xs[i] + xs[i + 1]) / 2, y];
+      }
+    }
+  }
+  return best.map((v) => Math.round(v * 1e5) / 1e5);
+}
+
+async function districts() {
+  const zips = [];
+  for (const src of DISTRICT_SOURCES) {
+    const path = join(CACHE_DIR, decodeURIComponent(src.url.split("/").pop()));
+    const buf = await downloadTo(src.url, path);
+    zips.push({ ...src, path, bytes: buf.length, sha256: createHash("sha256").update(buf).digest("hex") });
+  }
+
+  const raw = join(CACHE_DIR, "districts-out.topo.json");
+  const args = [
+    "-y", MAPSHAPER, "-i", ...zips.map((z) => z.path), "combine-files",
+    "-rename-layers", zips.map((z) => z.key).join(","),
+    "-filter-fields", "DISTRICT", "target=*",
+    "-simplify", "dp", "interval=1", "keep-shapes",
+    "-proj", "wgs84", "target=*",
+    "-o", "format=topojson", `quantization=${QUANTIZATION}`, "target=*", raw,
+  ];
+  console.log(`mapshaper: districts (${zips.map((z) => z.law).join(", ")})`);
+  const result = spawnSync("npx", args, { stdio: "inherit", shell: process.platform === "win32" });
+  if (result.status !== 0) throw new Error(`mapshaper exited ${result.status}`);
+
+  const topo = JSON.parse(readFileSync(raw, "utf8"));
+  for (const key of Object.keys(topo.objects)) {
+    for (const g of topo.objects[key].geometries) g.properties = { d: String(g.properties.DISTRICT).trim() };
+  }
+  writeFileSync(join(OUT_DIR, "districts.topo.json"), JSON.stringify(topo));
+
+  // Every district, decoded, with a bounding box for the prefilter.
+  const decode = topoPolygons(topo);
+  const layers = Object.fromEntries(
+    DISTRICT_SOURCES.map(({ key }) => [
+      key,
+      topo.objects[key].geometries.map((g) => {
+        const polys = decode(g);
+        return { d: g.properties.d, polys, rings: polys.flat(), box: boxOf(polys) };
+      }),
+    ]),
+  );
+
+  const labels = Object.fromEntries(
+    Object.entries(layers).map(([key, list]) => [
+      key,
+      list
+        .map((f) => ({ d: f.d, at: labelOf(f.polys) }))
+        .sort((a, b) => Number(a.d) - Number(b.d)),
+    ]),
+  );
+  writeFileSync(join(OUT_DIR, "district-labels.json"), JSON.stringify(labels));
+
+  // Precinct membership, sampled. Aligned with the precinct file's order.
+  const ptopo = JSON.parse(readFileSync(join(OUT_DIR, "nc-precincts.topo.json"), "utf8"));
+  const pdecode = topoPolygons(ptopo);
+  const districtAt = (key, x, y) => {
+    for (const f of layers[key]) {
+      if (x < f.box[0] || x > f.box[2] || y < f.box[1] || y > f.box[3]) continue;
+      if (inRings(x, y, f.rings)) return f.d;
+    }
+    return null;
+  };
+  let split = 0;
+  const membership = ptopo.objects.precincts.geometries.map((g) => {
+    const rings = pdecode(g).flat();
+    const [x0, y0, x1, y1] = boxOf([rings]);
+    let pts = [];
+    for (const n of [16, 48]) {
+      pts = [];
+      for (let i = 0; i < n; i++)
+        for (let j = 0; j < n; j++) {
+          const x = x0 + ((x1 - x0) * (i + 0.5)) / n;
+          const y = y0 + ((y1 - y0) * (j + 0.5)) / n;
+          if (inRings(x, y, rings)) pts.push([x, y]);
+        }
+      if (pts.length >= 24) break;
+    }
+    const row = DISTRICT_SOURCES.map(({ key }) => {
+      const tally = new Map();
+      for (const [x, y] of pts) {
+        const d = districtAt(key, x, y);
+        if (d) tally.set(d, (tally.get(d) ?? 0) + 1);
+      }
+      const total = [...tally.values()].reduce((a, b) => a + b, 0) || 1;
+      const ranked = [...tally.entries()].sort((a, b) => b[1] - a[1]);
+      // Two samples and 3% before a second district counts: below that it is
+      // the two agencies' linework disagreeing by metres, not a real split.
+      const kept = ranked.filter(([, n], i) => i === 0 || (n >= 2 && n / total >= 0.03));
+      return kept.map(([d, n]) => [d, Math.round((n / total) * 100)]);
+    });
+    if (row.some((r) => r.length > 1)) split++;
+    return row;
+  });
+  writeFileSync(join(OUT_DIR, "precinct-districts.json"), JSON.stringify(membership));
+
+  // One label point per precinct. Left to itself the map labels every tile a
+  // polygon touches, so a large precinct wore its code three times.
+  const plabels = ptopo.objects.precincts.geometries.map((g) => labelOf(pdecode(g)));
+  writeFileSync(join(OUT_DIR, "precinct-labels.json"), JSON.stringify(plabels));
+
+  console.log(
+    `wrote districts: ${Object.entries(layers).map(([k, v]) => `${k} ${v.length}`).join(", ")}; ` +
+      `${split} of ${membership.length} precincts split across districts`,
+  );
+  return zips.map(({ key, label, law, url, bytes, sha256 }) => ({ key, label, law, source: decodeURIComponent(url), bytes, sha256 }));
+}
+
 async function main() {
   mkdirSync(CACHE_DIR, { recursive: true });
   await download();
@@ -318,6 +549,11 @@ async function main() {
   runMapshaper();
   const precincts = postProcess(sha, zip.length);
   overview(precincts);
+  const plans = await districts();
+  const metaPath = join(OUT_DIR, "meta.json");
+  const meta = JSON.parse(readFileSync(metaPath, "utf8"));
+  meta.districts = plans;
+  writeFileSync(metaPath, JSON.stringify(meta, null, 2) + "\n");
 }
 
 main().catch((err) => {

@@ -65,6 +65,42 @@ export type BoundaryReport = {
   block: PrecinctRef | null;
 };
 
+/** [district, approximate share of the precinct's area in percent]. */
+export type DistrictShare = [string, number];
+
+/**
+ * What the map knows about any precinct without an address: its districts
+ * from the State Board's own plan files, sampled across the precinct so a
+ * split precinct reports every district it touches.
+ */
+export type PrecinctInfo = PrecinctRef & {
+  /** Position in the State Board file; the map's feature id. */
+  index: number;
+  districts: { congress: DistrictShare[]; senate: DistrictShare[]; house: DistrictShare[] };
+  areaKm2: number;
+};
+
+/** Minimal GeoJSON, enough for MapLibre sources. Coordinates are [lon, lat]. */
+export type GeoFeature = {
+  type: "Feature";
+  id?: number;
+  properties: Record<string, string | number | null>;
+  geometry:
+    | { type: "MultiPolygon"; coordinates: number[][][][] }
+    | { type: "MultiLineString"; coordinates: number[][][] }
+    | { type: "LineString"; coordinates: number[][] }
+    | { type: "Point"; coordinates: number[] };
+};
+
+export type LookupGeo = {
+  match: GeoFeature;
+  across: GeoFeature | null;
+  /** The line between the match and the precinct across: their shared arcs. */
+  shared: GeoFeature | null;
+  /** The nearest point on the match's edge, [lon, lat]. */
+  nearest: [number, number];
+};
+
 export type LookupResult = {
   ok: true;
   /** As the geocoder matched it, so the visitor can confirm it is their address. */
@@ -79,6 +115,10 @@ export type LookupResult = {
   map: MapLayer;
   /** A tight window on the line, only when the address is near one. */
   closeup: (MapLayer & { nearest: Xy }) | null;
+  /** The matched precinct as the map sees it, split districts included. */
+  info: PrecinctInfo;
+  /** Geometry in lon/lat for the interactive map. */
+  geo: LookupGeo;
   /** Server-side lookup time, geocoding excluded, for the page's own footnote. */
   lookupMs: number;
 };
