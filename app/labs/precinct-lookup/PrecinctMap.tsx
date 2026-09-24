@@ -188,8 +188,10 @@ export default function PrecinctMap({
           style,
           bounds: NC_BOUNDS,
           // Leave the floating panel its own ground on wide screens.
-          fitBoundsOptions: { padding: wideAtStart ? { top: 24, bottom: 24, left: 420, right: 70 } : 16 },
-          maxBounds: [[-88.5, 31.5], [-71, 39]],
+          fitBoundsOptions: { padding: wideAtStart ? { top: 24, bottom: 24, left: 450, right: 60 } : 16 },
+          // Loose enough that a tall stage can show all of NC at the fit zoom;
+          // tighter, and MapLibre zooms in to honour it and hides the west.
+          maxBounds: [[-93, 28.5], [-67, 42]],
           minZoom: 5,
           maxZoom: 19.5,
           maxPitch: 62,
@@ -454,7 +456,7 @@ export default function PrecinctMap({
         if (!resultRef.current) {
           const wideNow = map.getContainer().clientWidth >= 900;
           map.fitBounds(NC_BOUNDS, {
-            padding: wideNow ? { top: 24, bottom: 24, left: 420, right: 70 } : 16,
+            padding: wideNow ? { top: 24, bottom: 24, left: 450, right: 60 } : 16,
             duration: 0,
           });
         }
@@ -689,7 +691,7 @@ export default function PrecinctMap({
                 const m = mapRef.current;
                 const wideNow = (m?.getContainer().clientWidth ?? 0) >= 900;
                 m?.fitBounds(NC_BOUNDS, {
-                  padding: wideNow ? { top: 24, bottom: 24, left: 420, right: 70 } : 16,
+                  padding: wideNow ? { top: 24, bottom: 24, left: 450, right: 60 } : 16,
                   pitch: 0,
                   bearing: 0,
                 });
