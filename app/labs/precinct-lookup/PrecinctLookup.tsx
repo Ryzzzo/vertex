@@ -109,7 +109,7 @@ function FallbackPlates({ result, precinctCount }: { result: LookupResult | null
         <StateDrawing precinctCount={precinctCount} />
         <p className="pl-empty-caption marker">
           Every line here is a precinct boundary — {precinctCount.toLocaleString("en-US")} of
-          them. This browser can’t draw the interactive map, so this is the still version.
+          them. The interactive map isn’t available here right now, so this is the still version.
         </p>
       </div>
     );
@@ -572,10 +572,12 @@ export default function PrecinctLookup({
           ) : (
             <>
               {samples}
-              <p className="pl-explore">
-                Or explore: hover any precinct on the map, click one to inspect it, and switch
-                on the district plans under <b>Layers</b>.
-              </p>
+              {mapLive ? (
+                <p className="pl-explore">
+                  Or explore: hover any precinct on the map, click one to inspect it, and switch
+                  on the district plans under <b>Layers</b>.
+                </p>
+              ) : null}
             </>
           )}
           {result || inspected ? <details className="pl-more">

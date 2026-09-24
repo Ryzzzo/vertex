@@ -3,7 +3,7 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import type { Feature, FeatureCollection } from "geojson";
-import type { GeoJSONSource, Map as MapLibreMap, MapGeoJSONFeature, Marker } from "maplibre-gl";
+import type { GeoJSONSource, Map as MapLibreMap, MapGeoJSONFeature, Marker, StyleSpecification } from "maplibre-gl";
 import districtLabels from "@/data/precincts/district-labels.json";
 import type { GeoFeature, LookupResult, PrecinctInfo } from "@/lib/precinct/types";
 
@@ -160,10 +160,19 @@ export default function PrecinctMap({
     };
     (async () => {
       let lib: typeof import("maplibre-gl");
+      let style: StyleSpecification;
       try {
         if (!hasWebGL()) throw new Error("no WebGL");
+        // The basemap style is fetched here rather than by MapLibre, so an
+        // OpenFreeMap outage lands on the drawn plates instead of a map that
+        // never finishes loading. Our own precinct tiles do not depend on it.
+        const [mod, res] = await Promise.all([
+          import("maplibre-gl"),
+          fetch(STYLE_URL, { signal: AbortSignal.timeout(10_000) }),
+        ]);
+        if (!res.ok) throw new Error(`basemap style ${res.status}`);
+        style = (await res.json()) as StyleSpecification;
         // The UMD build arrives as a CommonJS module: the API may sit on `default`.
-        const mod = await import("maplibre-gl");
         lib = (mod as unknown as { default?: typeof mod }).default ?? mod;
       } catch {
         if (!cancelled) unsupported();
@@ -172,22 +181,38 @@ export default function PrecinctMap({
       if (cancelled || !container.current) return;
       libRef.current = lib;
       const wideAtStart = container.current.clientWidth >= 900;
-      const map = new lib.Map({
-        container: container.current,
-        style: STYLE_URL,
-        bounds: NC_BOUNDS,
-        // Leave the floating panel its own ground on wide screens.
-        fitBoundsOptions: { padding: wideAtStart ? { top: 24, bottom: 24, left: 420, right: 70 } : 16 },
-        maxBounds: [[-88.5, 31.5], [-71, 39]],
-        minZoom: 5,
-        maxZoom: 19.5,
-        maxPitch: 62,
-        // Never trap the page's scroll: wheel-zoom needs Ctrl/⌘, touch needs two fingers.
-        cooperativeGestures: true,
-        attributionControl: { compact: true },
-        fadeDuration: 0,
-      });
+      let map: MapLibreMap;
+      try {
+        map = new lib.Map({
+          container: container.current,
+          style,
+          bounds: NC_BOUNDS,
+          // Leave the floating panel its own ground on wide screens.
+          fitBoundsOptions: { padding: wideAtStart ? { top: 24, bottom: 24, left: 420, right: 70 } : 16 },
+          maxBounds: [[-88.5, 31.5], [-71, 39]],
+          minZoom: 5,
+          maxZoom: 19.5,
+          maxPitch: 62,
+          // Never trap the page's scroll: wheel-zoom needs Ctrl/⌘, touch needs two fingers.
+          cooperativeGestures: true,
+          attributionControl: { compact: true },
+          fadeDuration: 0,
+        });
+      } catch {
+        // A GPU that refuses a WebGL context surfaces here, not in the probe.
+        unsupported();
+        return;
+      }
       mapRef.current = map;
+      // Style in hand but no first frame after 45 s (a stalled tile host, a
+      // lost GPU): stop promising a live map and fall back to the plates.
+      const watchdog = window.setTimeout(() => {
+        if (cancelled || map.loaded()) return;
+        map.remove();
+        mapRef.current = null;
+        unsupported();
+      }, 45_000);
+      map.once("load", () => window.clearTimeout(watchdog));
       map.on("error", () => {
         /* A missing basemap tile is not fatal; precincts come from our own API. */
       });
