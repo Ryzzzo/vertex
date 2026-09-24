@@ -119,7 +119,7 @@ function FallbackPlates({ result, precinctCount }: { result: LookupResult | null
       <PrecinctPlate
         layer={result.map}
         kind="main"
-        label={`Map of precinct ${result.precinct.id} in ${result.county} County with its neighbouring precincts and the address marked.`}
+        label={`Map of precinct ${result.precinct.id} in ${result.county} County with its neighboring precincts and the address marked.`}
       >
         <StateDrawing compact lon={result.location.lon} lat={result.location.lat} precinctCount={precinctCount} />
       </PrecinctPlate>
