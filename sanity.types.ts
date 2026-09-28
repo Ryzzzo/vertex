@@ -41,6 +41,7 @@ export type Lab = {
     _key: string;
   }>;
   plate?: "map" | "sql";
+  legend?: "diverging";
 };
 
 export type Slug = {
@@ -230,7 +231,7 @@ export type LABS_INDEX_QUERY_RESULT = Array<{
 
 // Source: ../lib/sanity/queries.ts
 // Variable: LABS_FEATURED_QUERY
-// Query: *[_type == "lab" && featured == true] | order(orderRank asc) {    "slug": slug.current,    name,    line,    stack,    approach,    "url": href,    shot,    shotAlt,    status,    meta,    plate,    references[]{ label, href }  }
+// Query: *[_type == "lab" && featured == true] | order(orderRank asc) {    "slug": slug.current,    name,    line,    stack,    approach,    "url": href,    shot,    shotAlt,    status,    meta,    plate,    references[]{ label, href },    legend  }
 export type LABS_FEATURED_QUERY_RESULT = Array<{
   slug: string | null;
   name: string | null;
@@ -247,6 +248,7 @@ export type LABS_FEATURED_QUERY_RESULT = Array<{
     label: string | null;
     href: string | null;
   }> | null;
+  legend: "diverging" | null;
 }>;
 
 // Query TypeMap
@@ -254,7 +256,7 @@ declare global {
   interface SanityQueries {
     '\n  *[_type == "project"] | order(orderRank asc) {\n    "slug": slug.current,\n    name,\n    line,\n    url,\n    note,\n    stack,\n    approach,\n    shot,\n    shotAlt,\n    shotMobile,\n    featured\n  }\n': PROJECTS_QUERY_RESULT;
     '\n  *[_type == "lab"] | order(orderRank asc) {\n    "slug": slug.current,\n    name,\n    line,\n    href,\n    kind,\n    status,\n    shot,\n    shotAlt\n  }\n': LABS_INDEX_QUERY_RESULT;
-    '\n  *[_type == "lab" && featured == true] | order(orderRank asc) {\n    "slug": slug.current,\n    name,\n    line,\n    stack,\n    approach,\n    "url": href,\n    shot,\n    shotAlt,\n    status,\n    meta,\n    plate,\n    references[]{ label, href }\n  }\n': LABS_FEATURED_QUERY_RESULT;
+    '\n  *[_type == "lab" && featured == true] | order(orderRank asc) {\n    "slug": slug.current,\n    name,\n    line,\n    stack,\n    approach,\n    "url": href,\n    shot,\n    shotAlt,\n    status,\n    meta,\n    plate,\n    references[]{ label, href },\n    legend\n  }\n': LABS_FEATURED_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

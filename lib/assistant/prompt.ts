@@ -48,7 +48,7 @@ export async function buildSystemPrompt(): Promise<string> {
         `   What it is: ${item.line}`,
         `   Stack: ${item.stack}`,
         `   Technical approach: ${item.approach}`,
-        `   Live at: ${item.url}`,
+        `   Live at: ${item.external ? item.url : `https://vertexapps.dev${item.url}`}`,
       ];
       if (item.meta) lines.push(`   Note: ${item.meta}`);
       return lines.join("\n");

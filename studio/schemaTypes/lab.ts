@@ -203,6 +203,18 @@ export const lab = defineType({
             : true,
         ),
     }),
+    defineField({
+      name: 'legend',
+      title: 'Card legend',
+      type: 'string',
+      group: 'hero',
+      description:
+        "Optional legend under the line on the homepage card. 'Diverging ramp' is the NC Housing Terminal's Decline / Flat / Growth scale. Leave it empty for anything else: the legend used to follow the Map plate, which would have drawn a housing scale on every future map.",
+      options: {
+        list: [{title: 'Diverging ramp (Decline · Flat · Growth)', value: 'diverging'}],
+      },
+      hidden: ({parent}) => !parent?.featured,
+    }),
   ],
   orderings: [orderRankOrdering],
   preview: {

@@ -65,6 +65,14 @@ export type FeaturedLab = {
    * done for them.
    */
   references?: ReadonlyArray<{ label: string; href: string }>;
+  /**
+   * An optional legend on the card, declared per item. It used to follow
+   * `plate === "map"`, which would have drawn the Housing Terminal's
+   * Decline / Flat / Growth scale on every future map.
+   */
+  legend?: "diverging";
+  /** Derived from `url` in getFeaturedLabs, the same way LabItem derives it. */
+  external: boolean;
 };
 
 export type LabItem = {

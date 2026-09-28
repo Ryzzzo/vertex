@@ -196,6 +196,19 @@
           ]
         },
         "optional": true
+      },
+      "legend": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "diverging"
+            }
+          ]
+        },
+        "optional": true
       }
     }
   },

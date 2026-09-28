@@ -48,7 +48,12 @@ export const getFeaturedLabs = cache(async (): Promise<FeaturedLab[]> => {
   const rows = await client.fetch(LABS_FEATURED_QUERY, {}, fetchOptions("lab"));
   return (rows ?? [])
     .filter((row) => Boolean(row.slug) && (row.plate === "map" || row.plate === "sql"))
-    .map((row) => compact(row as unknown as FeaturedLab));
+    .map((row) =>
+      compact({
+        ...(row as unknown as Omit<FeaturedLab, "external">),
+        external: isExternal(row.url ?? ""),
+      }) as FeaturedLab,
+    );
 });
 
 export const getLabs = cache(async (): Promise<LabItem[]> => {

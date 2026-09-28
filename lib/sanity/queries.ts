@@ -52,6 +52,7 @@ export const LABS_FEATURED_QUERY = defineQuery(`
     status,
     meta,
     plate,
-    references[]{ label, href }
+    references[]{ label, href },
+    legend
   }
 `)

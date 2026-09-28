@@ -60,8 +60,8 @@ function LabCard({ item }: { item: FeaturedLab }) {
             <a
               className="card-title-link"
               href={item.url}
-              target="_blank"
-              rel="noreferrer noopener"
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noreferrer noopener" : undefined}
             >
               {item.name}
               <Chevron />
@@ -73,8 +73,9 @@ function LabCard({ item }: { item: FeaturedLab }) {
             ) : null}
           </h3>
           <p className="body lab-line">{item.line}</p>
-          {/* The legend is the map's own ramp, so it belongs to that item only. */}
-          {item.plate === "map" ? <Scale /> : null}
+          {/* The Housing Terminal's own ramp, so it is declared per item rather
+              than following the Map plate onto every future map. */}
+          {item.legend === "diverging" ? <Scale /> : null}
         </div>
 
         <div className="lab-detail">
