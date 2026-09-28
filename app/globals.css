@@ -1974,8 +1974,10 @@ a {
 }
 
 @media (hover: hover) and (pointer: fine) {
+  /* 1.2 is enough to look around the map; 1.6 cropped away most of the
+     plate and read as uncomfortable (Ryan, 2026-09-28). */
   .lab-card:hover .lab-media-map .card-shot {
-    transform: scale(1.6);
+    transform: scale(1.2);
   }
 
   .lab-card:hover .lab-media-map .lab-media-veil {
