@@ -455,6 +455,61 @@
   border-top: 1px solid var(--hairline);
 }
 
+/* The page opens on a worked example; this says so, and whose address it is. */
+.pl-example {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  margin: 0 0 0.875rem;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.pl-example-tag {
+  flex: none;
+  padding: 0.1875rem 0.5rem;
+  border-radius: 999px;
+  background: rgb(18 165 160 / 0.12);
+  color: var(--pl-teal-ink);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+}
+
+.pl-example-hint {
+  color: var(--text-secondary);
+}
+
+/* The way back to the statewide view, last in the panel. */
+.pl-reset {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    color var(--duration-hover) var(--easing-linear),
+    border-color var(--duration-hover) var(--easing-linear);
+}
+
+.pl-reset:hover {
+  border-color: var(--pl-teal-dark);
+  color: var(--pl-teal-dark);
+}
+
+.pl-reset:focus-visible {
+  outline: 3px solid rgb(18 165 160 / 0.45);
+  outline-offset: 2px;
+}
+
 .pl-answer-kicker {
   font-size: 0.6875rem;
   text-transform: uppercase;
@@ -684,9 +739,46 @@
   width: min(100%, 56rem);
 }
 
+/* It fades over the live map once that has painted, rather than cutting to it:
+   held long enough for the canvas's own fade-in to finish underneath. */
+.pl-map-poster {
+  transition: opacity 360ms var(--easing-linear) 400ms;
+}
+
+.pl-map[data-shown] .pl-map-poster {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The example's photo: full bleed, the wake button above the street. */
+.pl-map-poster:has(.pl-poster-photo) {
+  justify-content: flex-start;
+  padding: 0.875rem;
+}
+
+.pl-poster-photo,
+.pl-poster-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pl-poster-photo img {
+  object-fit: cover;
+}
+
+.pl-map-poster:has(.pl-poster-photo) .pl-map-wake {
+  position: relative;
+}
+
 @media (min-width: 900px) {
   .pl-map-poster {
     padding: 2rem 4.5rem 2rem 27rem;
+  }
+
+  .pl-map-poster:has(.pl-poster-photo) {
+    padding: 0.875rem 4.5rem 0.875rem 26rem;
   }
 }
 

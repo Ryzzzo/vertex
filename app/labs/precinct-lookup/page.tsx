@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import meta from "@/data/precincts/meta.json";
+import { precinctExample } from "@/lib/precinct/example";
 import PrecinctLookup from "./PrecinctLookup";
 import "./precinct.css";
 
@@ -106,6 +107,7 @@ export default function PrecinctLookupPage() {
               countyCount={meta.counties}
               precinctsAsOf={meta.sourceAsOf}
               toleranceMeters={meta.simplification.toleranceMeters}
+              example={precinctExample()}
             />
 
             <details className="notes">

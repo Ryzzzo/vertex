@@ -1,0 +1,26 @@
+{
+  "address": "1100 Central Ave, Charlotte, NC",
+  "label": "1100 Central Ave, Charlotte",
+  "geocodedOn": "2026-09-28",
+  "otherMatches": 0,
+  "match": {
+    "matchedAddress": "1100 CENTRAL AVE, CHARLOTTE, NC, 28204",
+    "lon": -80.820080242678,
+    "lat": 35.221544402752,
+    "state": "NC",
+    "county": "Mecklenburg",
+    "districts": {
+      "congress": "12",
+      "senate": "41",
+      "house": "102"
+    },
+    "blockPoint": {
+      "lon": -80.8194726,
+      "lat": 35.2207139
+    },
+    "layers": {
+      "congress": "120th Congressional Districts",
+      "legislature": "2026 State Legislative Districts"
+    }
+  }
+}

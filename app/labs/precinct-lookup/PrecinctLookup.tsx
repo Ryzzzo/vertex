@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import overview from "@/data/precincts/overview.json";
+import type { PrecinctExample } from "@/lib/precinct/example";
 import type {
   DistrictShare,
   GeoFeature,
@@ -99,6 +100,38 @@ function StateDrawing({
         <span className="pl-state-pin" style={onOverview(lon, lat)} aria-hidden="true" />
       ) : null}
     </div>
+  );
+}
+
+const SHOT = "/labs-shots/precinct-lookup/example";
+
+/**
+ * The example's first frame: the live map photographed at the camera it wakes
+ * into, one crop per layout (phone, tablet, wide), so the page opens on the
+ * street view without loading MapLibre. Re-shoot them if the result camera or
+ * the map styling changes, or the swap to the live map will show.
+ */
+function ExamplePoster() {
+  const set = (name: string, a: number, b: number, ext: string) =>
+    `${SHOT}-${name}-${a}.${ext} ${a}w, ${SHOT}-${name}-${b}.${ext} ${b}w`;
+  return (
+    <picture className="pl-poster-photo">
+      <source media="(min-width: 900px)" type="image/avif" srcSet={set("wide", 1118, 2236, "avif")} sizes="(min-width: 1280px) 1118px, 88vw" />
+      <source media="(min-width: 900px)" type="image/webp" srcSet={set("wide", 1118, 2236, "webp")} sizes="(min-width: 1280px) 1118px, 88vw" />
+      <source media="(min-width: 560px)" type="image/avif" srcSet={set("tablet", 700, 1398, "avif")} sizes="92vw" />
+      <source media="(min-width: 560px)" type="image/webp" srcSet={set("tablet", 700, 1398, "webp")} sizes="92vw" />
+      <source type="image/avif" srcSet={set("phone", 690, 1032, "avif")} sizes="92vw" />
+      {/* A plain <img> in an art-directed <picture>: next/image can't switch crops by layout. */}
+      <img
+        src={`${SHOT}-phone-690.webp`}
+        srcSet={set("phone", 690, 1032, "webp")}
+        sizes="92vw"
+        width={690}
+        height={1230}
+        alt="Street map of central Charlotte, tilted: precinct 109 raised in teal, precinct 014 across the street in coral, and the example address 6.1 m from the line between them."
+        decoding="async"
+      />
+    </picture>
   );
 }
 
@@ -226,13 +259,21 @@ function Verdict({ r, onShowLine }: { r: LookupResult; onShowLine?: () => void }
   );
 }
 
-function Answer({ r, onShowLine }: { r: LookupResult; onShowLine?: () => void }) {
+function Answer({ r, onShowLine, example }: { r: LookupResult; onShowLine?: () => void; example?: string }) {
   const name = precinctTitle(r.precinct.id, r.precinct.name);
   const d = r.districts;
   const split = r.info.districts;
   const splitPlans = (Object.keys(PLAN) as Array<keyof typeof PLAN>).filter((k) => split[k].length > 1);
   return (
     <div className="pl-answer">
+      {example ? (
+        <p className="pl-example">
+          <span className="pl-example-tag marker">Example</span>
+          <span>
+            {example}. <span className="pl-example-hint">Type any NC address above.</span>
+          </span>
+        </p>
+      ) : null}
       <p className="marker pl-answer-kicker">Precinct · {r.county} County</p>
       <p className="pl-answer-id">{r.precinct.id}</p>
       {name ? <p className="marker pl-answer-name">{name}</p> : null}
@@ -276,10 +317,12 @@ function Answer({ r, onShowLine }: { r: LookupResult; onShowLine?: () => void })
 function Inspector({
   inspected,
   result,
+  isExample,
   onBack,
 }: {
   inspected: Inspected;
   result: LookupResult | null;
+  isExample: boolean;
   onBack: () => void;
 }) {
   const { info } = inspected;
@@ -302,7 +345,7 @@ function Inspector({
       </p>
       {result ? (
         <button type="button" className="pl-back" onClick={onBack}>
-          <span aria-hidden="true">←</span> Back to {result.precinct.id}, your address
+          <span aria-hidden="true">←</span> Back to {result.precinct.id}, {isExample ? "the example" : "your address"}
         </button>
       ) : (
         <p className="pl-note">Type an address above to find the precinct for a specific home.</p>
@@ -319,16 +362,23 @@ export default function PrecinctLookup({
   precinctsAsOf,
   toleranceMeters,
   dataVersion,
+  example,
 }: {
   precinctCount: number;
   countyCount: number;
   precinctsAsOf: string;
   toleranceMeters: number;
   dataVersion: string;
+  /** Shown on arrival: a worked answer beats an empty form. */
+  example: PrecinctExample | null;
 }) {
+  // The field starts empty even with the example up, so a visitor types
+  // straight away; the example names its own address in the answer.
   const [address, setAddress] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
-  const [result, setResult] = useState<LookupResult | null>(null);
+  const [result, setResult] = useState<LookupResult | null>(example?.result ?? null);
+  const [isExample, setIsExample] = useState(example !== null);
+  const [resetRequest, setResetRequest] = useState(0);
   const [inspected, setInspected] = useState<Inspected | null>(null);
   const [lineRequest, setLineRequest] = useState(0);
   const [mapLive, setMapLive] = useState(true);
@@ -395,6 +445,7 @@ export default function PrecinctLookup({
     }
     window.clearTimeout(slowTimer);
     if (controller.signal.aborted) return;
+    setIsExample(false);
 
     if (body.ok) {
       setResult(body);
@@ -426,6 +477,8 @@ export default function PrecinctLookup({
    * moves.
    */
   const showLine = () => {
+    // The example arrives with the map still asleep behind its photo.
+    setWake((w) => w || 1);
     const fly = () => setLineRequest((n) => n + 1);
     const stage = stageRef.current;
     if (!stage) return fly();
@@ -445,6 +498,17 @@ export default function PrecinctLookup({
     window.addEventListener("scrollend", go);
     window.setTimeout(go, 900);
     stage.scrollIntoView({ block: "center", behavior: "smooth" });
+  };
+
+  /** Back to the statewide view: no answer, no pin, the camera out to all of NC. */
+  const seeAll = () => {
+    inFlight.current?.abort();
+    setResult(null);
+    setInspected(null);
+    setIsExample(false);
+    setStatus({ kind: "idle" });
+    setResetRequest((n) => n + 1);
+    setAnnounce(`Showing all of North Carolina: ${precinctCount.toLocaleString("en-US")} precincts.`);
   };
 
   const samples = (
@@ -563,11 +627,20 @@ export default function PrecinctLookup({
 
           {inspected ? (
             <div className="pl-result" key={`i-${inspected.info.index}`}>
-              <Inspector inspected={inspected} result={result} onBack={() => setInspected(null)} />
+              <Inspector
+                inspected={inspected}
+                result={result}
+                isExample={isExample}
+                onBack={() => setInspected(null)}
+              />
             </div>
           ) : result ? (
             <div className={loading ? "pl-result is-stale" : "pl-result"} key={result.matchedAddress}>
-              <Answer r={result} onShowLine={mapLive ? showLine : undefined} />
+              <Answer
+                r={result}
+                onShowLine={mapLive ? showLine : undefined}
+                example={isExample ? example?.label : undefined}
+              />
             </div>
           ) : (
             <>
@@ -584,6 +657,21 @@ export default function PrecinctLookup({
             <summary className="marker">Try another sample</summary>
             {samples}
           </details> : null}
+          {result || inspected ? (
+            <button type="button" className="pl-reset" onClick={seeAll}>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path
+                  d="M6 2H2v4M10 2h4v4M6 14H2v-4M10 14h4v-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              See all of North Carolina
+            </button>
+          ) : null}
         </div>
 
         <div className={loading && result ? "pl-stage is-stale" : "pl-stage"} ref={stageRef}>
@@ -592,10 +680,12 @@ export default function PrecinctLookup({
             selected={selected}
             onInspect={onInspect}
             lineRequest={lineRequest}
+            resetRequest={resetRequest}
+            example={isExample}
             dataVersion={dataVersion}
             onUnsupported={() => setMapLive(false)}
             wake={wake}
-            poster={<StateDrawing precinctCount={precinctCount} />}
+            poster={isExample ? <ExamplePoster /> : <StateDrawing precinctCount={precinctCount} />}
             fallback={<FallbackPlates result={result} precinctCount={precinctCount} />}
           />
           {inspected ? (

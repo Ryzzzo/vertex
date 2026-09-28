@@ -5,7 +5,7 @@
  * each need a different, honest sentence.
  */
 
-import { geocode } from "./geocode";
+import { geocode, type GeocodeMatch } from "./geocode";
 import { locate, mapPayload, precinctAt, precinctRef } from "./engine";
 import { precinctFeature, precinctInfo, sharedFeature } from "./geo";
 import type { LookupError, LookupResponse } from "./types";
@@ -51,7 +51,15 @@ export async function lookup(raw: string): Promise<LookupResponse> {
     );
   }
 
-  const { match, otherMatches } = outcome;
+  return resolve(outcome.match, outcome.otherMatches);
+}
+
+/**
+ * A geocoded point in; the precinct, the boundary report and the drawing out.
+ * No network: the page also calls this at build time for its example address,
+ * from a geocoder answer frozen in data/precincts/example.json.
+ */
+export function resolve(match: GeocodeMatch, otherMatches: number): LookupResponse {
   if (match.state !== "NC") {
     return fail(
       "outside_nc",

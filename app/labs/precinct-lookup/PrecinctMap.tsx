@@ -49,6 +49,10 @@ type Props = {
   onInspect: (info: PrecinctInfo, feature: GeoFeature) => void;
   /** Incremented to fly the camera down to the line near the address. */
   lineRequest: number;
+  /** Incremented to take the camera back out to the whole state. */
+  resetRequest: number;
+  /** The result on screen is the page's worked example, not the visitor's. */
+  example: boolean;
   dataVersion: string;
   /** Rendered instead of the map when WebGL is unavailable. */
   fallback: React.ReactNode;
@@ -90,6 +94,18 @@ function slabHeight(f: GeoFeature): number {
   return Math.min(Math.max(diag * 0.035, 35), 900);
 }
 
+/**
+ * The tilted camera a result is framed with. One definition, because the photo
+ * the example opens on was shot at exactly this camera.
+ */
+function resultCamera(wide: boolean) {
+  return {
+    padding: wide ? { top: 70, bottom: 70, left: 440, right: 90 } : { top: 70, bottom: 80, left: 24, right: 64 },
+    pitch: wide ? 48 : 36,
+    bearing: -14,
+  };
+}
+
 function hasWebGL(): boolean {
   try {
     const c = document.createElement("canvas");
@@ -112,6 +128,8 @@ export default function PrecinctMap({
   selected,
   onInspect,
   lineRequest,
+  resetRequest,
+  example,
   dataVersion,
   fallback,
   onUnsupported,
@@ -127,6 +145,15 @@ export default function PrecinctMap({
   const onInspectRef = useRef(onInspect);
   const onUnsupportedRef = useRef(onUnsupported);
   const resultRef = useRef(result);
+  /**
+   * The map can wake with a result already on screen (the example, behind its
+   * photo). Then the first camera and slab are set instantly, so the live map
+   * lands on exactly the picture it replaces.
+   */
+  const wokeWithResult = useRef({ camera: false, slab: false });
+  const shownRef = useRef(false);
+  const handledLine = useRef(0);
+  const handledReset = useRef(0);
   const [status, setStatus] = useState<"loading" | "ready" | "unsupported">("loading");
   /**
    * MapLibre is a megabyte of JavaScript and a WebGL context. It starts on the
@@ -138,11 +165,21 @@ export default function PrecinctMap({
   const [touched, setTouched] = useState(false);
   const live = touched || wake > 0;
   const [shown, setShown] = useState(false);
+  /** The poster fades over the live map rather than cutting to it. */
+  const [posterGone, setPosterGone] = useState(false);
   const [pitched, setPitched] = useState(false);
   const [layers, setLayers] = useState<Layers>({ cd: false, sen: false, house: false });
   const [menuOpen, setMenuOpen] = useState(false);
   const layersRef = useRef<HTMLDivElement>(null);
   const [tip, setTip] = useState<{ x: number; y: number; f: MapGeoJSONFeature } | null>(null);
+
+  useEffect(() => {
+    shownRef.current = shown;
+    if (!shown) return;
+    // After the CSS fade (400 ms hold, 360 ms fade) has finished.
+    const t = window.setTimeout(() => setPosterGone(true), 900);
+    return () => window.clearTimeout(t);
+  }, [shown]);
 
   useEffect(() => {
     onInspectRef.current = onInspect;
@@ -181,14 +218,20 @@ export default function PrecinctMap({
       if (cancelled || !container.current) return;
       libRef.current = lib;
       const wideAtStart = container.current.clientWidth >= 900;
+      const first = resultRef.current;
+      wokeWithResult.current = { camera: !!first, slab: !!first };
       let map: MapLibreMap;
       try {
         map = new lib.Map({
           container: container.current,
           style,
-          bounds: NC_BOUNDS,
+          // Start where the first frame will be, so the first tiles fetched
+          // are the ones on screen: the result's streets, or the whole state.
+          bounds: first ? bboxOf(first.geo.match) : NC_BOUNDS,
           // Leave the floating panel its own ground on wide screens.
-          fitBoundsOptions: { padding: wideAtStart ? { top: 24, bottom: 24, left: 450, right: 60 } : 16 },
+          fitBoundsOptions: first
+            ? { ...resultCamera(wideAtStart), maxZoom: 16.5 }
+            : { padding: wideAtStart ? { top: 24, bottom: 24, left: 450, right: 60 } : 16 },
           // Loose enough that a tall stage can show all of NC at the fit zoom;
           // tighter, and MapLibre zooms in to honour it and hides the west.
           maxBounds: [[-93, 28.5], [-67, 42]],
@@ -491,7 +534,9 @@ export default function PrecinctMap({
     (map.getSource("home") as GeoJSONSource).setData(fc(home));
     if (!selected) return;
     const height = slabHeight(selected);
-    if (prefersReducedMotion()) {
+    const instant = wokeWithResult.current.slab;
+    wokeWithResult.current.slab = false;
+    if (prefersReducedMotion() || instant) {
       map.setPaintProperty("pl-sel-3d", "fill-extrusion-height", height);
       return;
     }
@@ -546,20 +591,23 @@ export default function PrecinctMap({
       (map.getSource("dim") as GeoJSONSource).setData(EMPTY);
     }
 
-    const wide = map.getContainer().clientWidth >= 900;
+    const instant = wokeWithResult.current.camera;
+    wokeWithResult.current.camera = false;
     map.fitBounds(bboxOf(result.geo.match), {
-      padding: wide ? { top: 70, bottom: 70, left: 440, right: 90 } : { top: 70, bottom: 80, left: 24, right: 64 },
-      pitch: wide ? 48 : 36,
-      bearing: -14,
+      ...resultCamera(map.getContainer().clientWidth >= 900),
       maxZoom: 16.5,
-      duration: prefersReducedMotion() ? 0 : 2200,
+      duration: prefersReducedMotion() || instant ? 0 : 2200,
     });
   }, [result, status]);
 
   /* ── Fly down to the line ── */
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || status !== "ready" || !result || !lineRequest) return;
+    if (!map || status !== "ready" || !result) return;
+    // Only a new press flies. Without this, a later lookup (which changes
+    // `result`) re-ran the flight and overrode the new address's framing.
+    if (lineRequest === handledLine.current) return;
+    handledLine.current = lineRequest;
     const [nx, ny] = result.geo.nearest;
     const wide = map.getContainer().clientWidth >= 900;
     map.flyTo({
@@ -570,9 +618,26 @@ export default function PrecinctMap({
       // An offset, not padding: padding given to flyTo stays on the camera and
       // would squeeze every later fitBounds into what is left of the canvas.
       offset: [wide ? 200 : 0, 0],
-      duration: prefersReducedMotion() ? 0 : 2400,
+      // Pressed before the map was live: land there, behind the photo, rather
+      // than fly while nobody can see it.
+      duration: prefersReducedMotion() || !shownRef.current ? 0 : 2400,
     });
   }, [lineRequest, result, status]);
+
+  /* ── Back out to the whole state ── */
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || status !== "ready" || resetRequest === handledReset.current) return;
+    handledReset.current = resetRequest;
+    const wide = map.getContainer().clientWidth >= 900;
+    map.fitBounds(NC_BOUNDS, {
+      padding: wide ? { top: 24, bottom: 24, left: 450, right: 60 } : 16,
+      pitch: 0,
+      bearing: 0,
+      duration: prefersReducedMotion() ? 0 : 1800,
+    });
+    setPitched(false);
+  }, [resetRequest, status]);
 
   /* ── The layers menu closes like any popover: outside press or Escape ── */
   useEffect(() => {
@@ -611,11 +676,8 @@ export default function PrecinctMap({
   const frameResult = (r: LookupResult, duration: number) => {
     const map = mapRef.current;
     if (!map) return;
-    const wide = map.getContainer().clientWidth >= 900;
     map.fitBounds(bboxOf(r.geo.match), {
-      padding: wide ? { top: 70, bottom: 70, left: 440, right: 90 } : { top: 70, bottom: 80, left: 24, right: 64 },
-      pitch: wide ? 48 : 36,
-      bearing: -14,
+      ...resultCamera(map.getContainer().clientWidth >= 900),
       maxZoom: 16.5,
       duration: prefersReducedMotion() ? 0 : duration,
     });
@@ -638,7 +700,7 @@ export default function PrecinctMap({
       onFocus={wakeUp}
     >
       <div ref={container} className="pl-map-canvas" />
-      {!shown ? (
+      {!posterGone ? (
         <div className="pl-map-poster">
           {poster}
           <button type="button" className="pl-map-wake" onClick={wakeUp}>
@@ -747,7 +809,11 @@ export default function PrecinctMap({
         {result || selected ? (
           <span>
             <i className="pl-key pl-key-sel" />
-            {selected && result && selected.id !== result.info.index ? "Inspected precinct" : "Your precinct"}
+            {selected && result && selected.id !== result.info.index
+              ? "Inspected precinct"
+              : example
+                ? "Example precinct"
+                : "Your precinct"}
           </span>
         ) : null}
         {result?.geo.across ? (
