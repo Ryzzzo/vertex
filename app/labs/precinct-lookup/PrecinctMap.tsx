@@ -511,6 +511,9 @@ export default function PrecinctMap({
 
         // The 2D/3D button reflects the camera, whoever moved it.
         map.on("pitchend", () => setPitched(map.getPitch() > 5));
+        // A map that wakes into the example is born tilted, and no pitchend
+        // ever reports it.
+        setPitched(map.getPitch() > 5);
 
         setStatus("ready");
         map.once("idle", () => setShown(true));
@@ -636,7 +639,6 @@ export default function PrecinctMap({
       bearing: 0,
       duration: prefersReducedMotion() ? 0 : 1800,
     });
-    setPitched(false);
   }, [resetRequest, status]);
 
   /* ── The layers menu closes like any popover: outside press or Escape ── */
