@@ -167,7 +167,8 @@ export default function PrecinctMap({
   const [shown, setShown] = useState(false);
   /** The poster fades over the live map rather than cutting to it. */
   const [posterGone, setPosterGone] = useState(false);
-  const [pitched, setPitched] = useState(false);
+  // The example's photo is tilted, so the button starts on "2D" to match it.
+  const [pitched, setPitched] = useState(result !== null);
   const [layers, setLayers] = useState<Layers>({ cd: false, sen: false, house: false });
   const [menuOpen, setMenuOpen] = useState(false);
   const layersRef = useRef<HTMLDivElement>(null);
