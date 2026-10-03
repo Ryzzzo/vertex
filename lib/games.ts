@@ -1,8 +1,8 @@
 /**
  * The /games index, held here rather than in Sanity: it is two entries that
  * change when a game ships, not copy that gets edited week to week, and each
- * entry carries layout decisions (which picture, whether it plays the
- * waterline) that a CMS field would only blur. Move it to Sanity the day it
+ * entry carries layout decisions (which picture, whether its water moves)
+ * that a CMS field would only blur. Move it to Sanity the day it
  * passes a handful of entries.
  *
  * `experiment` sets the amber chip. It is the honest axis for this page: the
@@ -22,9 +22,9 @@ export type GameItem = {
   cta: string;
   experiment: boolean;
   facts: GameFact[];
-  /** "waterline" plays the drowned room's water under the pointer; "shot" is a still capture. */
+  /** "lake" is the key art with its lake alive (LakeCover.tsx); "shot" is a still capture. */
   media:
-    | { type: "waterline"; alt: string }
+    | { type: "lake"; alt: string }
     | { type: "shot"; src: string; alt: string };
 };
 
@@ -48,8 +48,8 @@ export const games: GameItem[] = [
       { label: "Made with", value: "Blender Cycles · three.js · Web Audio · recorded sound only" },
     ],
     media: {
-      type: "waterline",
-      alt: "The main room of the house under the river: a lamp lit on the mantel, a rocking chair half under water, moonlight through the window.",
+      type: "lake",
+      alt: "The drowned church steeple of Sallow Hollow standing in the lake at dusk, dead trees in the water and mountains behind, a lantern lit in a rowing boat in the foreground.",
     },
   },
   {

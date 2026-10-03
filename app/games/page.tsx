@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Shot from "@/components/Shot";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import Waterline from "@/components/Waterline";
+import LakeCover from "@/components/LakeCover";
 import { games, type GameItem } from "@/lib/games";
 
 const title = "Games — Vertex Business Solutions";
@@ -56,16 +56,16 @@ function Game({ game, first }: { game: GameItem; first: boolean }) {
     <article className="card games-item" aria-labelledby={headingId}>
       <div className="games-media-col">
         <div className="card-media games-media">
-          {game.media.type === "waterline" ? (
-            <Waterline alt={game.media.alt} sizes={SIZES} priority={first} />
+          {game.media.type === "lake" ? (
+            <LakeCover alt={game.media.alt} sizes={SIZES} priority={first} />
           ) : (
             <Shot src={game.media.src} alt={game.media.alt} sizes={SIZES} priority={first} />
           )}
           <span className="labs-tag labs-tag-live">Playable</span>
         </div>
-        {game.media.type === "waterline" ? (
+        {game.media.type === "lake" ? (
           <p className="games-hint" aria-hidden="true">
-            Move over the picture: the water follows.
+            Move over the lake: the water stirs.
           </p>
         ) : null}
       </div>

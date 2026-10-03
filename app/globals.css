@@ -4279,24 +4279,41 @@ a {
   aspect-ratio: 16 / 9;
 }
 
-.waterline,
-.waterline img {
+/*
+ * The Drowned Hollow's live lake (LakeCover.tsx): the still, and over it the
+ * canvas that moves the water. Same box and the same picture at rest, so the
+ * canvas can fade in without a jump.
+ */
+.lake,
+.lake-still,
+.lake-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
 
-.waterline img {
-  object-fit: cover;
+.lake-still {
   display: block;
+  object-fit: cover;
   user-select: none;
 }
 
+.lake-canvas {
+  display: block;
+  opacity: 0;
+  transition: opacity 600ms var(--easing-linear);
+}
+
+.lake[data-live] .lake-canvas {
+  opacity: 1;
+}
+
 /*
- * The hint appears only once the waterline is actually running (Waterline.tsx
- * sets data-live for a fine hovering pointer without reduced motion), so it can
- * never promise something a touch screen or a still will not do.
+ * The hint appears only once the lake is actually running (LakeCover.tsx sets
+ * data-live when WebGL2 is there and reduced motion is not asked for), and only
+ * for a pointer that hovers, so it never promises something a touch screen or a
+ * still will not do.
  */
 .games-hint {
   display: none;
@@ -4307,8 +4324,10 @@ a {
   color: var(--text-tertiary);
 }
 
-.games-media-col:has(.waterline[data-live]) .games-hint {
-  display: block;
+@media (hover: hover) and (pointer: fine) {
+  .games-media-col:has(.lake[data-live]) .games-hint {
+    display: block;
+  }
 }
 
 .games-body {
@@ -4401,11 +4420,6 @@ a {
 .games-item:has(:focus-visible) .games-cta {
   border-color: color-mix(in oklab, var(--accent) 55%, var(--hairline));
   background: color-mix(in oklab, var(--accent) 12%, var(--surface));
-}
-
-/* The waterline is the picture's motion; the shared card zoom would fight it. */
-.games-item:hover .waterline img {
-  transform: none;
 }
 
 @media (max-width: 900px) {
