@@ -213,7 +213,7 @@ export default async function LabsPage() {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader current="labs" />
       <main>
         <section className="section" aria-labelledby="labs-heading">
           <div className="shell">

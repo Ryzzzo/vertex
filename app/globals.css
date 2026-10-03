@@ -502,11 +502,54 @@ a {
 
 .site-nav-page {
   margin-left: 0.5rem;
+  white-space: nowrap;
+}
+
+.site-nav-short {
+  display: none;
 }
 
 /* Anchored headings clear the sticky header. */
 .h2[id] {
   scroll-margin-top: 6rem;
+}
+
+/*
+ * Two page links (Labs, Games) beside the wordmark. Phones get the short label;
+ * the narrowest phones drop the wordmark's text to the mark alone (its name is
+ * kept for screen readers) rather than wrapping the header onto two lines.
+ */
+@media (max-width: 720px) {
+  .site-nav-long {
+    display: none;
+  }
+
+  .site-nav-short {
+    display: inline;
+  }
+
+  .site-nav {
+    gap: 1.125rem;
+  }
+
+  .site-nav-page {
+    margin-left: 0;
+  }
+
+  .wordmark span {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 380px) {
+  .wordmark span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 720px) {
@@ -4129,4 +4172,257 @@ a {
 
 .labs-iframe-cropped {
   height: 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Games — routed index (/games)
+   Two games, each a zone served through this domain. Image-led rather
+   than a card grid: a single large render carries more than a row of
+   thumbnails, and two entries in a three-column grid read as a page
+   that ran out of things to show. Chips keep the Labs vocabulary —
+   green says it runs, amber says it was not built to be finished.
+   ───────────────────────────────────────────────────────────── */
+
+/*
+ * Title left, note right, on the same 7/5 split as the entries below, so the
+ * head costs one band of height and the first picture lands above the fold at
+ * 1440x900 instead of straddling it.
+ */
+.games-head {
+  max-width: none;
+  margin-bottom: clamp(2.5rem, 1.5rem + 2.5vw, 3.5rem);
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 1.25rem clamp(1.75rem, 1rem + 2.5vw, 3.5rem);
+  align-items: end;
+}
+
+.games-head-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 34rem;
+}
+
+/*
+ * The page's one disclaimer, and the line it exists to carry. It keeps
+ * --text-secondary (6.13:1 on the ground), for the same reason as
+ * .labs-disclaimer: the text doing the honest job must not be the
+ * faintest on the page. Amber marks it as the "not finished" axis.
+ */
+.games-note {
+  margin: 0;
+  padding: 1rem 1.125rem 1.0625rem;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--surface) 60%, var(--bg));
+}
+
+.games-note-label {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.games-note-label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 0.5rem;
+  border-radius: 999px;
+  background: #e3a33c;
+}
+
+.games-note-text {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.games-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(4rem, 2rem + 5vw, 7rem);
+}
+
+.games-item {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.75rem, 1rem + 2.5vw, 3.5rem);
+  align-items: start;
+}
+
+/* Alternate sides so two entries read as a sequence, not a table. The columns
+   swap widths too: the picture always gets the wide one. */
+.games-list > li:nth-child(even) .games-item {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+}
+
+.games-list > li:nth-child(even) .games-media-col {
+  order: 2;
+}
+
+.games-media-col {
+  min-width: 0;
+}
+
+.games-media {
+  aspect-ratio: 16 / 9;
+}
+
+.waterline,
+.waterline img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.waterline img {
+  object-fit: cover;
+  display: block;
+  user-select: none;
+}
+
+/*
+ * The hint appears only once the waterline is actually running (Waterline.tsx
+ * sets data-live for a fine hovering pointer without reduced motion), so it can
+ * never promise something a touch screen or a still will not do.
+ */
+.games-hint {
+  display: none;
+  margin: 0.75rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-wider);
+  color: var(--text-tertiary);
+}
+
+.games-media-col:has(.waterline[data-live]) .games-hint {
+  display: block;
+}
+
+.games-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.875rem;
+  min-width: 0;
+}
+
+.games-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+/* Above the stretched title link, so the chip stays selectable text. The base
+   chip's top/left offsets are for floating over media; reset them here. */
+.games-kicker .labs-tag-inline {
+  position: relative;
+  top: auto;
+  left: auto;
+  z-index: 2;
+}
+
+.games-title {
+  gap: 0.75rem;
+}
+
+.games-title .card-chevron {
+  width: 16px;
+  height: 16px;
+}
+
+.games-line {
+  max-width: 46ch;
+}
+
+.games-facts {
+  width: 100%;
+  margin: 0.375rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hairline);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.games-fact {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.games-fact dt {
+  padding-top: 0.1875rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.games-fact dd {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.games-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.625rem 1.0625rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition:
+    border-color var(--duration-hover) var(--easing-linear),
+    background-color var(--duration-hover) var(--easing-linear);
+}
+
+.games-item:hover .games-cta,
+.games-item:has(:focus-visible) .games-cta {
+  border-color: color-mix(in oklab, var(--accent) 55%, var(--hairline));
+  background: color-mix(in oklab, var(--accent) 12%, var(--surface));
+}
+
+/* The waterline is the picture's motion; the shared card zoom would fight it. */
+.games-item:hover .waterline img {
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  .games-head,
+  .games-item,
+  .games-list > li:nth-child(even) .games-item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .games-list > li:nth-child(even) .games-media-col {
+    order: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .games-fact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
 }

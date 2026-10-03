@@ -70,6 +70,28 @@ const nextConfig: NextConfig = {
           source: "/sql/:path*",
           destination: "https://sql-game-zeta.vercel.app/sql/:path*",
         },
+      /*
+       * The Drowned Hollow, the second zone, on the same arrangement as /sql:
+       * its own Vite build and Vercel project (drowned-hollow), base path
+       * /games/drowned-hollow/, canonical pointing back here. /games itself is
+       * this app's page and is deliberately not matched.
+       *
+       * The bare path goes to the folder WITH its slash. Next drops a trailing
+       * slash before rewrites run, and the zone adds one back for the bare
+       * path, so pointing bare at bare would loop. The zone uses no Vercel
+       * analytics, so it needs no beacon rule like /sql's.
+       *
+       * Origin is the public production alias, not the team-scoped one, for
+       * the same Vercel Authentication reason as above.
+       */
+        {
+          source: "/games/drowned-hollow",
+          destination: "https://drowned-hollow.vercel.app/games/drowned-hollow/",
+        },
+        {
+          source: "/games/drowned-hollow/:path*",
+          destination: "https://drowned-hollow.vercel.app/games/drowned-hollow/:path*",
+        },
       ],
       afterFiles: [],
       fallback: [],

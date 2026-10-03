@@ -8,10 +8,14 @@ import type { MetadataRoute } from "next";
  * file going stale every time a reference page is added over there, which is
  * exactly the sort of quiet drift a sitemap is supposed to prevent. robots.ts
  * names both.
+ *
+ * /games is listed; /games/drowned-hollow is not. That zone carries `noindex`
+ * (it is an experiment, not a release), and a sitemap entry for a page that
+ * asks not to be indexed is a contradiction crawlers report.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const routes = ["", "/labs", "/labs/fee-engine", "/labs/ops-table"];
+  const routes = ["", "/labs", "/labs/fee-engine", "/labs/ops-table", "/games"];
 
   return routes.map((route) => ({
     url: `https://vertexapps.dev${route}`,
